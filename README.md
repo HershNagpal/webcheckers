@@ -6,11 +6,11 @@ a web micro-framework.
 
 ## Team
 
-- Micheal Kha
-- Luis Gutierrez
-- Hersh Nagpal
-- Mathew Bollinger
-- Christopher Daukshus
+- Michael Kha
+-
+-
+-
+-
 
 
 ## Prerequisites
