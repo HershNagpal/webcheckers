@@ -10,7 +10,7 @@ a web micro-framework.
 - Luis Gutierrez
 - Hersh Nagpal
 - Matthew Bollinger
--
+- Christopher Daukshus
 
 
 ## Prerequisites
