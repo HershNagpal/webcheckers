@@ -7,7 +7,7 @@ a web micro-framework.
 ## Team
 
 - Michael Kha
--
+- Luis Gutierrez
 -
 -
 -
