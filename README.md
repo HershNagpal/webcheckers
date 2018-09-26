@@ -8,7 +8,7 @@ a web micro-framework.
 
 - Michael Kha
 - Luis Gutierrez
--
+- Hersh Nagpal
 -
 -
 
