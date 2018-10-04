@@ -16,12 +16,6 @@
     
     <div class="body">
       <p>Welcome to the world of online Checkers.</p>
-      <form method="POST">
-        Username
-        <input name="myName" />
-        <br/><br/>
-        <button type="submit">Sign in</button>
-      </form>
     </div>
     
   </div>
