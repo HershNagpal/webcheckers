@@ -24,6 +24,6 @@ public class Player {
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        return this.name.hashCode();
     }
 }
