@@ -19,11 +19,11 @@ public class Player {
             Player p = (Player)obj;
             return p.name.equals(this.name);
         }
-        return super.equals(obj);
+        return false;
     }
 
     @Override
     public int hashCode() {
-        return super.hashCode();
+        return this.name.hashCode();
     }
 }
