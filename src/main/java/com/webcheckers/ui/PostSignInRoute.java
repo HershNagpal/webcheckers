@@ -24,6 +24,13 @@ public class PostSignInRoute implements Route {
         this.templateEngine = templateEngine;
     }
 
+    /**
+     * Make an error message when the user enters invalid input
+     */
+    public String badArgMessge(final String badargs){
+        return String.format("The name you entered '%s' is invalid or already in use", badargs);
+    }
+
     @Override
     public Object handle(Request request, Response response) {
         return null;
