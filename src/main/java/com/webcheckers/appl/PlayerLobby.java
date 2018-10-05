@@ -9,6 +9,7 @@ import java.util.Set;
  * The player lobby used to hold players.
  *
  * @author Michael Kha
+ * @author
  */
 public class PlayerLobby {
 
@@ -30,7 +31,7 @@ public class PlayerLobby {
      * @param username name to check
      * @return is the username taken
      */
-    public synchronized boolean isUsernameTaken(String username) {
+    public boolean isUsernameTaken(String username) {
         return players.contains(new Player(username));
     }
 
@@ -42,6 +43,23 @@ public class PlayerLobby {
      */
     public boolean isValidUsername(String username) {
         return username.matches("^[a-zA-Z0-9]*$");
+    }
+
+    /**
+     * Let the player sign into the lobby
+     * TODO check if sign ins need to be synchronized
+     * @param player Player signing in
+     */
+    public void signIn(Player player) {
+        players.add(player);
+    }
+
+    /**
+     * Let the player sign out of the lobby
+     * @param player Player signing out
+     */
+    public void signOut(Player player) {
+        players.remove(player);
     }
 
 
