@@ -22,4 +22,5 @@ public class Space {
             thisSpaceType = SpaceType.NON_KING;
         }
     }
+
 }
