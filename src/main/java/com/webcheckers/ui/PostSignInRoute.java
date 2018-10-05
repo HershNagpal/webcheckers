@@ -1,11 +1,10 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.PlayerLobby;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.TemplateEngine;
+import spark.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class PostSignInRoute implements Route {
@@ -33,6 +32,12 @@ public class PostSignInRoute implements Route {
 
     @Override
     public Object handle(Request request, Response response) {
+        final Map<String, Object> vm = new HashMap<>();
+        final Session session = request.session();
+
+        final String name = request.queryParams(NAME_PARAM);
+        System.out.println(name);
+
         return null;
     }
 }
