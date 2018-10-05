@@ -9,6 +9,7 @@ public class Space {
     private int column;
     private SpaceType thisSpaceType;
 
+
     public Space(int row, int column){
         this.row = row;
         this.column = column;
@@ -23,4 +24,17 @@ public class Space {
         }
     }
 
+    /**
+     * Checks the color of the space. Returns false for dark square and true for light square.
+     *
+     * @return indicator of color in boolean
+     */
+    public boolean checkColor(){
+        if(row%2==0) {
+            return column % 2 == 0;
+        }
+        else{
+            return column % 2 == 1;
+        }
+    }
 }
