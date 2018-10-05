@@ -16,6 +16,9 @@
 
     <div class="body">
       <p>Welcome to the world of online Checkers.</p>
+      <#if error??>
+        <p>${error}</p>
+      </#if>
       <form action="./signin" method="POST">
         Username
         <input name="myName" />

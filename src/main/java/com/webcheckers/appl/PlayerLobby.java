@@ -38,6 +38,7 @@ public class PlayerLobby {
     /**
      * Alphanumeric regex to check if username contains at least
      * one letter or number.
+     * TODO allow spaces
      * @param username name to check
      * @return is the username valid
      */
