@@ -37,12 +37,24 @@ public class PlayerLobby {
 
     /**
      * Alphanumeric regex to check if username contains at least
-     * one letter or number.
-     * TODO allow spaces
+     * one letter or number and optionally spaces if this is satisfied.
      * @param username name to check
      * @return is the username valid
      */
     public boolean isValidUsername(String username) {
+        String[] parts;
+        if (username.contains(" ")) {
+            parts = username.split(" ");
+            if (parts.length == 0) {
+                return false;
+            }
+            for (String p : parts) {
+                if (!p.matches("^[a-zA-Z0-9]*$")) {
+                    return false;
+                }
+            }
+            return true;
+        }
         return username.matches("^[a-zA-Z0-9]*$");
     }
 
