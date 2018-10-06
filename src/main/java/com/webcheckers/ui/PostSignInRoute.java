@@ -12,6 +12,7 @@ public class PostSignInRoute implements Route {
 
     static final String TITLE_ATTR = "title";
     static final String ERROR_ATTR = "error";
+    static final String PLAYER_ATTR = "player";
     static final String NAME_PARAM = "myName";
     static final String VIEW_NAME = "signin.ftl";
 
@@ -19,10 +20,10 @@ public class PostSignInRoute implements Route {
     static final String INVALID_NAME = "Name must have at least one alphanumeric character.";
     static final String NAME_TAKEN = "Name has already been taken.";
 
-    private PlayerLobby playerLobby;
-    private TemplateEngine templateEngine;
+    private final PlayerLobby playerLobby;
+    private final TemplateEngine templateEngine;
 
-    public PostSignInRoute(PlayerLobby playerLobby, TemplateEngine templateEngine) {
+    public PostSignInRoute(final PlayerLobby playerLobby, final TemplateEngine templateEngine) {
 
         Objects.requireNonNull(playerLobby, "playerLobby must not be null");
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
@@ -66,7 +67,7 @@ public class PostSignInRoute implements Route {
 
         Player player = new Player(name);
         playerLobby.signIn(player);
-
+        session.attribute(PLAYER_ATTR, player);
         // Go back to home page
         response.redirect("/");
         return null;
