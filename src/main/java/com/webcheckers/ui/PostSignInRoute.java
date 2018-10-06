@@ -41,10 +41,11 @@ public class PostSignInRoute implements Route {
 
     /**
      * Handle the sign in POST request.
-     * TODO: only allow a single session to log in as one user
+     *
      * @param request the HTTP request
      * @param response the HTTP response
-     * @return
+     *
+     * @return the rendered HTML for the Sign In page
      */
     @Override
     public Object handle(Request request, Response response) {
