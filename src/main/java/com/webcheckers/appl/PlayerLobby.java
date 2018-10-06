@@ -2,7 +2,9 @@ package com.webcheckers.appl;
 
 import com.webcheckers.model.Player;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -73,6 +75,19 @@ public class PlayerLobby {
      */
     public void signOut(Player player) {
         players.remove(player);
+    }
+
+    /**
+     * Ease of access for player names within the lobby.
+     *
+     * @return List of player names
+     */
+    public List<String> getPlayerLobbyNames() {
+        List<String> names = new ArrayList<>();
+        for (Player player : players) {
+            names.add(player.getName());
+        }
+        return names;
     }
 
 
