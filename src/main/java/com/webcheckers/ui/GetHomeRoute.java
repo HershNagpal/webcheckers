@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
@@ -18,6 +19,8 @@ public class GetHomeRoute implements Route {
 
   static final String TITLE_ATTR = "title";
   static final String TITLE = "Welcome!";
+  static final String NUM_PLAYERS_ATTR = "numPlayers";
+  static final String PLAYER_LIST_ATTR = "playerList";
   static final String VIEW_NAME = "home.ftl";
 
   private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
@@ -63,9 +66,12 @@ public class GetHomeRoute implements Route {
     vm.put(TITLE_ATTR, TITLE);
 
     Player player = session.attribute(PostSignInRoute.PLAYER_ATTR);
+    List<String> players = playerLobby.getPlayerLobbyNames();
     if (player != null) {
-
-
+        vm.put(PLAYER_LIST_ATTR, players);
+    }
+    else {
+        vm.put(NUM_PLAYERS_ATTR, players.size());
     }
 
 
