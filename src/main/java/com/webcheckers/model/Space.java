@@ -12,8 +12,8 @@ public class Space {
     private int column;
     private SpaceType thisSpaceType;
 
-    //Space has no checker before setUpBoard() in Board
-    private Checker checker = null;
+    //Space has no piece before setUpBoard() in Board
+    private Piece piece = null;
 
     public Space(int row, int column){
         this.row = row;
@@ -44,14 +44,14 @@ public class Space {
     }
 
     public boolean hasChecker(){
-        return this.checker != null;
+        return this.piece != null;
     }
 
-    public Checker getChecker(){
-        return checker;
+    public Piece getPiece(){
+        return piece;
     }
 
-    public void setChecker(Checker checker){
-        this.checker = checker;
+    public void setPiece(Piece piece){
+        this.piece = piece;
     }
 }

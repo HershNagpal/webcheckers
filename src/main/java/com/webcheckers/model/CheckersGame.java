@@ -8,6 +8,7 @@ public class CheckersGame {
   public CheckersGame(Player redPlayer, Player whitePlayer, Board board){
     this.redPlayer = redPlayer;
     this.whitePlayer = whitePlayer;
+    this.checkerBoard = board;
   }
 
 }

@@ -17,21 +17,21 @@ public class Board {
      * placed on bottom three rows.
      */
     private void setUpBoard(){
-        for (int row = 0; row < ROWS; row++) {
-            for (int col = 0; col < COLUMNS; col++) {
-                Space boardSpace = new Space(row, col);
-                spaces[row][col] = boardSpace;
-                if ( row % 2 == col % 2 ) {
-                    if (row < 3) {
-                        Checker checker = new Checker(Checker.CheckerType.RED,row,col);
-                        spaces[row][col].setChecker(checker);
-                    }
-                    else if (row > 4){
-                        Checker checker = new Checker(Checker.CheckerType.WHITE,row,col);
-                        spaces[row][col].setChecker(checker);
-                    }
-                }
+      for (int row = 0; row < ROWS; row++) {
+        for (int col = 0; col < COLUMNS; col++) {
+          Space boardSpace = new Space(row, col);
+          spaces[row][col] = boardSpace;
+          if ( row % 2 == col % 2 ) {
+            if (row < 3) {
+              Piece piece = new Piece(Piece.Color.RED, Piece.Type.SINGLE,row,col);
+              spaces[row][col].setPiece(piece);
             }
+              else if (row > 4){
+                Piece piece = new Piece(Piece.Color.WHITE,Piece.Type.SINGLE,row,col);
+                spaces[row][col].setPiece(piece);
+            }
+          }
         }
+      }
     }
 }
