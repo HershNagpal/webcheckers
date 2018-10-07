@@ -1,14 +1,14 @@
 package com.webcheckers.model;
 
 public class Space {
-
-
+    
     public enum SpaceType {KING_RED, KING_BLACK, NON_KING}
 
     private int row;
     private int column;
     private SpaceType thisSpaceType;
 
+    private Checker checker;
 
     public Space(int row, int column){
         this.row = row;
@@ -36,5 +36,17 @@ public class Space {
         else{
             return column % 2 == 1;
         }
+    }
+
+    public boolean hasChecker(){
+        return this.checker != null;
+    }
+
+    public Checker getChecker(){
+        return checker;
+    }
+
+    public void setChecker(Checker checker){
+        this.checker = checker;
     }
 }
