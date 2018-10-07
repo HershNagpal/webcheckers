@@ -12,17 +12,17 @@
     
     <div class="navigation">
       <a href="/">my home</a>
-      <#if player??>
-        <a href="/">sign out</a>
+      <#if currentPlayer??>
+        <a href="/signout">sign out [${currentPlayer.name}]</a>
       <#else>
         <a href="/signin">sign in</a>
       </#if>
     </div>
 
     <div class="body">
-      <p>Welcome<#if player??>, <b>${player.name}</b></#if> to the world of online Checkers.</p>
+      <p>Welcome to the world of online Checkers.</p>
       <p>Online Players:
-        <#if player??>
+        <#if currentPlayer??>
           <#if playerList??>
             <#list playerList as p>
               <li>${p}</li>

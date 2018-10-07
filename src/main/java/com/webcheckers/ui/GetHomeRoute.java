@@ -21,7 +21,7 @@ public class GetHomeRoute implements Route {
   static final String TITLE = "Welcome!";
   static final String NUM_PLAYERS_ATTR = "numPlayers";
   static final String PLAYER_LIST_ATTR = "playerList";
-  static final String PLAYER_ATTR = "player";
+  static final String PLAYER_ATTR = "currentPlayer";
   static final String VIEW_NAME = "home.ftl";
 
   private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());

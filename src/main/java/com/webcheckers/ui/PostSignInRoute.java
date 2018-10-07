@@ -18,7 +18,7 @@ public class PostSignInRoute implements Route {
 
     static final String TITLE_ATTR = "title";
     static final String ERROR_ATTR = "error";
-    static final String PLAYER_ATTR = "player";
+    static final String PLAYER_ATTR = "currentPlayer";
     static final String NAME_PARAM = "myName";
     static final String VIEW_NAME = "signin.ftl";
 
