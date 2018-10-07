@@ -18,9 +18,22 @@
         <a href="/signin">sign in</a>
       </#if>
     </div>
-    
+
     <div class="body">
-      <p>Welcome to the world of online Checkers.</p>
+      <p>Welcome<#if player??>, <b>${player.name}</b></#if> to the world of online Checkers.</p>
+      <p>Online Players:
+        <#if player??>
+          <#if playerList??>
+            <#list playerList as p>
+              <li>${p}</li>
+            </#list>
+          <#else>
+            No other players online.
+          </#if>
+        <#else>
+          ${numPlayers} players online
+        </#if>
+      </p>
     </div>
     
   </div>

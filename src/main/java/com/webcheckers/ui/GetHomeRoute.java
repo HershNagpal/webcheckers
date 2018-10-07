@@ -20,6 +20,7 @@ public class GetHomeRoute implements Route {
   static final String TITLE_ATTR = "title";
   static final String TITLE = "Welcome!";
   static final String NUM_PLAYERS_ATTR = "numPlayers";
+  static final String PLAYER_LIST_ATTR = "playerList";
   static final String PLAYER_ATTR = "player";
   static final String VIEW_NAME = "home.ftl";
 
@@ -68,12 +69,15 @@ public class GetHomeRoute implements Route {
     Player player = session.attribute(PLAYER_ATTR);
     List<String> players = playerLobby.getPlayerLobbyNames();
     if (player != null) {
-        vm.put(PLAYER_ATTR, players);
+      vm.put(PLAYER_ATTR, player);
+      players.remove(player.getName());
+      if (players.size() != 0) {
+        vm.put(PLAYER_LIST_ATTR, players);
+      }
     }
     else {
-        vm.put(NUM_PLAYERS_ATTR, players.size());
+      vm.put(NUM_PLAYERS_ATTR, players.size());
     }
-
 
     return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
   }
