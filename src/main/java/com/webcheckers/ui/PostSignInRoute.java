@@ -23,7 +23,8 @@ public class PostSignInRoute implements Route {
     static final String VIEW_NAME = "signin.ftl";
 
     static final String TITLE = "Sign In";
-    static final String INVALID_NAME = "Name must have at least one alphanumeric character.";
+    static final String INVALID_NAME = "Name must have at least one alphanumeric character" +
+            "and contain no special characters.";
     static final String NAME_TAKEN = "Name has already been taken.";
 
     private static final Logger LOG = Logger.getLogger(PostSignInRoute.class.getName());
