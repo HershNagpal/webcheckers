@@ -11,8 +11,8 @@
     <h1>Web Checkers</h1>
     
     <div class="navigation">
-      <a href="/">my home</a>
       <#if currentPlayer??>
+        <a href="/">my home</a> |
         <a href="/signout">sign out [${currentPlayer.name}]</a>
       <#else>
         <a href="/signin">sign in</a>
