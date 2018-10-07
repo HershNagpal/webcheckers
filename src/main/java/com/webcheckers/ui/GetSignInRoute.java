@@ -50,7 +50,6 @@ public class GetSignInRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
         LOG.finer("GetSignInRoute is invoked.");
-
         Map<String, Object> vm = new HashMap<>();
         vm.put(TITLE_ATTR, TITLE);
         return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
