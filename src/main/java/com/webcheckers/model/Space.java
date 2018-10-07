@@ -1,14 +1,19 @@
 package com.webcheckers.model;
 
 public class Space {
-    
+
+    /**
+     * KING_RED = Spaces where Red checkers become king pieces.
+     * KING_BLACK = Spaces where Black checkers become king pieces.
+     */
     public enum SpaceType {KING_RED, KING_BLACK, NON_KING}
 
     private int row;
     private int column;
     private SpaceType thisSpaceType;
 
-    private Checker checker;
+    //Space has no checker before setUpBoard() in Board
+    private Checker checker = null;
 
     public Space(int row, int column){
         this.row = row;

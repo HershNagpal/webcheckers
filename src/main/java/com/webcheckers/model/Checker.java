@@ -2,7 +2,7 @@ package com.webcheckers.model;
 
 public class Checker {
 
-    public enum PieceType{
+    public enum CheckerType{
         RED,
         WHITE,
         RED_KING,
@@ -11,14 +11,14 @@ public class Checker {
         //TODO: Specify Checker Direction
     }
 
-    private PieceType type;
+    private CheckerType type;
     private int column;
     private int row;
 
-    public Checker(PieceType type, int column, int row) {
+    public Checker(CheckerType type, int row, int column) {
         this.type = type;
-        this.column = column;
         this.row = row;
+        this.column = column;
     }
 
     public void makeMove(){
