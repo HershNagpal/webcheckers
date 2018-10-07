@@ -1,5 +1,7 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Player;
 import spark.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +26,7 @@ public class GetGameRoute implements Route{
 
     private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());
 
+    private final PlayerLobby playerLobby;
     private final TemplateEngine templateEngine;
 
     /**
@@ -33,9 +36,11 @@ public class GetGameRoute implements Route{
      * @param templateEngine
      * the HTML template rendering engine
      */
-    public GetGameRoute (final TemplateEngine templateEngine){
+    public GetGameRoute (final PlayerLobby playerLobby, final TemplateEngine templateEngine){
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
+        Objects.requireNonNull(templateEngine, "playerLobby must not be null");
 
+        this.playerLobby = playerLobby;
         this.templateEngine = templateEngine;
 
         LOG.config("GetGameRoute is initialized");
