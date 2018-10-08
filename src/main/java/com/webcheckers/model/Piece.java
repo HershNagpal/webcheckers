@@ -11,11 +11,6 @@ public class Piece {
       KING
     }
 
-    public enum Color{
-      RED,
-      WHITE
-    }
-
     private Color color;
     private Type type;
     private int column;

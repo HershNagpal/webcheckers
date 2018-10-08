@@ -27,11 +27,11 @@ public class Board {
           spaces[row][col] = boardSpace;
           if ( row % 2 == col % 2 ) {
             if (row < 3) {
-              Piece piece = new Piece(Piece.Color.RED, Piece.Type.SINGLE,row,col);
+              Piece piece = new Piece(Color.RED, Piece.Type.SINGLE,row,col);
               spaces[row][col].setPiece(piece);
             }
               else if (row > 4){
-                Piece piece = new Piece(Piece.Color.WHITE,Piece.Type.SINGLE,row,col);
+                Piece piece = new Piece(Color.WHITE,Piece.Type.SINGLE,row,col);
                 spaces[row][col].setPiece(piece);
             }
           }

@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
+import com.webcheckers.model.ViewMode;
 import spark.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -84,6 +85,12 @@ public class GetGameRoute implements Route{
             }
             game = new Game(playerOne, playerTwo);
         }
+        vm.put(CURRENT_PLAYER_ATTR, playerOne);
+        vm.put(VIEW_MODE_ATTR, ViewMode.PLAY);
+        vm.put(RED_PLAYER_ATTR, game.getRedPlayer());
+        vm.put(WHITE_PLAYER_ATTR, game.getWhitePlayer());
+        vm.put(ACTIVE_COLOR_ATTR, game.getActiveColor());
+
 
         //return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
         return null;
