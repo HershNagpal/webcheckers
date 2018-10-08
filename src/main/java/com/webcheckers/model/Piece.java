@@ -1,5 +1,9 @@
 package com.webcheckers.model;
 
+/**
+ *
+ * @author Luis Gutierrez
+ */
 public class Piece {
 
     public enum Type{

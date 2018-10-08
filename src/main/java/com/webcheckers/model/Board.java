@@ -1,5 +1,9 @@
 package com.webcheckers.model;
 
+/**
+ * Represents the Checkers Board
+ * @author
+ */
 public class Board {
 
     private final int ROWS = 8;
