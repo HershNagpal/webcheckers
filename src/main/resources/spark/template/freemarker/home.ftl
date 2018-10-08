@@ -25,7 +25,7 @@
         <#if currentPlayer??>
           <#if playerList??>
             <#list playerList as p>
-              <li><a href="/game">${p}</a></li>
+              <li><a href="/game?pid=${p}">${p}</a></li>
             </#list>
           <#else>
             No other players online.

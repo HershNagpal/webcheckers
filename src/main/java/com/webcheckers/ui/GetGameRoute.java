@@ -71,9 +71,16 @@ public class GetGameRoute implements Route{
             game = playerOne.getGame();
         }
         else {
+            Player playerTwo = playerLobby.getPlayer(request.queryParams("pid"));
+            System.out.println(playerTwo.getName());
+            // Cannot create game with a player in game
+            if (playerTwo.getGame() != null) {
 
+            }
+            game = new Game(playerOne, playerTwo);
         }
 
-        return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
+        //return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
+        return null;
     }
 }

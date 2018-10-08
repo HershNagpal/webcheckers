@@ -15,4 +15,9 @@ public class Game {
     this.checkerBoard = board;
   }
 
+  public Game(Player redPlayer, Player whitePlayer) {
+    this.redPlayer = redPlayer;
+    this.whitePlayer = whitePlayer;
+  }
+
 }
