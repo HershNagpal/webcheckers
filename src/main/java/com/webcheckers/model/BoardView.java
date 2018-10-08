@@ -19,5 +19,7 @@ public class BoardView {
     }
   }
 
-  public Iterator<Row> iterator(){ return rows.iterator();}
+  public Iterator<Row> iterator(){
+    return rows.iterator();
+  }
 }

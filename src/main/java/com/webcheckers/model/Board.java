@@ -6,8 +6,8 @@ package com.webcheckers.model;
  */
 public class Board {
 
-    private final int ROWS = 8;
-    private final int COLUMNS = 8;
+    private static int ROWS = 8;
+    private static int COLUMNS = 8;
     private Space[][] spaces;
 
     public Board(){
