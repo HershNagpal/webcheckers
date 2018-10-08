@@ -10,13 +10,15 @@ import java.util.List;
  */
 public class BoardView {
 
+  private Board board;
+  private Space[][] spaces;
+
   private List<Row> rows;
 
-  public BoardView(){
-    rows = new ArrayList<>();
-    for(int rowIndex = 0; rowIndex < 8; rowIndex++){
-      rows.add(new Row(rowIndex));
-    }
+  public BoardView(Board board) {
+    this.board = board;
+    spaces = board.getSpaces();
+    rows = board.getRows();
   }
 
   public Iterator<Row> iterator(){
