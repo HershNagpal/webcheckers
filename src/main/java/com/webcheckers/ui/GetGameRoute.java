@@ -1,9 +1,7 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.model.Game;
-import com.webcheckers.model.Player;
-import com.webcheckers.model.ViewMode;
+import com.webcheckers.model.*;
 import spark.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +23,7 @@ public class GetGameRoute implements Route{
     static final String ACTIVE_COLOR_ATTR = "activeColor";
     static final String TITLE_ATTR = "title";
     static final String VIEW_NAME = "game.ftl";
+    static final String BOARD_ATTR = "board";
 
     static final String TITLE = "Game Board";
 
@@ -32,6 +31,8 @@ public class GetGameRoute implements Route{
 
     private final PlayerLobby playerLobby;
     private final TemplateEngine templateEngine;
+    private BoardView board;
+    private Board gameBoard;
 
     /**
      * Create the Spark Route (UI controller) for the
@@ -65,7 +66,7 @@ public class GetGameRoute implements Route{
     @Override
     public Object handle(Request request, Response response){
         LOG.finer("GetGameRoute is invoked");
-
+        //
         Map<String, Object> vm = new HashMap<>();
         vm.put(TITLE_ATTR, TITLE);
         Session session = request.session();
@@ -83,8 +84,12 @@ public class GetGameRoute implements Route{
             if (playerTwo.getGame() != null) {
 
             }
-            game = new Game(playerOne, playerTwo);
+            board = new BoardView();
+            gameBoard = new Board();
+            game = new Game(playerOne, playerTwo, gameBoard);
+
         }
+        vm.put(BOARD_ATTR, board);
         vm.put(CURRENT_PLAYER_ATTR, playerOne);
         vm.put(VIEW_MODE_ATTR, ViewMode.PLAY);
         vm.put(RED_PLAYER_ATTR, game.getRedPlayer());
