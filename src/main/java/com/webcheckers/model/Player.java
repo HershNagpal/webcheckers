@@ -12,10 +12,13 @@ public class Player {
      */
     private String name;
 
+    /**
+     * Game the player is in.
+     */
     private Game game;
 
     /**
-     * Create a player with a specified name.
+     * Create a player with a specified name. Set the game to null.
      *
      * @param name specified name
      */
