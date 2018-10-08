@@ -1,11 +1,15 @@
 package com.webcheckers.model;
 
-public class CheckersGame {
+/**
+ *
+ * @author Luis Gutierrez
+ */
+public class Game {
   private Player redPlayer;
   private Player whitePlayer;
   private Board checkerBoard;
 
-  public CheckersGame(Player redPlayer, Player whitePlayer, Board board){
+  public Game(Player redPlayer, Player whitePlayer, Board board){
     this.redPlayer = redPlayer;
     this.whitePlayer = whitePlayer;
     this.checkerBoard = board;

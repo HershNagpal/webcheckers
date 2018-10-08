@@ -1,8 +1,12 @@
 package com.webcheckers.model;
 
+/**
+ * 
+ * @author Luis Gutierrez
+ */
 public class Message {
 
-  private enum MessageType{
+  public enum MessageType{
     INFO,
     ERROR
   }
