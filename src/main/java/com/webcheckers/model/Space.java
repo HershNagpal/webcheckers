@@ -8,25 +8,48 @@ public class Space {
      */
     public enum SpaceType {KING_RED, KING_BLACK, NON_KING}
 
+    public enum SpaceColor {BLACK, WHITE}
+
     private int row;
     private int column;
-    private SpaceType thisSpaceType;
+    private SpaceType spaceType;
+    private SpaceColor spaceColor;
 
     //Space has no piece before setUpBoard() in Board
     private Piece piece = null;
 
     public Space(int row, int column){
-        this.row = row;
-        this.column = column;
-        if(row == 0){
-            thisSpaceType = SpaceType.KING_BLACK;
-        }
-        else if (row == 7){
-            thisSpaceType = SpaceType.KING_RED;
-        }
-        else{
-            thisSpaceType = SpaceType.NON_KING;
-        }
+      this.row = row;
+      this.column = column;
+      setSpaceType();
+      setSpaceColor();
+    }
+
+    /*
+    Sets the Space type based on row.
+     */
+    private void setSpaceType(){
+      if(row == 0){
+        this.spaceType = SpaceType.KING_BLACK;
+      }
+      else if (row == 7){
+        this.spaceType = SpaceType.KING_RED;
+      }
+      else{
+        this.spaceType = SpaceType.NON_KING;
+      }
+    }
+
+    /*
+    Sets the Space color based on rows and columns.
+     */
+    private void setSpaceColor(){
+      if(row%2 == column%2){
+        spaceColor = SpaceColor.WHITE;
+      }
+      else{
+        spaceColor = SpaceColor.BLACK;
+      }
     }
 
     /**
@@ -42,7 +65,7 @@ public class Space {
             return column % 2 == 1;
         }
     }
-
+    
     public boolean hasChecker(){
         return this.piece != null;
     }
