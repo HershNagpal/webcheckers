@@ -24,8 +24,6 @@ public class Space {
   //Space has no piece before setUpBoard() in Board
   private Piece piece = null;
 
-  private boolean hasPiece;
-
   public Space(int row, int column) {
     this.row = row;
     this.column = column;
@@ -77,11 +75,15 @@ public class Space {
    * @return true if this space is valid, false otherwise.
    */
   public boolean isValid() {
-    return this.spaceColor == SpaceColor.BLACK && !this.hasPiece;
+    return this.spaceColor == SpaceColor.BLACK && piece == null;
   }
 
   public boolean hasChecker() {
     return this.piece != null;
+  }
+
+  public int getCellIdx() {
+    return column;
   }
 
   public Piece getPiece() {
