@@ -24,6 +24,8 @@ public class GetGameRoute implements Route{
     static final String TITLE_ATTR = "title";
     static final String VIEW_NAME = "game.ftl";
     static final String BOARD_ATTR = "board";
+    static final String MESSAGE_ATTR = "message";
+    static final String IN_GAME_ERROR = "That player is already in game!";
 
     static final String TITLE = "Game Board";
 
@@ -82,7 +84,9 @@ public class GetGameRoute implements Route{
             System.out.println(playerTwo.getName());
             // Cannot create game with a player in game
             if (playerTwo.getGame() != null) {
-
+                session.attribute(MESSAGE_ATTR, new Message(IN_GAME_ERROR, Message.MessageType.ERROR));
+                response.redirect(WebServer.HOME_URL);
+                return null;
             }
             board = new BoardView();
             gameBoard = new Board();

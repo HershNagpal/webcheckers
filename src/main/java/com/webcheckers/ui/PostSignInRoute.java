@@ -83,7 +83,7 @@ public class PostSignInRoute implements Route {
         playerLobby.signIn(player);
         session.attribute(PLAYER_ATTR, player);
         // Go back to home page
-        response.redirect("/");
+        response.redirect(WebServer.HOME_URL);
         return null;
     }
 }
