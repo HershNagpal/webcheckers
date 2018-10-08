@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 /**
- * The UI Controller to GET the Home page.
+ * The UI Controller to GET the Sign-in page.
  *
  * @author Michael Kha
  */
