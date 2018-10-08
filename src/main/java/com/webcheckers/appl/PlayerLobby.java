@@ -78,6 +78,20 @@ public class PlayerLobby {
     }
 
     /**
+     * Get a player within the lobby given a name.
+     * @param name Name of player
+     * @return The specified player if they exist
+     */
+    public Player getPlayer(String name) {
+        for (Player player : players) {
+            if (player.getName().equals(name)) {
+                return player;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Ease of access for player names within the lobby.
      *
      * @return List of player names

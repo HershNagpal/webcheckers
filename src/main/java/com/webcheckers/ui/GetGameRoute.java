@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 import spark.*;
 import java.util.HashMap;
@@ -62,6 +63,17 @@ public class GetGameRoute implements Route{
 
         Map<String, Object> vm = new HashMap<>();
         vm.put(TITLE_ATTR, TITLE);
+        Session session = request.session();
+
+        Game game;
+        Player playerOne = session.attribute(CURRENT_PLAYER_ATTR);
+        if (playerOne.getGame() != null) {
+            game = playerOne.getGame();
+        }
+        else {
+
+        }
+
         return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
     }
 }
