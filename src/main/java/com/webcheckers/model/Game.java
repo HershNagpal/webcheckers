@@ -17,6 +17,7 @@ public class Game {
     this.redPlayer = redPlayer;
     this.whitePlayer = whitePlayer;
     this.board = board;
+    activeColor = Color.RED;
   }
 
   public Game(Player redPlayer, Player whitePlayer) {
@@ -24,6 +25,7 @@ public class Game {
     whitePlayer.setGame(this);
     this.redPlayer = redPlayer;
     this.whitePlayer = whitePlayer;
+    activeColor = Color.RED;
   }
 
   public Player getRedPlayer() {

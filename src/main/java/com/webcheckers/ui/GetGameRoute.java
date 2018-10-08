@@ -92,7 +92,6 @@ public class GetGameRoute implements Route{
         vm.put(ACTIVE_COLOR_ATTR, game.getActiveColor());
 
 
-        //return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
-        return null;
+        return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
     }
 }
