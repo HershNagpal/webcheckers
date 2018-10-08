@@ -11,6 +11,8 @@ import java.util.logging.Logger;
 
 /**
  * The UI Controller to GET the Game page
+ *
+ * @author Michael Kha
  */
 public class GetGameRoute implements Route{
 
@@ -49,10 +51,12 @@ public class GetGameRoute implements Route{
 
     /**
      * Render the WebCheckers Game page.
+     *
      * @param request
      *  the HTTP request
      * @param response
      *  the HTTP response
+     *
      * @return
      *  the rendered HTML for the Home page
      */
@@ -71,6 +75,7 @@ public class GetGameRoute implements Route{
             game = playerOne.getGame();
         }
         else {
+            // URL example: http://localhost:4567/game?pid=kid
             Player playerTwo = playerLobby.getPlayer(request.queryParams("pid"));
             System.out.println(playerTwo.getName());
             // Cannot create game with a player in game
