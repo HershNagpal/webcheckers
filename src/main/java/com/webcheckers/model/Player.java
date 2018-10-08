@@ -12,6 +12,8 @@ public class Player {
      */
     private String name;
 
+    private Game game;
+
     /**
      * Create a player with a specified name.
      *
@@ -19,6 +21,7 @@ public class Player {
      */
     public Player(String name) {
         this.name = name;
+        game = null;
     }
 
     /**
@@ -27,6 +30,23 @@ public class Player {
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * Get the game that this player is in, if any.
+     *
+     * @return Instance of a game or null
+     */
+    public Game getGame() {
+        return game;
+    }
+
+    /**
+     * Set the game to this player.
+     * @param game Game to set to player
+     */
+    public void setGame(Game game) {
+        this.game = game;
     }
 
     /**
@@ -53,6 +73,6 @@ public class Player {
      */
     @Override
     public int hashCode() {
-        return this.name.hashCode();
+        return name.hashCode();
     }
 }
