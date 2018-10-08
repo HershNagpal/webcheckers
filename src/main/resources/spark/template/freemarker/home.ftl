@@ -19,6 +19,12 @@
       </#if>
     </div>
 
+    <#if message??>
+      <div id="message" class="${message.type}">${message.text}</div>
+    <#else>
+      <div id="message" class="info" style="display:none"></div>
+    </#if>
+
     <div class="body">
       <p>Welcome to the world of online Checkers.</p>
       <p>Online Players:

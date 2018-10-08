@@ -22,6 +22,7 @@ public class GetHomeRoute implements Route {
   static final String NUM_PLAYERS_ATTR = "numPlayers";
   static final String PLAYER_LIST_ATTR = "playerList";
   static final String PLAYER_ATTR = "currentPlayer";
+  static final String MESSAGE_ATTR = "message";
   static final String VIEW_NAME = "home.ftl";
 
   private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
@@ -76,6 +77,10 @@ public class GetHomeRoute implements Route {
       players.remove(player.getName());
       if (players.size() != 0) {
         vm.put(PLAYER_LIST_ATTR, players);
+      }
+      if (session.attribute(MESSAGE_ATTR) != null) {
+          vm.put(MESSAGE_ATTR, session.attribute(MESSAGE_ATTR));
+          session.removeAttribute(MESSAGE_ATTR);
       }
     }
     else {
