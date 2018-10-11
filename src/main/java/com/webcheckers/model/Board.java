@@ -8,10 +8,12 @@ public class Board {
 
     private static int ROWS = 8;
     private static int COLUMNS = 8;
-    private Space[][] spaces;
+    private Piece[][] pieces;
+    private BoardView board;
 
     public Board(){
-        spaces = new Space[ROWS][COLUMNS];
+        pieces = new Piece[ROWS][COLUMNS];
+        board = new BoardView();
         setUpBoard();
     }
 
@@ -23,16 +25,14 @@ public class Board {
     private void setUpBoard(){
       for (int row = 0; row < ROWS; row++) {
         for (int col = 0; col < COLUMNS; col++) {
-          Space boardSpace = new Space(row, col);
-          spaces[row][col] = boardSpace;
           if ( row % 2 == col % 2 ) {
             if (row < 3) {
-              Piece piece = new Piece(Color.RED, Piece.Type.SINGLE,row,col);
-              spaces[row][col].setPiece(piece);
+              Piece piece = new Piece(Color.RED, Piece.Type.SINGLE);
+              pieces[row][col] = piece;
             }
               else if (row > 4){
-                Piece piece = new Piece(Color.WHITE,Piece.Type.SINGLE,row,col);
-                spaces[row][col].setPiece(piece);
+                Piece piece = new Piece(Color.WHITE,Piece.Type.SINGLE);
+                pieces[row][col] = piece;
             }
           }
         }
