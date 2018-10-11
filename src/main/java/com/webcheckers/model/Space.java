@@ -2,7 +2,7 @@ package com.webcheckers.model;
 
 /**
  *
- * @author
+ * @author Luis, Chris
  */
 public class Space {
 
@@ -24,9 +24,10 @@ public class Space {
   //Space has no piece before setUpBoard() in Board
   private Piece piece = null;
 
-  public Space(int row, int column) {
+  public Space(int row, int column, Piece piece) {
     this.row = row;
     this.column = column;
+    this.piece = piece;
     setSpaceType();
     setSpaceColor();
 
