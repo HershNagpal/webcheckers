@@ -2,7 +2,9 @@ package com.webcheckers.model;
 
 /**
  *
- * @author Luis Gutierrez, Christopher Daukshus
+ * @author Luis Gutierrez
+ * @author Christopher Daukshus
+ * @author Hersh Nagpal
  */
 public class Piece {
 
@@ -20,7 +22,14 @@ public class Piece {
       this.type = type;
     }
 
-    public void makeMove(){
-
+    /**
+     * Changes a piece to the king type and returns true if the piece was successfully kinged.
+     * @return true if the piece was changed from the SINGLE type to KING type and false otherwise.
+     */
+    public boolean kingPiece() {
+      if(this.type == Type.SINGLE) {
+        this.type = Type.KING;
+        return true;
+      } else return false;
     }
 }
