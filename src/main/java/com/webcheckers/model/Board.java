@@ -13,7 +13,7 @@ public class Board {
 
     public Board(){
         pieces = new Piece[ROWS][COLUMNS];
-        board = new BoardView();
+        board = new BoardView(ROWS,COLUMNS);
         setUpBoard();
     }
 
