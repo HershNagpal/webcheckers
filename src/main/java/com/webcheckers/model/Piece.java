@@ -2,10 +2,10 @@ package com.webcheckers.model;
 
 /**
  *
- * @author Luis Gutierrez
- * @author Hersh Nagpal
+ * @author Luis Gutierrez, Christopher Daukshus
  */
 public class Piece {
+
 
     public enum Type{
       SINGLE,
@@ -14,28 +14,13 @@ public class Piece {
 
     private Color color;
     private Type type;
-    private int column;
-    private int row;
 
-    public Piece(Color color, Type type, int row, int column) {
+    public Piece(Color color, Type type) {
       this.color = color;
       this.type = type;
-      this.row = row;
-      this.column = column;
     }
 
-    /**
-     * Changes a piece into a Kinged piece and returns true if the piece was successfully kinged.
-     * @return if the piece was successfully Kinged, false otherwise.
-     */
-    public boolean kingPiece() {
-      if (this.type == Type.SINGLE) {
-        this.type = Type.KING;
-        return true;
-      } 
-      else return false;
+    public void makeMove(){
+
     }
-
-    
-
 }
