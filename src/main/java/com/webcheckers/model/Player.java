@@ -2,6 +2,10 @@ package com.webcheckers.model;
 
 public class Player {
 
+    private enum Color {RED, WHITE}
+
+    private Color playerColor;
+
     private String name;
 
     public Player(String name) {
@@ -25,5 +29,14 @@ public class Player {
     @Override
     public int hashCode() {
         return this.name.hashCode();
+    }
+
+    public void assignColor(boolean colorDecision){
+        if(colorDecision){
+            playerColor = Color.RED;
+        }
+        else{
+            playerColor = Color.WHITE;
+        }
     }
 }
