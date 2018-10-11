@@ -17,9 +17,10 @@ public class Row {
     public Row(int index) {
         this.index = index;
         spaces = new ArrayList<>();
+        for (int column = 0; column < 8; column++) {
+            spaces.add(new Space(index, column));
+        }
     }
-
-    public void addSpace(Space space){spaces.add(space);}
 
     public int getIndex() {
         return index;

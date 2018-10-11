@@ -34,6 +34,7 @@ public class GetGameRoute implements Route{
     private final PlayerLobby playerLobby;
     private final TemplateEngine templateEngine;
     private BoardView board;
+    private Board gameBoard;
 
     /**
      * Create the Spark Route (UI controller) for the
@@ -87,9 +88,9 @@ public class GetGameRoute implements Route{
                 response.redirect(WebServer.HOME_URL);
                 return null;
             }
-            game = new Game(playerOne, playerTwo);
-            board = new BoardView(game.getBoard());
-
+            board = new BoardView();
+            gameBoard = new Board();
+            game = new Game(playerOne, playerTwo, gameBoard);
 
         }
         vm.put(BOARD_ATTR, board);
