@@ -1,20 +1,49 @@
 package com.webcheckers.model;
 
+/**
+ *
+ * @author Luis Gutierrez
+ */
 public class Game {
+  private Player redPlayer;
+  private Player whitePlayer;
+  private Board board;
+  private Color activeColor;
 
-    private Board gameBoard;
-    private Player player1;
-    private Player player2;
 
-    public Game(Player player1, Player player2){
-        this.player1 = player1;
-        this.player2 = player2;
+  public Game(Player redPlayer, Player whitePlayer, Board board){
+    redPlayer.setGame(this);
+    whitePlayer.setGame(this);
+    this.redPlayer = redPlayer;
+    this.whitePlayer = whitePlayer;
+    this.board = board;
+    activeColor = Color.RED;
+  }
 
-    }
+  public Game(Player redPlayer, Player whitePlayer) {
+    redPlayer.setGame(this);
+    whitePlayer.setGame(this);
+    this.redPlayer = redPlayer;
+    this.whitePlayer = whitePlayer;
+    activeColor = Color.RED;
+    board = new Board();
+  }
 
-    private void assignColor(Player player1, Player player2){
-        
-    }
+  public Player getRedPlayer() {
+    return redPlayer;
+  }
+
+  public Player getWhitePlayer() {
+    return whitePlayer;
+  }
+
+  public Color getActiveColor() {
+    return activeColor;
+  }
+
+  public Board getBoard() {
+    return board;
+  }
 
 
 }
