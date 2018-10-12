@@ -10,16 +10,17 @@ import java.util.List;
  */
 public class BoardView {
 
-  private List<Row> rows;
+    private List<Row> rows;
 
-  public BoardView(int numOfRows, int numOfColumns){
-    rows = new ArrayList<>();
-    for(int rowIndex = 0; rowIndex < 8; rowIndex++){
-      rows.add(new Row(rowIndex));
+    public BoardView(Piece[][] pieces){
+        rows = new ArrayList<>();
+        int numOfRows = pieces.length;
+        for(int rowNum = 0; rowNum < numOfRows; rowNum++){
+            rows.add(new Row(pieces[rowNum], rowNum));
+        }
     }
-  }
 
-  public Iterator<Row> iterator(){
-    return rows.iterator();
-  }
+    public Iterator<Row> iterator(){
+        return rows.iterator();
+    }
 }
