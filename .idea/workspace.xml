@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="42e6ec30-fd63-401e-92bf-f7cc129a918d" name="Default" comment="">
+    <list default="true" id="42e6ec30-fd63-401e-92bf-f7cc129a918d" name="Default" comment="Place pieces on board before putting array in boardview">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/webcheckers/model/Board.java" afterPath="$PROJECT_DIR$/src/main/java/com/webcheckers/model/Board.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/webcheckers/model/BoardView.java" afterPath="$PROJECT_DIR$/src/main/java/com/webcheckers/model/BoardView.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/webcheckers/model/Game.java" afterPath="$PROJECT_DIR$/src/main/java/com/webcheckers/model/Game.java" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/webcheckers/model/Board.class" afterPath="$PROJECT_DIR$/target/classes/com/webcheckers/model/Board.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/webcheckers/model/BoardView.class" afterPath="$PROJECT_DIR$/target/classes/com/webcheckers/model/BoardView.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/webcheckers/model/Game.class" afterPath="$PROJECT_DIR$/target/classes/com/webcheckers/model/Game.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/webcheckers/model/Piece$Type.class" afterPath="$PROJECT_DIR$/target/classes/com/webcheckers/model/Piece$Type.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/webcheckers/model/Piece.class" afterPath="$PROJECT_DIR$/target/classes/com/webcheckers/model/Piece.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/webcheckers/model/Row.class" afterPath="$PROJECT_DIR$/target/classes/com/webcheckers/model/Row.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/webcheckers/model/Space$SpaceColor.class" afterPath="$PROJECT_DIR$/target/classes/com/webcheckers/model/Space$SpaceColor.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/webcheckers/model/Space$SpaceType.class" afterPath="$PROJECT_DIR$/target/classes/com/webcheckers/model/Space$SpaceType.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/webcheckers/model/Space.class" afterPath="$PROJECT_DIR$/target/classes/com/webcheckers/model/Space.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/webcheckers/ui/GetGameRoute.class" afterPath="$PROJECT_DIR$/target/classes/com/webcheckers/ui/GetGameRoute.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/webcheckers/ui/WebServer.class" afterPath="$PROJECT_DIR$/target/classes/com/webcheckers/ui/WebServer.class" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,12 +27,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Board.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Board.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/webcheckers/model/Board.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="13" column="59" lean-forward="false" selection-start-line="13" selection-start-column="59" selection-end-line="13" selection-end-column="59" />
-              <folding />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <element signature="e#1455#1456#0" expanded="true" />
+                <element signature="e#1485#1486#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -100,18 +113,18 @@
       <file leaf-file-name="GetGameRoute.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/webcheckers/ui/GetGameRoute.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1540">
-              <caret line="93" column="45" lean-forward="true" selection-start-line="93" selection-start-column="45" selection-end-line="93" selection-end-column="45" />
+            <state relative-caret-position="721">
+              <caret line="108" column="0" lean-forward="false" selection-start-line="108" selection-start-column="0" selection-end-line="108" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BoardView.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="BoardView.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/webcheckers/model/BoardView.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="462">
-              <caret line="26" column="0" lean-forward="true" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+              <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -151,9 +164,9 @@
       <list>
         <option value="$PROJECT_DIR$/src/main/java/com/webcheckers/ui/GetHomeRoute.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/webcheckers/model/Row.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/webcheckers/model/Board.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/webcheckers/model/BoardView.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/webcheckers/model/Game.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/webcheckers/model/Board.java" />
       </list>
     </option>
   </component>
@@ -393,7 +406,21 @@
       <option name="project" value="LOCAL" />
       <updated>1539379585621</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Added more comments">
+      <created>1539380029800</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1539380029800</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Place pieces on board before putting array in boardview">
+      <created>1539380212486</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1539380212486</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -406,7 +433,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32928178" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3281768" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3281768" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24640884" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -435,7 +462,8 @@
     <MESSAGE value="Pieces are now able to be changed to the king type. Piece class &#10;should be completed." />
     <MESSAGE value="Allowed BoardView to be given by Board for use in GetGameRoute" />
     <MESSAGE value="Added more comments" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added more comments" />
+    <MESSAGE value="Place pieces on board before putting array in boardview" />
+    <option name="LAST_COMMIT_MESSAGE" value="Place pieces on board before putting array in boardview" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -446,7 +474,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#1455#1456#0" expanded="true" />
+            <element signature="e#1485#1486#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -642,22 +673,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/webcheckers/ui/GetGameRoute.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1540">
-          <caret line="93" column="45" lean-forward="true" selection-start-line="93" selection-start-column="45" selection-end-line="93" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/webcheckers/model/Board.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="13" column="59" lean-forward="false" selection-start-line="13" selection-start-column="59" selection-end-line="13" selection-end-column="59" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/webcheckers/model/Game.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="63">
@@ -685,8 +700,27 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/com/webcheckers/model/BoardView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="462">
-          <caret line="26" column="0" lean-forward="true" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+          <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/webcheckers/ui/GetGameRoute.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="721">
+          <caret line="108" column="0" lean-forward="false" selection-start-line="108" selection-start-column="0" selection-end-line="108" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/webcheckers/model/Board.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#1455#1456#0" expanded="true" />
+            <element signature="e#1485#1486#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
