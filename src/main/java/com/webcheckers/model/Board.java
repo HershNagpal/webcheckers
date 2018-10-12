@@ -2,10 +2,14 @@ package com.webcheckers.model;
 
 /**
  * Represents the Checkers Board
- * @author
+ * @author Christopher Daukshus
+ *
  */
 public class Board {
 
+    /**
+     * ROWS -
+     */
     private static int ROWS = 8;
     private static int COLUMNS = 8;
     private Piece[][] pieces;
