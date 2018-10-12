@@ -13,11 +13,11 @@ public class Board {
     private static int ROWS = 8;
     private static int COLUMNS = 8;
     private Piece[][] pieces;
-    private BoardView board;
+    private BoardView boardView;
 
     public Board(){
         pieces = new Piece[ROWS][COLUMNS];
-        board = new BoardView(pieces);
+        boardView = new BoardView(pieces);
         setUpBoard();
     }
 
@@ -41,5 +41,9 @@ public class Board {
                 }
             }
         }
+    }
+
+    public BoardView getBoardView(){
+      return boardView;
     }
 }
