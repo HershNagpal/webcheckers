@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  * @author Michael Kha
  * @author Hersh Nagpal
  */
-public class GetGameRoute implements Route {
+public class GetGameRoute implements Route{
 
     //values used for rendering signin view
     static final String CURRENT_PLAYER_ATTR = "currentPlayer";
@@ -24,7 +24,7 @@ public class GetGameRoute implements Route {
     static final String ACTIVE_COLOR_ATTR = "activeColor";
     static final String TITLE_ATTR = "title";
     static final String VIEW_NAME = "game.ftl";
-    static final String BOARD_VIEW_ATTR = "board";
+    static final String BOARD_ATTR = "board";
     static final String MESSAGE_ATTR = "message";
     static final String IN_GAME_ERROR = "That player is already in game!";
 
@@ -35,7 +35,7 @@ public class GetGameRoute implements Route {
     private final PlayerLobby playerLobby;
     private final TemplateEngine templateEngine;
     private BoardView boardView;
-    private Board board;
+    private Board gameBoard;
 
     /**
      * Create the Spark Route (UI controller) for the
@@ -67,7 +67,7 @@ public class GetGameRoute implements Route {
      */
 
     @Override
-    public Object handle(Request request, Response response) {
+    public Object handle(Request request, Response response){
         LOG.finer("GetGameRoute is invoked");
         //
         Map<String, Object> vm = new HashMap<>();
@@ -89,13 +89,13 @@ public class GetGameRoute implements Route {
                 response.redirect(WebServer.HOME_URL);
                 return null;
             }
-            
-            board = new Board();
-            boardView = board.getBoardView();
-            game = new Game(playerOne, playerTwo, board);
+
+            gameBoard = new Board();
+            boardView = gameBoard.getBoardView();
+            game = new Game(playerOne, playerTwo, gameBoard);
 
         }
-        vm.put(BOARD_VIEW_ATTR, boardView);
+        vm.put(BOARD_ATTR, boardView);
         vm.put(CURRENT_PLAYER_ATTR, playerOne);
         vm.put(VIEW_MODE_ATTR, ViewMode.PLAY);
         vm.put(RED_PLAYER_ATTR, game.getRedPlayer());
