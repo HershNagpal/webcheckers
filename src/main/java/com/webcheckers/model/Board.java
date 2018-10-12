@@ -13,7 +13,7 @@ public class Board {
 
     public Board(){
         pieces = new Piece[ROWS][COLUMNS];
-        board = new BoardView(ROWS,COLUMNS);
+        board = new BoardView(pieces);
         setUpBoard();
     }
 
@@ -23,19 +23,19 @@ public class Board {
      * placed on bottom three rows.
      */
     private void setUpBoard(){
-      for (int row = 0; row < ROWS; row++) {
-        for (int col = 0; col < COLUMNS; col++) {
-          if ( row % 2 == col % 2 ) {
-            if (row < 3) {
-              Piece piece = new Piece(Color.RED, Piece.Type.SINGLE);
-              pieces[row][col] = piece;
+        for (int row = 0; row < ROWS; row++) {
+            for (int col = 0; col < COLUMNS; col++) {
+                if ( row % 2 == col % 2 ) {
+                    if (row < 3) {
+                        Piece piece = new Piece(Color.RED, Piece.Type.SINGLE);
+                        pieces[row][col] = piece;
+                    }
+                    else if (row > 4){
+                        Piece piece = new Piece(Color.WHITE,Piece.Type.SINGLE);
+                        pieces[row][col] = piece;
+                    }
+                }
             }
-              else if (row > 4){
-                Piece piece = new Piece(Color.WHITE,Piece.Type.SINGLE);
-                pieces[row][col] = piece;
-            }
-          }
         }
-      }
     }
 }
