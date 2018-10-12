@@ -1,7 +1,7 @@
 package com.webcheckers.model;
 
 /**
- *
+ * Combines the board and players in order to play the game
  * @author Luis Gutierrez
  */
 public class Game {

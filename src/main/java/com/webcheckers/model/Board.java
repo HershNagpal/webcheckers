@@ -8,7 +8,11 @@ package com.webcheckers.model;
 public class Board {
 
     /**
-     * ROWS -
+     * ROWS - number of rows on the board
+     * COLUMNS - number of columns on the board
+     * pieces - 2D array showing where each piece is being kept
+     * board - the boardview being sent to the GetGameRoute
+     *
      */
     private static int ROWS = 8;
     private static int COLUMNS = 8;
@@ -42,4 +46,5 @@ public class Board {
             }
         }
     }
+
 }

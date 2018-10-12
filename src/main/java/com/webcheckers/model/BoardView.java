@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- *
+ * The board broken down visually into rows to meet the view
  * @author Luis Gutierrez, Christopher Daukshus
  */
 public class BoardView {
