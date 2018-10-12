@@ -17,8 +17,8 @@ public class Board {
 
     public Board(){
         pieces = new Piece[ROWS][COLUMNS];
-        setUpBoardView();
         board = new BoardView(pieces);
+        setUpBoard();
     }
 
     /**
@@ -26,7 +26,7 @@ public class Board {
      * Red checkers are placed on top three rows and black checkers
      * placed on bottom three rows.
      */
-    private void setUpBoardView(){
+    private void setUpBoard(){
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLUMNS; col++) {
                 if ( row % 2 == col % 2 ) {
@@ -41,9 +41,5 @@ public class Board {
                 }
             }
         }
-    }
-
-    private BoardView getBoardView(){
-        return board;
     }
 }
