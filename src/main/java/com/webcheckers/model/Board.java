@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import com.webcheckers.model.Piece.Type;
+
 /**
  * Represents the Checkers Board
  * @author Christopher Daukshus
@@ -23,6 +25,7 @@ public class Board {
         pieces = new Piece[ROWS][COLUMNS];
         setUpBoard();
         boardView = new BoardView(pieces);
+        
     }
 
     /**
@@ -45,6 +48,7 @@ public class Board {
                 }
             }
         }
+        
     }
 
     public BoardView getBoardView(){
