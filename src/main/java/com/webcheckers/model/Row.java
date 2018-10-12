@@ -14,11 +14,11 @@ public class Row {
     private int index;
     private List<Space> spaces;
 
-    public Row(int index) {
+    public Row(Piece[] pieces, int index) {
         this.index = index;
         spaces = new ArrayList<>();
         for (int column = 0; column < 8; column++) {
-            spaces.add(new Space(index, column));
+            spaces.add(new Space(index, column, pieces[column]));
         }
     }
 
