@@ -23,7 +23,6 @@ public class Board {
         pieces = new Piece[ROWS][COLUMNS];
         setUpBoard();
         boardView = new BoardView(pieces);
-
     }
 
     /**
