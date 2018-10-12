@@ -6,13 +6,13 @@ import java.util.List;
 
 /**
  *
- * @author Luis Gutierrez
+ * @author Luis Gutierrez, Christopher Daukshus
  */
 public class BoardView {
 
   private List<Row> rows;
 
-  public BoardView(){
+  public BoardView(int numOfRows, int numOfColumns){
     rows = new ArrayList<>();
     for(int rowIndex = 0; rowIndex < 8; rowIndex++){
       rows.add(new Row(rowIndex));
