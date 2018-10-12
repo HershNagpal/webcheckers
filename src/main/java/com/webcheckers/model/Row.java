@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Row data type that contains spaces
  *
- * @author Michael Kha
+ * @author Michael Kha, Christopher Daukshus
  */
 public class Row {
 

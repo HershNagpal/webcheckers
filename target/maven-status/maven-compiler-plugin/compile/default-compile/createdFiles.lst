@@ -1,8 +1,8 @@
-com/webcheckers/Application.class
-com/webcheckers/ui/WebServer.class
-com/webcheckers/ui/PostSignInRoute.class
-com/webcheckers/appl/PlayerLobby.class
-com/webcheckers/ui/GetSignInRoute.class
-com/webcheckers/ui/GetHomeRoute.class
-com/webcheckers/model/Player.class
-com/webcheckers/appl/PlayerLobby$1.class
+com\webcheckers\ui\WebServer.class
+com\webcheckers\ui\GetHomeRoute.class
+com\webcheckers\model\Player.class
+com\webcheckers\ui\GetSignInRoute.class
+com\webcheckers\ui\PostSignInRoute.class
+com\webcheckers\appl\PlayerLobby.class
+com\webcheckers\Application.class
+com\webcheckers\appl\PlayerLobby$1.class
