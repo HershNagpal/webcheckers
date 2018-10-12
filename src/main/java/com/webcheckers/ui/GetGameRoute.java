@@ -12,6 +12,7 @@ import java.util.logging.Logger;
  * The UI Controller to GET the Game page
  *
  * @author Michael Kha
+ * @author Hersh Nagpal
  */
 public class GetGameRoute implements Route{
 
@@ -88,7 +89,7 @@ public class GetGameRoute implements Route{
                 response.redirect(WebServer.HOME_URL);
                 return null;
             }
-            board = new BoardView();
+            
             gameBoard = new Board();
             game = new Game(playerOne, playerTwo, gameBoard);
 
