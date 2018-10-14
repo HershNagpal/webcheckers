@@ -49,6 +49,16 @@ public class Board {
         
     }
 
+    public BoardView getFlippedBoardView() {
+        Piece[][] flippedPieces = new Piece[ROWS][COLUMNS];
+        for (int row = 0; row < ROWS; row++) {
+            for (int col = 0; col < COLUMNS; col++) {
+                flippedPieces[7 - row][col] = pieces[row][col];
+            }
+        }
+        return new BoardView(flippedPieces);
+    }
+
     public BoardView getBoardView(){
       return boardView;
     }
