@@ -83,7 +83,6 @@ public class GetGameRoute implements Route{
         else {
             // URL example: http://localhost:4567/game?pid=kid
             Player playerTwo = playerLobby.getPlayer(request.queryParams("pid"));
-            System.out.println(playerTwo.getName());
             // Cannot create game with a player in game
             if (playerTwo.getGame() != null) {
                 session.attribute(MESSAGE_ATTR, new Message(IN_GAME_ERROR, Message.MessageType.ERROR));
