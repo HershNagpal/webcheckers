@@ -10,9 +10,17 @@ public class Message {
     INFO,
     ERROR
   }
+
+  /**
+   * text - the text for the message to display.
+   * type - the context of the message (informational or error).
+   */
   private String text;
   private MessageType type;
-
+  
+  //
+  // Constructor
+  //
   public Message(String text, MessageType type) {
     this.text = text;
     this.type = type;

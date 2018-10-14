@@ -14,9 +14,16 @@ public class Piece {
       KING
     }
 
+    /**
+     * color - the color of the piece (red or white).
+     * type - the type of piece (kinged or normal).
+     */
     private Color color;
     private Type type;
 
+    //
+    // Constructor
+    //
     public Piece(Color color, Type type) {
       this.color = color;
       this.type = type;

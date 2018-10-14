@@ -1,7 +1,8 @@
 package com.webcheckers.model;
 
 /**
- * Represents the Checkers Board
+ * Represents the Checkers Board and all the logical operations that need to be done on 
+ * pieces for the game to function.
  * @author Christopher Daukshus
  *
  */
@@ -19,6 +20,9 @@ public class Board {
     private Piece[][] pieces;
     private BoardView boardView;
 
+    //
+    // Constructor
+    //
     public Board(){
         pieces = new Piece[ROWS][COLUMNS];
         setUpBoard();
@@ -49,6 +53,10 @@ public class Board {
         
     }
 
+    /**
+     * Flips the BoardView to make it so each player sees their pieces closest to them.
+     * @return a BoardView that is flipped around (pieces on the far side would appear closer).
+     */
     public BoardView getFlippedBoardView() {
         Piece[][] flippedPieces = new Piece[ROWS][COLUMNS];
         for (int row = 0; row < ROWS; row++) {
@@ -59,6 +67,10 @@ public class Board {
         return new BoardView(flippedPieces);
     }
 
+    /**
+     * returns the visual representation of this board.
+     * @return the boardview associated with this board.
+     */
     public BoardView getBoardView(){
       return boardView;
     }

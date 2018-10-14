@@ -16,6 +16,12 @@ public class Space {
 
   public enum SpaceColor {BLACK, WHITE}
 
+  /**
+   * row - the row coordinate of this space.
+   * column - the column coordinate of this space.
+   * spaceType - the type of space (whether a piece can be kinged or not).
+   * spaceColor - the color associated with this space (black or white).
+   */
   private int row;
   private int column;
   private SpaceType spaceType;
@@ -79,6 +85,10 @@ public class Space {
     return this.spaceColor == SpaceColor.BLACK && piece == null;
   }
 
+  /**
+   * Does the space have a checker in it?
+   * @return true if the space has a checker, false if it doesn't.
+   */
   public boolean hasChecker() {
     return this.piece != null;
   }
@@ -91,6 +101,10 @@ public class Space {
     return piece;
   }
 
+  /**
+   * Puts a piece into the space.
+   * @param piece the piece to put into the space
+   */
   public void setPiece(Piece piece) {
     this.piece = piece;
   }

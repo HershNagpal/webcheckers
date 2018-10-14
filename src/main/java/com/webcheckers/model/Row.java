@@ -14,6 +14,9 @@ public class Row {
     private int index;
     private List<Space> spaces;
 
+    //
+    // Constructor
+    //
     public Row(Piece[] pieces, int index) {
         this.index = index;
         spaces = new ArrayList<>();
@@ -26,6 +29,10 @@ public class Row {
         return index;
     }
 
+    /**
+     * Creates an iterable for the Spaves in this Row for the freemarker template to work with.
+     * @return an iterable for all the Spaces in this Row.
+     */
     public Iterator<Space> iterator() {
         return spaces.iterator();
     }
