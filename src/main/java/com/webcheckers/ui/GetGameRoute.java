@@ -34,8 +34,6 @@ public class GetGameRoute implements Route{
 
     private final PlayerLobby playerLobby;
     private final TemplateEngine templateEngine;
-    private BoardView boardView;
-    private Board gameBoard;
 
     /**
      * Create the Spark Route (UI controller) for the
@@ -75,6 +73,8 @@ public class GetGameRoute implements Route{
         Session session = request.session();
 
         Game game;
+        BoardView boardView;
+        Board gameBoard;
         Player playerOne = session.attribute(CURRENT_PLAYER_ATTR);
         if (playerOne.getGame() != null) {
             game = playerOne.getGame();

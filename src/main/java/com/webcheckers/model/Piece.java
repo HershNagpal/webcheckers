@@ -1,7 +1,8 @@
 package com.webcheckers.model;
 
 /**
- *
+ * Represents a piece on a checkerboard. A piece is associated with
+ * the color of its player. A piece may be a single or a king.
  * @author Luis Gutierrez
  * @author Christopher Daukshus
  * @author Hersh Nagpal

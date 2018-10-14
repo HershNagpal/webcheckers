@@ -1,7 +1,7 @@
 package com.webcheckers.model;
 
 /**
- * 
+ * Used to display a message from the server.
  * @author Luis Gutierrez
  */
 public class Message {

@@ -1,7 +1,8 @@
 package com.webcheckers.model;
 
 /**
- *
+ * Represents a space on a checkerboard. A space is located on a row
+ * and column. A space may have a piece located on it.
  * @author Luis, Chris
  */
 public class Space {
