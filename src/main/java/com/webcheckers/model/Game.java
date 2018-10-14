@@ -29,6 +29,10 @@ public class Game {
     board = new Board();
   }
 
+  public boolean isRedPlayer(Player player) {
+    return redPlayer == player;
+  }
+
   public Player getRedPlayer() {
     return redPlayer;
   }

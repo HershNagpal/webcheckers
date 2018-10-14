@@ -78,6 +78,7 @@ public class GetGameRoute implements Route{
         Player playerOne = session.attribute(CURRENT_PLAYER_ATTR);
         if (playerOne.getGame() != null) {
             game = playerOne.getGame();
+            gameBoard = game.getBoard();
         }
         else {
             // URL example: http://localhost:4567/game?pid=kid
@@ -91,10 +92,16 @@ public class GetGameRoute implements Route{
             }
 
             gameBoard = new Board();
-            boardView = gameBoard.getBoardView();
             game = new Game(playerOne, playerTwo, gameBoard);
 
         }
+        if (game.isRedPlayer(playerOne)) {
+            boardView = gameBoard.getFlippedBoardView();
+        }
+        else {
+            boardView = gameBoard.getBoardView();
+        }
+
         vm.put(BOARD_ATTR, boardView);
         vm.put(CURRENT_PLAYER_ATTR, playerOne);
         vm.put(VIEW_MODE_ATTR, ViewMode.PLAY);
