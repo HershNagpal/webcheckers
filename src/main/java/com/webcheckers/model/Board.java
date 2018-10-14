@@ -53,7 +53,7 @@ public class Board {
         Piece[][] flippedPieces = new Piece[ROWS][COLUMNS];
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLUMNS; col++) {
-                flippedPieces[7 - row][col] = pieces[row][col];
+                flippedPieces[7 - row][7 - col] = pieces[row][col];
             }
         }
         return new BoardView(flippedPieces);
