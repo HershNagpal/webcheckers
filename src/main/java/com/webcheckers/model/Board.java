@@ -1,7 +1,5 @@
 package com.webcheckers.model;
 
-import com.webcheckers.model.Piece.Type;
-
 /**
  * Represents the Checkers Board
  * @author Christopher Daukshus
@@ -36,7 +34,7 @@ public class Board {
     private void setUpBoard(){
         for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLUMNS; col++) {
-                if ( row % 2 == col % 2 ) {
+                if ( row % 2 != col % 2 ) {
                     if (row < 3) {
                         Piece piece = new Piece(Color.RED, Piece.Type.SINGLE);
                         pieces[row][col] = piece;
