@@ -11,7 +11,6 @@ import java.util.Set;
  * The player lobby used to hold players.
  *
  * @author Michael Kha
- * @author
  */
 public class PlayerLobby {
 
@@ -78,6 +77,20 @@ public class PlayerLobby {
     }
 
     /**
+     * Get a player within the lobby given a name.
+     * @param name Name of player
+     * @return The specified player if they exist
+     */
+    public Player getPlayer(String name) {
+        for (Player player : players) {
+            if (player.getName().equals(name)) {
+                return player;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Ease of access for player names within the lobby.
      *
      * @return List of player names
@@ -89,25 +102,5 @@ public class PlayerLobby {
         }
         return names;
     }
-
-
-    public boolean containsPlayer(Player player){
-        if(player instanceof Player)
-            return players.contains(player);
-        else
-            return false;
-    }
-
-    public Boolean addPlayer(Player player){
-        if(!(player instanceof  Player))return  false;
-        if(containsPlayer(player)) return false;
-        else{
-            players.add(player);
-            return true;
-        }
-
-
-    }
-
 
 }
