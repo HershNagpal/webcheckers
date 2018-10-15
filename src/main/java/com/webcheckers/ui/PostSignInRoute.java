@@ -1,6 +1,8 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Message;
+import com.webcheckers.model.MessageType;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -17,7 +19,7 @@ import java.util.logging.Logger;
 public class PostSignInRoute implements Route {
 
     static final String TITLE_ATTR = "title";
-    static final String ERROR_ATTR = "error";
+    static final String MESSAGE_ATTR = "message";
     static final String PLAYER_ATTR = "currentPlayer";
     static final String NAME_PARAM = "myName";
     static final String VIEW_NAME = "signin.ftl";
@@ -46,13 +48,6 @@ public class PostSignInRoute implements Route {
     }
 
     /**
-     * Make an error message when the user enters invalid input
-     */
-    public String badArgMessge(final String badargs){
-        return String.format("The name you entered '%s' is invalid or already in use", badargs);
-    }
-
-    /**
      * Handle the sign-in POST request.
      *
      * @param request the HTTP request
@@ -70,12 +65,12 @@ public class PostSignInRoute implements Route {
         final String name = request.queryParams(NAME_PARAM);
 
         if (!playerLobby.isValidUsername(name)) {
-            vm.put(ERROR_ATTR, INVALID_NAME);
+            vm.put(MESSAGE_ATTR, new Message(INVALID_NAME, MessageType.ERROR));
             return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
         }
 
         if (playerLobby.isUsernameTaken(name)) {
-            vm.put(ERROR_ATTR, NAME_TAKEN);
+            vm.put(MESSAGE_ATTR, new Message(NAME_TAKEN, MessageType.ERROR));
             return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
         }
 

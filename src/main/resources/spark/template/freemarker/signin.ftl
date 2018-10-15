@@ -15,10 +15,13 @@
     </div>
 
     <div class="body">
-      <p>Welcome to the world of online Checkers.</p>
-      <#if error??>
-        <p>${error}</p>
-      </#if>
+      <p>Welcome to the world of online Checkers.
+        <#if message??>
+          <div id="message" class="${message.type}">${message.text}</div>
+        <#else>
+          <div id="message" class="info" style="display:none"></div>
+        </#if>
+      </p>
       <form action="./signin" method="POST">
         Username
         <input name="myName" />

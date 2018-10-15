@@ -85,7 +85,7 @@ public class GetGameRoute implements Route{
             Player playerTwo = playerLobby.getPlayer(request.queryParams("pid"));
             // Cannot create game with a player in game
             if (playerTwo.getGame() != null) {
-                session.attribute(MESSAGE_ATTR, new Message(IN_GAME_ERROR, Message.MessageType.ERROR));
+                session.attribute(MESSAGE_ATTR, new Message(IN_GAME_ERROR, MessageType.ERROR));
                 response.redirect(WebServer.HOME_URL);
                 return null;
             }

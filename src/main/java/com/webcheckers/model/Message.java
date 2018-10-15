@@ -6,11 +6,6 @@ package com.webcheckers.model;
  */
 public class Message {
 
-  public enum MessageType{
-    INFO,
-    ERROR
-  }
-
   /**
    * text - the text for the message to display.
    * type - the context of the message (informational or error).
