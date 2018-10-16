@@ -43,6 +43,9 @@ public class PlayerLobby {
      * @return is the username valid
      */
     public boolean isValidUsername(String username) {
+        if (username.length() == 0) {
+            return false;
+        }
         String[] parts;
         if (username.contains(" ")) {
             parts = username.split(" ");
