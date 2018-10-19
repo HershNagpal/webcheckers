@@ -57,6 +57,8 @@ public class WebServer {
   public static final String HOME_URL = "/";
 
   public static final String SIGNIN_URL = "/signin";
+
+  public static final String GAME_URL = "/game";
   //
   // Attributes
   //
@@ -142,11 +144,13 @@ public class WebServer {
     //// code clean; using small classes.
 
     // Shows the Checkers game Home page.
-    get(HOME_URL, new GetHomeRoute(templateEngine));
+    get(HOME_URL, new GetHomeRoute(playerLobby, templateEngine));
 
     get(SIGNIN_URL, new GetSignInRoute(templateEngine));
 
     post(SIGNIN_URL, new PostSignInRoute(playerLobby, templateEngine));
+
+    get(GAME_URL, new GetGameRoute(playerLobby, templateEngine));
     //
     LOG.config("WebServer is initialized.");
   }
