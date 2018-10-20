@@ -68,11 +68,11 @@ public class GetHomeRoute implements Route {
     vm.put(TITLE_ATTR, TITLE);
 
     Player player = session.attribute(PLAYER_ATTR);
-    List<String> players = playerLobby.getPlayerLobbyNames();
     if (player != null) {
       if (player.getGame() != null) {
         response.redirect(WebServer.GAME_URL);
       }
+      List<String> players = playerLobby.getPlayerLobbyNames();
       vm.put(PLAYER_ATTR, player);
       players.remove(player.getName());
       if (players.size() != 0) {
@@ -84,7 +84,7 @@ public class GetHomeRoute implements Route {
       }
     }
     else {
-      vm.put(NUM_PLAYERS_ATTR, players.size());
+      vm.put(NUM_PLAYERS_ATTR, playerLobby.size());
     }
 
     return templateEngine.render(new ModelAndView(vm , VIEW_NAME));

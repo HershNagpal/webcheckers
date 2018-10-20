@@ -106,4 +106,13 @@ public class PlayerLobby {
         return names;
     }
 
+    /**
+     * The number of players in the lobby.
+     *
+     * @return number of players
+     */
+    public int size() {
+        return players.size();
+    }
+
 }
