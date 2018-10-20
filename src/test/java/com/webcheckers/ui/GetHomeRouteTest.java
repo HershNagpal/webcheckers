@@ -60,8 +60,12 @@ public class GetHomeRouteTest {
         // Check view model has the necessary data
         testHelper.assertViewModelAttribute(GetHomeRoute.TITLE_ATTR, GetHomeRoute.TITLE);
         testHelper.assertViewModelAttribute(GetHomeRoute.NUM_PLAYERS_ATTR, playerLobby.size());
-
-
+        // Check view model does not have certain data
+        testHelper.assertViewModelAttributeIsAbsent(GetHomeRoute.PLAYER_ATTR);
+        testHelper.assertViewModelAttributeIsAbsent(GetHomeRoute.PLAYER_LIST_ATTR);
+        testHelper.assertViewModelAttributeIsAbsent(GetHomeRoute.MESSAGE_ATTR);
+        // Check view name
+        testHelper.assertViewName(GetHomeRoute.VIEW_NAME);
     }
 
     @Test
