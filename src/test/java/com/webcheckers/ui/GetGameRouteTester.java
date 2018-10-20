@@ -1,6 +1,8 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.TemplateEngineTester;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.ui.GetGameRoute;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -10,7 +12,6 @@ import spark.Session;
 import spark.TemplateEngine;
 
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockitoSession;
 import static org.mockito.Mockito.when;
 
 /**
