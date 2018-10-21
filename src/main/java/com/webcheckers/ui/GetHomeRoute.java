@@ -72,15 +72,14 @@ public class GetHomeRoute implements Route {
       if (player.getGame() != null) {
         response.redirect(WebServer.GAME_URL);
       }
-      List<String> players = playerLobby.getPlayerLobbyNames();
       vm.put(PLAYER_ATTR, player);
-      players.remove(player.getName());
+      List<String> players = playerLobby.getPlayerLobbyNames(player);
       if (players.size() != 0) {
         vm.put(PLAYER_LIST_ATTR, players);
       }
       if (session.attribute(MESSAGE_ATTR) != null) {
-          vm.put(MESSAGE_ATTR, session.attribute(MESSAGE_ATTR));
-          session.removeAttribute(MESSAGE_ATTR);
+        vm.put(MESSAGE_ATTR, session.attribute(MESSAGE_ATTR));
+        session.removeAttribute(MESSAGE_ATTR);
       }
     }
     else {

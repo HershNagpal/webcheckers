@@ -96,12 +96,14 @@ public class PlayerLobby {
     /**
      * Ease of access for player names within the lobby.
      *
-     * @return List of player names
+     * @return List of player names other than the player's
      */
-    public List<String> getPlayerLobbyNames() {
+    public List<String> getPlayerLobbyNames(Player self) {
         List<String> names = new ArrayList<>();
         for (Player player : players) {
-            names.add(player.getName());
+            if (!player.equals(self)) {
+                names.add(player.getName());
+            }
         }
         return names;
     }
