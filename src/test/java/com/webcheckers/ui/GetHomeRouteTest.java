@@ -14,14 +14,17 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
+ * Unit test suite for the GetHomeRoute class.
  *
  * @author Michael Kha
  */
 @Tag("UI-tier")
 public class GetHomeRouteTest {
 
+    // component under test
     private GetHomeRoute CuT;
 
+    // friendly objects
     private PlayerLobby playerLobby;
 
     // mock objects
@@ -31,6 +34,9 @@ public class GetHomeRouteTest {
     private Response response;
     private Player player;
 
+    /**
+     * Setup the objects for each test.
+     */
     @BeforeEach
     public void setup() {
         request = mock(Request.class);
@@ -158,9 +164,6 @@ public class GetHomeRouteTest {
         when(templateEngine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
         // Invoke the test
         CuT.handle(request, response);
-        // Check view model is initialized
-        testHelper.assertViewModelExists();
-        testHelper.assertViewModelIsaMap();
         // Verify the player is redirected to the game from the home page
         verify(response).redirect(WebServer.GAME_URL);
     }
