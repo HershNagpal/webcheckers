@@ -1,14 +1,13 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.model.Board;
-import com.webcheckers.model.BoardView;
-import com.webcheckers.model.Player;
+import com.webcheckers.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import spark.*;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.mockitoSession;
@@ -32,6 +31,8 @@ public class GetGameRouteTester {
     private Response response;
     private TemplateEngine engine;
     private PlayerLobby playerLobby;
+    private Player p1;
+    private Player p2;
 
     @BeforeEach
     public void setup(){
@@ -41,6 +42,8 @@ public class GetGameRouteTester {
         response = mock(Response.class);
         engine = mock(TemplateEngine.class);
         playerLobby = mock(PlayerLobby.class);
+        p1 = mock(Player.class);
+        p2 = mock(Player.class);
 
         CuT = new GetGameRoute(playerLobby, engine);
 
@@ -56,14 +59,41 @@ public class GetGameRouteTester {
     }
 
     /**
+     * Test when a player clicks on another player to start a game
+     */
+    @Test
+    public void testPlayerStartsGame() {
+        //getting players
+        when(session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR)).thenReturn(p1);
+        when(playerLobby.getPlayer(request.queryParams("pid"))).thenReturn(p2);
+
+        final TemplateEngineTester tester = new TemplateEngineTester();
+        when(engine.render(any(ModelAndView.class))).thenAnswer(tester.makeAnswer());
+
+        //start test
+        CuT.handle(request,response);
+        //make sure engine is setup
+        tester.assertViewModelExists();
+        tester.assertViewModelIsaMap();
+        //make view model is populated correctly
+        tester.assertViewModelAttributeIsPresent(GetGameRoute.BOARD_ATTR);
+        tester.assertViewModelAttributeIsPresent(GetGameRoute.CURRENT_PLAYER_ATTR);
+        tester.assertViewModelAttributeIsPresent(GetGameRoute.VIEW_MODE_ATTR);
+        tester.assertViewModelAttributeIsPresent(GetGameRoute.WHITE_PLAYER_ATTR);
+        tester.assertViewModelAttributeIsPresent(GetGameRoute.RED_PLAYER_ATTR);
+        tester.assertViewModelAttributeIsPresent(GetGameRoute.ACTIVE_COLOR_ATTR);
+    }
+
+    public void testPlayerChallengedToGame() {
+
+    }
+
+    /**
      * Test if a new game is created automattically when
      * is no game
      */
     @Test
     public void new_game(){
-        Player p1 = mock(Player.class);
-        Player p2 = mock(Player.class);
-
         //getting players
         when(session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR)).thenReturn(p1);
         when(playerLobby.getPlayer(request.queryParams("pid"))).thenReturn(p2);
