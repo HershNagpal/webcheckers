@@ -24,11 +24,18 @@ public class PlayerLobbyTest {
     private static final String name = "test name";
 
     /**
-     * friendly objects
+     * Component under test
      */
     private PlayerLobby CuT;
+
+    /**
+     * friendly objects
+     */
     private Player player;
 
+    /**
+     * Setup the objects for each test
+     */
     @BeforeEach
     public void setup() {
         CuT = new PlayerLobby();
@@ -40,12 +47,19 @@ public class PlayerLobbyTest {
      */
     @Test
     public void testValidUsername() {
+        // letters
         String valid1 = "thisIsValid";
-        String valid2 = "this is valid";
+        // letters, numbers, spaces
+        String valid2 = "this is valid 123";
+        // blank
         String invalid1 = "";
+        // only spaces
         String invalid2 = "   ";
+        // letters and special characters
         String invalid3 = "thisIsInvalid!@#$%^&*()";
+        // special characters
         String invalid4 = "!@#$%^&*()";
+        // letters, spaces, special characters
         String invalid5 = "this is invalid !@#";
 
         assertTrue(CuT.isValidUsername(valid1));
