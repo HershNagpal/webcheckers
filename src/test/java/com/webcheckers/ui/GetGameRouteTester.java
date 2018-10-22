@@ -79,6 +79,10 @@ public class GetGameRouteTester {
         tester.assertViewModelExists();
         tester.assertViewModelIsaMap();
         //make view model is populated correctly
-       // tester.assertViewModelAttribute(GetGameRoute.BOARD_ATTR, );
+
+        tester.assertViewModelAttribute(GetGameRoute.BOARD_ATTR, BoardView.class);
+        //tester.assertViewModelAttribute(GetGameRoute.CURRENT_PLAYER_ATTR,);
+        //tester.assertViewModelAttribute(GetGameRoute.VIEW_MODE_ATTR,);
+        //tester.assertViewModelAttribute(GetGameRoute.VIEW_MODE_ATTR,);
     }
 }
