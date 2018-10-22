@@ -1,15 +1,17 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Board;
+import com.webcheckers.model.BoardView;
+import com.webcheckers.model.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import spark.Request;
-import spark.Response;
-import spark.Session;
-import spark.TemplateEngine;
+import spark.*;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockitoSession;
 import static org.mockito.Mockito.when;
 
 /**
@@ -39,6 +41,7 @@ public class GetGameRouteTester {
         response = mock(Response.class);
         engine = mock(TemplateEngine.class);
         playerLobby = mock(PlayerLobby.class);
+
         CuT = new GetGameRoute(playerLobby, engine);
 
     }
@@ -58,9 +61,24 @@ public class GetGameRouteTester {
      */
     @Test
     public void new_game(){
-        when(session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR)).thenReturn(null);
+        Player p1 = mock(Player.class);
+        Player p2 = mock(Player.class);
+
+        //getting players
+        when(session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR)).thenReturn(p1);
+        when(playerLobby.getPlayer(request.queryParams("pid"))).thenReturn(p2);
+        //set games to null
+        when(p1.getGame()).thenReturn(null);
+        when(p1.getGame()).thenReturn(null);
 
         final TemplateEngineTester tester = new TemplateEngineTester();
-
+        when(engine.render(any(ModelAndView.class))).thenAnswer(tester.makeAnswer());
+        //start test
+        CuT.handle(request,response);
+        //make sure engine is setup
+        tester.assertViewModelExists();
+        tester.assertViewModelIsaMap();
+        //make view model is populated correctly
+       // tester.assertViewModelAttribute(GetGameRoute.BOARD_ATTR, );
     }
 }
