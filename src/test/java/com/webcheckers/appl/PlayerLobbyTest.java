@@ -5,8 +5,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
 
 /**
  * Unit test suite for PlayerLobby class.
@@ -16,12 +18,24 @@ import static org.mockito.Mockito.mock;
 @Tag("Application-tier")
 public class PlayerLobbyTest {
 
+    /**
+     * A default player name
+     */
     private static final String name = "test name";
 
+    /**
+     * Component under test
+     */
     private PlayerLobby CuT;
 
+    /**
+     * friendly objects
+     */
     private Player player;
 
+    /**
+     * Setup the objects for each test
+     */
     @BeforeEach
     public void setup() {
         CuT = new PlayerLobby();
@@ -33,12 +47,20 @@ public class PlayerLobbyTest {
      */
     @Test
     public void testValidUsername() {
+        // letters
         String valid1 = "thisIsValid";
-        String valid2 = "this is valid";
+        // letters, numbers, spaces
+        String valid2 = "this is valid 123";
+        // blank
         String invalid1 = "";
+        // only spaces
         String invalid2 = "   ";
+        // letters and special characters
         String invalid3 = "thisIsInvalid!@#$%^&*()";
+        // special characters
         String invalid4 = "!@#$%^&*()";
+        // letters, spaces, special characters
+        String invalid5 = "this is invalid !@#";
 
         assertTrue(CuT.isValidUsername(valid1));
         assertTrue(CuT.isValidUsername(valid2));
@@ -46,6 +68,7 @@ public class PlayerLobbyTest {
         assertFalse(CuT.isValidUsername(invalid2));
         assertFalse(CuT.isValidUsername(invalid3));
         assertFalse(CuT.isValidUsername(invalid4));
+        assertFalse(CuT.isValidUsername(invalid5));
     }
 
     /**
@@ -67,11 +90,9 @@ public class PlayerLobbyTest {
     public void testSignIn() {
         CuT.signIn(player);
         int size = CuT.size();
-        assertEquals(CuT.size(), 1);
+        assertEquals(1, CuT.size());
         CuT.signIn(player);
         assertEquals(size, CuT.size());
-        CuT.signOut(player);
-        assertEquals(CuT.size(), 0);
     }
 
     /**
@@ -79,7 +100,10 @@ public class PlayerLobbyTest {
      */
     @Test
     public void testSignOut() {
-
+        CuT.signIn(player);
+        assertEquals(1, CuT.size());
+        CuT.signOut(player);
+        assertEquals(0, CuT.size());
     }
 
     /**
@@ -87,7 +111,9 @@ public class PlayerLobbyTest {
      */
     @Test
     public void testGetPlayer() {
-
+        assertNull(CuT.getPlayer(name));
+        CuT.signIn(player);
+        assertEquals(player, CuT.getPlayer(name));
     }
 
     /**
@@ -95,14 +121,13 @@ public class PlayerLobbyTest {
      */
     @Test
     public void testGetPlayerLobbyNames() {
-
+        List<String> names = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            Player player = new Player("" + i);
+            CuT.signIn(player);
+            names.add("" + i);
+        }
+        assertEquals(names, CuT.getPlayerLobbyNames(player));
     }
 
-    /**
-     * Test the size of the player lobby.
-     */
-    @Test
-    public void testSize() {
-
-    }
 }

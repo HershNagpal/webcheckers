@@ -21,13 +21,19 @@ import static org.mockito.Mockito.when;
 @Tag("UI-tier")
 public class GetHomeRouteTest {
 
-    // component under test
+    /**
+     * Component under test
+     */
     private GetHomeRoute CuT;
 
-    // friendly objects
+    /**
+     * friendly objects
+     */
     private PlayerLobby playerLobby;
 
-    // mock objects
+    /**
+     * mock objects
+     */
     private Request request;
     private Session session;
     private TemplateEngine templateEngine;
