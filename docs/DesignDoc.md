@@ -41,7 +41,12 @@ This section describes the features of the application.
 > maybe Epics and critical Stories._
 
 ### Definition of MVP
-> _Provide a simple description of the Minimum Viable Product._
+WebCheckers is an application in which players can challenge each other to
+checkers games over the internet. Players will be able to log in to a website 
+and see a list of other players who are online. Clicking a player will challenge
+them to a game of checkers. If they accept, a game of checkers will be created.
+The game will follow the regulations of American Checkers. Players can resign at
+any time.
 
 ### MVP Features
 > _Provide a list of top-level Epics and/or Stories of the MVP._
