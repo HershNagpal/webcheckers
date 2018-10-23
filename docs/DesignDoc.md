@@ -98,8 +98,13 @@ with the WebCheckers application.
 
 ![The WebCheckers Web Interface Statechart](web-interface-statechart.png)
 
-> _Provide a summary of the application's user interface.  Describe, from
-> the user's perspective, the flow of the pages in the web application._
+Users can expect to be connected to the home page where they will have the option to sign in.
+Upon visiting the sign in page, users are prompted to enter a username. A username must follow
+specific criteria to be valid. Once a user has signed in, they will be able to see other players
+that are signed in on the home page. The user can start a game by selecting another player that
+is not yet in a game. The user that starts the game gets to go first and each player takes turns
+making moves until a winner has been decided. When a game of checkers is over, both users will
+return to the home page.
 
 
 ### UI Tier
