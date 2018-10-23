@@ -1,11 +1,14 @@
-# PROJECT Home
+# WebCheckers Home
 
-Welcome to the PROJECT Project!
+Welcome to the WebCheckers Project!
 
-## Team
+## Team Banana
 
-* MEMBER1
-* MEMBER2
+* Hersh Nagpal
+* Michael Kha
+* Luis Gutierrez
+* Matthew Bollinger
+* Christopher Daukshus
 
 ## [Design Documentation](DesignDoc)
 
