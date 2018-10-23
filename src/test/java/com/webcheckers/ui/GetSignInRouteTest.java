@@ -1,8 +1,5 @@
 package com.webcheckers.ui;
 
-import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.model.Game;
-import com.webcheckers.model.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -27,16 +24,40 @@ public class GetSignInRouteTest {
   //Mock objects
   private Request request;
   private Session session;
-  private TemplateEngine engine;
+  private TemplateEngine templateEngine;
   private Response response;
-  
+
   @BeforeEach
-  public void setup(){
+  public void setup() {
+    //Creating mock objects using Mockito mock()
     request = mock(Request.class);
     session = mock(Session.class);
     when(request.session()).thenReturn(session);
-    engine = mock(TemplateEngine.class);
+    response = mock(Response.class);
+    templateEngine = mock(TemplateEngine.class);
 
-    CuT = new GetSignInRoute(engine);
+    //Unique CuT for each test
+    CuT = new GetSignInRoute(templateEngine);
+  }
+
+  //Test when a new session enters the signin page
+  @Test
+  public void enter_sign_in(){
+    // Mock up the view model
+    final TemplateEngineTester testHelper = new TemplateEngineTester();
+    when(templateEngine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
+
+    // Invoke the test
+    CuT.handle(request, response);
+
+    // Check view model is initialized
+    testHelper.assertViewModelExists();
+    testHelper.assertViewModelIsaMap();
+
+    // Check view model has the necessary data
+    testHelper.assertViewModelAttribute(GetSignInRoute.TITLE_ATTR, GetSignInRoute.TITLE);
+
+    // Check view name
+    testHelper.assertViewName(GetSignInRoute.VIEW_NAME);
   }
 }
