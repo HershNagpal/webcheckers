@@ -69,7 +69,11 @@ public class GetSignInRouteTest {
     // Test view name
     testHelper.assertViewName(GetSignInRoute.VIEW_NAME);
   }
-  
+
+  /**
+   * Test when a session gets redirected to signIn page
+   * when invalid username is entered.
+   */
   @Test
   public void redirected_to_sign_in(){
 
