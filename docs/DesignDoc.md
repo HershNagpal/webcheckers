@@ -12,13 +12,15 @@ geometry: margin=1in
 * Team name: Banana
 * Team members
   * Hersh Nagpal
-  * MEMBER2
-  * MEMBER3
-  * MEMBER4
+  * Michael Kha
+  * Luis Gutierrez
+  * Matthew Bollinger
+  * Christopher Daukshus
 
 ## Executive Summary
 
-This is a summary of the project.
+WebCheckers is a web-based version of the game of checkers built using the
+Spark web framework and the FreeMarker template engine that is run on Java8.
 
 ### Purpose
 > _Provide a very brief statement about the project and the most
