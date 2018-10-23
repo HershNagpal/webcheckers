@@ -18,15 +18,22 @@ import static org.mockito.Mockito.when;
 @Tag("UI-tier")
 public class GetSignInRouteTest {
 
-  //Component under test
+  /**
+   * The component under test
+   */
   private GetSignInRoute CuT;
 
-  //Mock objects
+  /**
+   * Mock objects
+   */
   private Request request;
   private Session session;
   private TemplateEngine templateEngine;
   private Response response;
 
+  /**
+   * Setup new mock objects for each test.
+   */
   @BeforeEach
   public void setup() {
     //Creating mock objects using Mockito mock()
@@ -40,7 +47,9 @@ public class GetSignInRouteTest {
     CuT = new GetSignInRoute(templateEngine);
   }
 
-  //Test when a new session enters the signin page
+  /**
+   * Test when a new session enters the signin page
+   */
   @Test
   public void enter_sign_in(){
     // Mock up the view model
@@ -50,14 +59,19 @@ public class GetSignInRouteTest {
     // Invoke the test
     CuT.handle(request, response);
 
-    // Check view model is initialized
+    // Check that model is a non-null Map
     testHelper.assertViewModelExists();
     testHelper.assertViewModelIsaMap();
 
-    // Check view model has the necessary data
+    // View model contains the necessary data
     testHelper.assertViewModelAttribute(GetSignInRoute.TITLE_ATTR, GetSignInRoute.TITLE);
 
-    // Check view name
+    // Test view name
     testHelper.assertViewName(GetSignInRoute.VIEW_NAME);
+  }
+  
+  @Test
+  public void redirected_to_sign_in(){
+
   }
 }
