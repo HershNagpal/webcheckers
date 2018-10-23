@@ -42,6 +42,7 @@ public class Space {
 
   /**
    * Sets the Space type based on row.
+   * Row 0 and 7 are king rows.
    */
   private void setSpaceType() {
     if (row == 0) {
@@ -55,6 +56,8 @@ public class Space {
 
   /**
    * Sets the Space color based on rows and columns.
+   * If both row and column have the same remainder when divided
+   * by two, the space .
    */
   private void setSpaceColor() {
     if (row % 2 == column % 2) {
