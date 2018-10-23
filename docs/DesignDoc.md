@@ -23,15 +23,17 @@ WebCheckers is a web-based version of the game of checkers built using the
 Spark web framework and the FreeMarker template engine that is run on Java8.
 
 ### Purpose
-> _Provide a very brief statement about the project and the most
-> important user group and user goals._
+The goal of this project is to have a functional application that allows users
+to play a game of checkers with other users. Users select an opponent or wait
+to be selected to begin a game within the player lobby. Players can expect to
+play under the American rules for checkers until a player wins or resigns.
 
 ### Glossary and Acronyms
-> _Provide a table of terms and acronyms._
-
 | Term | Definition |
 |------|------------|
 | VO | Value Object |
+| MVP | Minimum Viable Product |
+| UI | User Interface |
 
 
 ## Requirements
@@ -61,7 +63,7 @@ any time.
 
 This section describes the application domain.
 
-![The WebCheckers Domain Model](domain-model-placeholder.png)
+![The WebCheckers Domain Model](domain-model.png)
 
 > _Provide a high-level overview of the domain for this application. You
 > can discuss the more important domain entities and their relationship
@@ -94,7 +96,7 @@ Details of the components within these tiers are supplied below.
 This section describes the web interface flow; this is how the user views and interacts
 with the WebCheckers application.
 
-![The WebCheckers Web Interface Statechart](web-interface-placeholder.png)
+![The WebCheckers Web Interface Statechart](web-interface-statechart.png)
 
 > _Provide a summary of the application's user interface.  Describe, from
 > the user's perspective, the flow of the pages in the web application._
