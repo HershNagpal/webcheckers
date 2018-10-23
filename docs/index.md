@@ -10,7 +10,7 @@ Welcome to the WebCheckers Project!
 * Matthew Bollinger
 * Christopher Daukshus
 
-## [Design Documentation](DesignDoc)
+## [Design Documentation](DesignDoc.md)
 
 Click above for details of the WebCheckers design documentation.
 
