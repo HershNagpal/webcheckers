@@ -78,5 +78,28 @@ public class Board {
     public Piece[][] getPieces(){
         return pieces;
     }
+    public boolean equals(Object obj){
+      if(this == obj){
+        return true;
+      }
+      else if(!(obj instanceof Board)){
+        return false;
+      }
+  
+      Board b2 = (Board)obj;
+
+      boolean deepEqual = true;
+
+      for(int row = 0; row < this.pieces.length; row++){
+        for(int col = 0; col < this.pieces[row].length; col++){
+          if(!(this.pieces[row][col].equals(b2.pieces[row][col]))){
+            deepEqual = false;
+          }
+
+        }
+      }
+
+      return deepEqual;
+    }
 
 }
