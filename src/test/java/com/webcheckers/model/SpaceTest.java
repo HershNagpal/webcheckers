@@ -1,18 +1,19 @@
 package com.webcheckers.model;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Assertions.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
-import com.webcheckers.model.Space.SpaceColor;
+import com.webcheckers.model.Piece.Type;
 
 /**
  * Unit test suite for the Space class.
  * @author Hersh Nagpal
  */
+@Tag("Model-tier")
 class SpaceTest {
 
 	/**
@@ -29,7 +30,7 @@ class SpaceTest {
 
 
 	/**
-	* Initialize the object to test
+	* Initialize the objects to test
 	*/
 	@BeforeEach
 	public void setup() {
@@ -42,6 +43,7 @@ class SpaceTest {
 		whiteKingSpaceWithoutPiece = new Space(1, 7, null);
 		blackKingSpaceWithoutPiece = new Space(0, 0, null);
 	}
+
 	/**
 	 * Tests the checkColor method
 	 */
@@ -79,14 +81,6 @@ class SpaceTest {
 		assertFalse(blackSpaceWithoutPiece.hasChecker());
 		assertFalse(whiteSpaceWithoutPiece.hasChecker());
 	}
-	
-	/**
-	 * Tests the getPiece method
-	 */
-	@Test
-	public void testGetPiece() {
-		// @TODO
-	}
 
 	/**
 	 * Tests the getCellIdx method
@@ -95,13 +89,22 @@ class SpaceTest {
 	public void testGetCellIdx() {
 		assertEquals(0, blackKingSpaceWithoutPiece.getCellIdx());
 		assertEquals(7, whiteKingSpaceWithoutPiece.getCellIdx());
+
+		assertNotEquals(0, whiteKingSpaceWithoutPiece.getCellIdx());
+		assertNotEquals(7, blackKingSpaceWithoutPiece.getCellIdx());
 	}
 
 	/**
-	 * Tests the setPiece method
+	 * Tests the setPiece and getPiece method
 	 */
 	@Test
-	public void testSetPiece() {
-		// @TODO
+	public void testSetAndGetPiece() {
+		Piece testPiece = new Piece(Color.RED, Type.SINGLE);
+		blackSpaceWithoutPiece.setPiece(testPiece);
+
+		assertEquals(new Piece(Color.RED, Type.SINGLE), blackSpaceWithoutPiece.getPiece());
+		assertNotEquals(new Piece(Color.WHITE, Type.SINGLE), blackSpaceWithoutPiece.getPiece());
+		assertNotEquals(new Piece(Color.WHITE, Type.KING), blackSpaceWithoutPiece.getPiece());
+		assertNotEquals(new Piece(Color.RED, Type.KING), blackSpaceWithoutPiece.getPiece());
 	}
 }
