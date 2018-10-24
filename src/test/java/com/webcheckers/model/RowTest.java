@@ -60,7 +60,7 @@ public class RowTest {
 	}
 
 	/**
-	 * Tests the Iterator method
+	 * Tests the Iterator method and that the Row is set up properly.
 	 */
 	@Test
 	public void testIterator() {
