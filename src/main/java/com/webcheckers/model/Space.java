@@ -112,4 +112,26 @@ public class Space {
   public void setPiece(Piece piece) {
     this.piece = piece;
   }
+
+  /**
+   * Overriding equals() for deep equality between Space Objects.
+   * This method is used for testing.
+   * @param obj Object being compared to "this" Piece
+   * @return true if "this" is equal to obj
+   */
+  @Override
+  public boolean equals(Object obj){
+    if(this == obj){
+      return true;
+    }
+    else if(!(obj instanceof Space)){
+      return false;
+    }
+
+    Space space2 = (Space)obj;
+
+    return this.row == space2.row && this.column == space2.column
+            && this.spaceType.equals(space2.spaceType)
+            && this.spaceColor.equals(space2.spaceColor);
+  }
 }

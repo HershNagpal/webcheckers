@@ -37,4 +37,24 @@ public class Row {
         return spaces.iterator();
     }
 
+    /**
+     * Overriding equals() for deep equality between Row Objects.
+     * This method is used for testing.
+     * @param obj Object being compared to "this" Piece
+     * @return true if "this" is equal to obj
+     */
+    @Override
+    public boolean equals(Object obj){
+        if(this == obj){
+            return true;
+        }
+        else if(!(obj instanceof Row)){
+            return false;
+        }
+
+        Row row2 = (Row)obj;
+
+        return this.index == row2.index && this.spaces.equals(row2.spaces);
+    }
+
 }
