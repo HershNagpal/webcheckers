@@ -11,6 +11,10 @@ import java.util.List;
  */
 public class Row {
 
+    /**
+     * index - the vertical row (Y) index of this row on the board.
+     * spaces - List of Space objects that are within this row.
+     */
     private int index;
     private List<Space> spaces;
 
