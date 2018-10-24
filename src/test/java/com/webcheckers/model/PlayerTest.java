@@ -16,6 +16,9 @@ import static org.mockito.Mockito.mock;
 @Tag("Model-tier")
 public class PlayerTest {
 	
+	/**
+	 * Objects being tested
+	 */
 	private Player playerOrange;
 	private Player playerTangerine;
 	private static String ORANGE_NAME = "Orange";
