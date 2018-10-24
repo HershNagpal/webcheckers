@@ -85,7 +85,7 @@ public class Board {
       else if(!(obj instanceof Board)){
         return false;
       }
-  
+
       Board b2 = (Board)obj;
 
       boolean deepEqual = true;
