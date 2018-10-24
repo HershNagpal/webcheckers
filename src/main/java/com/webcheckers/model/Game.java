@@ -5,6 +5,12 @@ package com.webcheckers.model;
  * @author Luis Gutierrez
  */
 public class Game {
+  /**
+   * redPlayer - The player in control of red pieces.
+   * whitePlayer - The player in control of the white pieces.
+   * board - the Board object that holds the rows, spaces, and pieces within it.
+   * activeColor - the color of the player whose turn it currently is.
+   */
   private Player redPlayer;
   private Player whitePlayer;
   private Board board;
