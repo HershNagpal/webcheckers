@@ -74,4 +74,9 @@ public class Board {
     public BoardView getBoardView(){
       return boardView;
     }
+
+    public Piece[][] getPieces(){
+        return pieces;
+    }
+
 }
