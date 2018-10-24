@@ -17,7 +17,7 @@ import static org.mockito.Mockito.*;
  * author: Matthew Bollinger mxb9771@rit.edu
  */
 @Tag("UI-tier")
-public class GetGameRouteTester {
+public class GetGameRouteTest {
 
     /**
      * The componet being tested
