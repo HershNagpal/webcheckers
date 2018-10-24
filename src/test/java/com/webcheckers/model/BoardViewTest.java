@@ -21,7 +21,7 @@ public class BoardViewTest {
 	 */
 	@BeforeEach
 	public void setup(){
-
+		
 	}
 
 	/**
