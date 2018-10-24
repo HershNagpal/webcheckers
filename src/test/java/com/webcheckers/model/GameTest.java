@@ -83,7 +83,17 @@ public class GameTest {
 	 */
 	@Test
 	public void testGetBoard() {
-	assertEquals(board, CuT.getBoard(), "" +
+	assertSame(board, CuT.getBoard(), "" +
             "The boards are not equal!");
 	}
+
+    /**
+     * Test new Board should be generated if
+     * there is no board supplied
+     */
+    @Test
+    public void testNoBoardConstructor(){
+        CuT = new Game(red, white);
+        //assertSame();
+    }
 }
