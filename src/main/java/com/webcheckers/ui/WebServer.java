@@ -85,7 +85,7 @@ public class WebServer {
     Objects.requireNonNull(playerLobby, "playerLobby must not be null");
     Objects.requireNonNull(templateEngine, "templateEngine must not be null");
     Objects.requireNonNull(gson, "gson must not be null");
-    //
+
     this.playerLobby = playerLobby;
     this.templateEngine = templateEngine;
     this.gson = gson;
@@ -150,7 +150,7 @@ public class WebServer {
     post(SIGNIN_URL, new PostSignInRoute(playerLobby, templateEngine));
 
     get(GAME_URL, new GetGameRoute(playerLobby, templateEngine));
-    //
+
     LOG.config("WebServer is initialized.");
   }
 
