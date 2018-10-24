@@ -7,9 +7,9 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import spark.*;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * The unit test class for {@link GetGameRoute} componet.
@@ -44,45 +44,28 @@ public class GetGameRouteTester {
         p2 = mock(Player.class);
 
         CuT = new GetGameRoute(playerLobby, engine);
-
     }
 
     /**
-     * Test that if GetGameRoute does not recive the correct paramaters
-     * then it will throw the propper errors
+     * Test that if you attempt to start a game with a playewr who is already in
+     * game then you should be redirected to home with message
      */
     @Test
-    public void constructor_params(){
+    public void testPlayerInGame() {
+        Game game = mock(Game.class);
 
-    }
-
-    /**
-     * Test when a player clicks on another player to start a game
-     */
-    @Test
-    public void testPlayerStartsGame() {
-        //getting players
-        when(session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR)).thenReturn(p1);
+        //get players
+        when(session.attribute((GetGameRoute.CURRENT_PLAYER_ATTR))).thenReturn(p1);
         when(playerLobby.getPlayer(request.queryParams("pid"))).thenReturn(p2);
+        //player two is already in a game
+        when(p2.getGame()).thenReturn(game);
 
-        final TemplateEngineTester tester = new TemplateEngineTester();
+        final  TemplateEngineTester tester = new TemplateEngineTester();
         when(engine.render(any(ModelAndView.class))).thenAnswer(tester.makeAnswer());
-
-        //start test
-        CuT.handle(request,response);
-        //make sure engine is setup
-        tester.assertViewModelExists();
-        tester.assertViewModelIsaMap();
-        //make view model is populated correctly
-        tester.assertViewModelAttributeIsPresent(GetGameRoute.BOARD_ATTR);
-        tester.assertViewModelAttributeIsPresent(GetGameRoute.CURRENT_PLAYER_ATTR);
-        tester.assertViewModelAttributeIsPresent(GetGameRoute.VIEW_MODE_ATTR);
-        tester.assertViewModelAttributeIsPresent(GetGameRoute.WHITE_PLAYER_ATTR);
-        tester.assertViewModelAttributeIsPresent(GetGameRoute.RED_PLAYER_ATTR);
-        tester.assertViewModelAttributeIsPresent(GetGameRoute.ACTIVE_COLOR_ATTR);
-    }
-
-    public void testPlayerChallengedToGame() {
+        //invoke test
+        CuT.handle(request, response);
+        //verify that user is sent back to home
+        verify(response).redirect(WebServer.HOME_URL);
 
     }
 
@@ -91,7 +74,7 @@ public class GetGameRouteTester {
      * is no game
      */
     @Test
-    public void new_game(){
+    public void newGame(){
         //getting players
         when(session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR)).thenReturn(p1);
         when(playerLobby.getPlayer(request.queryParams("pid"))).thenReturn(p2);
@@ -107,10 +90,42 @@ public class GetGameRouteTester {
         tester.assertViewModelExists();
         tester.assertViewModelIsaMap();
         //make view model is populated correctly
-
-        tester.assertViewModelAttribute(GetGameRoute.BOARD_ATTR, BoardView.class);
-        //tester.assertViewModelAttribute(GetGameRoute.CURRENT_PLAYER_ATTR,);
-        //tester.assertViewModelAttribute(GetGameRoute.VIEW_MODE_ATTR,);
-        //tester.assertViewModelAttribute(GetGameRoute.VIEW_MODE_ATTR,);
+        tester.assertViewModelAttributeIsPresent(GetGameRoute.BOARD_ATTR);
+        tester.assertViewModelAttributeIsPresent(GetGameRoute.VIEW_MODE_ATTR);
+        tester.assertViewModelAttributeIsPresent(GetGameRoute.CURRENT_PLAYER_ATTR);
+        tester.assertViewModelAttributeIsPresent(GetGameRoute.RED_PLAYER_ATTR);
+        tester.assertViewModelAttributeIsPresent(GetGameRoute.WHITE_PLAYER_ATTR);
+        tester.assertViewModelAttributeIsPresent(GetGameRoute.ACTIVE_COLOR_ATTR);
     }
+
+    /**
+     * This method test if a player already has a they are redirected back to
+     * their game
+     */
+    @Test
+    public void rejoinGame(){
+        when(session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR)).thenReturn(p1);
+        //make player one already have a game
+        Game game = mock(Game.class);
+        Board board = mock(Board.class);
+        when(p1.getGame()).thenReturn(game);
+        when(game.getBoard()).thenReturn(board);
+
+        final TemplateEngineTester tester = new TemplateEngineTester();
+        when(engine.render(any(ModelAndView.class))).thenAnswer(tester.makeAnswer());
+        //invoke test
+        CuT.handle(request, response);
+        //make sure engine is setup
+        tester.assertViewModelExists();
+        tester.assertViewModelIsaMap();
+        //make sure view model is populated correctly
+        tester.assertViewModelAttributeIsPresent(GetGameRoute.BOARD_ATTR);
+        tester.assertViewModelAttributeIsPresent(GetGameRoute.VIEW_MODE_ATTR);
+        tester.assertViewModelAttributeIsPresent(GetGameRoute.CURRENT_PLAYER_ATTR);
+        tester.assertViewModelAttributeIsPresent(GetGameRoute.RED_PLAYER_ATTR);
+        tester.assertViewModelAttributeIsPresent(GetGameRoute.WHITE_PLAYER_ATTR);
+        tester.assertViewModelAttributeIsPresent(GetGameRoute.ACTIVE_COLOR_ATTR);
+    }
+
+
 }
