@@ -50,10 +50,11 @@ public class GetSignOutRoute implements Route {
         final Session session = request.session();
 
         Player player = session.attribute(GetHomeRoute.PLAYER_ATTR);
-        // No longer a signed in player; update controller and view
-        playerLobby.signOut(player);
-        session.removeAttribute(GetHomeRoute.PLAYER_ATTR);
-
+        if (player != null) {
+            // No longer a signed in player; update controller and view
+            playerLobby.signOut(player);
+            session.removeAttribute(GetHomeRoute.PLAYER_ATTR);
+        }
         response.redirect(WebServer.HOME_URL);
         return null;
     }
