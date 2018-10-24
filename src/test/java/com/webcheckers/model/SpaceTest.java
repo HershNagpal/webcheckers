@@ -45,6 +45,21 @@ class SpaceTest {
 	}
 
 	/**
+	 * Tests the overridden Equals method
+	 */
+	@Test
+	public void testEquals() { 
+		assertTrue(blackKingSpaceWithoutPiece.equals(new Space(0, 0, null)));
+		assertTrue(blackSpaceWithPiece.equals(new Space(1, 2, mock(Piece.class))));
+		assertTrue(whiteSpaceWithPiece.equals(new Space(6, 6, mock(Piece.class))));
+
+		assertFalse(whiteKingSpaceWithoutPiece.equals(7));
+		assertFalse(blackSpaceWithPiece.equals(new Message("", MessageType.INFO)));
+		assertFalse(whiteSpaceWithoutPiece.equals(whiteSpaceWithPiece));
+		assertFalse(whiteKingSpaceWithoutPiece.equals(whiteSpaceWithoutPiece));
+	}
+
+	/**
 	 * Tests the checkColor method
 	 */
 	@Test
@@ -107,4 +122,6 @@ class SpaceTest {
 		assertNotEquals(new Piece(Color.WHITE, Type.KING), blackSpaceWithoutPiece.getPiece());
 		assertNotEquals(new Piece(Color.RED, Type.KING), blackSpaceWithoutPiece.getPiece());
 	}
+
+
 }
