@@ -69,6 +69,7 @@ public class BoardViewTest {
 		Row currentRow;
 		Piece currentPiece;
 
+		
 		while(rows.hasNext()){
 			currentRow = rows.next();
 			switch(counter % 2) {
