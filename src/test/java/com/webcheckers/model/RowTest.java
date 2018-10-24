@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import java.util.*;
 
 import com.webcheckers.model.Piece.Type;
@@ -27,8 +25,8 @@ public class RowTest {
 	/**
 	 * Friendly Objects
 	 */
-	private Piece mockRedPiece;
-	private Piece mockWhitePiece;
+	private Piece redPiece;
+	private Piece whitePiece;
 	private Piece pieces3[];
 	private Piece pieces7[];	
 
@@ -37,25 +35,21 @@ public class RowTest {
 	 */
 	@BeforeEach
 	public void setup(){
-		mockRedPiece = mock(Piece.class);
-		when(mockRedPiece.getColor()).thenReturn(Color.RED);
-		when(mockRedPiece.getType()).thenReturn(Type.SINGLE);
+		redPiece = new Piece(Color.RED, Type.SINGLE);
 
-		mockWhitePiece = mock(Piece.class);
-		when(mockWhitePiece.getColor()).thenReturn(Color.WHITE);
-		when(mockWhitePiece.getType()).thenReturn(Type.SINGLE);
+		whitePiece = new Piece(Color.WHITE, Type.SINGLE);
 
 		/**
 		 * Setup for the piece arrays to be put into each Row
-	 	 * pieces3 is 8 mockRedPieces in a row
+	 	 * pieces3 is 8 redPieces in a row
 	 	 * pieces7 is null, white, red, null twice
 	 	 */
 		pieces3 = new Piece[]
-			{mockRedPiece, mockRedPiece, mockRedPiece, mockRedPiece, 
-			 mockRedPiece, mockRedPiece, mockRedPiece, mockRedPiece};
+			{redPiece, redPiece, redPiece, redPiece, 
+			 redPiece, redPiece, redPiece, redPiece};
 		pieces7 = new Piece[] 
-			{null, mockWhitePiece, mockRedPiece, null,
-			 null, mockWhitePiece, mockRedPiece, null};
+			{null, whitePiece, redPiece, null,
+			 null, whitePiece, redPiece, null};
 	
 
 		row3 = new Row(pieces3, 3);
@@ -74,8 +68,8 @@ public class RowTest {
 		// Tests that all of the pieces in pieces3 are red pieces.
 		while(iterator3.hasNext()) {
 			currentPiece = iterator3.next().getPiece();
-			assertEquals(mockRedPiece, currentPiece);
-			assertNotEquals(mockWhitePiece, currentPiece);
+			assertEquals(redPiece, currentPiece);
+			assertNotEquals(whitePiece, currentPiece);
 		}
 		
 
@@ -89,12 +83,12 @@ public class RowTest {
 					assertNull(currentPiece);
 					break;
 				case 1:
-					assertEquals(mockWhitePiece, currentPiece);
-					assertNotEquals(mockRedPiece, currentPiece);
+					assertEquals(whitePiece, currentPiece);
+					assertNotEquals(redPiece, currentPiece);
 					break;
 				case 2:
-					assertEquals(mockRedPiece, currentPiece);
-					assertNotEquals(mockWhitePiece, currentPiece);
+					assertEquals(redPiece, currentPiece);
+					assertNotEquals(whitePiece, currentPiece);
 					break;
 				case 3:
 					assertNull(currentPiece);
