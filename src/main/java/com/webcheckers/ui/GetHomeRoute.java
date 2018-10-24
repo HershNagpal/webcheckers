@@ -27,7 +27,13 @@ public class GetHomeRoute implements Route {
 
   private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
+  /**
+   * The player lobby
+   */
   private final PlayerLobby playerLobby;
+  /**
+   * Renders the model and view map
+   */
   private final TemplateEngine templateEngine;
 
   /**
@@ -39,6 +45,7 @@ public class GetHomeRoute implements Route {
    */
   public GetHomeRoute(final PlayerLobby playerLobby, final TemplateEngine templateEngine) {
     // validation
+    Objects.requireNonNull(playerLobby, "playerLobby must not be null");
     Objects.requireNonNull(templateEngine, "templateEngine must not be null");
     //
     this.playerLobby = playerLobby;
@@ -61,7 +68,7 @@ public class GetHomeRoute implements Route {
   @Override
   public Object handle(Request request, Response response) {
     LOG.finer("GetHomeRoute is invoked.");
-    //
+
     final Session session = request.session();
 
     Map<String, Object> vm = new HashMap<>();
