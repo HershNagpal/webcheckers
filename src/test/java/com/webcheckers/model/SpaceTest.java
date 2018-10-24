@@ -1,19 +1,19 @@
 package com.webcheckers.model;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Assertions.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
 import com.webcheckers.model.Piece.Type;
-import com.webcheckers.model.Space.SpaceColor;
 
 /**
  * Unit test suite for the Space class.
  * @author Hersh Nagpal
  */
+@Tag("Model-tier")
 class SpaceTest {
 
 	/**
