@@ -21,8 +21,8 @@ public class PlayerTest {
 	 */
 	private Player playerOrange;
 	private Player playerTangerine;
-	private static String ORANGE_NAME = "Orange";
-	private static String TANGERINE_NAME = "Tangerine";
+	private final String ORANGE_NAME = "Orange";
+	private final String TANGERINE_NAME = "Tangerine";
 
 	/**
 	 * Initialize the objects to test
