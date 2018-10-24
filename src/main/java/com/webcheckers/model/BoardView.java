@@ -31,4 +31,24 @@ public class BoardView {
     public Iterator<Row> iterator(){
         return rows.iterator();
     }
+
+    /**
+     * Overriding equals() for deep equality between BoardView Objects.
+     * This method is used for testing.
+     * @param obj Object being compared to "this" Piece
+     * @return true if "this" is equal to obj
+     */
+    @Override
+    public boolean equals(Object obj){
+        if(this == obj){
+            return true;
+        }
+        else if(!(obj instanceof BoardView)){
+            return false;
+        }
+
+        BoardView bv2 = (BoardView)obj;
+
+        return this.rows.equals(bv2.rows);
+    }
 }

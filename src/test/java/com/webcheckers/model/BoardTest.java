@@ -60,6 +60,17 @@ public class BoardTest {
   public void testBoardSetUp(){
     Piece[][] actualPieces = CuT.getPieces();
 
+    Piece[][] expectedPieces = new Piece[][]{
+            {null, redPiece, null, redPiece, null, redPiece, null, redPiece},
+            {redPiece, null, redPiece, null, redPiece, null, redPiece, null},
+            {null, redPiece, null, redPiece, null, redPiece, null, redPiece},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {whitePiece, null, whitePiece, null, whitePiece, null, whitePiece, null},
+            {null, whitePiece, null, whitePiece, null, whitePiece, null, whitePiece},
+            {whitePiece, null, whitePiece, null, whitePiece, null, whitePiece, null},
+    };
+
     for(int row = 0; row < expectedPieces.length; row++){
       assertTrue(Arrays.deepEquals(expectedPieces[row],actualPieces[row]));
     }
@@ -115,7 +126,8 @@ public class BoardTest {
    */
   @Test
   public void testBoardView(){
-    //assertEquals(expectedBoardView,CuT.getBoardView());
+    assertEquals(expectedBoardView,CuT.getBoardView());
+
   }
 
 }
