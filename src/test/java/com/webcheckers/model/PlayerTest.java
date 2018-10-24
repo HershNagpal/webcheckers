@@ -49,7 +49,8 @@ public class PlayerTest {
 	 */
 	@Test
 	public void testGetGame() {
-	
+		assertNull(playerOrange.getGame());
+		assertNotNull(playerTangerine.getGame());
 	}
 
 	/**
@@ -57,6 +58,9 @@ public class PlayerTest {
 	 */
 	@Test
 	public void testSetGame() {
-	
+		Game mockGame2 = mock(Game.class);
+		playerOrange.setGame(mockGame2);
+		assertNotNull(playerOrange.getGame());
+		playerOrange.setGame(null);
 	}
 }
