@@ -1,16 +1,17 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Message;
 import com.webcheckers.model.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import spark.Request;
-import spark.Response;
-import spark.Session;
-import spark.TemplateEngine;
+import spark.*;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Unit test suite for the PostSignInRoute class.
@@ -56,19 +57,67 @@ public class PostSignInRouteTest {
         CuT = new PostSignInRoute(playerLobby, templateEngine);
     }
 
+    /**
+     * Test when a user tries to sign in with an invalid username.
+     */
     @Test
     public void testInvalidNameMessage() {
-
+        // Arrange test scenario
+        when(request.queryParams(PostSignInRoute.NAME_PARAM)).thenReturn("Invalid!!!");
+        // Mock up the view model
+        final TemplateEngineTester testHelper = new TemplateEngineTester();
+        when(templateEngine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
+        // Invoke the test
+        CuT.handle(request, response);
+        // Check view model is initialized
+        testHelper.assertViewModelExists();
+        testHelper.assertViewModelIsaMap();
+        // Check view model has the necessary data
+        testHelper.assertViewModelAttribute(PostSignInRoute.TITLE_ATTR, PostSignInRoute.TITLE);
+        testHelper.assertViewModelAttribute(PostSignInRoute.MESSAGE_ATTR, PostSignInRoute.INVALID_MESSAGE);
+        // Check view model does not have certain data
+        testHelper.assertViewModelAttributeIsAbsent(PostSignInRoute.PLAYER_ATTR);
+        // Check view name
+        testHelper.assertViewName(PostSignInRoute.VIEW_NAME);
     }
 
+    /**
+     * Test when a user tries to sign in with an already taken username.
+     */
     @Test
     public void testTakenNameMessage() {
-
+        // Arrange test scenario
+        when(request.queryParams(PostSignInRoute.NAME_PARAM)).thenReturn(PLAYER_NAME);
+        playerLobby.signIn(player);
+        // Mock up the view model
+        final TemplateEngineTester testHelper = new TemplateEngineTester();
+        when(templateEngine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
+        // Invoke the test
+        CuT.handle(request, response);
+        // Check view model is initialized
+        testHelper.assertViewModelExists();
+        testHelper.assertViewModelIsaMap();
+        // Check view model has the necessary data
+        testHelper.assertViewModelAttribute(PostSignInRoute.TITLE_ATTR, PostSignInRoute.TITLE);
+        testHelper.assertViewModelAttribute(PostSignInRoute.MESSAGE_ATTR, PostSignInRoute.TAKEN_MESSAGE);
+        // Check view model does not have certain data
+        testHelper.assertViewModelAttributeIsAbsent(PostSignInRoute.PLAYER_ATTR);
+        // Check view name
+        testHelper.assertViewName(PostSignInRoute.VIEW_NAME);
     }
 
+    /**
+     * Test when a user successfully signs in.
+     */
     @Test
     public void testSignInSuccessful() {
+        // Arrange test scenario
+        when(request.session()).thenReturn(session);
 
+        // Invoke the test
+        CuT.handle(request, response);
+        // Verify that the player is redirected to the home page
+        verify(response).redirect(WebServer.HOME_URL);
     }
 
 

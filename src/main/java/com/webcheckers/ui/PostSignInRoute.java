@@ -29,6 +29,9 @@ public class PostSignInRoute implements Route {
             " and contain no special characters.";
     static final String NAME_TAKEN = "Name has already been taken.";
 
+    static final Message INVALID_MESSAGE = new Message(INVALID_NAME, MessageType.ERROR);
+    static final Message TAKEN_MESSAGE = new Message(NAME_TAKEN, MessageType.ERROR);
+
     private static final Logger LOG = Logger.getLogger(PostSignInRoute.class.getName());
 
     private final PlayerLobby playerLobby;
@@ -66,12 +69,12 @@ public class PostSignInRoute implements Route {
         final String name = request.queryParams(NAME_PARAM);
 
         if (!playerLobby.isValidUsername(name)) {
-            vm.put(MESSAGE_ATTR, new Message(INVALID_NAME, MessageType.ERROR));
+            vm.put(MESSAGE_ATTR, INVALID_MESSAGE);
             return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
         }
 
         if (playerLobby.isUsernameTaken(name)) {
-            vm.put(MESSAGE_ATTR, new Message(NAME_TAKEN, MessageType.ERROR));
+            vm.put(MESSAGE_ATTR, TAKEN_MESSAGE);
             return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
         }
 
