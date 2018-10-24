@@ -1,5 +1,6 @@
 package com.webcheckers.model;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions.*;
 
@@ -19,15 +20,18 @@ class SpaceTest {
 	 */
 	private Space blackSpaceWithPiece;
 	private Space blackSpaceWithoutPiece;
+
 	private Space whiteSpaceWithPiece;
 	private Space whiteSpaceWithoutPiece;
+
 	private Space whiteKingSpaceWithoutPiece;
 	private Space blackKingSpaceWithoutPiece;
 
 
 	/**
-	* Setup the object to test
+	* Initialize the object to test
 	*/
+	@BeforeEach
 	public void setup() {
 		blackSpaceWithPiece = new Space(1, 2, mock(Piece.class));
 		blackSpaceWithoutPiece = new Space(3, 4, null);
@@ -35,33 +39,20 @@ class SpaceTest {
 		whiteSpaceWithPiece = new Space(6, 6, mock(Piece.class));
 		whiteSpaceWithoutPiece = new Space(2, 4, null);
 
-		whiteKingSpaceWithoutPiece = new Space(7, 1, null);
-		blackKingSpaceWithoutPiece = new Space();
+		whiteKingSpaceWithoutPiece = new Space(1, 7, null);
+		blackKingSpaceWithoutPiece = new Space(0, 0, null);
 	}
-
-	/**
-	 * Tests the setSpaceColor method
-	 */
-	@Test
-	public void testSetSpaceColor(){
-		
-	}
-
-	/**
-	* Tests the setSpaceType method
-	*/
-   @Test
-   public void testSetSpaceType() {
-	   
-   }
-
 	/**
 	 * Tests the checkColor method
 	 */
 	@Test
 	public void testCheckColor() {
+		// Black Spaces are false
 		assertFalse(blackSpaceWithPiece.checkColor());
+		assertFalse(blackSpaceWithPiece.checkColor());
+		// White Spaces are true
 		assertTrue(whiteSpaceWithoutPiece.checkColor());
+		assertTrue(whiteSpaceWithPiece.checkColor());
 	}
 
 	/**
@@ -69,7 +60,12 @@ class SpaceTest {
 	 */
 	@Test
 	public void testIsValid() {
-
+		// Space is valid because it has no Piece and is Black.
+		assertTrue(blackSpaceWithoutPiece.isValid());
+		// These should all be false because they either have Pieces or are not Black spaces.
+		assertFalse(blackSpaceWithPiece.isValid());
+		assertFalse(whiteSpaceWithoutPiece.isValid());
+		assertFalse(whiteSpaceWithPiece.isValid());
 	}
 
 	/**
@@ -77,7 +73,11 @@ class SpaceTest {
 	 */
 	@Test
 	public void testHasChecker() {
-		
+		assertTrue(blackSpaceWithPiece.hasChecker());
+		assertTrue(whiteSpaceWithPiece.hasChecker());
+
+		assertFalse(blackSpaceWithoutPiece.hasChecker());
+		assertFalse(whiteSpaceWithoutPiece.hasChecker());
 	}
 	
 	/**
@@ -85,7 +85,7 @@ class SpaceTest {
 	 */
 	@Test
 	public void testGetPiece() {
-		
+		// @TODO
 	}
 
 	/**
@@ -93,7 +93,8 @@ class SpaceTest {
 	 */
 	@Test
 	public void testGetCellIdx() {
-		
+		assertEquals(0, blackKingSpaceWithoutPiece.getCellIdx());
+		assertEquals(7, whiteKingSpaceWithoutPiece.getCellIdx());
 	}
 
 	/**
@@ -101,6 +102,6 @@ class SpaceTest {
 	 */
 	@Test
 	public void testSetPiece() {
-		
+		// @TODO
 	}
 }
