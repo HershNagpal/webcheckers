@@ -28,7 +28,7 @@ public class BoardViewTest {
 	 */
 	private Piece redPiece;
 
-	// Board created with mock pieces. Every other row has 8 mock red pieces while the odd rows have none.
+	// Board created with pieces. Every other row has 8 red pieces while the odd rows have none.
 	private Piece[][] pieces;
 
 	/**
