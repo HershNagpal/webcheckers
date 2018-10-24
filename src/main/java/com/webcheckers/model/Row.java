@@ -25,12 +25,16 @@ public class Row {
         }
     }
 
+    /**
+     * Returns the row index of this row.
+     * @return the row index of this row.
+     */
     public int getIndex() {
         return index;
     }
 
     /**
-     * Creates an iterable for the Spaves in this Row for the freemarker template to work with.
+     * Creates an iterable for the Spaces in this Row for the freemarker template to work with.
      * @return an iterable for all the Spaces in this Row.
      */
     public Iterator<Space> iterator() {
