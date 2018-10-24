@@ -15,6 +15,13 @@ import static org.mockito.Mockito.mock;
 @Tag("Model-tier")
 public class PieceTest {
 
+	/**
+	 * Initialize the objects to test
+	 */
+	@BeforeEach
+	public void setup(){
+
+	}
 
 	/**
 	 * Tests the getColor method

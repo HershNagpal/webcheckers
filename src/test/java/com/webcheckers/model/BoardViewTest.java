@@ -16,6 +16,13 @@ import static org.mockito.Mockito.mock;
 @Tag("Model-tier")
 public class BoardViewTest {
 
+	/**
+	 * Initialize the objects to test
+	 */
+	@BeforeEach
+	public void setup(){
+
+	}
 
 	/**
 	 * Tests the iterator method
