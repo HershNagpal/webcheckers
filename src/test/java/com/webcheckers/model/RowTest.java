@@ -3,7 +3,6 @@ package com.webcheckers.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -25,6 +24,9 @@ public class RowTest {
 	 */
 	private Row row3;
 	private Row row7;
+	/**
+	 * Friendly Objects
+	 */
 	private Piece mockRedPiece;
 	private Piece mockWhitePiece;
 	private Piece pieces3[];
@@ -61,7 +63,7 @@ public class RowTest {
 	}
 
 	/**
-	 * Tests the Iterator method
+	 * Tests the Iterator method and that the Row is set up properly.
 	 */
 	@Test
 	public void testIterator() {

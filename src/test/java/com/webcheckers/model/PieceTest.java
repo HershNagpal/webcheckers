@@ -5,7 +5,8 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
+
+import com.webcheckers.model.Piece.Type;
 
 /**
  * Unit test suite for the Piece class.
@@ -16,11 +17,25 @@ import static org.mockito.Mockito.mock;
 public class PieceTest {
 
 	/**
+	 * The objects to be tested.
+	 */
+	private Piece redSingle;
+	private Piece whiteSingle;
+	private Piece redKing;
+	private Piece whiteKing;
+	private Piece redSingleToKing;
+
+	/**
 	 * Initialize the objects to test
 	 */
 	@BeforeEach
 	public void setup(){
+		redSingle = new Piece(Color.RED, Type.SINGLE);
+		whiteSingle = new Piece(Color.WHITE, Type.SINGLE);
+		redKing = new Piece(Color.RED, Type.KING);
+		whiteKing = new Piece(Color.WHITE, Type.KING);
 
+		redSingleToKing = new Piece(Color.RED, Type.SINGLE);
 	}
 
 	/**
@@ -28,7 +43,10 @@ public class PieceTest {
 	 */
 	@Test
 	public void testGetColor() {
-		
+		assertEquals(Color.RED, redSingle.getColor());
+		assertEquals(Color.WHITE, whiteSingle.getColor());
+		assertEquals(Color.RED, redKing.getColor());
+		assertEquals(Color.WHITE, whiteKing.getColor());
 	}
 
 	/**
@@ -36,7 +54,10 @@ public class PieceTest {
 	 */
 	@Test
 	public void testGetType() {
-		
+		assertEquals(Type.SINGLE, redSingle.getType());
+		assertEquals(Type.SINGLE, whiteSingle.getType());
+		assertEquals(Type.KING, redKing.getType());
+		assertEquals(Type.KING, whiteKing.getType());
 	}
 
 	/**
@@ -44,6 +65,8 @@ public class PieceTest {
 	 */
 	@Test
 	public void testKingPiece() {
-		
+		assertEquals(Type.SINGLE, redSingleToKing.getType());
+		assertTrue(redSingleToKing.kingPiece());
+		assertEquals(Type.KING, redSingleToKing.getType());
 	}
 }
