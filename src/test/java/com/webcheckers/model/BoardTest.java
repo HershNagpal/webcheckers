@@ -24,8 +24,23 @@ public class BoardTest {
   /**
    * Friendly Objects
    */
-  Piece redPiece;
-  Piece whitePiece;
+  private Piece redPiece;
+  private Piece whitePiece;
+  private BoardView expectedBoardView;
+
+  /**
+   * Expected piece 2d array
+   */
+  private Piece[][] expectedPieces = new Piece[][]{
+          {null, redPiece, null, redPiece, null, redPiece, null, redPiece},
+          {redPiece, null, redPiece, null, redPiece, null, redPiece, null},
+          {null, redPiece, null, redPiece, null, redPiece, null, redPiece},
+          {null, null, null, null, null, null, null, null},
+          {null, null, null, null, null, null, null, null},
+          {whitePiece, null, whitePiece, null, whitePiece, null, whitePiece, null},
+          {null, whitePiece, null, whitePiece, null, whitePiece, null, whitePiece},
+          {whitePiece, null, whitePiece, null, whitePiece, null, whitePiece, null},
+  };
 
   /**
    * Setting up objects before each test
@@ -35,6 +50,7 @@ public class BoardTest {
     CuT = new Board();
     redPiece = new Piece(Color.RED, Piece.Type.SINGLE);
     whitePiece = new Piece(Color.WHITE,Piece.Type.SINGLE);
+    expectedBoardView = new BoardView(expectedPieces);
   }
 
   /**
@@ -43,17 +59,6 @@ public class BoardTest {
   @Test
   public void testBoardSetUp(){
     Piece[][] actualPieces = CuT.getPieces();
-
-    Piece[][] expectedPieces = new Piece[][]{
-            {null, redPiece, null, redPiece, null, redPiece, null, redPiece},
-            {redPiece, null, redPiece, null, redPiece, null, redPiece, null},
-            {null, redPiece, null, redPiece, null, redPiece, null, redPiece},
-            {null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {whitePiece, null, whitePiece, null, whitePiece, null, whitePiece, null},
-            {null, whitePiece, null, whitePiece, null, whitePiece, null, whitePiece},
-            {whitePiece, null, whitePiece, null, whitePiece, null, whitePiece, null},
-    };
 
     for(int row = 0; row < expectedPieces.length; row++){
       assertTrue(Arrays.deepEquals(expectedPieces[row],actualPieces[row]));
@@ -85,11 +90,32 @@ public class BoardTest {
   }
 
   /**
-   * Test
+   * Test for equals method.
+   */
+  @Test
+  public void testEquals(){
+    //Boards are equal
+    Board b1 = new Board();
+    Board b2 = new Board();
+    assertTrue(b1.equals(b2));
+
+    //Boards are the same object
+    assertTrue(b1.equals(b1));
+
+    //Board compared to other object
+    assertFalse(b1.equals(redPiece));
+
+    //Boards are not equal
+    //TODO add constructor for diff. board setup
+
+  }
+
+  /**
+   * Test for Board's board View
    */
   @Test
   public void testBoardView(){
-
+    //assertEquals(expectedBoardView,CuT.getBoardView());
   }
 
 }
