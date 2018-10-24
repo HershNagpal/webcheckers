@@ -24,6 +24,9 @@ public class RowTest {
 	 */
 	private Row row3;
 	private Row row7;
+	/**
+	 * Friendly Objects
+	 */
 	private Piece mockRedPiece;
 	private Piece mockWhitePiece;
 	private Piece pieces3[];

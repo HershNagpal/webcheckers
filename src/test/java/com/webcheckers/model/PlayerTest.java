@@ -21,6 +21,9 @@ public class PlayerTest {
 	 */
 	private Player playerOrange;
 	private Player playerTangerine;
+	/**
+	 * Friendly Objects
+	 */
 	private final String ORANGE_NAME = "Orange";
 	private final String TANGERINE_NAME = "Tangerine";
 

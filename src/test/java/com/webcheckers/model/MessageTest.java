@@ -19,6 +19,9 @@ public class MessageTest {
 	 */
 	private Message errorMessage;
 	private Message infoMessage;
+	/**
+	 * Friendly Objects
+	 */
 	private final String ERROR_TEXT = "This is an error; you suck.";
 	private final String INFO_TEXT = "This just in: you suck.";
 

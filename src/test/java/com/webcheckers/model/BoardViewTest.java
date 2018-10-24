@@ -25,6 +25,9 @@ public class BoardViewTest {
 	 * The objects to be tested
 	 */
 	private BoardView boardView;
+	/**
+	 * Friendly Objects
+	 */
 	private Piece mockRedPiece;
 
 	// Board created with mock pieces. Every other row has 8 mock red pieces while the odd rows have none.
