@@ -141,7 +141,19 @@ public class GameTest {
 	}
 	
 	/**
-	 * Tests the ValidateMove method.
+     * Tests the switchActiveColor method
+     */
+    @Test
+    public void testSwitchActiveColor() {
+		Color originalColor = CuT.getActiveColor();
+		CuT.switchActiveColor();
+		assertNotEquals(originalColor, CuT.getActiveColor());
+		CuT.switchActiveColor();
+		assertEquals(originalColor, CuT.getActiveColor());
+	}
+
+	/**
+	 * Tests the ValidateMove method with single pieces.
 	 */
 	@Test
 	public void testValidateMove(){
