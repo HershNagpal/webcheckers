@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import com.webcheckers.model.Piece.Type;
+
 /**
  * Combines the board and players in order to play the game
  * @author Luis Gutierrez, Christopher Daukshus
@@ -107,22 +109,35 @@ public class Game {
    */
   private boolean isNormalMove(Move move) {
     int row1 = move.getStart().getRow();
-    int row2 = move.getEnd().getRow();
-
     int col1 = move.getStart().getCell();
+    
+    int row2 = move.getEnd().getRow();
     int col2 = move.getEnd().getCell();
+
+    Piece movingPiece = board.getPieceAtPosition(move.getStart());
 
     boolean isSingleMove = false;
     boolean endIsEmpty = false;
 
-    if((row1+1 == row2) && (col1+1 == col2)) {
-      isSingleMove = true;
-    }
-    else if((row1+1 == row2) && (col1-1 == col2)) {
-      isSingleMove = true;
+    // Red pieces move to higher rows, White pieces move to lower rows. Kings can do both.
+    if(movingPiece.getColor().equals(Color.RED) || movingPiece.getType().equals(Type.KING)) {
+      if((row1+1 == row2) && (col1+1 == col2)) {
+        isSingleMove = true;
+      }
+      else if((row1+1 == row2) && (col1-1 == col2)) {
+        isSingleMove = true;
+      }
+    } 
+    else if(movingPiece.getColor().equals(Color.WHITE) || movingPiece.getType().equals(Type.KING)) {
+      if((row1-1 == row2) && (col1+1 == col2)) {
+        isSingleMove = true;
+      }
+      else if((row1-1 == row2) && (col1-1 == col2)) {
+        isSingleMove = true; 
+      }
     }
 
-    if(board.checkPiece() == null) {
+    if(board.getPieceAtPosition(move.getEnd()) == null) {
       endIsEmpty = true;
     }
 
