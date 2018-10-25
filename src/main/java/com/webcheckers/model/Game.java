@@ -85,5 +85,19 @@ public class Game {
    */
   public void setActiveColor(Color color){this.activeColor = color;}
 
+  /**
+   * Checks if player is the active player
+   */
+    public boolean isActivePlayer(Player player){
+        if (player == redPlayer){
+            if (activeColor == Color.RED)return true;
+        }
+        else{
+            if (player == whitePlayer){
+                if (activeColor == Color.WHITE)return true;
+            }
+        }
+        return false;
+    }
 
 }
