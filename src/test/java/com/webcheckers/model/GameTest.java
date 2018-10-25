@@ -6,12 +6,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * Unit test suite for the Game class.
  *
  * @author Hersh Nagpal
+ * @author Matthew Bollinger
  */
 @Tag("Model-tier")
 public class GameTest {
@@ -19,13 +19,24 @@ public class GameTest {
 	/**
 	 * The objects to be tested.
 	 */
+	private Player white;
+	private Player red;
+	private Board board;
+	private Color color;
+
+	private Game CuT;
+
 
 	 /**
 	 * Initialize the objects to test
 	 */
 	@BeforeEach
 	public void setup(){
+	    white = mock(Player.class);
+	    red = mock(Player.class);
+	    board = mock(Board.class);
 
+	    CuT = new Game(red, white, board);
 	}
 
 	/**
@@ -33,7 +44,10 @@ public class GameTest {
 	 */
 	@Test
 	public void testIsRedPlayer() {
-	
+
+	    assertFalse(CuT.isRedPlayer(white), "" +
+                "When passing in white player, this should return false!");
+	    assertTrue(CuT.isRedPlayer(red));
 	}
 
 	/**
@@ -41,7 +55,8 @@ public class GameTest {
 	 */
 	@Test
 	public void testGetRedPlayer() {
-	
+	assertEquals(red, CuT.getRedPlayer(), "" +
+            "getRedPlayer does not return the correct object!");
 	}
 
 	/**
@@ -49,7 +64,8 @@ public class GameTest {
 	 */
 	@Test
 	public void testGetWhitePlayer() {
-	
+	assertEquals(white, CuT.getWhitePlayer(), "" +
+            "getWhitePlayer does not return correct object!");
 	}
 
 	/**
@@ -57,7 +73,8 @@ public class GameTest {
 	 */
 	@Test
 	public void testgetActivePlayer() {
-	
+	assertEquals(Color.RED, CuT.getActiveColor(), "" +
+            "Active player should be red!");
 	}
 
 	/**
@@ -65,6 +82,17 @@ public class GameTest {
 	 */
 	@Test
 	public void testGetBoard() {
-	
+	assertSame(board, CuT.getBoard(), "" +
+            "The boards are not equal!");
 	}
+
+    /**
+     * Test new Board should be generated if
+     * there is no board supplied
+     */
+    @Test
+    public void testNoBoardConstructor(){
+        CuT = new Game(red, white);
+        //assertSame();
+    }
 }
