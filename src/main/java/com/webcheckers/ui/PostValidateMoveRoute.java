@@ -1,8 +1,7 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
-import com.webcheckers.model.Message;
-import com.webcheckers.model.MessageType;
+import com.webcheckers.model.*;
 import spark.*;
 
 import java.util.Objects;
@@ -28,19 +27,24 @@ public class PostValidateMoveRoute implements Route {
 
     @Override
     public Object handle(Request request, Response response) {
-        final String messageJSON = request.body();
-        System.out.println(messageJSON);
-        final Message message = gson.fromJson(messageJSON, Message.class);
-        MessageType type = message.getType();
-        switch (type) {
-            case ERROR:
-                // Return message text telling why user move is invalid
-                break;
-            case INFO:
-                // Valid move
-                break;
+        final String moveJSON = request.body();
+        System.out.println(moveJSON);
+        final Move move = gson.fromJson(moveJSON, Move.class);
+        final Session session = request.session();
+        final Player player = session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR);
+        System.out.println("Grabbed player");
+        final Game game = player.getGame();
+        System.out.println("Grabbed game");
+        if (valid(move, game)) {
+            return new Message("This move is valid", MessageType.INFO);
         }
+        else {
+            return new Message("This move is invalid", MessageType.ERROR);
+        }
+    }
 
-        return null;
+    private boolean valid(Move move, Game game) {
+        
+        return true;
     }
 }
