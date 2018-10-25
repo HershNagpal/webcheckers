@@ -81,4 +81,10 @@ public class Game {
   }
 
 
+  public void makeMove(Move move){
+    //If normal move
+    board.makeNormalMove(move);
+    //If jump move
+    board.makeJumpMove(move);
+  }
 }
