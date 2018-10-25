@@ -114,6 +114,9 @@ public class PlayerLobbyTest {
         assertNull(CuT.getPlayer(name));
         CuT.signIn(player);
         assertEquals(player, CuT.getPlayer(name));
+        CuT.signOut(player);
+        CuT.signIn(new Player("testing"));
+        assertNull(CuT.getPlayer(name));
     }
 
     /**
@@ -127,6 +130,7 @@ public class PlayerLobbyTest {
             CuT.signIn(player);
             names.add("" + i);
         }
+        CuT.signIn(player);
         assertEquals(names, CuT.getPlayerLobbyNames(player));
     }
 
