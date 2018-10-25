@@ -134,7 +134,16 @@ public class Board {
 
   public void makeNormalMove(Move move){
       Position startingPosition = move.getStart();
-      Piece startingPiece = pieces[startingPosition.getRow()][startingPosition.getCell()];
+      Position endingPosition = move.getEnd();
+
+      int rowStart = startingPosition.getRow();
+      int colStart = startingPosition.getCell();
+      int rowEnd = endingPosition.getRow();
+      int colEnd = endingPosition.getCell();
+
+      Piece startingPiece = pieces[rowStart][colStart];
+      pieces[rowStart][colStart] = null;
+      pieces[rowEnd][colEnd] = startingPiece;
 
   }
 
