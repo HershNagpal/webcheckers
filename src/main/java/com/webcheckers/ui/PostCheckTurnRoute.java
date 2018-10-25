@@ -1,12 +1,11 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Message;
 import com.webcheckers.model.MessageType;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.TemplateEngine;
+import com.webcheckers.model.Player;
+import spark.*;
 
 import java.util.Objects;
 
@@ -14,6 +13,8 @@ import java.util.Objects;
  * The {@code POST /game} route handler for checking player turns.
  *
  * @author Michael Kha
+ * @author Matthew Bollinger
+ * @author Luis Gutierrez
  */
 public class PostCheckTurnRoute implements Route {
 
@@ -27,20 +28,30 @@ public class PostCheckTurnRoute implements Route {
         this.gson = gson;
     }
 
+  /**
+   * This action checks to see if the opponent has submitted their turn.
+   * @param request The HTTP request
+   * @param response The HTTP response
+   * @return Info Message, true if opponent is done with turn, false otherwise.
+   */
     @Override
     public Object handle(Request request, Response response) {
-        final String messageJSON = request.body();
-        System.out.println(messageJSON);
-        final Message message = gson.fromJson(messageJSON, Message.class);
-        String text = message.getText();
-        switch (text) {
-            case "true":
-                // This player's turn
-                break;
-            case "false":
-                // Opponent still taking their turn
-                break;
+        final Session session = request.session();
+        final Player player = session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR);
+        System.out.println("Grabbed player");
+        final Game game = player.getGame();
+
+        final Message message;
+
+        //Opponent ended his turn
+        if(game.isActivePlayer(player)){
+          message = new Message("true",MessageType.INFO);
         }
-        return null;
+        //Opponent is still in his turn
+        else{
+          message = new Message("false",MessageType.INFO);
+        }
+
+        return message;
     }
 }

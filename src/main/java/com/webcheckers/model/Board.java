@@ -125,4 +125,29 @@ public class Board {
     return deepEqual;
   }
 
+  public Piece checkPiece(Position position){
+      int row = position.getRow();
+      int col = position.getCell();
+      return pieces[row][col];
+  }
+
+
+  public void makeNormalMove(Move move){
+      Position startingPosition = move.getStart();
+      Position endingPosition = move.getEnd();
+
+      int rowStart = startingPosition.getRow();
+      int colStart = startingPosition.getCell();
+      int rowEnd = endingPosition.getRow();
+      int colEnd = endingPosition.getCell();
+
+      Piece startingPiece = pieces[rowStart][colStart];
+      pieces[rowStart][colStart] = null;
+      pieces[rowEnd][colEnd] = startingPiece;
+
+  }
+
+  public void makeJumpMove(Move move){
+
+  }
 }

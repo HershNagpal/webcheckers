@@ -2,8 +2,7 @@ package com.webcheckers.model;
 
 /**
  * Combines the board and players in order to play the game
- * @author Luis Gutierrez
- * @author Hersh Nagpal
+ * @author Luis Gutierrez, Christopher Daukshus
  */
 public class Game {
   private Player redPlayer;
@@ -139,5 +138,38 @@ public class Game {
 
     return true;
   }
+  /**
+   * Switches the active Color
+   */
+  public void switchActiveColor(){
+    if (activeColor == Color.RED) {
+      activeColor = Color.WHITE;
+    } else {
+      activeColor = Color.RED;
+    }
+  }
 
+  /**
+   * Checks if player is the active player
+   */
+    public boolean isActivePlayer(Player player){
+        if (player == redPlayer){
+            if (activeColor == Color.RED)
+            return true;
+        }
+        else{
+            if (player == whitePlayer){
+                if (activeColor == Color.WHITE)
+                return true;
+            }
+        }
+        return false;
+    }
+
+  public void makeMove(Move move){
+    //If normal move
+    board.makeNormalMove(move);
+    //If jump move
+    board.makeJumpMove(move);
+  }
 }
