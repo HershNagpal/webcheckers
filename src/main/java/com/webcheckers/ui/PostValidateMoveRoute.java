@@ -29,6 +29,7 @@ public class PostValidateMoveRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
         final String messageJSON = request.body();
+        System.out.println(messageJSON);
         final Message message = gson.fromJson(messageJSON, Message.class);
         MessageType type = message.getType();
         switch (type) {

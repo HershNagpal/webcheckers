@@ -30,6 +30,7 @@ public class PostCheckTurnRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
         final String messageJSON = request.body();
+        System.out.println(messageJSON);
         final Message message = gson.fromJson(messageJSON, Message.class);
         String text = message.getText();
         switch (text) {
