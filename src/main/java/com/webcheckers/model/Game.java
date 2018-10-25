@@ -4,7 +4,9 @@ import com.webcheckers.model.Piece.Type;
 
 /**
  * Combines the board and players in order to play the game
- * @author Luis Gutierrez, Christopher Daukshus
+ * @author Luis Gutierrez 
+ * @author Christopher Daukshus
+ * @author Hersh Nagpal
  */
 public class Game {
   private Player redPlayer;
@@ -84,13 +86,24 @@ public class Game {
 
   /**
    * Checks if the move being made by a player is valid or not.
-   * First checks if the move is a normal diagonal movement. If so, returns true.
-   * Then checks if the move is a jump move over an opponent's piece. If so, returns true.
+   * First ensures that it is the correct player's turn and that there is no piece at the destination.
+   * Checks if the move is a normal diagonal movement. If so, returns true.
+   * If not, then checks if the move is a jump move over an opponent's piece. If so, returns true.
    * Returns false if neither.
    * @param move The Move object that the player is making
    * @return true if the move is valid, false if it is invalid.
    */
   public boolean validateMove(Move move) {
+    Color movedPieceColor = board.getPieceAtPosition(move.getStart()).getColor();
+
+    if( !getActiveColor().equals(movedPieceColor) ) {
+      return false;
+    }
+
+    if(board.getPieceAtPosition(move.getEnd()) != null) {
+      return false;
+    }
+
     if(isNormalMove(move)) {
       return true;
     } 
@@ -110,15 +123,13 @@ public class Game {
   private boolean isNormalMove(Move move) {
     int row1 = move.getStart().getRow();
     int col1 = move.getStart().getCell();
-    
+
     int row2 = move.getEnd().getRow();
     int col2 = move.getEnd().getCell();
 
     Piece movingPiece = board.getPieceAtPosition(move.getStart());
 
     boolean isSingleMove = false;
-    boolean endIsEmpty = false;
-
     // Red pieces move to higher rows, White pieces move to lower rows. Kings can do both.
     if(movingPiece.getColor().equals(Color.RED) || movingPiece.getType().equals(Type.KING)) {
       if((row1+1 == row2) && (col1+1 == col2)) {
@@ -137,11 +148,7 @@ public class Game {
       }
     }
 
-    if(board.getPieceAtPosition(move.getEnd()) == null) {
-      endIsEmpty = true;
-    }
-
-    return isSingleMove && endIsEmpty;
+    return isSingleMove;
   }
 
   /**
@@ -165,21 +172,23 @@ public class Game {
   }
 
   /**
-   * Checks if player is the active player
-   */
-    public boolean isActivePlayer(Player player){
-        if (player == redPlayer){
-            if (activeColor == Color.RED)
+  * Checks if player is the active player
+  */
+  public boolean isActivePlayer(Player player) {
+      if (player == redPlayer) {
+        if (activeColor == Color.RED) {
+          return true;
+        }
+      }
+      else{
+        if (player == whitePlayer) {
+          if (activeColor == Color.WHITE) {
             return true;
+          }
         }
-        else{
-            if (player == whitePlayer){
-                if (activeColor == Color.WHITE)
-                return true;
-            }
-        }
-        return false;
     }
+    return false;
+  }
 
   public void makeMove(Move move){
     //If normal move
