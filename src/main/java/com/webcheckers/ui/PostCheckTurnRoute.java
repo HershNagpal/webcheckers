@@ -28,17 +28,22 @@ public class PostCheckTurnRoute implements Route {
 
     @Override
     public Object handle(Request request, Response response) {
-        final String messageJSON = request.body();
-        System.out.println(messageJSON);
-        final Message message = gson.fromJson(messageJSON, Message.class);
-
         final Session session = request.session();
         final Player player = session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR);
         System.out.println("Grabbed player");
         final Game game = player.getGame();
-
-        String text = message.getText();
         
-        return null;
+        final Message message;
+
+        //Opponent ended his turn
+        if(game.isActivePlayer(player)){
+          message = new Message("true",MessageType.INFO);
+        }
+        //Opponent is still in his turn
+        else{
+          message = new Message("false",MessageType.INFO);
+        }
+
+        return message;
     }
 }
