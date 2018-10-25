@@ -28,13 +28,19 @@ public class PostCheckTurnRoute implements Route {
         this.gson = gson;
     }
 
+  /**
+   * This action checks to see if the opponent has submitted their turn.
+   * @param request The HTTP request
+   * @param response The HTTP response
+   * @return Info Message, true if opponent is done with turn, false otherwise.
+   */
     @Override
     public Object handle(Request request, Response response) {
         final Session session = request.session();
         final Player player = session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR);
         System.out.println("Grabbed player");
         final Game game = player.getGame();
-        
+
         final Message message;
 
         //Opponent ended his turn
