@@ -82,13 +82,22 @@ public class Game {
 
   /**
    * Checks if the move being made by a player is valid or not.
+   * First checks if the move is a normal diagonal movement. If so, returns true.
+   * Then checks if the move is a jump move over an opponent's piece. If so, returns true.
+   * Returns false if neither.
    * @param move The Move object that the player is making
    * @return true if the move is valid, false if it is invalid.
    */
   public boolean validateMove(Move move) {
-    
-    
-    return true;
+    if(isNormalMove(move)) {
+      return true;
+    } 
+    else if (isJumpMove(move)) {
+      return true;
+    } 
+    else {
+      return false;
+    }
   }
 
   /**
