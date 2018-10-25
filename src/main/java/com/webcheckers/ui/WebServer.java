@@ -164,13 +164,13 @@ public class WebServer {
 
     get(GAME_URL, new GetGameRoute(playerLobby, templateEngine));
 
-    post(CHECK_TURN_URL, new PostCheckTurnRoute(templateEngine));
+    post(CHECK_TURN_URL, new PostCheckTurnRoute(templateEngine, gson));
 
     post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(templateEngine, gson));
 
     post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(templateEngine, gson));
 
-    post(BACKUP_MOVE_URL, new PostBackupMoveRoute(templateEngine));
+    post(BACKUP_MOVE_URL, new PostBackupMoveRoute(templateEngine, gson));
 
     LOG.config("WebServer is initialized.");
   }
