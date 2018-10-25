@@ -81,9 +81,15 @@ public class Game {
   }
 
   /**
-   * Changes the active Color
+   * Switches the active Color
    */
-  public void setActiveColor(Color color){this.activeColor = color;}
+  public void switchActiveColor(){
+    if (activeColor == Color.RED) {
+      activeColor = Color.WHITE;
+    } else {
+      activeColor = Color.RED;
+    }
+  }
 
   /**
    * Checks if player is the active player
@@ -100,4 +106,10 @@ public class Game {
         return false;
     }
 
+  public void makeMove(Move move){
+    //If normal move
+    board.makeNormalMove(move);
+    //If jump move
+    board.makeJumpMove(move);
+  }
 }
