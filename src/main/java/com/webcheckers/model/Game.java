@@ -80,6 +80,25 @@ public class Game {
     return board;
   }
 
+  /**
+   * Changes the active Color
+   */
+  public void setActiveColor(Color color){this.activeColor = color;}
+
+  /**
+   * Checks if player is the active player
+   */
+    public boolean isActivePlayer(Player player){
+        if (player == redPlayer){
+            if (activeColor == Color.RED)return true;
+        }
+        else{
+            if (player == whitePlayer){
+                if (activeColor == Color.WHITE)return true;
+            }
+        }
+        return false;
+    }
 
   public void makeMove(Move move){
     //If normal move
