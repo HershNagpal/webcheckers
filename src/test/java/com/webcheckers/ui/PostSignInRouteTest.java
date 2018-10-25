@@ -1,13 +1,13 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.model.Message;
 import com.webcheckers.model.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import spark.*;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -113,9 +113,13 @@ public class PostSignInRouteTest {
     public void testSignInSuccessful() {
         // Arrange test scenario
         when(request.session()).thenReturn(session);
-
+        when(request.queryParams(PostSignInRoute.NAME_PARAM)).thenReturn(PLAYER_NAME);
         // Invoke the test
+        int unexpected = playerLobby.size();
         CuT.handle(request, response);
+        int actual = playerLobby.size();
+        // Check that the sign in was successful
+        assertNotEquals(unexpected, actual);
         // Verify that the player is redirected to the home page
         verify(response).redirect(WebServer.HOME_URL);
     }
