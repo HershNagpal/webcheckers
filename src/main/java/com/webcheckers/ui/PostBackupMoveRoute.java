@@ -7,16 +7,11 @@ import spark.TemplateEngine;
 
 import java.util.Objects;
 
-/**
- * The {@code POST /game} route handler for checking player turns.
- *
- * @author Michael Kha
- */
-public class PostCheckTurnRoute implements Route {
+public class PostBackupMoveRoute implements Route {
 
     private TemplateEngine templateEngine;
 
-    public PostCheckTurnRoute(TemplateEngine templateEngine) {
+    public PostBackupMoveRoute(TemplateEngine templateEngine) {
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
         this.templateEngine = templateEngine;
     }
