@@ -13,6 +13,8 @@ import java.util.Objects;
  * The {@code POST /game} route handler for checking player turns.
  *
  * @author Michael Kha
+ * @author Matthew Bollinger
+ * @author Luis Gutierrez
  */
 public class PostCheckTurnRoute implements Route {
 
