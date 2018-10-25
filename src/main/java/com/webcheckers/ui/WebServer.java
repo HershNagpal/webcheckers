@@ -166,7 +166,7 @@ public class WebServer {
 
     post(CHECK_TURN_URL, new PostCheckTurnRoute(templateEngine));
 
-    post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(templateEngine));
+    post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(templateEngine, gson));
 
     post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(templateEngine));
 
