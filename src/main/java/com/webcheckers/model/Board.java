@@ -165,7 +165,27 @@ public class Board {
       int rowDistance = rowEnd - rowStart;
       int colDistance = colEnd - colStart;
 
-      int jumpedPieceRow = rowStart + rowDistance;
+
+      //If row or column distance is 2, then the jump is going up/right, so the piece in between is one above the start.
+      //Otherwise, the jump is going down/left, so the piece is one below the start.
+      int jumpedRow;
+      int jumpedCol;
+
+      if(rowDistance == 2){
+          jumpedRow = rowStart + 1;
+      }
+      else{
+          jumpedRow = rowStart - 1;
+      }
+
+      if(colDistance == 2){
+          jumpedCol = colStart + 1;
+      }
+      else{
+          jumpedCol = colStart - 1;
+      }
+
+      pieces[jumpedRow][jumpedCol] = null;
 
   }
 }
