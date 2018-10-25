@@ -215,10 +215,29 @@ public class Game {
     return false;
   }
 
+  /**
+   * Updates the board to implement a move
+   * @param move starting position and ending position
+   */
   public void makeMove(Move move){
-    //If normal move
-    board.makeNormalMove(move);
-    //If jump move
-    board.makeJumpMove(move);
+
+      Position moveStart = move.getStart();
+      Position moveEnd = move.getEnd();
+
+      int rowStart = moveStart.getRow();
+      int colStart = moveStart.getCell();
+      int rowEnd = moveStart.getRow();
+      int colEnd = moveStart.getCell();
+
+      int rowDistance = rowStart - rowEnd;
+      int colDistance = colStart - colEnd;
+
+      if(rowDistance == 1 && colDistance == 2){
+
+      }
+
+      board.makeNormalMove(move);
+
+
   }
 }
