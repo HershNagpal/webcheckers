@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import static java.lang.Math.abs;
+
 /**
  * Combines the board and players in order to play the game
  * @author Luis Gutierrez, Christopher Daukshus
@@ -120,12 +122,13 @@ public class Game {
       int rowEnd = moveStart.getRow();
       int colEnd = moveStart.getCell();
 
-      int rowDistance = rowStart - rowEnd;
-      int colDistance = colStart - colEnd;
+      int rowDistance = rowEnd - rowStart;
+      rowDistance = abs(rowDistance);
+      int colDistance = colEnd - colStart;
+      colDistance = abs(colDistance);
 
       if(rowDistance == 1 && colDistance == 1){ board.makeNormalMove(move); }
       else if (rowDistance == 2 && colDistance == 2) { board.makeJumpMove(move); }
-
 
   }
 }
