@@ -80,5 +80,35 @@ public class Game {
     return board;
   }
 
+  /**
+   * Checks if the move being made by a player is valid or not.
+   * @param move The Move object that the player is making
+   * @return true if the move is valid, false if it is invalid.
+   */
+  public boolean validateMove(Move move) {
+    
+    
+    return true;
+  }
+
+  /**
+   * Checks if the given Move is a valid normal, non-jump move.
+   * @param move The Move object that the player is making
+   * @return true if the move is a valid normal, non-jump move, false if it is invalid or not a normal move.
+   */
+  private boolean isNormalMove(Move move) {
+
+    return true;
+  }
+
+  /**
+   * Checks if the given Move is a valid jump move
+   * @param move The Move object that the player is making.
+   * @return true if the move is a valid jump move, false if it is invalid or not a jump move.
+   */
+  private boolean isJumpMove(Move move) {
+
+    return true;
+  }
 
 }
