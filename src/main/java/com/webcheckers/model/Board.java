@@ -148,6 +148,6 @@ public class Board {
   }
 
   public void makeJumpMove(Move move){
-
+      
   }
 }
