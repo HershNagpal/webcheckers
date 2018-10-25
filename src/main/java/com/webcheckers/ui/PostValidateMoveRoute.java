@@ -33,8 +33,10 @@ public class PostValidateMoveRoute implements Route {
         MessageType type = message.getType();
         switch (type) {
             case ERROR:
+                // Return message text telling why user move is invalid
                 break;
             case INFO:
+                // Valid move
                 break;
         }
 
