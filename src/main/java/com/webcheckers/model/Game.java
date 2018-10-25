@@ -80,5 +80,10 @@ public class Game {
     return board;
   }
 
+  /**
+   * Changes the active Color
+   */
+  public void setActiveColor(Color color){this.activeColor = color;}
+
 
 }
