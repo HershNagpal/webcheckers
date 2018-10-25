@@ -157,9 +157,34 @@ public class Game {
    * @return true if the move is a valid jump move, false if it is invalid or not a jump move.
    */
   private boolean isJumpMove(Move move) {
+    int row1 = move.getStart().getRow();
+    int col1 = move.getStart().getCell();
 
-    return true;
+    int row2 = move.getEnd().getRow();
+    int col2 = move.getEnd().getCell();
+
+    Piece movingPiece = board.getPieceAtPosition(move.getStart());
+
+    boolean isJumpMove = false;
+    if(movingPiece.getColor().equals(Color.RED) || movingPiece.getType().equals(Type.KING)) {
+      if((row1+2 == row2) && (col1+2 == col2)) {
+        isJumpMove = true;
+      }
+      else if((row1+2 == row2) && (col1-2 == col2)) {
+        isJumpMove = true;
+      }
+    } 
+    else if(movingPiece.getColor().equals(Color.WHITE) || movingPiece.getType().equals(Type.KING)) {
+      if((row1-2 == row2) && (col1+2 == col2)) {
+        isJumpMove = true;
+      }
+      else if((row1-2 == row2) && (col1-2 == col2)) {
+        isJumpMove = true; 
+      }
+    }
+    return isJumpMove;
   }
+
   /**
    * Switches the active Color
    */
