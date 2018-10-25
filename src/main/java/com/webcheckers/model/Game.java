@@ -152,6 +152,7 @@ public class Game {
   }
 
   /**
+   * @TODO make sure that there is a piece in between the start and end.
    * Checks if the given Move is a valid jump move
    * @param move The Move object that the player is making.
    * @return true if the move is a valid jump move, false if it is invalid or not a jump move.
