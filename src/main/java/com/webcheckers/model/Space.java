@@ -9,11 +9,11 @@ public class Space {
 
   /**
    * KING_RED - Spaces where Red checkers become king pieces.
-   * KING_BLACK - Spaces where Black checkers become king pieces.
+   * KING_WHITE - Spaces where White checkers become king pieces.
    * NON_KING - Normal spaces where king pieces cannot be made.
    */
   public enum SpaceType {
-    KING_RED, KING_BLACK, NON_KING
+    KING_RED, KING_WHITE, NON_KING
   }
 
   /**
@@ -49,7 +49,7 @@ public class Space {
    */
   private void setSpaceType() {
     if (row == 0) {
-      this.spaceType = SpaceType.KING_BLACK;
+      this.spaceType = SpaceType.KING_WHITE;
     } else if (row == 7) {
       this.spaceType = SpaceType.KING_RED;
     } else {
