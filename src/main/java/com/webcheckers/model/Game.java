@@ -3,6 +3,7 @@ package com.webcheckers.model;
 /**
  * Combines the board and players in order to play the game
  * @author Luis Gutierrez
+ * @author Hersh Nagpal
  */
 public class Game {
   private Player redPlayer;
@@ -106,8 +107,27 @@ public class Game {
    * @return true if the move is a valid normal, non-jump move, false if it is invalid or not a normal move.
    */
   private boolean isNormalMove(Move move) {
+    int row1 = move.getStart().getRow();
+    int row2 = move.getEnd().getRow();
 
-    return true;
+    int col1 = move.getStart().getCell();
+    int col2 = move.getEnd().getCell();
+
+    boolean isSingleMove = false;
+    boolean endIsEmpty = false;
+
+    if((row1+1 == row2) && (col1+1 == col2)) {
+      isSingleMove = true;
+    }
+    else if((row1+1 == row2) && (col1-1 == col2)) {
+      isSingleMove = true;
+    }
+
+    if(board.checkPiece() == null) {
+      endIsEmpty = true;
+    }
+
+    return isSingleMove && endIsEmpty;
   }
 
   /**
