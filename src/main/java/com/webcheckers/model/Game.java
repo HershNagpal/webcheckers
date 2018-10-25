@@ -123,11 +123,8 @@ public class Game {
       int rowDistance = rowStart - rowEnd;
       int colDistance = colStart - colEnd;
 
-      if(rowDistance == 1 && colDistance == 2){
-
-      }
-
-      board.makeNormalMove(move);
+      if(rowDistance == 1 && colDistance == 1){ board.makeNormalMove(move); }
+      else if (rowDistance == 2 && colDistance == 2) { board.makeJumpMove(move); }
 
 
   }
