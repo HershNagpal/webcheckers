@@ -1,12 +1,11 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Message;
 import com.webcheckers.model.MessageType;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.TemplateEngine;
+import com.webcheckers.model.Player;
+import spark.*;
 
 import java.util.Objects;
 
@@ -32,15 +31,14 @@ public class PostCheckTurnRoute implements Route {
         final String messageJSON = request.body();
         System.out.println(messageJSON);
         final Message message = gson.fromJson(messageJSON, Message.class);
+
+        final Session session = request.session();
+        final Player player = session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR);
+        System.out.println("Grabbed player");
+        final Game game = player.getGame();
+
         String text = message.getText();
-        switch (text) {
-            case "true":
-                // This player's turn
-                break;
-            case "false":
-                // Opponent still taking their turn
-                break;
-        }
+        
         return null;
     }
 }
