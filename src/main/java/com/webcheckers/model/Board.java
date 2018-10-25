@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import static java.lang.Math.abs;
+
 /**
  * Represents the Checkers Board and all the logical operations that need to be done on 
  * pieces for the game to function.
@@ -153,6 +155,42 @@ public class Board {
   }
 
   public void makeJumpMove(Move move){
-      
+      Position startingPosition = move.getStart();
+      Position endingPosition = move.getEnd();
+
+      int rowStart = startingPosition.getRow();
+      int colStart = startingPosition.getCell();
+      int rowEnd = endingPosition.getRow();
+      int colEnd = endingPosition.getCell();
+
+      Piece startingPiece = pieces[rowStart][colStart];
+      pieces[rowStart][colStart] = null;
+      pieces[rowEnd][colEnd] = startingPiece;
+
+      int rowDistance = rowEnd - rowStart;
+      int colDistance = colEnd - colStart;
+
+
+      //If row or column distance is 2, then the jump is going up/right, so the piece in between is one above the start.
+      //Otherwise, the jump is going down/left, so the piece is one below the start.
+      int jumpedRow;
+      int jumpedCol;
+
+      if(rowDistance == 2){
+          jumpedRow = rowStart + 1;
+      }
+      else{
+          jumpedRow = rowStart - 1;
+      }
+
+      if(colDistance == 2){
+          jumpedCol = colStart + 1;
+      }
+      else{
+          jumpedCol = colStart - 1;
+      }
+
+      pieces[jumpedRow][jumpedCol] = null;
+
   }
 }

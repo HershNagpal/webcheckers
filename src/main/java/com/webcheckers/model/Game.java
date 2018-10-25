@@ -1,10 +1,12 @@
 package com.webcheckers.model;
 
+import static java.lang.Math.abs;
+
 import com.webcheckers.model.Piece.Type;
 
 /**
  * Combines the board and players in order to play the game
- * @author Luis Gutierrez 
+ * @author Luis Gutierrez
  * @author Christopher Daukshus
  * @author Hersh Nagpal
  */
@@ -106,10 +108,10 @@ public class Game {
 
     if(isNormalMove(move)) {
       return true;
-    } 
+    }
     else if (isJumpMove(move)) {
       return true;
-    } 
+    }
     else {
       return false;
     }
@@ -138,13 +140,13 @@ public class Game {
       else if((row1+1 == row2) && (col1-1 == col2)) {
         isSingleMove = true;
       }
-    } 
+    }
     else if(movingPiece.getColor().equals(Color.WHITE) || movingPiece.getType().equals(Type.KING)) {
       if((row1-1 == row2) && (col1+1 == col2)) {
         isSingleMove = true;
       }
       else if((row1-1 == row2) && (col1-1 == col2)) {
-        isSingleMove = true; 
+        isSingleMove = true;
       }
     }
 
@@ -174,13 +176,13 @@ public class Game {
       else if((row1+2 == row2) && (col1-2 == col2)) {
         isJumpMove = true;
       }
-    } 
+    }
     else if(movingPiece.getColor().equals(Color.WHITE) || movingPiece.getType().equals(Type.KING)) {
       if((row1-2 == row2) && (col1+2 == col2)) {
         isJumpMove = true;
       }
       else if((row1-2 == row2) && (col1-2 == col2)) {
-        isJumpMove = true; 
+        isJumpMove = true;
       }
     }
     return isJumpMove;
@@ -230,15 +232,13 @@ public class Game {
       int rowEnd = moveStart.getRow();
       int colEnd = moveStart.getCell();
 
-      int rowDistance = rowStart - rowEnd;
-      int colDistance = colStart - colEnd;
+      int rowDistance = rowEnd - rowStart;
+      rowDistance = abs(rowDistance);
+      int colDistance = colEnd - colStart;
+      colDistance = abs(colDistance);
 
-      if(rowDistance == 1 && colDistance == 2){
-
-      }
-
-      board.makeNormalMove(move);
-
+      if(rowDistance == 1 && colDistance == 1){ board.makeNormalMove(move); }
+      else if (rowDistance == 2 && colDistance == 2) { board.makeJumpMove(move); }
 
   }
 }
