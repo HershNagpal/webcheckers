@@ -30,14 +30,14 @@ public class PostValidateMoveRoute implements Route {
         String moveJSON = request.body();
         System.out.println(moveJSON);
         Move move = gson.fromJson(moveJSON, Move.class);
-        final Session session = request.session();
-        final Player player = session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR);
+        Session session = request.session();
+        Player player = session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR);
         System.out.println("Grabbed player");
-        final Game game = player.getGame();
+        Game game = player.getGame();
         System.out.println("Grabbed game");
         if (valid(move, game)) {
             session.attribute("move", move);
-            return gson.toJson(new Message(null, MessageType.INFO));
+            return gson.toJson(new Message("", MessageType.INFO));
         }
         else {
             return gson.toJson(new Message("Invalid move. Try again.", MessageType.ERROR));

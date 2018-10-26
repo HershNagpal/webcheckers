@@ -23,24 +23,26 @@ public class PostSubmitTurnRoute implements Route {
 
     @Override
     public Object handle(Request request, Response response) {
-        final Session session = request.session();
-        final Player player = session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR);
-        final Game game = player.getGame();
-        String messageJSON = request.body();
-        System.out.println(messageJSON);
-        Message message = gson.fromJson(messageJSON, Message.class);
-        MessageType type = message.getType();
-        switch (type) {
-            case ERROR:
-                // Error occurred display error message
-                return gson.toJson(new Message("Turn was not processed. Error occurred.", MessageType.ERROR));
-            case INFO:
-                // Turn was processed
-                Move move = session.attribute("move");
-                game.makeMove(move);
-                game.switchActiveColor();
-                return gson.toJson(new Message("Turn was submitted", MessageType.INFO));
-        }
-        return null;
+        Session session = request.session();
+        Player player = session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR);
+        Game game = player.getGame();
+        //String messageJSON = request.body();
+        //System.out.println(messageJSON);
+        //Message message = gson.fromJson(messageJSON, Message.class);
+        //System.out.println(message);
+        //MessageType type = message.getType();
+        //switch (type) {
+        //    case ERROR:
+        //        // Error occurred display error message
+        //        return gson.toJson(new Message("Turn was not processed. Error occurred.", MessageType.ERROR));
+        //    case INFO:
+        //        // Turn was processed
+        //
+        //        return gson.toJson(new Message("Turn was submitted", MessageType.INFO));
+        //}
+        Move move = session.attribute("move");
+        game.makeMove(move);
+        game.switchActiveColor();
+        return gson.toJson(new Message("", MessageType.INFO));
     }
 }
