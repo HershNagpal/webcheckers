@@ -221,7 +221,7 @@ public class BoardTest {
   public void testMakeNormalMove(){
 
     CuT2.makeNormalMove(validRedMove2);
-    assertEquals(CuT.getPieces(),customPiecesRedMove2);
+    assertEquals(CuT2.getPieces(),customPiecesRedMove2);
 
     CuT2 = new Board(customPieces);
 
