@@ -12,7 +12,12 @@ public class Move {
       this.start = start;
       this.end = end;
   }
-  
+
+  /**
+   * Flips a given move. Used in PostValidateTurnRoute and PostSubmitTurnRoute.
+   * @param initial Move passed in to be flipped.
+   * @return Flipped move.
+   */
   public Move flipMove(Move initial){
       Position pos_start = initial.start;
       Position pos_end = initial.end;
