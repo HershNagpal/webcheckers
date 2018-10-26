@@ -96,7 +96,12 @@ public class Game {
    * @return true if the move is valid, false if it is invalid.
    */
   public boolean validateMove(Move move) {
-    Color movedPieceColor = board.getPieceAtPosition(move.getStart()).getColor();
+    Color movedPieceColor;
+    if (activeColor.equals(Color.RED)) {
+      movedPieceColor = board.getPieceAtFlippedPosition(move.getStart()).getColor();
+    } else {
+      movedPieceColor = board.getPieceAtPosition(move.getStart()).getColor();
+    }
 
     if( !getActiveColor().equals(movedPieceColor) ) {
       return false;

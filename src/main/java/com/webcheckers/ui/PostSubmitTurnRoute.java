@@ -1,10 +1,7 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
-import com.webcheckers.model.Game;
-import com.webcheckers.model.Message;
-import com.webcheckers.model.MessageType;
-import com.webcheckers.model.Player;
+import com.webcheckers.model.*;
 import spark.*;
 
 import java.util.Objects;
@@ -29,18 +26,20 @@ public class PostSubmitTurnRoute implements Route {
         final Session session = request.session();
         final Player player = session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR);
         final Game game = player.getGame();
-        final String messageJSON = request.body();
+        String messageJSON = request.body();
         System.out.println(messageJSON);
-        final Message message = gson.fromJson(messageJSON, Message.class);
+        Message message = gson.fromJson(messageJSON, Message.class);
         MessageType type = message.getType();
         switch (type) {
             case ERROR:
                 // Error occurred display error message
-                return new Message("Turn was not processed. Error occurred.", MessageType.ERROR);
+                return gson.toJson(new Message("Turn was not processed. Error occurred.", MessageType.ERROR));
             case INFO:
                 // Turn was processed
+                Move move = session.attribute("move");
+                game.makeMove(move);
                 game.switchActiveColor();
-                return new Message("Turn was submitted", MessageType.INFO);
+                return gson.toJson(new Message("Turn was submitted", MessageType.INFO));
         }
         return null;
     }

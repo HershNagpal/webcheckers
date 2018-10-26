@@ -147,6 +147,12 @@ public class Board {
       return pieces[row][col];
   }
 
+  public Piece getPieceAtFlippedPosition(Position position) {
+      int row = 7 - position.getRow();
+      int col = 7 - position.getCell();
+      return pieces[row][col];
+  }
+
 
   public void makeNormalMove(Move move){
       Position startingPosition = move.getStart();
