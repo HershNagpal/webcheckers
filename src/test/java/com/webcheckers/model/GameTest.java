@@ -34,6 +34,13 @@ public class GameTest {
 	private Piece redPiece;
 	private Piece whitePiece;
 	Piece[][] customPieces;
+
+	// Boards that result from making a move
+	Piece[][] customPiecesRedMove1;
+	Piece[][] customPiecesRedMove2;
+	Piece[][] customPiecesWhiteMove1;
+	Piece[][] customPiecesWhiteMove2;
+
 	// Positions on the mock board that can be called.
 	private Position redPosition1 = new Position(0, 2);
 	private Position redPosition2 = new Position(6, 2);
@@ -71,15 +78,59 @@ public class GameTest {
 			{null, null, redPiece, null, null, null, null, null},
 			{null, whitePiece, null, null, null, null, null, null},
 			{null, null, null, null, null, null, null, null},
-			{null, null, null, null, null, null, null, null},			
+			{null, null, null, null, null, null, null, null},
 			{null, null, null, null, null, null, null, null},
 			{null, null, null, null, null, null, null, null},
 			{null, null, redPiece, null, null, null, null, null},
 			{null, null, null, whitePiece, null, null, null, null}
 		};
-		
-		
-		
+
+        customPiecesRedMove2 = 	new Piece[][]{
+                {null, null, null, null, null, null, null, null},
+                {null, whitePiece, redPiece, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, redPiece, null, null, null, null, null},
+                {null, null, null, whitePiece, null, null, null, null}
+        };
+
+        customPiecesRedMove1 = new Piece[][]{
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {redPiece, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, redPiece, null, null, null, null, null},
+                {null, null, null, whitePiece, null, null, null, null}
+        };
+
+        customPiecesWhiteMove1 = new Piece[][]{
+                {null, null, redPiece, null, null, null, null, null},
+                {null, whitePiece, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, whitePiece, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
+        };
+
+        customPiecesWhiteMove2 = new Piece[][]{
+                {null, null, redPiece, null, null, null, null, null},
+                {null, whitePiece, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, redPiece, null, null, null, null, null},
+                {null, null, null, whitePiece, null, null, null, null}
+        };
+
+
+
 		board = new Board(customPieces);
 	    CuT = new Game(red, white, board);
 	}
@@ -140,7 +191,7 @@ public class GameTest {
         CuT = new Game(red, white);
         //assertSame();
 	}
-	
+
 	/**
      * Tests the switchActiveColor method
      */
@@ -170,7 +221,7 @@ public class GameTest {
 		assertFalse(CuT.validateMove(validWhiteMove1));
 		assertFalse(CuT.validateMove(invalidWhiteMove1));
 
-		CuT.switchActiveColor();		
+		CuT.switchActiveColor();
 
 		assertTrue(CuT.validateMove(validWhiteMove1));
 		assertTrue(CuT.validateMove(validWhiteMove2));
@@ -179,4 +230,30 @@ public class GameTest {
 		assertFalse(CuT.validateMove(validRedMove1));
 		assertFalse(CuT.validateMove(invalidRedMove1));
 	}
+
+	@Test
+	public void testMakeMove(){
+	    if(CuT.getActiveColor() == Color.WHITE){
+            CuT.switchActiveColor();
+        }
+
+        CuT.makeMove(validRedMove2);
+        assertEquals(CuT.getBoard().getPieces(),customPiecesRedMove2);
+
+        CuT = new Game(red, white, board);
+
+        CuT.makeMove(validRedMove1);
+        assertEquals(CuT.getBoard().getPieces(),customPiecesRedMove1);
+
+        CuT = new Game(red, white, board);
+
+        CuT.makeMove(validWhiteMove1);
+        assertEquals(CuT.getBoard().getPieces(),customPiecesWhiteMove1);
+
+        CuT = new Game(red, white, board);
+
+        CuT.makeMove(validWhiteMove2);
+        assertEquals(CuT.getBoard().getPieces(),customPiecesWhiteMove2);
+
+    }
 }
