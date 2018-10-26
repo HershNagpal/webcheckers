@@ -231,7 +231,6 @@ public class GameTest {
 		assertFalse(CuT.validateMove(invalidRedMove1));
 	}
 
-	@Test
 	public void testMakeMove(){
 	    if(CuT.getActiveColor() == Color.WHITE){
             CuT.switchActiveColor();
