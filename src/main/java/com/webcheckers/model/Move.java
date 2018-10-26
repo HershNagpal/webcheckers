@@ -12,15 +12,19 @@ public class Move {
       this.start = start;
       this.end = end;
   }
-  
-  public Move flipMove(Move initial){
-      Position pos_start = initial.start;
-      Position pos_end = initial.end;
 
-      Position pos_start_flipped = new Position(7-pos_start.getRow(), 7-pos_end.getCell());
-      Position pos_end_flipped = new Position(7-pos_end.getRow(), 7-pos_end.getCell());
+  /**
+   * Flips a given move. Used in PostValidateTurnRoute and PostSubmitTurnRoute.
+   * @return Flipped move.
+   */
+  public Move flipMove(){
+      Position posStart = this.start;
+      Position posEnd = this.end;
 
-      Move flippedMove = new Move(pos_start_flipped,pos_end_flipped);
+      Position posStartFlipped = new Position(7-posStart.getRow(), 7-posEnd.getCell());
+      Position posEndFlipped = new Position(7-posEnd.getRow(), 7-posEnd.getCell());
+
+      Move flippedMove = new Move(posStartFlipped,posEndFlipped);
       return flippedMove;
   }
 
@@ -30,5 +34,25 @@ public class Move {
 
   public Position getEnd() {
       return end;
+  }
+
+  /**
+   * Overriding equals() for deep equality between Move Objects.
+   * This method is used for testing.
+   * @param obj Object being compared to "this" Move
+   * @return true if "this" is equal to obj
+   */
+  @Override
+  public boolean equals(Object obj){
+    if(this == obj){
+      return true;
+    }
+    else if(!(obj instanceof Move)){
+      return false;
+    }
+
+    Move m2 = (Move)obj;
+
+    return this.start.equals(m2.start) && this.end.equals(m2.end);
   }
 }
