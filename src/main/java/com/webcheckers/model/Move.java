@@ -35,4 +35,24 @@ public class Move {
   public Position getEnd() {
       return end;
   }
+
+  /**
+   * Overriding equals() for deep equality between Move Objects.
+   * This method is used for testing.
+   * @param obj Object being compared to "this" Move
+   * @return true if "this" is equal to obj
+   */
+  @Override
+  public boolean equals(Object obj){
+    if(this == obj){
+      return true;
+    }
+    else if(!(obj instanceof Move)){
+      return false;
+    }
+
+    Move m2 = (Move)obj;
+
+    return this.start.equals(m2.start) && this.end.equals(m2.end);
+  }
 }
