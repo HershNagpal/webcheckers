@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import net.bytebuddy.dynamic.scaffold.TypeWriter.MethodPool.Record.AccessBridgeWrapper;
+
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -38,11 +40,12 @@ public class MoveTest {
 
     Move move = new Move(initialPos,endPos);
 
-    Position flippedInitialPos = new Position(5,2);
-    Position flippedEndPos = new Position(4,3);
+    Position flippedInitialPos = new Position(2,5);
+    Position flippedEndPos = new Position(3,4);
 
     Move expectedFlippedMove = new Move(flippedInitialPos,flippedEndPos);
 
+    assertEquals(move, expectedFlippedMove.flipMove());
     assertEquals(expectedFlippedMove, move.flipMove());
   }
 

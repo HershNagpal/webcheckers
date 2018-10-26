@@ -21,7 +21,7 @@ public class Move {
       Position posStart = this.start;
       Position posEnd = this.end;
 
-      Position posStartFlipped = new Position(7-posStart.getRow(), 7-posEnd.getCell());
+      Position posStartFlipped = new Position(7-posStart.getRow(), 7-posStart.getCell());
       Position posEndFlipped = new Position(7-posEnd.getRow(), 7-posEnd.getCell());
 
       Move flippedMove = new Move(posStartFlipped,posEndFlipped);
