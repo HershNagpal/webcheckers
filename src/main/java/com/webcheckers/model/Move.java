@@ -5,19 +5,30 @@ package com.webcheckers.model;
  */
 public class Move {
 
-    private Position start;
-    private Position end;
+  private Position start;
+  private Position end;
 
-    public Move(Position start, Position end) {
-        this.start = start;
-        this.end = end;
-    }
+  public Move(Position start, Position end) {
+      this.start = start;
+      this.end = end;
+  }
+  
+  public Move flipMove(Move initial){
+      Position pos_start = initial.start;
+      Position pos_end = initial.end;
 
-    public Position getStart() {
-        return start;
-    }
+      Position pos_start_flipped = new Position(7-pos_start.getRow(), 7-pos_end.getCell());
+      Position pos_end_flipped = new Position(7-pos_end.getRow(), 7-pos_end.getCell());
 
-    public Position getEnd() {
-        return end;
-    }
+      Move flippedMove = new Move(pos_start_flipped,pos_end_flipped);
+      return flippedMove;
+  }
+
+  public Position getStart() {
+      return start;
+  }
+
+  public Position getEnd() {
+      return end;
+  }
 }
