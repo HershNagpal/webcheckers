@@ -231,6 +231,9 @@ public class GameTest {
 		assertFalse(CuT.validateMove(invalidRedMove1));
 	}
 
+	/**
+	 * Tests if making a move changes the board in the appropriate ways.
+	 */
 	@Test
 	public void testMakeMove(){
 	    if(CuT.getActiveColor() == Color.WHITE){
