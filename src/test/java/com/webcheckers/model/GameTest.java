@@ -33,6 +33,7 @@ public class GameTest {
 	private Color color;
 	private Piece redPiece;
 	private Piece whitePiece;
+	Piece[][] customPieces;
 	// Positions on the mock board that can be called.
 	private Position redPosition1 = new Position(0, 2);
 	private Position redPosition2 = new Position(6, 2);
@@ -63,23 +64,23 @@ public class GameTest {
 	public void setup(){
 	    white = mock(Player.class);
 	    red = mock(Player.class);
-		board = mock(Board.class);
+		Piece whitePiece = new Piece(Color.WHITE, Type.SINGLE);
+		Piece redPiece = new Piece(Color.RED, Type.SINGLE);
 
-		redPiece = new Piece(Color.RED, Type.SINGLE);
-		whitePiece = new Piece(Color.WHITE, Type.SINGLE);
+		customPieces = 	new Piece[][]{
+			{null, null, redPiece, null, null, null, null, null},
+			{null, whitePiece, null, null, null, null, null, null},
+			{null, null, null, null, null, null, null, null},
+			{null, null, null, null, null, null, null, null},			
+			{null, null, null, null, null, null, null, null},
+			{null, null, null, null, null, null, null, null},
+			{null, null, redPiece, null, null, null, null, null},
+			{null, null, null, whitePiece, null, null, null, null}
+		};
 		
-		// Fill the positions on the mock board.
-		when(board.getPieceAtPosition(redPosition1)).thenReturn(redPiece);
-		when(board.getPieceAtPosition(redPosition2)).thenReturn(redPiece);
-		when(board.getPieceAtPosition(whitePosition1)).thenReturn(whitePiece);
-		when(board.getPieceAtPosition(whitePosition2)).thenReturn(whitePiece);
-		when(board.getPieceAtPosition(emptyPosition1)).thenReturn(null);
-		when(board.getPieceAtPosition(emptyPosition2)).thenReturn(null);
-		when(board.getPieceAtPosition(emptyPosition3)).thenReturn(null);
-		when(board.getPieceAtPosition(emptyPosition4)).thenReturn(null);
-		when(board.getPieceAtPosition(emptyPosition5)).thenReturn(null);
-		when(board.getPieceAtPosition(emptyPosition6)).thenReturn(null);
-	
+		
+		
+		board = new Board(customPieces);
 	    CuT = new Game(red, white, board);
 	}
 
@@ -177,6 +178,5 @@ public class GameTest {
 		assertFalse(CuT.validateMove(invalidWhiteMove2));
 		assertFalse(CuT.validateMove(validRedMove1));
 		assertFalse(CuT.validateMove(invalidRedMove1));
-
 	}
 }

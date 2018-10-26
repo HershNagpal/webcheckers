@@ -33,6 +33,16 @@ public class Board {
   }
 
   /**
+   * Board constructor that initializes and sets up the 2d Piece array from a given custom configuration.
+   * Creates a BoardView object using the pieces 2d array.
+   */
+  public Board(Piece[][] customPieces){
+    pieces = customPieces;
+    setUpBoard();
+    boardView = new BoardView(pieces);
+}
+
+  /**
    * Method used to set up spaces and checkers on the board.
    * Red checkers are placed on top three rows and white checkers
    * placed on bottom three rows.
@@ -52,7 +62,6 @@ public class Board {
               }
           }
       }
-
   }
 
   /**
