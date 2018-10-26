@@ -20,6 +20,7 @@ public class BoardTest {
    * Component to test
    */
   private Board CuT;
+  private Board CuT2;
 
   /**
    * Friendly Objects
@@ -85,9 +86,6 @@ public class BoardTest {
     whitePiece = new Piece(Color.WHITE,Piece.Type.SINGLE);
     expectedBoardView = new BoardView(expectedPieces);
 
-    Piece whitePiece = new Piece(Color.WHITE, Piece.Type.SINGLE);
-    Piece redPiece = new Piece(Color.RED, Piece.Type.SINGLE);
-
     customPieces = 	new Piece[][]{
             {null, null, redPiece, null, null, null, null, null},
             {null, whitePiece, null, null, null, null, null, null},
@@ -145,7 +143,8 @@ public class BoardTest {
 
 
 
-    CuT = new Board(customPieces);
+    CuT = new Board(expectedPieces);
+    CuT2 = new Board(customPieces);
 
   }
 
@@ -248,13 +247,13 @@ public class BoardTest {
   @Test
   public void testJumpMove(){
 
-    CuT.makeJumpMove(validRedMove1);
-    assertEquals(CuT.getPieces(),customPiecesRedMove1);
+    CuT2.makeJumpMove(validRedMove1);
+    assertEquals(CuT2.getPieces(),customPiecesRedMove1);
 
-    CuT = new Board(customPieces);
+    CuT2 = new Board(customPieces);
 
-    CuT.makeNormalMove(validWhiteMove1);
-    assertEquals(CuT.getPieces(),customPiecesWhiteMove1);
+    CuT2.makeNormalMove(validWhiteMove1);
+    assertEquals(CuT2.getPieces(),customPiecesWhiteMove1);
 
   }
 }
