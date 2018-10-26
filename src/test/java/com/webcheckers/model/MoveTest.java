@@ -38,12 +38,14 @@ public class MoveTest {
 
     Move move = new Move(initialPos,endPos);
 
-    Position flippedInitialPos = new Position(5,2);
-    Position flippedEndPos = new Position(4,3);
+    Position flippedInitialPos = new Position(2,5);
+    Position flippedEndPos = new Position(3,4);
 
     Move expectedFlippedMove = new Move(flippedInitialPos,flippedEndPos);
 
-    assertEquals(expectedFlippedMove, move.flipMove());
+    System.out.println(expectedFlippedMove);
+    System.out.println(move.flipMove());
+    assertTrue(expectedFlippedMove.equals(move.flipMove()));
   }
 
 }
