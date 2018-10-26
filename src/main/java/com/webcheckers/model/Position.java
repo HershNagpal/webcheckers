@@ -26,4 +26,24 @@ public class Position {
         return cell;
     }
 
+    /**
+     * Overriding equals() for deep equality between Position Objects.
+     * This method is used for testing.
+     * @param obj Object being compared to "this" Position
+     * @return true if "this" is equal to obj
+     */
+    @Override
+    public boolean equals(Object obj){
+        if(this == obj){
+            return true;
+        }
+        else if(!(obj instanceof Position)){
+            return false;
+        }
+
+        Position p2 = (Position)obj;
+
+        return this.row == p2.row && this.cell == p2.cell;
+    }
+
 }
