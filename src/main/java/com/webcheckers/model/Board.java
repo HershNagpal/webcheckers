@@ -163,9 +163,9 @@ public class Board {
       int rowEnd = endingPosition.getRow();
       int colEnd = endingPosition.getCell();
 
-      Piece startingPiece = pieces[rowStart][colStart];
+      Piece movingPiece = pieces[rowStart][colStart];
       pieces[rowStart][colStart] = null;
-      pieces[rowEnd][colEnd] = startingPiece;
+      pieces[rowEnd][colEnd] = movingPiece;
 
   }
 

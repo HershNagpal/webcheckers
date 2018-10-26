@@ -29,6 +29,8 @@ public class BoardTest {
   private Piece whitePiece;
   private BoardView expectedBoardView;
 
+
+
   /**
    * Expected piece 2d array
    */
@@ -43,35 +45,80 @@ public class BoardTest {
           {whitePiece, null, whitePiece, null, whitePiece, null, whitePiece, null},
   };
 
-  // Boards that result from making a move
-  Piece[][] customPieces;
-  Piece[][] customPiecesRedMove1;
-  Piece[][] customPiecesRedMove2;
-  Piece[][] customPiecesWhiteMove1;
-  Piece[][] customPiecesWhiteMove2;
+  /**
+   * Boards for custom move tests
+   */
+  private Piece[][] customPieces = 	new Piece[][]{
+    {null, null, redPiece, null, null, null, null, null},
+    {null, whitePiece, null, null, null, null, null, null},
+    {null, null, null, null, null, null, null, null},
+    {null, null, null, null, null, null, null, null},
+    {null, null, null, null, null, null, null, null},
+    {null, null, null, null, null, null, null, null},
+    {null, null, redPiece, null, null, null, null, null},
+    {null, null, null, whitePiece, null, null, null, null}
+  };
+
+  private Piece[][] customPiecesRedMove2 = 	new Piece[][]{
+    {null, null, null, null, null, null, null, null},
+    {null, whitePiece, redPiece, null, null, null, null, null},
+    {null, null, null, null, null, null, null, null},
+    {null, null, null, null, null, null, null, null},
+    {null, null, null, null, null, null, null, null},
+    {null, null, null, null, null, null, null, null},
+    {null, null, redPiece, null, null, null, null, null},
+    {null, null, null, whitePiece, null, null, null, null}
+  };
+
+  private Piece[][] customPiecesRedMove1 = new Piece[][]{
+    {null, null, null, null, null, null, null, null},
+    {null, null, null, null, null, null, null, null},
+    {redPiece, null, null, null, null, null, null, null},
+    {null, null, null, null, null, null, null, null},
+    {null, null, null, null, null, null, null, null},
+    {null, null, null, null, null, null, null, null},
+    {null, null, redPiece, null, null, null, null, null},
+    {null, null, null, whitePiece, null, null, null, null}
+  };
+
+  private Piece[][] customPiecesWhiteMove1 = new Piece[][]{
+    {null, null, redPiece, null, null, null, null, null},
+    {null, whitePiece, null, null, null, null, null, null},
+    {null, null, null, null, null, null, null, null},
+    {null, null, null, null, null, null, null, null},
+    {null, null, null, null, null, null, null, null},
+    {null, whitePiece, null, null, null, null, null, null},
+    {null, null, null, null, null, null, null, null},
+    {null, null, null, null, null, null, null, null}
+  };
+
+  private Piece[][] customPiecesWhiteMove2 = new Piece[][]{
+    {null, null, redPiece, null, null, null, null, null},
+    {null, whitePiece, null, null, null, null, null, null},
+    {null, null, null, null, null, null, null, null},
+    {null, null, null, null, null, null, null, null},
+    {null, null, null, null, null, null, null, null},
+    {null, null, null, null, null, null, null, null},
+    {null, null, redPiece, null, null, null, null, null},
+    {null, null, null, whitePiece, null, null, null, null}
+  };
 
   // Positions on the mock board that can be called.
   private Position redPosition1 = new Position(0, 2);
   private Position redPosition2 = new Position(6, 2);
   private Position whitePosition1 = new Position(1, 1);
   private Position whitePosition2 = new Position(7, 3);
-  // The 3 positions the Red piece in position 1 will try to jump to
+  // The 2 positions the Red piece in position 1 will try to jump to
   private Position emptyPosition1 = new Position(2, 0);
   private Position emptyPosition2 = new Position(1, 3);
-  private Position emptyPosition3 = new Position(2, 4);
-  // The 3 positions the White piece in position 1 will try to jump to
+  // The 2 positions the White piece in position 1 will try to jump to
   private Position emptyPosition4 = new Position(5, 1);
   private Position emptyPosition5 = new Position(6, 4);
-  private Position emptyPosition6 = new Position(5, 5);
   // Create moves to be tested in validateMove
   Move validRedMove1 = new Move(redPosition1, emptyPosition1);
   Move validRedMove2 = new Move(redPosition1, emptyPosition2);
-  Move invalidRedMove1 = new Move(redPosition1, whitePosition1);
-  Move invalidRedMove2 = new Move(redPosition1, emptyPosition3);
   Move validWhiteMove1 = new Move(whitePosition2, emptyPosition4);
   Move validWhiteMove2 = new Move(whitePosition2, emptyPosition5);
-  Move invalidWhiteMove1 = new Move(whitePosition2, redPosition2);
-  Move invalidWhiteMove2 = new Move(whitePosition2, emptyPosition6);
 
 
 
@@ -81,67 +128,9 @@ public class BoardTest {
    */
   @BeforeEach
   public void setup(){
-    CuT = new Board();
     redPiece = new Piece(Color.RED, Piece.Type.SINGLE);
     whitePiece = new Piece(Color.WHITE,Piece.Type.SINGLE);
     expectedBoardView = new BoardView(expectedPieces);
-
-    customPieces = 	new Piece[][]{
-            {null, null, redPiece, null, null, null, null, null},
-            {null, whitePiece, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {null, null, redPiece, null, null, null, null, null},
-            {null, null, null, whitePiece, null, null, null, null}
-    };
-
-    customPiecesRedMove2 = 	new Piece[][]{
-            {null, null, null, null, null, null, null, null},
-            {null, whitePiece, redPiece, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {null, null, redPiece, null, null, null, null, null},
-            {null, null, null, whitePiece, null, null, null, null}
-    };
-
-    customPiecesRedMove1 = new Piece[][]{
-            {null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {redPiece, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {null, null, redPiece, null, null, null, null, null},
-            {null, null, null, whitePiece, null, null, null, null}
-    };
-
-    customPiecesWhiteMove1 = new Piece[][]{
-            {null, null, redPiece, null, null, null, null, null},
-            {null, whitePiece, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {null, whitePiece, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null}
-    };
-
-    customPiecesWhiteMove2 = new Piece[][]{
-            {null, null, redPiece, null, null, null, null, null},
-            {null, whitePiece, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {null, null, redPiece, null, null, null, null, null},
-            {null, null, null, whitePiece, null, null, null, null}
-    };
-
-
 
     CuT = new Board(expectedPieces);
     CuT2 = new Board(customPieces);
@@ -231,13 +220,13 @@ public class BoardTest {
   @Test
   public void testMakeNormalMove(){
 
-    CuT.makeNormalMove(validRedMove2);
+    CuT2.makeNormalMove(validRedMove2);
     assertEquals(CuT.getPieces(),customPiecesRedMove2);
 
-    CuT = new Board(customPieces);
+    CuT2 = new Board(customPieces);
 
-    CuT.makeNormalMove(validWhiteMove2);
-    assertEquals(CuT.getPieces(),customPiecesWhiteMove2);
+    CuT2.makeNormalMove(validWhiteMove2);
+    assertEquals(CuT2.getPieces(),customPiecesWhiteMove2);
 
   }
 

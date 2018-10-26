@@ -240,13 +240,13 @@ public class GameTest {
             CuT.switchActiveColor();
         }
 
-        CuT.makeMove(validRedMove2);
-        assertEquals(CuT.getBoard().getPieces(),customPiecesRedMove2);
+        CuT.makeMove(validRedMove1);
+        assertEquals(CuT.getBoard().getPieces(),customPiecesRedMove1);
 
         CuT = new Game(red, white, board);
 
-        CuT.makeMove(validRedMove1);
-        assertEquals(CuT.getBoard().getPieces(),customPiecesRedMove1);
+        CuT.makeMove(validRedMove2);
+        assertEquals(CuT.getBoard().getPieces(),customPiecesRedMove2);
 
         CuT = new Game(red, white, board);
 

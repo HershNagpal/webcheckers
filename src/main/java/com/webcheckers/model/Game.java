@@ -271,8 +271,8 @@ public class Game {
 
       int rowStart = moveStart.getRow();
       int colStart = moveStart.getCell();
-      int rowEnd = moveStart.getRow();
-      int colEnd = moveStart.getCell();
+      int rowEnd = moveEnd.getRow();
+      int colEnd = moveEnd.getCell();
 
       int rowDistance = rowEnd - rowStart;
       rowDistance = abs(rowDistance);
