@@ -15,17 +15,16 @@ public class Move {
 
   /**
    * Flips a given move. Used in PostValidateTurnRoute and PostSubmitTurnRoute.
-   * @param initial Move passed in to be flipped.
    * @return Flipped move.
    */
-  public Move flipMove(Move initial){
-      Position pos_start = initial.start;
-      Position pos_end = initial.end;
+  public Move flipMove(){
+      Position posStart = this.start;
+      Position posEnd = this.end;
 
-      Position pos_start_flipped = new Position(7-pos_start.getRow(), 7-pos_end.getCell());
-      Position pos_end_flipped = new Position(7-pos_end.getRow(), 7-pos_end.getCell());
+      Position posStartFlipped = new Position(7-posStart.getRow(), 7-posEnd.getCell());
+      Position posEndFlipped = new Position(7-posEnd.getRow(), 7-posEnd.getCell());
 
-      Move flippedMove = new Move(pos_start_flipped,pos_end_flipped);
+      Move flippedMove = new Move(posStartFlipped,posEndFlipped);
       return flippedMove;
   }
 
