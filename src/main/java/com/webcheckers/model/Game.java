@@ -45,6 +45,10 @@ public class Game {
     board = new Board();
   }
 
+  public boolean playerInGame(Player player) {
+    return player == redPlayer || player == whitePlayer;
+  }
+
   /**
    * Checks if the player is the red player in the game.
    * @param player The player to check
@@ -96,14 +100,14 @@ public class Game {
    * @return true if the move is valid, false if it is invalid.
    */
   public boolean validateMove(Move move) {
-    // Color movedPieceColor;
-    // if (activeColor.equals(Color.RED)) {
-    //   movedPieceColor = board.getPieceAtFlippedPosition(move.getStart()).getColor();
-    // } else {
-    //   movedPieceColor = board.getPieceAtPosition(move.getStart()).getColor();
-    // }
+    Color movedPieceColor;
+    if (activeColor.equals(Color.RED)) {
+      movedPieceColor = board.getPieceAtFlippedPosition(move.getStart()).getColor();
+    } else {
+      movedPieceColor = board.getPieceAtPosition(move.getStart()).getColor();
+    }
 
-    Color movedPieceColor = board.getPieceAtPosition(move.getStart()).getColor();
+    //Color movedPieceColor = board.getPieceAtPosition(move.getStart()).getColor();
 
     if( !getActiveColor().equals(movedPieceColor) ) {
       return false;
