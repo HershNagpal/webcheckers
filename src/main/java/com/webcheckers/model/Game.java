@@ -15,6 +15,7 @@ public class Game {
   private Player whitePlayer;
   private Board board;
   private Color activeColor;
+  private Move lastMove;
 
   /**
    * Start a game with a given board state.
@@ -102,6 +103,10 @@ public class Game {
     // } else {
     //   movedPieceColor = board.getPieceAtPosition(move.getStart()).getColor();
     // }
+    if (activeColor.equals(Color.RED)) {
+        move = move.flipMove();
+    }
+
 
     Color movedPieceColor = board.getPieceAtPosition(move.getStart()).getColor();
 
@@ -114,9 +119,11 @@ public class Game {
     }
 
     if(isNormalMove(move)) {
+      lastMove = move;
       return true;
     }
     else if (isJumpMove(move)) {
+      lastMove = move;
       return true;
     }
     else {
@@ -271,16 +278,31 @@ public class Game {
 
       int rowStart = moveStart.getRow();
       int colStart = moveStart.getCell();
-      int rowEnd = moveStart.getRow();
-      int colEnd = moveStart.getCell();
+      int rowEnd = moveEnd.getRow();
+      int colEnd = moveEnd.getCell();
 
       int rowDistance = rowEnd - rowStart;
       rowDistance = abs(rowDistance);
       int colDistance = colEnd - colStart;
       colDistance = abs(colDistance);
 
-      if(rowDistance == 1 && colDistance == 1){ board.makeNormalMove(move); }
-      else if (rowDistance == 2 && colDistance == 2) { board.makeJumpMove(move); }
+      if(rowDistance == 1 && colDistance == 1) {
+          System.out.println("Game: making a normal move");
+          board.makeNormalMove(move);
+      }
+      else if (rowDistance == 2 && colDistance == 2) {
+          board.makeJumpMove(move);
+      }
 
+  }
+
+  public Message submitTurn() {
+      if (lastMove == null) {
+          return new Message("Invalid move. Cannot submit turn.", MessageType.ERROR);
+      }
+      System.out.println("Last move: " + lastMove);
+      makeMove(lastMove);
+      switchActiveColor();
+      return new Message("", MessageType.INFO);
   }
 }

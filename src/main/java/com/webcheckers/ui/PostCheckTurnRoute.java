@@ -38,7 +38,6 @@ public class PostCheckTurnRoute implements Route {
     public Object handle(Request request, Response response) {
         Session session = request.session();
         Player player = session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR);
-        System.out.println("Grabbed player");
         Game game = player.getGame();
 
         Message message;

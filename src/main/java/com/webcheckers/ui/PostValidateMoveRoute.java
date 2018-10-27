@@ -37,11 +37,11 @@ public class PostValidateMoveRoute implements Route {
         System.out.println("PostValidateMove:Grabbed game");
         //if its a white player then we need to flip the move
         //before we validate it
-        if (game.isRedPlayer(player)){
-           move = move.flipMove();
-        }
+        //if (game.isRedPlayer(player)){
+        //   move = move.flipMove();
+        //}
         if (valid(move, game)) {
-            session.attribute("move", move);
+            //session.attribute("move", move);
             return gson.toJson(new Message("", MessageType.INFO));
         }
         else {

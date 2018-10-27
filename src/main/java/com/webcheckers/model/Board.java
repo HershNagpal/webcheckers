@@ -164,8 +164,11 @@ public class Board {
       int colEnd = endingPosition.getCell();
 
       Piece startingPiece = pieces[rowStart][colStart];
-      pieces[rowStart][colStart] = null;
       pieces[rowEnd][colEnd] = startingPiece;
+      pieces[rowStart][colStart] = null;
+      System.out.println("Board: Normal move completed");
+      System.out.println(startingPiece);
+
 
   }
 
