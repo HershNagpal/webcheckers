@@ -66,11 +66,10 @@ public class GetGameRoute implements Route{
      * @return
      *  the rendered HTML for the Home page
      */
-
     @Override
     public Object handle(Request request, Response response){
         LOG.finer("GetGameRoute is invoked");
-        //
+
         Map<String, Object> vm = new HashMap<>();
         vm.put(TITLE_ATTR, TITLE);
         Session session = request.session();
@@ -100,35 +99,12 @@ public class GetGameRoute implements Route{
             boardView = board.getBoardView();
         }
 
-
-//        else {
-//            // URL example: http://localhost:4567/game?pid=kid
-//            Player playerTwo = playerLobby.getPlayer(request.queryParams("pid"));
-//            // Cannot create game with a player in game
-//            if (playerTwo.getGame() != null) {
-//                session.attribute(MESSAGE_ATTR, new Message(IN_GAME_ERROR, MessageType.ERROR));
-//                response.redirect(WebServer.HOME_URL);
-//                return null;
-//            }
-//
-//            board = new Board();
-//            game = new Game(playerOne, playerTwo, board);
-//
-//        }
-//        if (game.isRedPlayer(playerOne)) {
-//            boardView = board.getFlippedBoardView();
-//        }
-//        else {
-//            boardView = board.getBoardView();
-//        }
-
         vm.put(BOARD_ATTR, boardView);
         vm.put(CURRENT_PLAYER_ATTR, player);
         vm.put(VIEW_MODE_ATTR, ViewMode.PLAY);
         vm.put(RED_PLAYER_ATTR, game.getRedPlayer());
         vm.put(WHITE_PLAYER_ATTR, game.getWhitePlayer());
         vm.put(ACTIVE_COLOR_ATTR, game.getActiveColor());
-
 
         return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
     }
