@@ -101,27 +101,18 @@ public class Game {
    * @return true if the move is valid, false if it is invalid.
    */
   public boolean validateMove(Move move) {
-    // Color movedPieceColor;
-    // if (activeColor.equals(Color.RED)) {
-    //   movedPieceColor = board.getPieceAtFlippedPosition(move.getStart()).getColor();
-    // } else {
-    //   movedPieceColor = board.getPieceAtPosition(move.getStart()).getColor();
-    // }
+    // If it is red turn, move is flipped
     if (activeColor.equals(Color.RED)) {
         move = move.flipMove();
     }
-
-
     Color movedPieceColor = board.getPieceAtPosition(move.getStart()).getColor();
-
+    // Check valid move conditions
     if( !getActiveColor().equals(movedPieceColor) ) {
       return false;
     }
-
     if(board.getPieceAtPosition(move.getEnd()) != null) {
       return false;
     }
-
     if(isNormalMove(move)) {
       lastMove = move;
       return true;
@@ -172,7 +163,6 @@ public class Game {
   }
 
   /**
-   * @TODO make sure that there is a piece in between the start and end.
    * Checks if the given Move is a valid jump move
    * @param move The Move object that the player is making.
    * @return true if the move is a valid jump move, false if it is invalid or not a jump move.
@@ -291,7 +281,6 @@ public class Game {
       colDistance = abs(colDistance);
 
       if(rowDistance == 1 && colDistance == 1) {
-          System.out.println("Game: making a normal move");
           board.makeNormalMove(move);
       }
       else if (rowDistance == 2 && colDistance == 2) {
@@ -300,12 +289,19 @@ public class Game {
 
   }
 
+    /**
+     * Submit the last made move. If there is no last made move an error
+     * message is returned. Otherwise, the move is made and the other player's
+     * turn now starts.
+     *
+     * @return Error or info message depending on if the move was made
+     */
   public Message submitTurn() {
       if (lastMove == null) {
           return new Message("Invalid move. Cannot submit turn.", MessageType.ERROR);
       }
-      System.out.println("Last move: " + lastMove);
       makeMove(lastMove);
+      lastMove = null;
       switchActiveColor();
       return new Message("", MessageType.INFO);
   }
