@@ -32,11 +32,16 @@ public class PostValidateMoveRoute implements Route {
         Move move = gson.fromJson(moveJSON, Move.class);
         Session session = request.session();
         Player player = session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR);
-        System.out.println("Grabbed player");
+        System.out.println("PostValidateMove:Grabbed player");
         Game game = player.getGame();
-        System.out.println("Grabbed game");
+        System.out.println("PostValidateMove:Grabbed game");
+        //if its a white player then we need to flip the move
+        //before we validate it
+        //if (game.isRedPlayer(player)){
+        //   move = move.flipMove();
+        //}
         if (valid(move, game)) {
-            session.attribute("move", move);
+            //session.attribute("move", move);
             return gson.toJson(new Message("", MessageType.INFO));
         }
         else {

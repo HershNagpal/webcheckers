@@ -40,9 +40,17 @@ public class PostSubmitTurnRoute implements Route {
         //
         //        return gson.toJson(new Message("Turn was submitted", MessageType.INFO));
         //}
-        Move move = session.attribute("move");
-        game.makeMove(move);
-        game.switchActiveColor();
-        return gson.toJson(new Message("", MessageType.INFO));
+    //    Move move = session.attribute("move");
+
+        //if this is a move from the red player
+        //we should flip the move to match our model
+    //    if (game.isRedPlayer(player)){
+    //        move = move.flipMove();
+    //    }
+    //    game.makeMove(move);
+    //    game.switchActiveColor();
+        System.out.println("Turn submitted");
+        return gson.toJson(game.submitTurn());
+    //    return gson.toJson(new Message("", MessageType.INFO));
     }
 }
