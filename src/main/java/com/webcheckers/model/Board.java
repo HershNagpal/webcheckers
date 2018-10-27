@@ -20,7 +20,6 @@ public class Board {
   private static int ROWS = 8;
   private static int COLUMNS = 8;
   private Piece[][] pieces;
-  private BoardView boardView;
 
   /**
    * Board constructor that initializes and sets up the 2d Piece array.
@@ -29,7 +28,6 @@ public class Board {
   public Board(){
       pieces = new Piece[ROWS][COLUMNS];
       setUpBoard();
-      boardView = new BoardView(pieces);
   }
 
   /**
@@ -39,7 +37,6 @@ public class Board {
   public Board(Piece[][] customPieces){
     pieces = customPieces;
     setUpBoard();
-    boardView = new BoardView(pieces);
 }
 
   /**
@@ -92,7 +89,7 @@ public class Board {
    * @return the boardview associated with this board.
    */
   public BoardView getBoardView(){
-    return boardView;
+    return new BoardView(pieces);
   }
 
   /**
