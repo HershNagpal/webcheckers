@@ -46,6 +46,10 @@ public class Game {
     board = new Board();
   }
 
+  public boolean playerInGame(Player player) {
+    return player == redPlayer || player == whitePlayer;
+  }
+
   /**
    * Checks if the player is the red player in the game.
    * @param player The player to check
