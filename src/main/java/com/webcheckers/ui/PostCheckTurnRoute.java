@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Message;
 import com.webcheckers.model.MessageType;
@@ -18,13 +19,14 @@ import java.util.Objects;
  */
 public class PostCheckTurnRoute implements Route {
 
-    private TemplateEngine templateEngine;
+    private GameCenter gameCenter;
     private Gson gson;
 
-    public PostCheckTurnRoute(TemplateEngine templateEngine, Gson gson) {
-        Objects.requireNonNull(templateEngine, "templateEngine must not be null");
+    public PostCheckTurnRoute(GameCenter gameCenter, Gson gson) {
+        Objects.requireNonNull(gameCenter, "gameCenter must not be null");
         Objects.requireNonNull(gson, "gson must not be null");
-        this.templateEngine = templateEngine;
+
+        this.gameCenter = gameCenter;
         this.gson = gson;
     }
 
@@ -38,8 +40,7 @@ public class PostCheckTurnRoute implements Route {
     public Object handle(Request request, Response response) {
         Session session = request.session();
         Player player = session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR);
-        Game game = player.getGame();
-
+        Game game = gameCenter.getGame(player);
         Message message;
 
         //Opponent ended his turn

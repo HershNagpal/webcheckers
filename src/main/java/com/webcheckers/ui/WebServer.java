@@ -167,11 +167,11 @@ public class WebServer {
 
     get(GAME_URL, new GetGameRoute(gameCenter, playerLobby, templateEngine));
 
-    post(CHECK_TURN_URL, new PostCheckTurnRoute(templateEngine, gson));
+    post(CHECK_TURN_URL, new PostCheckTurnRoute(gameCenter, gson));
 
-    post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(templateEngine, gson));
+    post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(gameCenter, gson));
 
-    post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(templateEngine, gson));
+    post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(gameCenter, gson));
 
     post(BACKUP_MOVE_URL, new PostBackupMoveRoute(templateEngine, gson));
 

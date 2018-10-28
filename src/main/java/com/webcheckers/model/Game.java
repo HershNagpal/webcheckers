@@ -24,8 +24,6 @@ public class Game {
    * @param board The state of the board
    */
   public Game(Player redPlayer, Player whitePlayer, Board board){
-    redPlayer.setGame(this);
-    whitePlayer.setGame(this);
     this.redPlayer = redPlayer;
     this.whitePlayer = whitePlayer;
     this.board = board;
@@ -38,8 +36,6 @@ public class Game {
    * @param whitePlayer The white player
    */
   public Game(Player redPlayer, Player whitePlayer) {
-    redPlayer.setGame(this);
-    whitePlayer.setGame(this);
     this.redPlayer = redPlayer;
     this.whitePlayer = whitePlayer;
     activeColor = Color.RED;
