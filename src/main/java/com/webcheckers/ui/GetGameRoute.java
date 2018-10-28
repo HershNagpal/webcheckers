@@ -77,8 +77,6 @@ public class GetGameRoute implements Route{
         Session session = request.session();
 
         Game game;
-        BoardView boardView;
-        Board board;
         Player player = session.attribute(CURRENT_PLAYER_ATTR);
         // Is this player in game
         if (gameCenter.playerInGame(player)) {
@@ -98,12 +96,7 @@ public class GetGameRoute implements Route{
             game = gameCenter.createGame(player, opponent);
             session.attribute(GAME_ATTR, game);
         }
-        board = game.getBoard();
-        if (game.isRedPlayer(player)) {
-            boardView = board.getFlippedBoardView();
-        } else {
-            boardView = board.getBoardView();
-        }
+        BoardView boardView = game.getBoardView(player);
 
         vm.put(BOARD_ATTR, boardView);
         vm.put(CURRENT_PLAYER_ATTR, player);

@@ -92,6 +92,18 @@ public class Game {
   }
 
   /**
+   * Get the correctly oriented BoardView for the respective player.
+   * @param player The red or white player
+   * @return The correct BoardView
+   */
+  public BoardView getBoardView(Player player) {
+    if (player == redPlayer) {
+      return board.getFlippedBoardView();
+    }
+    return board.getBoardView();
+  }
+
+  /**
    * Checks if the move being made by a player is valid or not.
    * First ensures that it is the correct player's turn and that there is no piece at the destination.
    * Checks if the move is a normal diagonal movement. If so, returns true.
