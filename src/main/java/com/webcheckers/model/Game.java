@@ -328,23 +328,30 @@ public class Game {
   }
 
   /**
-   * Update last move made.
+   * "Undo" last move made and update both the list of previous moves,
+   * and the lastMove.
    *
    * @return Error or info message depending on if the back up action was made
    */
   public Message backUpMove(){
-    if (lastMove == null){
+    if (lastMove == null || lastMoves.isEmpty()){
       return new Message("Cannot back up move.", MessageType.ERROR);
     }
 
+    //Undo last move
+    Move backUpMove = lastMove.createBackUpMove();
+    makeMove(backUpMove);
 
     //Remove lastMove from list of previous moves
     lastMoves.remove(lastMove);
 
     //Update lastMove
-    lastMove = lastMoves.get(lastMoves.size()-1);
-
-    //Undo last move
+    if(!lastMoves.isEmpty()) {
+      lastMove = lastMoves.get(lastMoves.size() - 1);
+    }
+    else{
+      lastMove = null;
+    }
 
     return new Message("", MessageType.INFO);
   }

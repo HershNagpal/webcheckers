@@ -28,6 +28,14 @@ public class Move {
       return flippedMove;
   }
 
+  /**
+   * Returns a new Move that "deletes" the last move.
+   * @return new Move with current's end as start, and current's start as end
+   */
+  public Move createBackUpMove(){
+    return new Move(this.end, this.start);
+  }
+
   public Position getStart() {
       return start;
   }
