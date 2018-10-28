@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Message;
 import com.webcheckers.model.MessageType;
@@ -12,22 +13,29 @@ import java.util.Objects;
 public class PostBackupMoveRoute implements Route {
 
     private TemplateEngine templateEngine;
+
+    /**
+     * The game center
+     */
+    private GameCenter gameCenter;
+
+    /**
+     * Interprets and converts json
+     */
     private Gson gson;
 
-    public PostBackupMoveRoute(TemplateEngine templateEngine, Gson gson) {
-        Objects.requireNonNull(templateEngine, "templateEngine must not be null");
+    public PostBackupMoveRoute(GameCenter gameCenter, Gson gson) {
+        Objects.requireNonNull(gameCenter, "gameCenter must not be null");
         Objects.requireNonNull(gson, "gson must not be null");
-        this.templateEngine = templateEngine;
+        this.gameCenter = gameCenter;
         this.gson = gson;
     }
 
     @Override
     public Object handle(Request request, Response response) {
-        final String messageJSON = request.body();
-        System.out.println(messageJSON);
-        final Message message = gson.fromJson(messageJSON, Message.class);
-        MessageType type = message.getType();
-
-        return null;
+        Session session = request.session();
+        Player player = session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR);
+        Game game = gameCenter.getGame(player);
+        return gson.toJson(game.backUpMove());
     }
 }

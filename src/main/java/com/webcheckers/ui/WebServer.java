@@ -173,7 +173,7 @@ public class WebServer {
 
     post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(gameCenter, gson));
 
-    post(BACKUP_MOVE_URL, new PostBackupMoveRoute(templateEngine, gson));
+    post(BACKUP_MOVE_URL, new PostBackupMoveRoute(gameCenter, gson));
 
     LOG.config("WebServer is initialized.");
   }

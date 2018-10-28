@@ -25,7 +25,7 @@ public class Game {
 
   //List of moves made before a move is submitted.
   //Used for backing up a move.
-  private List<Move> lastMoves;
+  private List<Move> lastMoves = new ArrayList<>();
 
   /**
    * Start a game with a given board state.
@@ -38,7 +38,7 @@ public class Game {
     this.whitePlayer = whitePlayer;
     this.board = board;
     activeColor = Color.RED;
-    lastMoves = new ArrayList<>();
+    //lastMoves = new ArrayList<>();
   }
 
   /**
@@ -133,13 +133,13 @@ public class Game {
       return false;
     }
     if(isNormalMove(move)) {
+      lastMoves.add(move);
       lastMove = move;
-      lastMoves.add(lastMove);
       return true;
     }
     else if (isJumpMove(move)) {
+      lastMoves.add(move);
       lastMove = move;
-      lastMoves.add(lastMove);
       return true;
     }
     else {
