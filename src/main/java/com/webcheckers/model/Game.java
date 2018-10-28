@@ -4,6 +4,9 @@ import static java.lang.Math.abs;
 
 import com.webcheckers.model.Piece.Type;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Combines the board and players in order to play the game
  * @author Luis Gutierrez
@@ -15,7 +18,14 @@ public class Game {
   private Player whitePlayer;
   private Board board;
   private Color activeColor;
+
+  //Last move made before a move is submitted.
+  //lastMove is the move at the end of lastMoves.
   private Move lastMove;
+
+  //List of moves made before a move is submitted.
+  //Used for backing up a move.
+  private List<Move> lastMoves;
 
   /**
    * Start a game with a given board state.
@@ -28,6 +38,7 @@ public class Game {
     this.whitePlayer = whitePlayer;
     this.board = board;
     activeColor = Color.RED;
+    lastMoves = new ArrayList<>();
   }
 
   /**
@@ -312,5 +323,27 @@ public class Game {
       lastMove = null;
       switchActiveColor();
       return new Message("", MessageType.INFO);
+  }
+
+  /**
+   * Update last move made.
+   *
+   * @return Error or info message depending on if the back up action was made
+   */
+  public Message backUpMove(){
+    if (lastMove == null){
+      return new Message("Cannot back up move.", MessageType.ERROR);
+    }
+
+
+    //Remove lastMove from list of previous moves
+    lastMoves.remove(lastMove);
+
+    //Update lastMove
+    lastMove = lastMoves.get(lastMoves.size()-1);
+
+    //Undo last move
+
+    return new Message("", MessageType.INFO);
   }
 }

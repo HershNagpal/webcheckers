@@ -1,12 +1,11 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Message;
 import com.webcheckers.model.MessageType;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.TemplateEngine;
+import com.webcheckers.model.Player;
+import spark.*;
 
 import java.util.Objects;
 
@@ -28,14 +27,7 @@ public class PostBackupMoveRoute implements Route {
         System.out.println(messageJSON);
         final Message message = gson.fromJson(messageJSON, Message.class);
         MessageType type = message.getType();
-        switch (type) {
-            case ERROR:
-                // Backup move was unsuccessful
-                break;
-            case INFO:
-                // Backup move was successful
-                break;
-        }
+
         return null;
     }
 }
