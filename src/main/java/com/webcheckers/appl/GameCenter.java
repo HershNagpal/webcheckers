@@ -14,6 +14,9 @@ import java.util.List;
  */
 public class GameCenter {
 
+    /**
+     * All ongoing games.
+     */
     private List<Game> games;
 
     public GameCenter() {
@@ -29,14 +32,39 @@ public class GameCenter {
         return false;
     }
 
+    /**
+     * Get the game a player is in.
+     * @param player The player to get a game from
+     * @return The game or null
+     */
     public Game getGame(Player player) {
-        return player.getGame();
+        for (Game game : games) {
+            if (game.playerInGame(player)) {
+                return game;
+            }
+        }
+        return null;
     }
 
+    /**
+     * Create a new game for the two players.
+     * @param player The player that started the game
+     * @param opponent The player that was selected to be an opponent
+     * @return The created game
+     */
     public Game createGame(Player player, Player opponent) {
         Game game = new Game(player, opponent);
         games.add(game);
         return game;
+    }
+
+    /**
+     * Used to remove games that ended.
+     * @param game Game that ended
+     */
+    public void removeGame(Game game) {
+        games.remove(game);
+        // TODO remove players from game and game from players
     }
 
 }
