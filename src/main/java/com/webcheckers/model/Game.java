@@ -134,10 +134,12 @@ public class Game {
     }
     if(isNormalMove(move)) {
       lastMove = move;
+      lastMoves.add(lastMove);
       return true;
     }
     else if (isJumpMove(move)) {
       lastMove = move;
+      lastMoves.add(lastMove);
       return true;
     }
     else {
