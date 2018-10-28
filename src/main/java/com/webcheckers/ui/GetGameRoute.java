@@ -23,7 +23,6 @@ public class GetGameRoute implements Route{
     static final String RED_PLAYER_ATTR = "redPlayer";
     static final String WHITE_PLAYER_ATTR = "whitePlayer";
     static final String ACTIVE_COLOR_ATTR = "activeColor";
-    static final String GAME_ATTR = "game";
     static final String ID_PARAM = "pid";
     static final String TITLE_ATTR = "title";
     static final String VIEW_NAME = "game.ftl";
@@ -81,9 +80,6 @@ public class GetGameRoute implements Route{
         // Is this player in game
         if (gameCenter.playerInGame(player)) {
             game = gameCenter.getGame(player);
-            if (session.attribute(GAME_ATTR) == null) {
-                session.attribute(GAME_ATTR, game);
-            }
         } else {
             Player opponent = playerLobby.getPlayer(request.queryParams(ID_PARAM));
             // Is other player in game
@@ -94,7 +90,6 @@ public class GetGameRoute implements Route{
             }
             // Create a new game
             game = gameCenter.createGame(player, opponent);
-            session.attribute(GAME_ATTR, game);
         }
         BoardView boardView = game.getBoardView(player);
 

@@ -1,7 +1,5 @@
 package com.webcheckers.model;
 
-import static java.lang.Math.abs;
-
 /**
  * Represents the Checkers Board and all the logical operations that need to be done on 
  * pieces for the game to function.
@@ -163,10 +161,6 @@ public class Board {
       Piece startingPiece = pieces[rowStart][colStart];
       pieces[rowEnd][colEnd] = startingPiece;
       pieces[rowStart][colStart] = null;
-      System.out.println("Board: Normal move completed");
-      System.out.println(startingPiece);
-
-
   }
 
   public void makeJumpMove(Move move){
