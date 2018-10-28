@@ -30,7 +30,8 @@ public class PostCheckTurnRoute implements Route {
     private Gson gson;
 
     /**
-     * The constructor for the {@code POST /game} route handler.
+     * The constructor for the {@code POST /game} route handler to check
+     * whose turn it is.
      *
      * @param gameCenter holds the ongoing games
      * @param gson used to interpret and convert json
