@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
@@ -39,6 +40,7 @@ public class GetHomeRouteTest {
     private TemplateEngine templateEngine;
     private Response response;
     private Player player;
+    private GameCenter gameCenter;
 
     /**
      * Setup the objects for each test.
@@ -53,7 +55,8 @@ public class GetHomeRouteTest {
         player = mock(Player.class);
 
         playerLobby = new PlayerLobby();
-        CuT = new GetHomeRoute(playerLobby, templateEngine);
+        gameCenter = mock(GameCenter.class);
+        CuT = new GetHomeRoute(gameCenter, playerLobby, templateEngine);
     }
 
     /**
@@ -164,7 +167,7 @@ public class GetHomeRouteTest {
     public void testInAGame() {
         // Arrange test scenario: the player joins but is already in game
         when(session.attribute(GetHomeRoute.PLAYER_ATTR)).thenReturn(player);
-        when(player.getGame()).thenReturn(mock(Game.class));
+        when(gameCenter.playerInGame(player)).thenReturn(true);
         // Mock up the view model
         final TemplateEngineTester testHelper = new TemplateEngineTester();
         when(templateEngine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());

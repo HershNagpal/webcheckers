@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 
 
 import com.google.gson.Gson;
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
@@ -33,6 +34,7 @@ public class WebServerTest {
      */
     private TemplateEngine templateEngine;
     private PlayerLobby playerLobby;
+    private GameCenter gameCenter;
 
 
     /**
@@ -42,9 +44,10 @@ public class WebServerTest {
     public void setup() {
         templateEngine = mock(TemplateEngine.class);
         playerLobby = mock(PlayerLobby.class);
+        gameCenter = mock(GameCenter.class);
         gson = new Gson();
 
-        CuT = new WebServer(playerLobby, templateEngine, gson);
+        CuT = new WebServer(gameCenter, playerLobby, templateEngine, gson);
     }
 
     /**

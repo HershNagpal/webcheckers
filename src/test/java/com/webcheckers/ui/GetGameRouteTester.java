@@ -100,8 +100,8 @@ public class GetGameRouteTester {
         when(session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR)).thenReturn(p1);
         when(playerLobby.getPlayer(request.queryParams("pid"))).thenReturn(p2);
         //set games to null
-        when(p1.getGame()).thenReturn(null);
-        when(p1.getGame()).thenReturn(null);
+    //    when(p1.getGame()).thenReturn(null);
+    //    when(p1.getGame()).thenReturn(null);
 
         final TemplateEngineTester tester = new TemplateEngineTester();
         when(engine.render(any(ModelAndView.class))).thenAnswer(tester.makeAnswer());
