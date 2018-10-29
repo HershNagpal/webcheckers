@@ -314,14 +314,14 @@ public class Game {
      */
   public Message submitTurn() {
       if (lastMove == null) {
-          return new Message("Invalid move. Cannot submit turn.", MessageType.ERROR);
+          return new Message("Invalid move. Cannot submit turn.", MessageType.error);
       }
       
       //reset lastMoves and lastMove
       lastMoves.clear();
       lastMove = null;
       switchActiveColor();
-      return new Message("", MessageType.INFO);
+      return new Message("", MessageType.info);
   }
 
   /**
@@ -332,7 +332,7 @@ public class Game {
    */
   public Message backUpMove(){
     if (lastMove == null || lastMoves.isEmpty()){
-      return new Message("Cannot Backup, there are no moves to undo.", MessageType.ERROR);
+      return new Message("Cannot Backup, there are no moves to undo.", MessageType.error);
     }
 
     //Undo last move
@@ -350,6 +350,6 @@ public class Game {
       lastMove = null;
     }
 
-    return new Message("", MessageType.INFO);
+    return new Message("", MessageType.info);
   }
 }

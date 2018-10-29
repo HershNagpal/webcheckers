@@ -84,7 +84,7 @@ public class GetGameRoute implements Route{
             Player opponent = playerLobby.getPlayer(request.queryParams(ID_PARAM));
             // Is other player in game
             if (gameCenter.playerInGame(opponent)) {
-                session.attribute(MESSAGE_ATTR, new Message(IN_GAME_ERROR, MessageType.ERROR));
+                session.attribute(MESSAGE_ATTR, new Message(IN_GAME_ERROR, MessageType.error));
                 response.redirect(WebServer.HOME_URL);
                 return null;
             }

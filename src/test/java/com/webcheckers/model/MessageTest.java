@@ -30,8 +30,8 @@ public class MessageTest {
 	 */
 	@BeforeEach
 	public void setup(){
-		errorMessage = new Message(ERROR_TEXT, MessageType.ERROR);
-		infoMessage = new Message(INFO_TEXT, MessageType.INFO);
+		errorMessage = new Message(ERROR_TEXT, MessageType.error);
+		infoMessage = new Message(INFO_TEXT, MessageType.info);
 	}
 
 	/**
@@ -48,7 +48,7 @@ public class MessageTest {
 	 */
 	@Test
 	public void testGetType() {
-		assertEquals(MessageType.ERROR, errorMessage.getType());
-		assertEquals(MessageType.INFO, infoMessage.getType());
+		assertEquals(MessageType.error, errorMessage.getType());
+		assertEquals(MessageType.info, infoMessage.getType());
 	}
 }

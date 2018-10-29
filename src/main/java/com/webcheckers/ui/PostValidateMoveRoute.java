@@ -56,10 +56,10 @@ public class PostValidateMoveRoute implements Route {
         Game game = gameCenter.getGame(player);
 
         if (game.validateMove(move)) {
-            return gson.toJson(new Message("", MessageType.INFO));
+            return gson.toJson(new Message("", MessageType.info));
         }
         else {
-            return gson.toJson(new Message("Invalid move. Try again.", MessageType.ERROR));
+            return gson.toJson(new Message("Invalid move. Try again.", MessageType.error));
         }
     }
 

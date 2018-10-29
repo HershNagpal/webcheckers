@@ -59,11 +59,11 @@ public class PostCheckTurnRoute implements Route {
 
         //Opponent ended his turn
         if(game.isActivePlayer(player)){
-          message = new Message("true",MessageType.INFO);
+          message = new Message("true",MessageType.info);
         }
         //Opponent is still in his turn
         else{
-          message = new Message("false",MessageType.INFO);
+          message = new Message("false",MessageType.info);
         }
 
         return gson.toJson(message);
