@@ -38,7 +38,6 @@ public class Game {
     this.whitePlayer = whitePlayer;
     this.board = board;
     activeColor = Color.RED;
-    //lastMoves = new ArrayList<>();
   }
 
   /**
@@ -322,6 +321,9 @@ public class Game {
           return new Message("Invalid move. Cannot submit turn.", MessageType.ERROR);
       }
       makeMove(lastMove);
+      
+      //reset lastMoves and lastMove
+      lastMoves.clear();
       lastMove = null;
       switchActiveColor();
       return new Message("", MessageType.INFO);
