@@ -295,7 +295,12 @@ public class Game {
           board.makeNormalMove(move);
       }
       else if (rowDistance == 2 && colDistance == 2) {
-          board.makeJumpMove(move);
+          if(move.isBackUpMove()){
+            board.makeBackUpJumpMove(move, activeColor);
+          }
+          else{
+            board.makeJumpMove(move);
+          }
       }
 
   }
@@ -327,7 +332,7 @@ public class Game {
    */
   public Message backUpMove(){
     if (lastMove == null || lastMoves.isEmpty()){
-      return new Message("Cannot back up move.", MessageType.ERROR);
+      return new Message("Cannot Backup, there are no moves to undo.", MessageType.ERROR);
     }
 
     //Undo last move

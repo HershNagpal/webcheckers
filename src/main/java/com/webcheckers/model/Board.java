@@ -163,6 +163,11 @@ public class Board {
       pieces[rowStart][colStart] = null;
   }
 
+  /**
+   * Performs a jump move by updating the piece moved and removing the
+   * jumped piece.
+   * @param move Jump move to be performed on board.
+   */
   public void makeJumpMove(Move move){
       Position startingPosition = move.getStart();
       Position endingPosition = move.getEnd();
@@ -178,7 +183,6 @@ public class Board {
 
       int rowDistance = rowEnd - rowStart;
       int colDistance = colEnd - colStart;
-
 
       //If row or column distance is 2, then the jump is going up/right, so the piece in between is one above the start.
       //Otherwise, the jump is going down/left, so the piece is one below the start.
@@ -200,6 +204,59 @@ public class Board {
       }
 
       pieces[jumpedRow][jumpedCol] = null;
+
+  }
+
+  /**
+   * Performs a back up for a jump move by updating the piece that jumped
+   * and by placing the piece that was jumped back into the board.
+   * @param move Jump move to be performed on board.
+   */
+  public void makeBackUpJumpMove(Move move, Color activeColor){
+    Position startingPosition = move.getStart();
+    Position endingPosition = move.getEnd();
+
+    int rowStart = startingPosition.getRow();
+    int colStart = startingPosition.getCell();
+    int rowEnd = endingPosition.getRow();
+    int colEnd = endingPosition.getCell();
+
+    Piece startingPiece = pieces[rowStart][colStart];
+    pieces[rowStart][colStart] = null;
+    pieces[rowEnd][colEnd] = startingPiece;
+
+    int rowDistance = rowEnd - rowStart;
+    int colDistance = colEnd - colStart;
+
+
+    //If row or column distance is 2, then the jump is going up/right, so the piece in between is one above the start.
+    //Otherwise, the jump is going down/left, so the piece is one below the start.
+    int jumpedRow;
+    int jumpedCol;
+
+    if(rowDistance == 2){
+      jumpedRow = rowStart + 1;
+    }
+    else{
+      jumpedRow = rowStart - 1;
+    }
+
+    if(colDistance == 2){
+      jumpedCol = colStart + 1;
+    }
+    else{
+      jumpedCol = colStart - 1;
+    }
+
+    //Place removed piece that got jumped back into board
+    if(move.isBackUpMove()){
+      if(activeColor.equals(Color.RED)) {
+        pieces[jumpedRow][jumpedCol] = new Piece(Color.WHITE, Piece.Type.SINGLE);
+      }
+      else{
+        pieces[jumpedRow][jumpedCol] = new Piece(Color.RED, Piece.Type.SINGLE);
+      }
+    }
 
   }
 }
