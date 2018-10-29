@@ -134,11 +134,13 @@ public class Game {
     if(isNormalMove(move)) {
       lastMoves.add(move);
       lastMove = move;
+      makeMove(move);
       return true;
     }
     else if (isJumpMove(move)) {
       lastMoves.add(move);
       lastMove = move;
+      makeMove(move);
       return true;
     }
     else {
@@ -320,7 +322,6 @@ public class Game {
       if (lastMove == null) {
           return new Message("Invalid move. Cannot submit turn.", MessageType.ERROR);
       }
-      makeMove(lastMove);
       
       //reset lastMoves and lastMove
       lastMoves.clear();
