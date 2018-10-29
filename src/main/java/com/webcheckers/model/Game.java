@@ -135,11 +135,13 @@ public class Game {
     if(isNormalMove(move)) {
       lastMoves.add(move);
       lastMove = move;
+      makeMove(move);
       return true;
     }
     else if (isJumpMove(move)) {
       lastMoves.add(move);
       lastMove = move;
+      makeMove(move);
       return true;
     }
     else {
@@ -267,19 +269,17 @@ public class Game {
   * Checks if player is the active player
   */
   public boolean isActivePlayer(Player player) {
-      if (player == redPlayer) {
-        if (activeColor == Color.RED) {
-          return true;
-        }
-      }
-      else{
-        if (player == whitePlayer) {
-          if (activeColor == Color.WHITE) {
-            return true;
-          }
-        }
-    }
-    return false;
+    return (player == redPlayer && activeColor == Color.RED)
+            || (player == whitePlayer && activeColor == Color.WHITE);
+//    if (player == redPlayer && activeColor == Color.RED) {
+//      return true;
+//    }
+//    else if (player == whitePlayer && activeColor == Color.WHITE) {
+//      return true;
+//    }
+//    else {
+//      return false;
+//    }
   }
 
   /**
@@ -321,7 +321,7 @@ public class Game {
       if (lastMove == null) {
           return new Message("Invalid move. Cannot submit turn.", MessageType.ERROR);
       }
-      makeMove(lastMove);
+      //makeMove(lastMove);
       lastMove = null;
       switchActiveColor();
       return new Message("", MessageType.INFO);
