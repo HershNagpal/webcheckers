@@ -84,16 +84,14 @@ public class GetGameRoute implements Route{
             Player opponent = playerLobby.getPlayer(request.queryParams(ID_PARAM));
             // Is other player in game
             if (gameCenter.playerInGame(opponent)) {
-                session.attribute(MESSAGE_ATTR, new Message(IN_GAME_ERROR, MessageType.error));
-                response.redirect(WebServer.HOME_URL);
+                sessionRedirect(session, response);
                 return null;
             }
             // Create a new game
             game = gameCenter.createGame(player, opponent);
         }
-        BoardView boardView = game.getBoardView(player);
 
-        vm.put(BOARD_ATTR, boardView);
+        vm.put(BOARD_ATTR, game.getBoardView(player));
         vm.put(CURRENT_PLAYER_ATTR, player);
         vm.put(VIEW_MODE_ATTR, ViewMode.PLAY);
         vm.put(RED_PLAYER_ATTR, game.getRedPlayer());
@@ -101,5 +99,10 @@ public class GetGameRoute implements Route{
         vm.put(ACTIVE_COLOR_ATTR, game.getActiveColor());
 
         return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
+    }
+
+    private void sessionRedirect(Session session, Response response) {
+        session.attribute(MESSAGE_ATTR, new Message(IN_GAME_ERROR, MessageType.error));
+        response.redirect(WebServer.HOME_URL);
     }
 }
