@@ -19,10 +19,18 @@ public class GameCenter {
      */
     private List<Game> games;
 
+    /**
+     * Initialize the list of games.
+     */
     public GameCenter() {
         games = new ArrayList<>();
     }
 
+    /**
+     * Is the given player in a game
+     * @param player Player to check
+     * @return If the player is in a game
+     */
     public Boolean playerInGame(Player player) {
         for (Game game : games) {
             if (game.playerInGame(player)) {
