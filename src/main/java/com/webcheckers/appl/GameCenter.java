@@ -18,21 +18,15 @@ import java.util.Map;
 public class GameCenter {
 
     /**
-     * All ongoing games.
-     */
-    private List<Game> games;
-
-    /**
      * All ongoing games and their respective messengers
      */
-    private Map<Game, Messenger> gamesM;
+    private Map<Game, Messenger> games;
 
     /**
      * Initialize the list of games.
      */
     public GameCenter() {
-        games = new ArrayList<>();
-        gamesM = new HashMap<>();
+        games = new HashMap<>();
     }
 
     /**
@@ -41,7 +35,7 @@ public class GameCenter {
      * @return If the player is in a game
      */
     public Boolean playerInGame(Player player) {
-        for (Game game : games) {
+        for (Game game : games.keySet()) {
             if (game.playerInGame(player)) {
                 return true;
             }
@@ -55,7 +49,7 @@ public class GameCenter {
      * @return The game or null
      */
     public Game getGame(Player player) {
-        for (Game game : games) {
+        for (Game game : games.keySet()) {
             if (game.playerInGame(player)) {
                 return game;
             }
@@ -71,9 +65,8 @@ public class GameCenter {
      */
     public Game createGame(Player player, Player opponent) {
         Game game = new Game(player, opponent);
-        games.add(game);
         Messenger messenger = new Messenger(game);
-        gamesM.put(game, messenger);
+        games.put(game, messenger);
         return game;
     }
 
@@ -83,8 +76,6 @@ public class GameCenter {
      */
     public void removeGame(Game game) {
         games.remove(game);
-        gamesM.remove(game);
-        // TODO remove players from game and game from players
     }
 
     /**
@@ -93,8 +84,7 @@ public class GameCenter {
      * @return Message
      */
     public Message checkTurn(Game game) {
-        return gamesM.get(game).checkTurn();
-        //return messenger.checkTurn();
+        return games.get(game).checkTurn();
     }
 
     /**
@@ -103,7 +93,7 @@ public class GameCenter {
      * @return Message
      */
     public Message validateMove(Game game) {
-        return gamesM.get(game).validateMove();
+        return games.get(game).validateMove();
     }
 
     /**
@@ -112,7 +102,7 @@ public class GameCenter {
      * @return Message
      */
     public Message submitTurn(Game game) {
-        return gamesM.get(game).submitTurn();
+        return games.get(game).submitTurn();
     }
 
     /**
@@ -121,7 +111,7 @@ public class GameCenter {
      * @return Message
      */
     public Message backupMove(Game game) {
-        return gamesM.get(game).backupMove();
+        return games.get(game).backupMove();
     }
 
 }
