@@ -55,17 +55,7 @@ public class PostCheckTurnRoute implements Route {
         Session session = request.session();
         Player player = session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR);
         Game game = gameCenter.getGame(player);
-        Message message;
-
-        //Opponent ended his turn
-        if(game.isActivePlayer(player)){
-          message = new Message("true",MessageType.info);
-        }
-        //Opponent is still in his turn
-        else{
-          message = new Message("false",MessageType.info);
-        }
-
+        Message message = gameCenter.checkTurn(game, player);
         return gson.toJson(message);
     }
 }

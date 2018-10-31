@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.Game;
+import com.webcheckers.model.Message;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -32,6 +33,7 @@ public class PostBackupMoveRoute implements Route {
         Session session = request.session();
         Player player = session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR);
         Game game = gameCenter.getGame(player);
-        return gson.toJson(game.backUpMove());
+        Message message = gameCenter.backupMove(game);
+        return gson.toJson(message);
     }
 }

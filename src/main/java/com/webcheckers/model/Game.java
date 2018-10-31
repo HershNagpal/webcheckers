@@ -14,6 +14,15 @@ import java.util.List;
  * @author Hersh Nagpal
  */
 public class Game {
+  private static final Message TURN_TRUE = new Message("true", MessageType.info);
+  private static final Message TURN_FALSE = new Message("false", MessageType.info);
+  private static final Message MOVE_TRUE = new Message("", MessageType.info);
+  private static final Message MOVE_FALSE = new Message("Invalid move. Try again.", MessageType.error);
+  private static final Message SUBMIT_TRUE = new Message("", MessageType.info);
+  private static final Message SUBMIT_FALSE = new Message("Invalid move. Cannot submit turn.", MessageType.error);
+  private static final Message BACKUP_TRUE = new Message("", MessageType.info);
+  private static final Message BACKUP_FALSE = new Message("Cannot Backup, there are no moves to undo.", MessageType.error);
+
   private Player redPlayer;
   private Player whitePlayer;
   private Board board;
@@ -112,13 +121,12 @@ public class Game {
   /**
    * Checks if the move being made by a player is valid or not.
    * First ensures that it is the correct player's turn and that there is no piece at the destination.
-   * Checks if the move is a normal diagonal movement. If so, returns true.
-   * If not, then checks if the move is a jump move over an opponent's piece. If so, returns true.
-   * Returns false if neither.
+   * Checks if the move is a normal diagonal movement.
+   * If not, then checks if the move is a jump move over an opponent's piece.
    * @param move The Move object that the player is making
-   * @return true if the move is valid, false if it is invalid.
+   * @return Info message if the move is valid, error message if it is invalid.
    */
-  public boolean validateMove(Move move) {
+  public Message validateMove(Move move) {
     // If it is red turn, move is flipped
     if (activeColor.equals(Color.RED)) {
         move = move.flipMove();
@@ -126,25 +134,25 @@ public class Game {
     Color movedPieceColor = board.getPieceAtPosition(move.getStart()).getColor();
     // Check valid move conditions
     if( !getActiveColor().equals(movedPieceColor) ) {
-      return false;
+      return MOVE_FALSE;
     }
     if(board.getPieceAtPosition(move.getEnd()) != null) {
-      return false;
+      return MOVE_FALSE;
     }
     if(isNormalMove(move)) {
       lastMoves.add(move);
       lastMove = move;
       makeMove(move);
-      return true;
+      return MOVE_TRUE;
     }
     else if (isJumpMove(move)) {
       lastMoves.add(move);
       lastMove = move;
       makeMove(move);
-      return true;
+      return MOVE_TRUE;
     }
     else {
-      return false;
+      return MOVE_FALSE;
     }
   }
 
@@ -265,11 +273,16 @@ public class Game {
   }
 
   /**
-  * Checks if player is the active player
-  */
-  public boolean isActivePlayer(Player player) {
-    return (player == redPlayer && activeColor == Color.RED)
-            || (player == whitePlayer && activeColor == Color.WHITE);
+   * Checks if player is the active player.
+   * @param player Player to check
+   * @return Message indicating if the player is the active player
+   */
+  public Message isActivePlayer(Player player) {
+    if ((player == redPlayer && activeColor == Color.RED)
+            || (player == whitePlayer && activeColor == Color.WHITE)) {
+      return TURN_TRUE;
+    }
+    return TURN_FALSE;
   }
 
   /**
@@ -314,14 +327,14 @@ public class Game {
      */
   public Message submitTurn() {
       if (lastMove == null) {
-          return new Message("Invalid move. Cannot submit turn.", MessageType.error);
+          return SUBMIT_FALSE;
       }
       
       //reset lastMoves and lastMove
       lastMoves.clear();
       lastMove = null;
       switchActiveColor();
-      return new Message("", MessageType.info);
+      return SUBMIT_TRUE;
   }
 
   /**
@@ -332,7 +345,7 @@ public class Game {
    */
   public Message backUpMove(){
     if (lastMove == null || lastMoves.isEmpty()){
-      return new Message("Cannot Backup, there are no moves to undo.", MessageType.error);
+      return BACKUP_FALSE;
     }
 
     //Undo last move
@@ -350,6 +363,6 @@ public class Game {
       lastMove = null;
     }
 
-    return new Message("", MessageType.info);
+    return BACKUP_TRUE;
   }
 }

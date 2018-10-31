@@ -2,6 +2,7 @@ package com.webcheckers.appl;
 
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Message;
+import com.webcheckers.model.Move;
 import com.webcheckers.model.Player;
 
 import java.util.ArrayList;
@@ -81,25 +82,25 @@ public class GameCenter {
     /**
      * Get the message from the messenger about whose turn it is.
      *
-     * @return Message
+     * @return Message with correct type
      */
-    public Message checkTurn(Game game) {
-        return games.get(game).checkTurn();
+    public Message checkTurn(Game game, Player player) {
+        return games.get(game).checkTurn(player);
     }
 
     /**
      * Get the message from the messenger about a valid move.
      *
-     * @return Message
+     * @return Message with correct type
      */
-    public Message validateMove(Game game) {
-        return games.get(game).validateMove();
+    public Message validateMove(Game game, Move move) {
+        return games.get(game).validateMove(move);
     }
 
     /**
      * Get the message from the messenger about submitting a turn.
      *
-     * @return Message
+     * @return Message with correct type
      */
     public Message submitTurn(Game game) {
         return games.get(game).submitTurn();
@@ -108,7 +109,7 @@ public class GameCenter {
     /**
      * Get the message from the messenger about backing up a move.
      *
-     * @return Message
+     * @return Message with correct type
      */
     public Message backupMove(Game game) {
         return games.get(game).backupMove();

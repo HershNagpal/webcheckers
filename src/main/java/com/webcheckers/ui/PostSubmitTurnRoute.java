@@ -51,6 +51,7 @@ public class PostSubmitTurnRoute implements Route {
         Session session = request.session();
         Player player = session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR);
         Game game = gameCenter.getGame(player);
-        return gson.toJson(game.submitTurn());
+        Message message = gameCenter.submitTurn(game);
+        return gson.toJson(message);
     }
 }

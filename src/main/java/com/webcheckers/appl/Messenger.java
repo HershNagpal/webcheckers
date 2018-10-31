@@ -1,10 +1,10 @@
 package com.webcheckers.appl;
 
-import com.webcheckers.model.Game;
-import com.webcheckers.model.Message;
+import com.webcheckers.model.*;
 
 /**
- * Creates the messages for view components to return to ajax calls
+ * Creates the messages for view components to return to ajax calls.
+ * Helper class for GameCenter.
  *
  * @author Michael Kha
  */
@@ -28,8 +28,8 @@ public class Messenger {
      *
      * @return Message
      */
-    public Message checkTurn() {
-        return null;
+    public Message checkTurn(Player player) {
+        return game.isActivePlayer(player);
     }
 
     /**
@@ -37,8 +37,8 @@ public class Messenger {
      *
      * @return Message
      */
-    public Message validateMove() {
-        return null;
+    public Message validateMove(Move move) {
+        return game.validateMove(move);
     }
 
     /**
@@ -47,7 +47,7 @@ public class Messenger {
      * @return Message
      */
     public Message submitTurn() {
-        return null;
+        return game.submitTurn();
     }
 
     /**
@@ -56,7 +56,7 @@ public class Messenger {
      * @return Message
      */
     public Message backupMove() {
-        return null;
+        return game.backUpMove();
     }
 
 }
