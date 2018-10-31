@@ -14,14 +14,6 @@ import java.util.List;
  * @author Hersh Nagpal
  */
 public class Game {
-  private static final Message TURN_TRUE = new Message("true", MessageType.info);
-  private static final Message TURN_FALSE = new Message("false", MessageType.info);
-  private static final Message MOVE_TRUE = new Message("", MessageType.info);
-  private static final Message MOVE_FALSE = new Message("Invalid move. Try again.", MessageType.error);
-  private static final Message SUBMIT_TRUE = new Message("", MessageType.info);
-  private static final Message SUBMIT_FALSE = new Message("Invalid move. Cannot submit turn.", MessageType.error);
-  private static final Message BACKUP_TRUE = new Message("", MessageType.info);
-  private static final Message BACKUP_FALSE = new Message("Cannot Backup, there are no moves to undo.", MessageType.error);
 
   private Player redPlayer;
   private Player whitePlayer;
@@ -124,9 +116,9 @@ public class Game {
    * Checks if the move is a normal diagonal movement.
    * If not, then checks if the move is a jump move over an opponent's piece.
    * @param move The Move object that the player is making
-   * @return Info message if the move is valid, error message if it is invalid.
+   * @return True if the move is valid, false if it is invalid.
    */
-  public Message validateMove(Move move) {
+  public boolean validateMove(Move move) {
     // If it is red turn, move is flipped
     if (activeColor.equals(Color.RED)) {
         move = move.flipMove();
@@ -134,25 +126,25 @@ public class Game {
     Color movedPieceColor = board.getPieceAtPosition(move.getStart()).getColor();
     // Check valid move conditions
     if( !getActiveColor().equals(movedPieceColor) ) {
-      return MOVE_FALSE;
+      return false;
     }
     if(board.getPieceAtPosition(move.getEnd()) != null) {
-      return MOVE_FALSE;
+      return false;
     }
     if(isNormalMove(move)) {
       lastMoves.add(move);
       lastMove = move;
       makeMove(move);
-      return MOVE_TRUE;
+      return true;
     }
     else if (isJumpMove(move)) {
       lastMoves.add(move);
       lastMove = move;
       makeMove(move);
-      return MOVE_TRUE;
+      return true;
     }
     else {
-      return MOVE_FALSE;
+      return true;
     }
   }
 
@@ -275,14 +267,14 @@ public class Game {
   /**
    * Checks if player is the active player.
    * @param player Player to check
-   * @return Message indicating if the player is the active player
+   * @return Is the player is the active player
    */
-  public Message isActivePlayer(Player player) {
+  public boolean isActivePlayer(Player player) {
     if ((player == redPlayer && activeColor == Color.RED)
             || (player == whitePlayer && activeColor == Color.WHITE)) {
-      return TURN_TRUE;
+      return true;
     }
-    return TURN_FALSE;
+    return false;
   }
 
   /**
@@ -323,29 +315,29 @@ public class Game {
      * message is returned. Otherwise, the move is made and the other player's
      * turn now starts.
      *
-     * @return Error or info message depending on if the move was made
+     * @return True or false depending on if the move was made
      */
-  public Message submitTurn() {
+  public boolean submitTurn() {
       if (lastMove == null) {
-          return SUBMIT_FALSE;
+          return false;
       }
       
       //reset lastMoves and lastMove
       lastMoves.clear();
       lastMove = null;
       switchActiveColor();
-      return SUBMIT_TRUE;
+      return true;
   }
 
   /**
    * "Undo" last move made and update both the list of previous moves,
    * and the lastMove.
    *
-   * @return Error or info message depending on if the back up action was made
+   * @return True or false depending on if the back up action was made
    */
-  public Message backUpMove(){
+  public boolean backUpMove(){
     if (lastMove == null || lastMoves.isEmpty()){
-      return BACKUP_FALSE;
+      return false;
     }
 
     //Undo last move
@@ -363,6 +355,6 @@ public class Game {
       lastMove = null;
     }
 
-    return BACKUP_TRUE;
+    return true;
   }
 }
