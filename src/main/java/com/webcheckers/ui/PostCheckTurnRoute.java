@@ -54,8 +54,7 @@ public class PostCheckTurnRoute implements Route {
     public Object handle(Request request, Response response) {
         Session session = request.session();
         Player player = session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR);
-        Game game = gameCenter.getGame(player);
-        Message message = gameCenter.checkTurn(game, player);
+        Message message = gameCenter.checkTurn(player);
         return gson.toJson(message);
     }
 }

@@ -32,8 +32,7 @@ public class PostBackupMoveRoute implements Route {
     public Object handle(Request request, Response response) {
         Session session = request.session();
         Player player = session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR);
-        Game game = gameCenter.getGame(player);
-        Message message = gameCenter.backupMove(game);
+        Message message = gameCenter.backupMove(player);
         return gson.toJson(message);
     }
 }

@@ -4,6 +4,8 @@ import com.webcheckers.model.*;
 
 /**
  * Creates the messages for view components to return to ajax calls.
+ * Calls the method to update the model and returns the right message
+ * from a boolean.
  * Helper class for GameCenter.
  *
  * @author Michael Kha
@@ -23,24 +25,11 @@ public class Messenger {
     private static final Message BACKUP_FALSE = new Message("Cannot Backup, there are no moves to undo.", MessageType.error);
 
     /**
-     * Game to retrieve messages from.
-     */
-    private Game game;
-
-    /**
-     * Create a messenger for the game.
-     * @param game Game
-     */
-    public Messenger(Game game) {
-        this.game = game;
-    }
-
-    /**
      * Get the message from the game about whose turn it is.
      *
      * @return Message
      */
-    public Message checkTurn(Player player) {
+    public Message checkTurn(Game game, Player player) {
         return game.isActivePlayer(player) ? TURN_TRUE : TURN_FALSE;
     }
 
@@ -49,7 +38,7 @@ public class Messenger {
      *
      * @return Message
      */
-    public Message validateMove(Move move) {
+    public Message validateMove(Game game, Move move) {
         return game.validateMove(move) ? MOVE_TRUE : MOVE_FALSE;
     }
 
@@ -58,7 +47,7 @@ public class Messenger {
      *
      * @return Message
      */
-    public Message submitTurn() {
+    public Message submitTurn(Game game) {
         return game.submitTurn() ? SUBMIT_TRUE : SUBMIT_FALSE;
     }
 
@@ -67,7 +56,7 @@ public class Messenger {
      *
      * @return Message
      */
-    public Message backupMove() {
+    public Message backupMove(Game game) {
         return game.backUpMove() ? BACKUP_TRUE : BACKUP_FALSE;
     }
 

@@ -21,13 +21,19 @@ public class GameCenter {
     /**
      * All ongoing games and their respective messengers
      */
-    private Map<Game, Messenger> games;
+    private List<Game> games;
+
+    /**
+     * Manages messages
+     */
+    private Messenger messenger;
 
     /**
      * Initialize the list of games.
      */
     public GameCenter() {
-        games = new HashMap<>();
+        games = new ArrayList<>();
+        messenger = new Messenger();
     }
 
     /**
@@ -36,7 +42,7 @@ public class GameCenter {
      * @return If the player is in a game
      */
     public Boolean playerInGame(Player player) {
-        for (Game game : games.keySet()) {
+        for (Game game : games) {
             if (game.playerInGame(player)) {
                 return true;
             }
@@ -50,7 +56,7 @@ public class GameCenter {
      * @return The game or null
      */
     public Game getGame(Player player) {
-        for (Game game : games.keySet()) {
+        for (Game game : games) {
             if (game.playerInGame(player)) {
                 return game;
             }
@@ -66,8 +72,7 @@ public class GameCenter {
      */
     public Game createGame(Player player, Player opponent) {
         Game game = new Game(player, opponent);
-        Messenger messenger = new Messenger(game);
-        games.put(game, messenger);
+        games.add(game);
         return game;
     }
 
@@ -84,8 +89,9 @@ public class GameCenter {
      *
      * @return Message with correct type
      */
-    public Message checkTurn(Game game, Player player) {
-        return games.get(game).checkTurn(player);
+    public Message checkTurn(Player player) {
+        Game game = getGame(player);
+        return messenger.checkTurn(game, player);
     }
 
     /**
@@ -93,8 +99,9 @@ public class GameCenter {
      *
      * @return Message with correct type
      */
-    public Message validateMove(Game game, Move move) {
-        return games.get(game).validateMove(move);
+    public Message validateMove(Player player, Move move) {
+        Game game = getGame(player);
+        return messenger.validateMove(game, move);
     }
 
     /**
@@ -102,8 +109,9 @@ public class GameCenter {
      *
      * @return Message with correct type
      */
-    public Message submitTurn(Game game) {
-        return games.get(game).submitTurn();
+    public Message submitTurn(Player player) {
+        Game game = getGame(player);
+        return messenger.submitTurn(game);
     }
 
     /**
@@ -111,8 +119,9 @@ public class GameCenter {
      *
      * @return Message with correct type
      */
-    public Message backupMove(Game game) {
-        return games.get(game).backupMove();
+    public Message backupMove(Player player) {
+        Game game = getGame(player);
+        return messenger.backupMove(game);
     }
 
 }
