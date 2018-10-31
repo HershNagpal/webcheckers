@@ -165,18 +165,18 @@ public class Game {
     boolean isSingleMove = false;
     // Red pieces move to higher rows, White pieces move to lower rows. Kings can do both.
     if(movingPiece.getColor() == Color.RED || movingPiece.getType() == Type.KING) {
-      if((row1+1 == row2) && (col1+1 == col2)) {
+      if(checkDistance(row2,row1,1) && checkDistance(col2,col1,1)) {
         isSingleMove = true;
       }
-      else if((row1+1 == row2) && (col1-1 == col2)) {
+      else if(checkDistance(row2,row1,1) && checkDistance(col2,col1,-1)) {
         isSingleMove = true;
       }
     }
     else if(movingPiece.getColor() == Color.WHITE || movingPiece.getType() == Type.KING) {
-      if((row1-1 == row2) && (col1+1 == col2)) {
+      if(checkDistance(row2,row1,-1) && checkDistance(col2,col1,1)) {
         isSingleMove = true;
       }
-      else if((row1-1 == row2) && (col1-1 == col2)) {
+      else if(checkDistance(row2,row1,-1) && checkDistance(col2,col1,-1)) {
         isSingleMove = true;
       }
     }
@@ -203,7 +203,7 @@ public class Game {
     // The piece must either be Red or a King to move towards the bottom of the board.
     if(movingPiece.getColor() == Color.RED || movingPiece.getType() == Type.KING) {
       // The move must be two down and two to the right or..
-      if((row1+2 == row2) && (col1+2 == col2)) {
+      if(checkDistance(row2,row1,2) && checkDistance(col2,col1,2)) {
         middlePiece = board.getPieceAtPosition(new Position(row1+1,col1+1));
         if (middlePiece == null) {
           return false;
@@ -214,7 +214,7 @@ public class Game {
         }
       }
       // The move must be two down and two to the left
-      else if((row1+2 == row2) && (col1-2 == col2)) {
+      else if(checkDistance(row2,row1,2) && checkDistance(col2,col1,-2)) {
         middlePiece = board.getPieceAtPosition(new Position(row1+1,col1-1));
         if (middlePiece == null) {
           return false;
@@ -228,7 +228,7 @@ public class Game {
     // The piece must either be White or a King to move to the top of the board
     else if(movingPiece.getColor() == Color.WHITE || movingPiece.getType() == Type.KING) {
       // The move must be two up and two to the left
-      if((row1-2 == row2) && (col1+2 == col2)) {
+      if(checkDistance(row2,row1,-2) && checkDistance(col2,col1,2)) {
         middlePiece = board.getPieceAtPosition(new Position(row1-1,col1+1));
         if (middlePiece == null) {
           return false;
@@ -239,7 +239,7 @@ public class Game {
         }
       }
       // The move must be two up and two to the left
-      else if((row1-2 == row2) && (col1-2 == col2)) {
+      else if(checkDistance(row2,row1,-2) && checkDistance(col2,col1,-2)) {
         middlePiece = board.getPieceAtPosition(new Position(row1-1,col1-1));
         if (middlePiece == null) {
           return false;
@@ -251,6 +251,17 @@ public class Game {
       }
     }
     return isJumpMove;
+  }
+
+  /**
+   *
+   * @param val1 col or row value to check distance with another value
+   * @param val2 col or row value to check distance with another value.
+   * @param expected expected difference between val2 and val1.
+   * @return true if the distance between p1 and p2 is equal to the expected value
+   */
+  public boolean checkDistance(int val2, int val1, int expected){
+    return (val2-val1) == expected;
   }
 
   /**
