@@ -1,10 +1,13 @@
 package com.webcheckers.appl;
 
 import com.webcheckers.model.Game;
+import com.webcheckers.model.Message;
 import com.webcheckers.model.Player;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Holds all games that are occurring on the application.
@@ -20,10 +23,16 @@ public class GameCenter {
     private List<Game> games;
 
     /**
+     * All ongoing games and their respective messengers
+     */
+    private Map<Game, Messenger> gamesM;
+
+    /**
      * Initialize the list of games.
      */
     public GameCenter() {
         games = new ArrayList<>();
+        gamesM = new HashMap<>();
     }
 
     /**
@@ -63,6 +72,8 @@ public class GameCenter {
     public Game createGame(Player player, Player opponent) {
         Game game = new Game(player, opponent);
         games.add(game);
+        Messenger messenger = new Messenger(game);
+        gamesM.put(game, messenger);
         return game;
     }
 
@@ -72,7 +83,45 @@ public class GameCenter {
      */
     public void removeGame(Game game) {
         games.remove(game);
+        gamesM.remove(game);
         // TODO remove players from game and game from players
+    }
+
+    /**
+     * Get the message from the messenger about whose turn it is.
+     *
+     * @return Message
+     */
+    public Message checkTurn(Game game) {
+        return gamesM.get(game).checkTurn();
+        //return messenger.checkTurn();
+    }
+
+    /**
+     * Get the message from the messenger about a valid move.
+     *
+     * @return Message
+     */
+    public Message validateMove(Game game) {
+        return gamesM.get(game).validateMove();
+    }
+
+    /**
+     * Get the message from the messenger about submitting a turn.
+     *
+     * @return Message
+     */
+    public Message submitTurn(Game game) {
+        return gamesM.get(game).submitTurn();
+    }
+
+    /**
+     * Get the message from the messenger about backing up a move.
+     *
+     * @return Message
+     */
+    public Message backupMove(Game game) {
+        return gamesM.get(game).backupMove();
     }
 
 }

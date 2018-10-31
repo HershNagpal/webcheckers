@@ -1,5 +1,6 @@
 package com.webcheckers.appl;
 
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Message;
 
 /**
@@ -8,6 +9,19 @@ import com.webcheckers.model.Message;
  * @author Michael Kha
  */
 public class Messenger {
+
+    /**
+     * Game to retrieve messages from.
+     */
+    private Game game;
+
+    /**
+     * Create a messenger for the game.
+     * @param game Game
+     */
+    public Messenger(Game game) {
+        this.game = game;
+    }
 
     /**
      * Get the message from the game about whose turn it is.
