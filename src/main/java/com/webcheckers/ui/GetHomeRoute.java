@@ -94,7 +94,6 @@ public class GetHomeRoute implements Route {
       }
       if (session.attribute(MESSAGE_ATTR) != null) {
         vm.put(MESSAGE_ATTR, session.attribute(MESSAGE_ATTR));
-        session.removeAttribute(MESSAGE_ATTR);
       }
     }
     else {

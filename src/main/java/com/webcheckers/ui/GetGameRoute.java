@@ -74,7 +74,8 @@ public class GetGameRoute implements Route{
         Map<String, Object> vm = new HashMap<>();
         vm.put(TITLE_ATTR, TITLE);
         Session session = request.session();
-
+        // Reset game messages
+        session.removeAttribute(MESSAGE_ATTR);
         Game game;
         Player player = session.attribute(CURRENT_PLAYER_ATTR);
         // Is this player in game
