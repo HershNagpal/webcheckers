@@ -189,7 +189,7 @@ public class Game {
    * @param move The Move object that the player is making.
    * @return true if the move is a valid jump move, false if it is invalid or not a jump move.
    */
-  private boolean isJumpMove(Move move) {
+  public boolean isJumpMove(Move move) {
     int row1 = move.getStart().getRow();
     int col1 = move.getStart().getCell();
 
@@ -350,3 +350,4 @@ public class Game {
     return true;
   }
 }
+
