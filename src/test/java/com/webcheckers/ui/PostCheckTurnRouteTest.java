@@ -15,13 +15,13 @@ import spark.Response;
 import spark.Session;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
+ * Unit test suite for PostCheckTurnRoute
  *
- * @author
+ * @author Michael Kha
  */
 @Tag("UI-tier")
 public class PostCheckTurnRouteTest {
@@ -34,9 +34,8 @@ public class PostCheckTurnRouteTest {
     /**
      * friendly objects
      */
-    private Gson gson;
+    private Game game;
     private GameCenter gameCenter;
-    private Messenger messenger;
 
     /**
      * mock objects
@@ -45,10 +44,12 @@ public class PostCheckTurnRouteTest {
     private Response response;
     private Session session;
     private Player player;
-    private Game game;
+    private Player opponent;
+    private Messenger messenger;
 
-
-
+    /**
+     * Setup the objects for each test.
+     */
     @BeforeEach
     public void setup() {
         request = mock(Request.class);
@@ -56,28 +57,47 @@ public class PostCheckTurnRouteTest {
         session = mock(Session.class);
         when(request.session()).thenReturn(session);
         player = mock(Player.class);
-        game = mock(Game.class);
-        messenger = new Messenger();
+        opponent = mock(Player.class);
+        messenger = mock(Messenger.class);
+
         gameCenter = new GameCenter();
-        gson = new Gson();
+        game = gameCenter.createGame(player, opponent);
+        Gson gson = new Gson();
 
         CuT = new PostCheckTurnRoute(gameCenter, gson);
     }
 
+    /**
+     * Validate that the message is correct for a player
+     * who is taking their turn.
+     */
     @Test
     public void testIsYourTurn() {
+        Message message = new Message("true", MessageType.info);
         // Arrange the test scenario; the player checks the turn and it is their turn
         when(session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR)).thenReturn(player);
-    //    when(game.isActivePlayer(player)).thenReturn(true);
-        doReturn(true).when(game).isActivePlayer(player);
-    //    doReturn(new Message("true", MessageType.info)).when(messenger).checkTurn(game, player);
-        doReturn(messenger.checkTurn(game, player)).when(gameCenter).checkTurn(player);
+        when(messenger.checkTurn(game, player)).thenReturn(message);
+        // Invoke the test
         CuT.handle(request, response);
-        assertTrue(messenger.checkTurn(game, player) == gameCenter.checkTurn(player));
+        assertEquals(gameCenter.checkTurn(player).getText(), message.getText());
+        assertEquals(gameCenter.checkTurn(player).getType(), message.getType());
+        assertNotEquals(gameCenter.checkTurn(opponent).getText(), message.getText());
     }
 
+    /**
+     * Validate that the message is correct for a player
+     * who is not taking their turn.
+     */
     @Test
     public void testNotYourTurn() {
-        when(gameCenter.checkTurn(player)).thenReturn(new Message("false", MessageType.info));
+        Message message = new Message("false", MessageType.info);
+        // Arrange the test scenario; the player checks the turn and it is their turn
+        when(session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR)).thenReturn(opponent);
+        when(messenger.checkTurn(game, opponent)).thenReturn(message);
+        // Invoke the test
+        CuT.handle(request, response);
+        assertEquals(gameCenter.checkTurn(opponent).getText(), message.getText());
+        assertEquals(gameCenter.checkTurn(opponent).getType(), message.getType());
+        assertNotEquals(gameCenter.checkTurn(player).getText(), message.getText());
     }
 }
