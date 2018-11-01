@@ -400,7 +400,7 @@ public class Game {
      * @return
      */
     public List<Piece> checkJumpLocation(Piece piece){
-
+        return null;
     }
 }
 
