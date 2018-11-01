@@ -12,7 +12,6 @@ import java.util.List;
  * @author Luis Gutierrez
  * @author Christopher Daukshus
  * @author Hersh Nagpal
- * @author Matthew Bolliner
  */
 public class Game {
 
@@ -347,30 +346,52 @@ public class Game {
     else{
       lastMove = null;
     }
+
     return true;
   }
+    /**
+     * Checks whether or not the last move made a piece able to be kinged.
+     * If the piece is kinged, returns true. If already kinged or not able to be
+     * kinged, returns false.
+     * This should only be called once a move has been made.
+     *
+     * @param move The move that was just made
+     * @return Whether or not the piece was kinged.
+     */
+    private boolean checkIfKinged(Move move) {
+        int endRow = move.getEnd().getCell();
+        Piece currentPiece = board.getPieceAtPosition(move.getEnd());
+        Color pieceColor = currentPiece.getColor();
 
-  /**
-   * This function will return true if there is a
-   * possible jump move for the current player
-   * @return
-   */
-  public boolean jumpMoveExists(){
-    Piece[][] pieces = board.getPieces();
-    Piece current;
-      for(int ir = 0; ir < Board.ROWS; ir++){
-        for(int ic = 0; ic < Board.COLUMNS; ic++){
-            current = pieces[ir][ic];
-            //make sure the space has a piece
-            if(!(current.equals(null))){
-                //see if current is the same color as active player
-                if(current.getColor().equals(getActiveColor())){
+        if (endRow == 7 && pieceColor == Color.RED) {
+            return currentPiece.kingPiece();
+        }
+        else if (endRow == 7 && pieceColor == Color.RED) {
+            return currentPiece.kingPiece();
+        }
+        return false;
+    }
+    /**
+     * This function will return true if there is a
+     * possible jump move for the current player
+     * @return
+     */
+    public boolean jumpMoveExists(){
+        Piece[][] pieces = board.getPieces();
+        Piece current;
+        for(int ir = 0; ir < Board.ROWS; ir++){
+            for(int ic = 0; ic < Board.COLUMNS; ic++){
+                current = pieces[ir][ic];
+                //make sure the space has a piece
+                if(!(current.equals(null))){
+                    //see if current is the same color as active player
+                    if(current.getColor().equals(getActiveColor())){
+                    }
                 }
             }
         }
+        return false;
     }
-    return false;
-  }
 
     /**
      * This method will get a piece and check
@@ -378,8 +399,8 @@ public class Game {
      * @param piece
      * @return
      */
-  public List<Piece> checkJumpLocation(Piece piece){
+    public List<Piece> checkJumpLocation(Piece piece){
 
-  }
+    }
 }
 
