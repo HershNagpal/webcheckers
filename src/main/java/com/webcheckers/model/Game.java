@@ -172,7 +172,7 @@ public class Game {
         isSingleMove = true;
       }
     }
-    else if(movingPiece.getColor() == Color.WHITE || movingPiece.getType() == Type.KING) {
+    if(movingPiece.getColor() == Color.WHITE || movingPiece.getType() == Type.KING) {
       if((row1-1 == row2) && (col1+1 == col2)) {
         isSingleMove = true;
       }
@@ -205,9 +205,6 @@ public class Game {
       // The move must be two down and two to the right or..
       if((row1+2 == row2) && (col1+2 == col2)) {
         middlePiece = board.getPieceAtPosition(new Position(row1+1,col1+1));
-        if (middlePiece == null) {
-          return false;
-        }
         // There must also be a piece of the opposite color in between the start and end.
         if(middlePiece.getColor() != movingPiece.getColor()) {
           isJumpMove = true;
@@ -216,9 +213,6 @@ public class Game {
       // The move must be two down and two to the left
       else if((row1+2 == row2) && (col1-2 == col2)) {
         middlePiece = board.getPieceAtPosition(new Position(row1+1,col1-1));
-        if (middlePiece == null) {
-          return false;
-        }
         // There must also be a piece of the opposite color in between the start and end.
         if(middlePiece.getColor() != movingPiece.getColor()) {
           isJumpMove = true;
@@ -226,13 +220,10 @@ public class Game {
       }
     }
     // The piece must either be White or a King to move to the top of the board
-    else if(movingPiece.getColor() == Color.WHITE || movingPiece.getType() == Type.KING) {
+    if(movingPiece.getColor() == Color.WHITE || movingPiece.getType() == Type.KING) {
       // The move must be two up and two to the left
       if((row1-2 == row2) && (col1+2 == col2)) {
         middlePiece = board.getPieceAtPosition(new Position(row1-1,col1+1));
-        if (middlePiece == null) {
-          return false;
-        }
         // There must also be a piece of the opposite color in between the start and end.
         if(middlePiece.getColor() != movingPiece.getColor()) {
           isJumpMove = true;
@@ -241,9 +232,6 @@ public class Game {
       // The move must be two up and two to the left
       else if((row1-2 == row2) && (col1-2 == col2)) {
         middlePiece = board.getPieceAtPosition(new Position(row1-1,col1-1));
-        if (middlePiece == null) {
-          return false;
-        }
         // There must also be a piece of the opposite color in between the start and end.
         if(middlePiece.getColor() != movingPiece.getColor()) {
           isJumpMove = true;
