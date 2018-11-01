@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
+import com.webcheckers.appl.Messenger;
 import com.webcheckers.appl.PlayerLobby;
 
 import com.webcheckers.ui.WebServer;
@@ -48,7 +49,7 @@ public final class Application {
       System.err.println("Could not initialize log manager because: " + e.getMessage());
     }
 
-    final GameCenter gameCenter = new GameCenter();
+    final GameCenter gameCenter = new GameCenter(new Messenger());
 
     final PlayerLobby playerLobby = new PlayerLobby();
 
