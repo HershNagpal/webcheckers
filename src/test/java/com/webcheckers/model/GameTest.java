@@ -40,6 +40,7 @@ public class GameTest {
 	Piece[][] customPiecesRedMove2;
 	Piece[][] customPiecesWhiteMove1;
 	Piece[][] customPiecesWhiteMove2;
+	Piece[][] customPiecesWhiteMove3;
 
 	// Positions on the mock board that can be called.
 	private Position redPosition1 = new Position(0, 2);
@@ -124,6 +125,17 @@ public class GameTest {
                 {null, null, redPiece, null, null, null, null, null},
                 {null, whitePiece, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, redPiece, null, null, null, null, null},
+                {null, null, null, whitePiece, null, null, null, null}
+        };
+        //using this to test jump move
+        customPiecesWhiteMove3 = new Piece[][]{
+                {null, null, null, null, null, null, null, null},
+                {null, whitePiece, null, null, null, null, null, null},
+                {null, null, redPiece, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
@@ -268,10 +280,23 @@ public class GameTest {
      */
     @Test
     public void testIsJumpMove(){
+        //valid jump move
         Position positionStart = new Position(7, 3);
         Position positionEnd = new Position(5, 1);
         Move move = new Move(positionStart, positionEnd);
+
         assertTrue(CuT.isJumpMove(move));
+
+        //invalid move: trying to move a
+        //non red or kinged piece down
+        positionStart = new Position(1, 1);
+        positionEnd = new Position(2, 3);
+        move = new Move(positionStart, positionEnd);
+        board = new Board(customPiecesWhiteMove3);
+        CuT = new Game(red, white, board);
+
+        assertFalse(CuT.isJumpMove(move));
+
 
     }
 }
