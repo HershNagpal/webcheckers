@@ -34,7 +34,12 @@ public class PostBackupMoveRouteTest {
      * friendly objects
      */
     private Game game;
-    private GameCenter gameCenter;
+
+    private Messenger messengerSuccess;
+    private GameCenter gameCenterSuccess;
+
+    private Messenger messengerFail;
+    private GameCenter gameCenterFail;
 
 
     /**
@@ -44,11 +49,6 @@ public class PostBackupMoveRouteTest {
     private Response response;
     private Session session;
     private Player player;
-    private Player opponent;
-    private Messenger messenger;
-    private Game game_NoLastMoves;
-    private Messenger messenger_NoLastMoves;
-    private GameCenter gameCenter_NoLastMoves;
 
     /**
      * Setup the objects for each test.
@@ -60,43 +60,57 @@ public class PostBackupMoveRouteTest {
         session = mock(Session.class);
         when(request.session()).thenReturn(session);
         player = mock(Player.class);
-        opponent = mock(Player.class);
-        messenger = mock(Messenger.class);
 
-        gameCenter = new GameCenter(messenger);
+        //Setup for BackUp success
+        messengerSuccess = mock(Messenger.class);
+        gameCenterSuccess = new GameCenter(messengerSuccess);
 
-        game = gameCenter.createGame(player, opponent);
-        Gson gson = new Gson();
+        //Setup for BackUp fail
+        messengerFail = mock(Messenger.class);
+        gameCenterFail = new GameCenter(messengerFail);
 
-        game_NoLastMoves = mock(Game.class);
-        gameCenter_NoLastMoves = mock(GameCenter.class);
-        messenger_NoLastMoves = mock(Messenger.class);
-
-        CuT = new PostBackupMoveRoute(gameCenter, gson);
     }
 
+    /**
+     * Validate the message is correct for an info backUp move message.
+     */
     @Test
-    public void testBackUpMove() {
+    public void testBackUpMoveSuccess() {
+        Gson gson = new Gson();
+        CuT = new PostBackupMoveRoute(gameCenterSuccess,gson);
         Message backUp_True = new Message("", MessageType.info);
-        Message backUp_False = new Message("Cannot Backup, there are no moves to undo.", MessageType.error);
 
         //Arrange the test scenario: the player does a backUpMove
         when(session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR)).thenReturn(player);
-        when(messenger.backupMove(game)).thenReturn(backUp_True);
 
         //Invoke the test
         CuT.handle(request, response);
 
         //BackUpMove Success
-        assertEquals(gameCenter.backupMove(player).getText(), backUp_True.getText());
-        assertEquals(gameCenter.backupMove(player).getType(), backUp_True.getType());
-
-        //BackUpMove Fail
-        when(gameCenter_NoLastMoves.backupMove(player)).thenReturn(backUp_False);
-        assertEquals(gameCenter_NoLastMoves.backupMove(player).getText(), backUp_False.getText());
-        assertEquals(gameCenter_NoLastMoves.backupMove(player).getType(), backUp_False.getType());
+        when(messengerSuccess.backupMove(game)).thenReturn(backUp_True);
+        assertEquals(gameCenterSuccess.backupMove(player).getText(), backUp_True.getText());
+        assertEquals(gameCenterSuccess.backupMove(player).getType(), backUp_True.getType());
 
     }
 
-    //TODO split testBackUpMove into success and fail
+    /**
+     * Validate the message is correct for an error backUp move message.
+     */
+    @Test
+    public void testBackUpMoveFail(){
+        Gson gson = new Gson();
+        CuT = new PostBackupMoveRoute(gameCenterFail,gson);
+        Message backUp_False = new Message("Cannot Backup, there are no moves to undo.", MessageType.error);
+
+        //Arrange the test scenario: the player does a backUpMove
+        when(session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR)).thenReturn(player);
+
+        //Invoke the test
+        CuT.handle(request, response);
+
+        //BackUpMove Fail
+        when(gameCenterFail.backupMove(player)).thenReturn(backUp_False);
+        assertEquals(gameCenterFail.backupMove(player).getText(), backUp_False.getText());
+        assertEquals(gameCenterFail.backupMove(player).getType(), backUp_False.getType());
+    }
 }
