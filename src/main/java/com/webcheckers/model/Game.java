@@ -275,50 +275,51 @@ public class Game {
    */
   public void makeMove(Move move){
 
-      Position moveStart = move.getStart();
-      Position moveEnd = move.getEnd();
+    Position moveStart = move.getStart();
+    Position moveEnd = move.getEnd();
 
-      int rowStart = moveStart.getRow();
-      int colStart = moveStart.getCell();
-      int rowEnd = moveEnd.getRow();
-      int colEnd = moveEnd.getCell();
+    int rowStart = moveStart.getRow();
+    int colStart = moveStart.getCell();
+    int rowEnd = moveEnd.getRow();
+    int colEnd = moveEnd.getCell();
 
-      int rowDistance = rowEnd - rowStart;
-      rowDistance = abs(rowDistance);
-      int colDistance = colEnd - colStart;
-      colDistance = abs(colDistance);
+    int rowDistance = rowEnd - rowStart;
+    rowDistance = abs(rowDistance);
+    int colDistance = colEnd - colStart;
+    colDistance = abs(colDistance);
 
-      if(rowDistance == 1 && colDistance == 1) {
-          board.makeNormalMove(move);
+    if(rowDistance == 1 && colDistance == 1) {
+      board.makeNormalMove(move);
+      checkIfKinged(move);
+    }
+    else if (rowDistance == 2 && colDistance == 2) {
+      if(move.isBackUpMove()){
+        board.makeBackUpJumpMove(move, activeColor);
       }
-      else if (rowDistance == 2 && colDistance == 2) {
-          if(move.isBackUpMove()){
-            board.makeBackUpJumpMove(move, activeColor);
-          }
-          else{
-            board.makeJumpMove(move);
-          }
+      else{
+        board.makeJumpMove(move);
+        checkIfKinged(move);
       }
-
+    }
   }
 
-    /**
-     * Submit the last made move. If there is no last made move an error
-     * message is returned. Otherwise, the move is made and the other player's
-     * turn now starts.
-     *
-     * @return True or false depending on if the move was made
-     */
+  /**
+   * Submit the last made move. If there is no last made move an error
+   * message is returned. Otherwise, the move is made and the other player's
+   * turn now starts.
+   *
+   * @return True or false depending on if the move was made
+   */
   public boolean submitTurn() {
-      if (lastMove == null) {
-          return false;
-      }
+    if (lastMove == null) {
+      return false;
+    }
       
-      //reset lastMoves and lastMove
-      lastMoves.clear();
-      lastMove = null;
-      switchActiveColor();
-      return true;
+    //reset lastMoves and lastMove
+    lastMoves.clear();
+    lastMove = null;
+    switchActiveColor();
+    return true;
   }
 
   /**
@@ -349,86 +350,101 @@ public class Game {
 
     return true;
   }
-    /**
-     * Checks whether or not the last move made a piece able to be kinged.
-     * If the piece is kinged, returns true. If already kinged or not able to be
-     * kinged, returns false.
-     * This should only be called once a move has been made.
-     *
-     * @param move The move that was just made
-     * @return Whether or not the piece was kinged.
-     */
-    private boolean checkIfKinged(Move move) {
-        int endRow = move.getEnd().getCell();
-        Piece currentPiece = board.getPieceAtPosition(move.getEnd());
-        Color pieceColor = currentPiece.getColor();
 
-        if (endRow == 7 && pieceColor == Color.RED) {
-            return currentPiece.kingPiece();
-        }
-        else if (endRow == 7 && pieceColor == Color.RED) {
-            return currentPiece.kingPiece();
-        }
-        return false;
+  /**
+   * Checks whether or not the last move made a piece able to be kinged.
+   * If the piece is kinged, returns true. If already kinged or not able to be
+   * kinged, returns false.
+   * This should only be called once a move has been made.
+   *
+   * @param move The move that was just made
+   * @return Whether or not the piece was kinged.
+   */
+  private boolean checkIfKinged(Move move) {
+    int endRow = move.getEnd().getCell();
+    Piece currentPiece = board.getPieceAtPosition(move.getEnd());
+    Color pieceColor = currentPiece.getColor();
+
+    if (endRow == 7 && pieceColor == Color.RED) {
+      return currentPiece.kingPiece();
     }
-    /**
-     * This function will return true if there is a
-     * possible jump move for the current player
-     * @return
-     */
-    public boolean jumpMoveExists(){
-        Piece[][] pieces = board.getPieces();
-        Piece current;
-        for(int ir = 0; ir < Board.ROWS; ir++){
-            for(int ic = 0; ic < Board.COLUMNS; ic++){
-                current = pieces[ir][ic];
-                //make sure the space has a piece
-                if(!(current.equals(null))){
-                    //see if current is the same color as active player
-                    if(current.getColor().equals(getActiveColor())){
-                    }
-                }
-            }
-        }
-        return false;
+    else if (endRow == 7 && pieceColor == Color.RED) {
+      return currentPiece.kingPiece();
+    }
+    return false;
+  }
+
+  /**
+   * This function will return true if there is a possible jump move for the 
+   * current player to make. This method should only be called when a move is
+   * being validated.
+   * 
+   * @return whether or not the current player can make a jump move.
+   */
+  public boolean jumpMoveExists(){
+    // for(int ir = 0; ir < Board.ROWS; ir++){
+    //     for(int ic = 0; ic < Board.COLUMNS; ic++){
+    //         current = pieces[ir][ic];
+    //         //make sure the space has a piece
+    //         if(!(current.equals(null))){
+    //             //see if current is the same color as active player
+    //             if(current.getColor().equals(getActiveColor())){
+    //             }
+    //         }
+    //     }
+    // }
+    Color currentColor = getActiveColor();
+    List possiblePiecesToMove = new ArrayList<Position>();
+    Position indexPosition;
+    Piece indexPiece;
+    
+    // Iterate through all pieces to see which ones are valid to move this turn.
+    for(int row = 0; row < Board.ROWS; row++) {
+      for(int col = 0; col < Board.COLUMNS; col++) {
+        indexPosition = new Position(row, col);
+        indexPiece = board.getPieceAtPosition(indexPosition);
+
+        // Add the possible positions of pieces that are the active color to the array.
+
+      }
     }
 
-    /**
-     * This method will get a piece and check
-     * the jump location
-     * @param piece
-     * @return
-     */
-    public List<Position> checkJumpLocation(Position position){
-        int row = position.getRow();
-        int col = position.getCell();
-        List<Position> possibleJumps = new ArrayList<>();
-        Position upperLeft, upperRight, lowerLeft, lowerRight;
-        Piece[][] pieces = board.getPieces();
+    return false;
+  }
 
-        upperLeft = new Position(row-2, col-2);
-        upperRight = new Position(row - 2, col + 2);
-        lowerLeft = new Position(row + 2, col -2);
-        lowerRight = new Position(row + 2, col +2);
-
-        possibleJumps.add(upperLeft);
-        possibleJumps.add(upperRight);
-        possibleJumps.add(lowerLeft);
-        possibleJumps.add(lowerRight);
-
-        for(Position p: possibleJumps){
-            //make sure positions are on the board
-            row = p.getRow();
-            col = p.getCell();
-            if(row < 0 || col < 0 || row >= Board.ROWS || col >= Board.COLUMNS)
-                possibleJumps.remove(p);
-            //now check if spaces are empty
-            Piece test = pieces[row][ col];
-            if(!(test.equals(null))){
-                possibleJumps.remove(p);
-            }
+  /**
+  * This method will get a piece and check
+  * the jump location
+  * @param piece
+  * @return
+  */
+  public List<Position> checkJumpLocation(Position position) {
+    int row = position.getRow();
+    int col = position.getCell();
+    List<Position> possibleJumps = new ArrayList<>();
+    Position upperLeft, upperRight, lowerLeft, lowerRight;
+    Piece[][] pieces = board.getPieces();
+     upperLeft = new Position(row-2, col-2);
+    upperRight = new Position(row - 2, col + 2);
+    lowerLeft = new Position(row + 2, col -2);
+    lowerRight = new Position(row + 2, col +2);
+     possibleJumps.add(upperLeft);
+    possibleJumps.add(upperRight);
+    possibleJumps.add(lowerLeft);
+    possibleJumps.add(lowerRight);
+     for(Position p: possibleJumps){
+        //make sure positions are on the board
+        row = p.getRow();
+        col = p.getCell();
+        if(row < 0 || col < 0 || row >= Board.ROWS || col >= Board.COLUMNS)
+            possibleJumps.remove(p);
+        //now check if spaces are empty
+        Piece test = pieces[row][ col];
+        if(!(test.equals(null))){
+            possibleJumps.remove(p);
         }
-        return possibleJumps;
     }
+    return possibleJumps;
+  }
 }
 
