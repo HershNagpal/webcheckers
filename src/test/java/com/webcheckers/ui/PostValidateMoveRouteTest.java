@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  *
- * @author
+ * @author Luis Gutierrez
  */
 @Tag("UI-tier")
 public class PostValidateMoveRouteTest {
