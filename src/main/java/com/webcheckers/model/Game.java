@@ -281,11 +281,8 @@ public class Game {
    * @return Is the player is the active player
    */
   public boolean isActivePlayer(Player player) {
-    if ((player == redPlayer && activeColor == Color.RED)
-            || (player == whitePlayer && activeColor == Color.WHITE)) {
-      return true;
-    }
-    return false;
+    return (player == redPlayer && activeColor == Color.RED)
+            || (player == whitePlayer && activeColor == Color.WHITE);
   }
 
   /**
