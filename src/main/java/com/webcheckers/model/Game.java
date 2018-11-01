@@ -12,6 +12,7 @@ import java.util.List;
  * @author Luis Gutierrez
  * @author Christopher Daukshus
  * @author Hersh Nagpal
+ * @author Matthew Bolliner
  */
 public class Game {
 
@@ -346,8 +347,39 @@ public class Game {
     else{
       lastMove = null;
     }
-
     return true;
+  }
+
+  /**
+   * This function will return true if there is a
+   * possible jump move for the current player
+   * @return
+   */
+  public boolean jumpMoveExists(){
+    Piece[][] pieces = board.getPieces();
+    Piece current;
+      for(int ir = 0; ir < Board.ROWS; ir++){
+        for(int ic = 0; ic < Board.COLUMNS; ic++){
+            current = pieces[ir][ic];
+            //make sure the space has a piece
+            if(!(current.equals(null))){
+                //see if current is the same color as active player
+                if(current.getColor().equals(getActiveColor())){
+                }
+            }
+        }
+    }
+    return false;
+  }
+
+    /**
+     * This method will get a piece and check
+     * the jump location
+     * @param piece
+     * @return
+     */
+  public List<Piece> checkJumpLocation(Piece piece){
+
   }
 }
 
