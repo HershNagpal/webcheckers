@@ -144,7 +144,7 @@ public class Game {
       return true;
     }
     else {
-      return true;
+      return false;
     }
   }
 
