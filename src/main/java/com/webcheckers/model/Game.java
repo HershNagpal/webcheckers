@@ -399,8 +399,36 @@ public class Game {
      * @param piece
      * @return
      */
-    public List<Piece> checkJumpLocation(Piece piece){
-        return null;
+    public List<Position> checkJumpLocation(Position position){
+        int row = position.getRow();
+        int col = position.getCell();
+        List<Position> possibleJumps = new ArrayList<>();
+        Position upperLeft, upperRight, lowerLeft, lowerRight;
+        Piece[][] pieces = board.getPieces();
+
+        upperLeft = new Position(row-2, col-2);
+        upperRight = new Position(row - 2, col + 2);
+        lowerLeft = new Position(row + 2, col -2);
+        lowerRight = new Position(row + 2, col +2);
+
+        possibleJumps.add(upperLeft);
+        possibleJumps.add(upperRight);
+        possibleJumps.add(lowerLeft);
+        possibleJumps.add(lowerRight);
+
+        for(Position p: possibleJumps){
+            //make sure positions are on the board
+            row = p.getRow();
+            col = p.getCell();
+            if(row < 0 || col < 0 || row >= Board.ROWS || col >= Board.COLUMNS)
+                possibleJumps.remove(p);
+            //now check if spaces are empty
+            Piece test = pieces[row][ col];
+            if(!(test.equals(null))){
+                possibleJumps.remove(p);
+            }
+        }
+        return possibleJumps;
     }
 }
 
