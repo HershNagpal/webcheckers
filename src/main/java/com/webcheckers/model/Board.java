@@ -15,8 +15,8 @@ public class Board {
    * board - the boardview being sent to the GetGameRoute
    *
    */
-  public static int ROWS = 8;
-  public static int COLUMNS = 8;
+  public final static int ROWS = 8;
+  public final static int COLUMNS = 8;
   private Piece[][] pieces;
 
   /**
