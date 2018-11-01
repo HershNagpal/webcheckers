@@ -14,6 +14,7 @@ import spark.Request;
 import spark.Response;
 import spark.Session;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -45,8 +46,13 @@ public class PostBackupMoveRouteTest {
     private Player player;
     private Player opponent;
     private Messenger messenger;
+    private Game game_NoLastMoves;
+    private Messenger messenger_NoLastMoves;
+    private GameCenter gameCenter_NoLastMoves;
 
-
+    /**
+     * Setup the objects for each test.
+     */
     @BeforeEach
     public void setup() {
         request = mock(Request.class);
@@ -57,16 +63,22 @@ public class PostBackupMoveRouteTest {
         opponent = mock(Player.class);
         messenger = mock(Messenger.class);
 
-        gameCenter = new GameCenter();
+        gameCenter = new GameCenter(messenger);
+
         game = gameCenter.createGame(player, opponent);
         Gson gson = new Gson();
+
+        game_NoLastMoves = mock(Game.class);
+        gameCenter_NoLastMoves = mock(GameCenter.class);
+        messenger_NoLastMoves = mock(Messenger.class);
 
         CuT = new PostBackupMoveRoute(gameCenter, gson);
     }
 
     @Test
-    public void testIs() {
+    public void testBackUpMove() {
         Message backUp_True = new Message("", MessageType.info);
+        Message backUp_False = new Message("Cannot Backup, there are no moves to undo.", MessageType.error);
 
         //Arrange the test scenario: the player does a backUpMove
         when(session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR)).thenReturn(player);
@@ -75,12 +87,16 @@ public class PostBackupMoveRouteTest {
         //Invoke the test
         CuT.handle(request, response);
 
+        //BackUpMove Success
+        assertEquals(gameCenter.backupMove(player).getText(), backUp_True.getText());
+        assertEquals(gameCenter.backupMove(player).getType(), backUp_True.getType());
+
+        //BackUpMove Fail
+        when(gameCenter_NoLastMoves.backupMove(player)).thenReturn(backUp_False);
+        assertEquals(gameCenter_NoLastMoves.backupMove(player).getText(), backUp_False.getText());
+        assertEquals(gameCenter_NoLastMoves.backupMove(player).getType(), backUp_False.getType());
 
     }
 
-    @Test
-    public void testNotYourTurn() {
-        Message backUp_False = new Message("Cannot Backup, there are no moves to undo.", MessageType.error);
-
-    }
+    //TODO split testBackUpMove into success and fail
 }
