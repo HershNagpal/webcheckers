@@ -376,22 +376,38 @@ public class Game {
 
   /**
    * This function will return true if there is a possible jump move for the 
-   * current player to make.
+   * current player to make. This method should only be called when a move is
+   * being validated.
+   * 
    * @return whether or not the current player can make a jump move.
    */
   public boolean jumpMoveExists(){
-      // for(int ir = 0; ir < Board.ROWS; ir++){
-      //     for(int ic = 0; ic < Board.COLUMNS; ic++){
-      //         current = pieces[ir][ic];
-      //         //make sure the space has a piece
-      //         if(!(current.equals(null))){
-      //             //see if current is the same color as active player
-      //             if(current.getColor().equals(getActiveColor())){
-      //             }
-      //         }
-      //     }
-      // }
-        
+    // for(int ir = 0; ir < Board.ROWS; ir++){
+    //     for(int ic = 0; ic < Board.COLUMNS; ic++){
+    //         current = pieces[ir][ic];
+    //         //make sure the space has a piece
+    //         if(!(current.equals(null))){
+    //             //see if current is the same color as active player
+    //             if(current.getColor().equals(getActiveColor())){
+    //             }
+    //         }
+    //     }
+    // }
+    Color currentColor = getActiveColor();
+    List possiblePiecesToMove = new ArrayList<Position>();
+    Position indexPosition;
+    Piece indexPiece;
+    
+    // Iterate through all pieces to see which ones are valid to move this turn.
+    for(int row = 0; row < Board.ROWS; row++) {
+      for(int col = 0; col < Board.COLUMNS; col++) {
+        indexPosition = new Position(row, col);
+        indexPiece = board.getPieceAtPosition(indexPosition);
+
+        // Add the possible positions of pieces that are the active color to the array.
+
+      }
+    }
 
     return false;
   }
