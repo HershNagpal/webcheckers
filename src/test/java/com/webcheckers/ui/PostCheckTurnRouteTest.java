@@ -60,7 +60,7 @@ public class PostCheckTurnRouteTest {
         opponent = mock(Player.class);
         messenger = mock(Messenger.class);
 
-        gameCenter = new GameCenter();
+        gameCenter = new GameCenter(messenger);
         game = gameCenter.createGame(player, opponent);
         Gson gson = new Gson();
 
@@ -81,7 +81,6 @@ public class PostCheckTurnRouteTest {
         CuT.handle(request, response);
         assertEquals(gameCenter.checkTurn(player).getText(), message.getText());
         assertEquals(gameCenter.checkTurn(player).getType(), message.getType());
-        assertNotEquals(gameCenter.checkTurn(opponent).getText(), message.getText());
     }
 
     /**
@@ -98,6 +97,6 @@ public class PostCheckTurnRouteTest {
         CuT.handle(request, response);
         assertEquals(gameCenter.checkTurn(opponent).getText(), message.getText());
         assertEquals(gameCenter.checkTurn(opponent).getType(), message.getType());
-        assertNotEquals(gameCenter.checkTurn(player).getText(), message.getText());
     }
+
 }

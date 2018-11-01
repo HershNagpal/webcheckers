@@ -31,9 +31,10 @@ public class GameCenter {
     /**
      * Initialize the list of games.
      */
-    public GameCenter() {
+    public GameCenter(Messenger messenger) {
         games = new ArrayList<>();
-        messenger = new Messenger();
+        this.messenger = messenger;
+    //    messenger = new Messenger();
     }
 
     /**
