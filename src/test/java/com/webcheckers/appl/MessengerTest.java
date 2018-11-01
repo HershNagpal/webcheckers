@@ -35,11 +35,6 @@ public class MessengerTest {
     private Messenger CuT;
 
     /**
-     * friendly objects
-     */
-
-
-    /**
      * mock objects
      */
     private Game game;
