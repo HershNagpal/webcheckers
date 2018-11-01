@@ -206,15 +206,15 @@ public class Game {
       if(checkDistance(row2,row1,2) && checkDistance(col2,col1,2)) {
         middlePiece = board.getPieceAtPosition(new Position(row1+1,col1+1));
         // There must also be a piece of the opposite color in between the start and end.
-        if(middlePiece.getColor() != movingPiece.getColor()) {
-          isJumpMove = true;
+        if(middlePiece != null && middlePiece.getColor() != movingPiece.getColor()) {
+            isJumpMove = true;
         }
       }
       // The move must be two down and two to the left
       else if(checkDistance(row2,row1,2) && checkDistance(col2,col1,-2)) {
         middlePiece = board.getPieceAtPosition(new Position(row1+1,col1-1));
         // There must also be a piece of the opposite color in between the start and end.
-        if(middlePiece.getColor() != movingPiece.getColor()) {
+        if(middlePiece != null && middlePiece.getColor() != movingPiece.getColor()) {
           isJumpMove = true;
         }
       }
@@ -225,7 +225,7 @@ public class Game {
       if(checkDistance(row2,row1,-2) && checkDistance(col2,col1,2)) {
         middlePiece = board.getPieceAtPosition(new Position(row1-1,col1+1));
         // There must also be a piece of the opposite color in between the start and end.
-        if(middlePiece.getColor() != movingPiece.getColor()) {
+        if(middlePiece != null && middlePiece.getColor() != movingPiece.getColor()) {
           isJumpMove = true;
         }
       }
@@ -233,7 +233,7 @@ public class Game {
       else if(checkDistance(row2,row1,-2) && checkDistance(col2,col1,-2)) {
         middlePiece = board.getPieceAtPosition(new Position(row1-1,col1-1));
         // There must also be a piece of the opposite color in between the start and end.
-        if(middlePiece.getColor() != movingPiece.getColor()) {
+        if(middlePiece != null && middlePiece.getColor() != movingPiece.getColor()) {
           isJumpMove = true;
         }
       }
