@@ -115,6 +115,7 @@ public class Game {
    * First ensures that it is the correct player's turn and that there is no piece at the destination.
    * Checks if the move is a normal diagonal movement.
    * If not, then checks if the move is a jump move over an opponent's piece.
+   * If a move is validated, it makes the move.
    * @param move The Move object that the player is making
    * @return True if the move is valid, false if it is invalid.
    */
@@ -131,13 +132,13 @@ public class Game {
     if(board.getPieceAtPosition(move.getEnd()) != null) {
       return false;
     }
-    if(isNormalMove(move)) {
+    if(isJumpMove(move) && jumpMoveExists()) {
       lastMoves.add(move);
       lastMove = move;
       makeMove(move);
       return true;
     }
-    else if (isJumpMove(move)) {
+    else if (isNormalMove(move) && !jumpMoveExists()) {
       lastMoves.add(move);
       lastMove = move;
       makeMove(move);
@@ -242,7 +243,8 @@ public class Game {
   }
 
   /**
-   *
+   * Checks the distance between two row positions or two column positions.
+   * 
    * @param val1 col or row value to check distance with another value
    * @param val2 col or row value to check distance with another value.
    * @param expected expected difference between val2 and val1.
@@ -261,6 +263,7 @@ public class Game {
 
   /**
    * Checks if player is the active player.
+   * 
    * @param player Player to check
    * @return Is the player is the active player
    */
@@ -270,7 +273,9 @@ public class Game {
   }
 
   /**
-   * Updates the board to implement a move
+   * Updates the board to implement a move. This should only be called once
+   * the move being passed has been validated.
+   * 
    * @param move starting position and ending position
    */
   public void makeMove(Move move){
@@ -290,6 +295,7 @@ public class Game {
 
       if(rowDistance == 1 && colDistance == 1) {
           board.makeNormalMove(move);
+          checkIfKinged(move);
       }
       else if (rowDistance == 2 && colDistance == 2) {
           if(move.isBackUpMove()){
@@ -297,9 +303,9 @@ public class Game {
           }
           else{
             board.makeJumpMove(move);
+            checkIfKinged(move);
           }
       }
-
   }
 
     /**
@@ -346,8 +352,30 @@ public class Game {
     else{
       lastMove = null;
     }
-
     return true;
+  }
+
+  /**
+   * Checks whether or not the last move made a piece able to be kinged.
+   * If the piece is kinged, returns true. If already kinged or not able to be
+   * kinged, returns false.
+   * This should only be called once a move has been made.
+   * 
+   * @param move The move that was just made
+   * @return Whether or not the piece was kinged. 
+   */
+  private boolean checkIfKinged(Move move) {
+    int endRow = move.getEnd().getCell();
+    Piece currentPiece = board.getPieceAtPosition(move.getEnd());
+    Color pieceColor = currentPiece.getColor();
+
+    if (endRow == 7 && pieceColor == Color.RED) {
+      return currentPiece.kingPiece();
+    } 
+    else if (endRow == 7 && pieceColor == Color.RED) {
+      return currentPiece.kingPiece();
+    }
+    return false;
   }
 }
 
