@@ -398,7 +398,7 @@ public class Game {
    * 
    * @return a list of positions that have pieces that can move.
    */
-  private List<Position> checkForValidPieces() {
+  public List<Position> checkForValidPieces() {
     List<Position> possiblePiecesToMove = new ArrayList<Position>();
     Position indexPosition;
     Piece indexPiece;
@@ -425,7 +425,7 @@ public class Game {
   * @param piece
   * @return
   */
-  private List<Position> checkJumpLocation(Position position) {
+  public List<Position> checkJumpLocation(Position position) {
     int row = position.getRow();
     int col = position.getCell();
     List<Position> possibleJumps = new ArrayList<>();
