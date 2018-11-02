@@ -14,11 +14,12 @@ import spark.Request;
 import spark.Response;
 import spark.Session;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- *
+ * Unit test suite for the PostBackupMoveRoute class.
  * @author Luis Gutierrez
  */
 @Tag("UI-tier")
@@ -33,8 +34,12 @@ public class PostBackupMoveRouteTest {
      * friendly objects
      */
     private Game game;
-    private GameCenter gameCenter;
 
+    private Messenger messengerSuccess;
+    private GameCenter gameCenterSuccess;
+
+    private Messenger messengerFail;
+    private GameCenter gameCenterFail;
 
     /**
      * mock objects
@@ -43,10 +48,10 @@ public class PostBackupMoveRouteTest {
     private Response response;
     private Session session;
     private Player player;
-    private Player opponent;
-    private Messenger messenger;
 
-
+    /**
+     * Setup the objects for each test.
+     */
     @BeforeEach
     public void setup() {
         request = mock(Request.class);
@@ -54,33 +59,57 @@ public class PostBackupMoveRouteTest {
         session = mock(Session.class);
         when(request.session()).thenReturn(session);
         player = mock(Player.class);
-        opponent = mock(Player.class);
-        messenger = mock(Messenger.class);
 
-        gameCenter = new GameCenter();
-        game = gameCenter.createGame(player, opponent);
-        Gson gson = new Gson();
+        //Setup for BackUp success
+        messengerSuccess = mock(Messenger.class);
+        gameCenterSuccess = new GameCenter(messengerSuccess);
 
-        CuT = new PostBackupMoveRoute(gameCenter, gson);
+        //Setup for BackUp fail
+        messengerFail = mock(Messenger.class);
+        gameCenterFail = new GameCenter(messengerFail);
+
     }
 
+    /**
+     * Validate the message is correct for an info backUp move message.
+     */
     @Test
-    public void testIs() {
+    public void testBackUpMoveSuccess() {
+        Gson gson = new Gson();
+        CuT = new PostBackupMoveRoute(gameCenterSuccess,gson);
         Message backUp_True = new Message("", MessageType.info);
 
         //Arrange the test scenario: the player does a backUpMove
         when(session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR)).thenReturn(player);
-        when(messenger.backupMove(game)).thenReturn(backUp_True);
 
         //Invoke the test
         CuT.handle(request, response);
 
+        //BackUpMove Success
+        when(messengerSuccess.backupMove(game)).thenReturn(backUp_True);
+        assertEquals(gameCenterSuccess.backupMove(player).getText(), backUp_True.getText());
+        assertEquals(gameCenterSuccess.backupMove(player).getType(), backUp_True.getType());
 
     }
 
+    /**
+     * Validate the message is correct for an error backUp move message.
+     */
     @Test
-    public void testNotYourTurn() {
+    public void testBackUpMoveFail(){
+        Gson gson = new Gson();
+        CuT = new PostBackupMoveRoute(gameCenterFail,gson);
         Message backUp_False = new Message("Cannot Backup, there are no moves to undo.", MessageType.error);
 
+        //Arrange the test scenario: the player does a backUpMove
+        when(session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR)).thenReturn(player);
+
+        //Invoke the test
+        CuT.handle(request, response);
+
+        //BackUpMove Fail
+        when(gameCenterFail.backupMove(player)).thenReturn(backUp_False);
+        assertEquals(gameCenterFail.backupMove(player).getText(), backUp_False.getText());
+        assertEquals(gameCenterFail.backupMove(player).getType(), backUp_False.getType());
     }
 }
