@@ -125,4 +125,10 @@ public class GameCenter {
         return messenger.backupMove(game);
     }
 
+
+    public Message resignGame(Player player) {
+        Game game = getGame(player);
+        return messenger.resignGame(game, player);
+    }
+
 }

@@ -415,7 +415,7 @@ public class Game {
   /**
   * This method will get a piece and check
   * the jump location
-  * @param piece
+  * @param
   * @return
   */
   public List<Position> checkJumpLocation(Position position) {
@@ -446,5 +446,11 @@ public class Game {
     }
     return possibleJumps;
   }
+
+  public boolean resignGame() {
+    // game over
+    return true;
+  }
+
 }
 
