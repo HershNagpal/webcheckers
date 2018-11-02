@@ -128,7 +128,7 @@ public class GameCenter {
 
     public Message resignGame(Player player) {
         Game game = getGame(player);
-        return messenger.resignGame(game, player);
+        return messenger.resignGame(game);
     }
 
 }
