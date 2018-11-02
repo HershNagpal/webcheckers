@@ -447,6 +447,11 @@ public class Game {
     return possibleJumps;
   }
 
+  /**
+   * Resign the game. This ends the game and makes the current player
+   * lose and the other player win.
+   * @return True if successful
+   */
   public boolean resignGame() {
     // game over
     return true;
