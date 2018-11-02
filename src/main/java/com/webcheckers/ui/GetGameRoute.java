@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.*;
 import spark.*;
@@ -22,6 +23,7 @@ public class GetGameRoute implements Route{
     static final String RED_PLAYER_ATTR = "redPlayer";
     static final String WHITE_PLAYER_ATTR = "whitePlayer";
     static final String ACTIVE_COLOR_ATTR = "activeColor";
+    static final String ID_PARAM = "pid";
     static final String TITLE_ATTR = "title";
     static final String VIEW_NAME = "game.ftl";
     static final String BOARD_ATTR = "board";
@@ -32,6 +34,7 @@ public class GetGameRoute implements Route{
 
     private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());
 
+    private final GameCenter gameCenter;
     private final PlayerLobby playerLobby;
     private final TemplateEngine templateEngine;
 
@@ -42,10 +45,11 @@ public class GetGameRoute implements Route{
      * @param templateEngine
      * the HTML template rendering engine
      */
-    public GetGameRoute (final PlayerLobby playerLobby, final TemplateEngine templateEngine){
+    public GetGameRoute (final GameCenter gameCenter, final PlayerLobby playerLobby, final TemplateEngine templateEngine){
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
         Objects.requireNonNull(templateEngine, "playerLobby must not be null");
 
+        this.gameCenter = gameCenter;
         this.playerLobby = playerLobby;
         this.templateEngine = templateEngine;
 
@@ -63,51 +67,39 @@ public class GetGameRoute implements Route{
      * @return
      *  the rendered HTML for the Home page
      */
-
     @Override
     public Object handle(Request request, Response response){
         LOG.finer("GetGameRoute is invoked");
-        //
+
         Map<String, Object> vm = new HashMap<>();
         vm.put(TITLE_ATTR, TITLE);
         Session session = request.session();
-
+        // Reset game messages
+        session.removeAttribute(MESSAGE_ATTR);
         Game game;
-        BoardView boardView;
-        Board gameBoard;
-        Player playerOne = session.attribute(CURRENT_PLAYER_ATTR);
-        if (playerOne.getGame() != null) {
-            game = playerOne.getGame();
-            gameBoard = game.getBoard();
-        }
-        else {
-            // URL example: http://localhost:4567/game?pid=kid
-            Player playerTwo = playerLobby.getPlayer(request.queryParams("pid"));
-            // Cannot create game with a player in game
-            if (playerTwo.getGame() != null) {
-                session.attribute(MESSAGE_ATTR, new Message(IN_GAME_ERROR, MessageType.ERROR));
+        Player player = session.attribute(CURRENT_PLAYER_ATTR);
+        // Is this player in game
+        if (gameCenter.playerInGame(player)) {
+            game = gameCenter.getGame(player);
+        } else {
+            Player opponent = playerLobby.getPlayer(request.queryParams(ID_PARAM));
+            // Is other player in game
+            if (gameCenter.playerInGame(opponent)) {
+                session.attribute(MESSAGE_ATTR, new Message(IN_GAME_ERROR, MessageType.error));
                 response.redirect(WebServer.HOME_URL);
                 return null;
             }
-
-            gameBoard = new Board();
-            game = new Game(playerOne, playerTwo, gameBoard);
-
+            // Create a new game
+            game = gameCenter.createGame(player, opponent);
         }
-        if (game.isRedPlayer(playerOne)) {
-            boardView = gameBoard.getFlippedBoardView();
-        }
-        else {
-            boardView = gameBoard.getBoardView();
-        }
+        BoardView boardView = game.getBoardView(player);
 
         vm.put(BOARD_ATTR, boardView);
-        vm.put(CURRENT_PLAYER_ATTR, playerOne);
+        vm.put(CURRENT_PLAYER_ATTR, player);
         vm.put(VIEW_MODE_ATTR, ViewMode.PLAY);
         vm.put(RED_PLAYER_ATTR, game.getRedPlayer());
         vm.put(WHITE_PLAYER_ATTR, game.getWhitePlayer());
         vm.put(ACTIVE_COLOR_ATTR, game.getActiveColor());
-
 
         return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
     }

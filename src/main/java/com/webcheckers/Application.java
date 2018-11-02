@@ -6,6 +6,8 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import com.google.gson.Gson;
+import com.webcheckers.appl.GameCenter;
+import com.webcheckers.appl.Messenger;
 import com.webcheckers.appl.PlayerLobby;
 
 import com.webcheckers.ui.WebServer;
@@ -47,6 +49,8 @@ public final class Application {
       System.err.println("Could not initialize log manager because: " + e.getMessage());
     }
 
+    final GameCenter gameCenter = new GameCenter(new Messenger());
+
     final PlayerLobby playerLobby = new PlayerLobby();
 
     // The application uses FreeMarker templates to generate the HTML
@@ -60,7 +64,7 @@ public final class Application {
     final Gson gson = new Gson();
 
     // inject the game center and freemarker engine into web server
-    final WebServer webServer = new WebServer(playerLobby, templateEngine, gson);
+    final WebServer webServer = new WebServer(gameCenter, playerLobby, templateEngine, gson);
 
     // inject web server into application
     final Application app = new Application(webServer);

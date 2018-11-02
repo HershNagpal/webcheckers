@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Player;
 import spark.*;
@@ -28,6 +29,11 @@ public class GetHomeRoute implements Route {
   private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
   /**
+   * The game center
+   */
+  private final GameCenter gameCenter;
+
+  /**
    * The player lobby
    */
   private final PlayerLobby playerLobby;
@@ -43,11 +49,13 @@ public class GetHomeRoute implements Route {
    * @param templateEngine
    *   the HTML template rendering engine
    */
-  public GetHomeRoute(final PlayerLobby playerLobby, final TemplateEngine templateEngine) {
+  public GetHomeRoute(final GameCenter gameCenter, final PlayerLobby playerLobby, final TemplateEngine templateEngine) {
     // validation
+    Objects.requireNonNull(gameCenter, "gameCenter must not be null");
     Objects.requireNonNull(playerLobby, "playerLobby must not be null");
     Objects.requireNonNull(templateEngine, "templateEngine must not be null");
     //
+    this.gameCenter = gameCenter;
     this.playerLobby = playerLobby;
     this.templateEngine = templateEngine;
     //
@@ -76,7 +84,7 @@ public class GetHomeRoute implements Route {
 
     Player player = session.attribute(PLAYER_ATTR);
     if (player != null) {
-      if (player.getGame() != null) {
+      if (gameCenter.playerInGame(player)) {
         response.redirect(WebServer.GAME_URL);
       }
       vm.put(PLAYER_ATTR, player);
@@ -86,7 +94,6 @@ public class GetHomeRoute implements Route {
       }
       if (session.attribute(MESSAGE_ATTR) != null) {
         vm.put(MESSAGE_ATTR, session.attribute(MESSAGE_ATTR));
-        session.removeAttribute(MESSAGE_ATTR);
       }
     }
     else {

@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,6 +29,7 @@ public class GetGameRouteTester {
     private Session session;
     private Response response;
     private TemplateEngine engine;
+    private GameCenter gameCenter;
     private PlayerLobby playerLobby;
     private Player p1;
     private Player p2;
@@ -39,11 +41,13 @@ public class GetGameRouteTester {
         when(request.session()).thenReturn(session);
         response = mock(Response.class);
         engine = mock(TemplateEngine.class);
+        gameCenter = mock(GameCenter.class);
         playerLobby = mock(PlayerLobby.class);
+
         p1 = mock(Player.class);
         p2 = mock(Player.class);
 
-        CuT = new GetGameRoute(playerLobby, engine);
+        CuT = new GetGameRoute(gameCenter, playerLobby, engine);
 
     }
 
@@ -96,8 +100,8 @@ public class GetGameRouteTester {
         when(session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR)).thenReturn(p1);
         when(playerLobby.getPlayer(request.queryParams("pid"))).thenReturn(p2);
         //set games to null
-        when(p1.getGame()).thenReturn(null);
-        when(p1.getGame()).thenReturn(null);
+    //    when(p1.getGame()).thenReturn(null);
+    //    when(p1.getGame()).thenReturn(null);
 
         final TemplateEngineTester tester = new TemplateEngineTester();
         when(engine.render(any(ModelAndView.class))).thenAnswer(tester.makeAnswer());

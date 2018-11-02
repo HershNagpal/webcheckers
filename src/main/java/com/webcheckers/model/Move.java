@@ -8,9 +8,13 @@ public class Move {
   private Position start;
   private Position end;
 
+  //Flag to check if move is a backUpMove
+  private boolean isBackUpMove;
+
   public Move(Position start, Position end) {
       this.start = start;
       this.end = end;
+      this.isBackUpMove = false;
   }
 
   /**
@@ -26,6 +30,20 @@ public class Move {
 
       Move flippedMove = new Move(posStartFlipped,posEndFlipped);
       return flippedMove;
+  }
+
+  /**
+   * Returns a new Move that "deletes" the last move.
+   * @return new Move with current's end as start, and current's start as end
+   */
+  public Move createBackUpMove(){
+    Move backUpMove = new Move(this.end, this.start);
+    backUpMove.isBackUpMove = true;
+    return backUpMove;
+  }
+
+  public boolean isBackUpMove(){
+    return isBackUpMove;
   }
 
   public Position getStart() {

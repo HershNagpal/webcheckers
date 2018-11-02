@@ -66,12 +66,12 @@ public class PostSignInRoute implements Route {
         final String name = request.queryParams(NAME_PARAM);
 
         if (!playerLobby.isValidUsername(name)) {
-            vm.put(MESSAGE_ATTR, new Message(INVALID_NAME, MessageType.ERROR));
+            vm.put(MESSAGE_ATTR, new Message(INVALID_NAME, MessageType.error));
             return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
         }
 
         if (playerLobby.isUsernameTaken(name)) {
-            vm.put(MESSAGE_ATTR, new Message(NAME_TAKEN, MessageType.ERROR));
+            vm.put(MESSAGE_ATTR, new Message(NAME_TAKEN, MessageType.error));
             return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
         }
 

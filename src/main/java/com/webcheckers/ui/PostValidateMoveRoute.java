@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.*;
 import spark.*;
 
@@ -14,42 +15,46 @@ import java.util.Objects;
  */
 public class PostValidateMoveRoute implements Route {
 
-    private TemplateEngine templateEngine;
+    /**
+     * The game center
+     */
+    private GameCenter gameCenter;
+
+    /**
+     * Interprets and converts json
+     */
     private Gson gson;
 
-    public PostValidateMoveRoute(TemplateEngine templateEngine, Gson gson) {
-        Objects.requireNonNull(templateEngine, "templateEngine must not be null");
+    /**
+     * The constructor for the {@code POST /game} route handler to submit
+     * the players turn. A turn consists of a valid move and changing whose
+     * turn it is.
+     *
+     * @param gameCenter holds the ongoing games
+     * @param gson used to interpret and convert json
+     */
+    public PostValidateMoveRoute(GameCenter gameCenter, Gson gson) {
+        Objects.requireNonNull(gameCenter, "gameCenter must not be null");
         Objects.requireNonNull(gson, "gson must not be null");
 
-        this.templateEngine = templateEngine;
+        this.gameCenter = gameCenter;
         this.gson = gson;
     }
 
+    /**
+     * Handles the request to validate a move.
+     * @param request The HTTP request
+     * @param response The HTTP response
+     * @return Message, error if invalid move, info if valid move
+     */
     @Override
     public Object handle(Request request, Response response) {
         String moveJSON = request.body();
-        System.out.println(moveJSON);
         Move move = gson.fromJson(moveJSON, Move.class);
         Session session = request.session();
         Player player = session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR);
-        System.out.println("PostValidateMove:Grabbed player");
-        Game game = player.getGame();
-        System.out.println("PostValidateMove:Grabbed game");
-        //if its a white player then we need to flip the move
-        //before we validate it
-        if (game.isRedPlayer(player)){
-           move = move.flipMove();
-        }
-        if (valid(move, game)) {
-            session.attribute("move", move);
-            return gson.toJson(new Message("", MessageType.INFO));
-        }
-        else {
-            return gson.toJson(new Message("Invalid move. Try again.", MessageType.ERROR));
-        }
+        Message message = gameCenter.validateMove(player, move);
+        return gson.toJson(message);
     }
 
-    private boolean valid(Move move, Game game) {
-        return game.validateMove(move);
-    }
 }

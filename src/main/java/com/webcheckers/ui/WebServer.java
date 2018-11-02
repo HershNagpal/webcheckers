@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import spark.TemplateEngine;
 
@@ -72,6 +73,7 @@ public class WebServer {
   //
   // Attributes
   //
+  private final GameCenter gameCenter;
   private final PlayerLobby playerLobby;
   private final TemplateEngine templateEngine;
   private final Gson gson;
@@ -91,12 +93,13 @@ public class WebServer {
    * @throws NullPointerException
    *    If any of the parameters are {@code null}.
    */
-  public WebServer(final PlayerLobby playerLobby, final TemplateEngine templateEngine, final Gson gson) {
+  public WebServer(final GameCenter gameCenter, final PlayerLobby playerLobby, final TemplateEngine templateEngine, final Gson gson) {
     // validation
     Objects.requireNonNull(playerLobby, "playerLobby must not be null");
     Objects.requireNonNull(templateEngine, "templateEngine must not be null");
     Objects.requireNonNull(gson, "gson must not be null");
 
+    this.gameCenter = gameCenter;
     this.playerLobby = playerLobby;
     this.templateEngine = templateEngine;
     this.gson = gson;
@@ -154,7 +157,7 @@ public class WebServer {
     //// code clean; using small classes.
 
     // Shows the Checkers game Home page.
-    get(HOME_URL, new GetHomeRoute(playerLobby, templateEngine));
+    get(HOME_URL, new GetHomeRoute(gameCenter, playerLobby, templateEngine));
 
     get(SIGNIN_URL, new GetSignInRoute(templateEngine));
 
@@ -162,15 +165,15 @@ public class WebServer {
 
     get(SIGNOUT_URL, new GetSignOutRoute(playerLobby));
 
-    get(GAME_URL, new GetGameRoute(playerLobby, templateEngine));
+    get(GAME_URL, new GetGameRoute(gameCenter, playerLobby, templateEngine));
 
-    post(CHECK_TURN_URL, new PostCheckTurnRoute(templateEngine, gson));
+    post(CHECK_TURN_URL, new PostCheckTurnRoute(gameCenter, gson));
 
-    post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(templateEngine, gson));
+    post(VALIDATE_MOVE_URL, new PostValidateMoveRoute(gameCenter, gson));
 
-    post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(templateEngine, gson));
+    post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(gameCenter, gson));
 
-    post(BACKUP_MOVE_URL, new PostBackupMoveRoute(templateEngine, gson));
+    post(BACKUP_MOVE_URL, new PostBackupMoveRoute(gameCenter, gson));
 
     LOG.config("WebServer is initialized.");
   }

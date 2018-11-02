@@ -34,10 +34,6 @@ public class PlayerTest {
 	public void setup(){
 		playerOrange = new Player(ORANGE_NAME);
 		playerTangerine = new Player(TANGERINE_NAME);
-
-		Game mockGame = mock(Game.class);
-		playerTangerine.setGame(mockGame);
-		
 	}
 
 	/**
@@ -50,23 +46,4 @@ public class PlayerTest {
 		assertNotEquals("Orange", playerTangerine.getName());
 	}
 
-	/**
-	 * Tests the getGame method
-	 */
-	@Test
-	public void testGetGame() {
-		assertNull(playerOrange.getGame());
-		assertNotNull(playerTangerine.getGame());
-	}
-
-	/**
-	 * Tests the setGame method
-	 */
-	@Test
-	public void testSetGame() {
-		Game mockGame2 = mock(Game.class);
-		playerOrange.setGame(mockGame2);
-		assertNotNull(playerOrange.getGame());
-		playerOrange.setGame(null);
-	}
 }

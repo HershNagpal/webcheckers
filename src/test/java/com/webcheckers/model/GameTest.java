@@ -40,6 +40,7 @@ public class GameTest {
 	Piece[][] customPiecesRedMove2;
 	Piece[][] customPiecesWhiteMove1;
 	Piece[][] customPiecesWhiteMove2;
+	Piece[][] customPiecesWhiteMove3;
 
 	// Positions on the mock board that can be called.
 	private Position redPosition1 = new Position(0, 2);
@@ -55,14 +56,14 @@ public class GameTest {
 	private Position emptyPosition5 = new Position(6, 4);
 	private Position emptyPosition6 = new Position(5, 5);
 	// Create moves to be tested in validateMove
-	Move validRedMove1 = new Move(redPosition1, emptyPosition1);
-	Move validRedMove2 = new Move(redPosition1, emptyPosition2);
-	Move invalidRedMove1 = new Move(redPosition1, whitePosition1);
-	Move invalidRedMove2 = new Move(redPosition1, emptyPosition3);
-	Move validWhiteMove1 = new Move(whitePosition2, emptyPosition4);
-	Move validWhiteMove2 = new Move(whitePosition2, emptyPosition5);
-	Move invalidWhiteMove1 = new Move(whitePosition2, redPosition2);
-	Move invalidWhiteMove2 = new Move(whitePosition2, emptyPosition6);
+    private Move validRedMove1 = new Move(redPosition1, emptyPosition1);
+	private Move validRedMove2 = new Move(redPosition1, emptyPosition2);
+	private Move invalidRedMove1 = new Move(redPosition1, whitePosition1);
+	private Move invalidRedMove2 = new Move(redPosition1, emptyPosition3);
+	private Move validWhiteMove1 = new Move(whitePosition2, emptyPosition4);
+	private Move validWhiteMove2 = new Move(whitePosition2, emptyPosition5);
+	private Move invalidWhiteMove1 = new Move(whitePosition2, redPosition2);
+	private Move invalidWhiteMove2 = new Move(whitePosition2, emptyPosition6);
 
 	 /**
 	 * Initialize the objects to test
@@ -107,6 +108,7 @@ public class GameTest {
                 {null, null, null, whitePiece, null, null, null, null}
         };
 
+        //using this to test jump move
         customPiecesWhiteMove1 = new Piece[][]{
                 {null, null, redPiece, null, null, null, null, null},
                 {null, whitePiece, null, null, null, null, null, null},
@@ -118,10 +120,22 @@ public class GameTest {
                 {null, null, null, null, null, null, null, null}
         };
 
+        //using this to test jump move
         customPiecesWhiteMove2 = new Piece[][]{
                 {null, null, redPiece, null, null, null, null, null},
                 {null, whitePiece, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, redPiece, null, null, null, null, null},
+                {null, null, null, whitePiece, null, null, null, null}
+        };
+        //using this to test jump move
+        customPiecesWhiteMove3 = new Piece[][]{
+                {null, null, null, null, null, null, null, null},
+                {null, whitePiece, null, null, null, null, null, null},
+                {null, null, redPiece, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
@@ -257,6 +271,32 @@ public class GameTest {
 
         CuT.makeMove(validWhiteMove2);
         assertEquals(CuT.getBoard().getPieces(),customPiecesWhiteMove2);
+
+    }
+
+    /**
+     * If there is a valid jump move to be made
+     * then this method should return true
+     */
+    @Test
+    public void testIsJumpMove(){
+        //valid jump move
+        Position positionStart = new Position(7, 3);
+        Position positionEnd = new Position(5, 1);
+        Move move = new Move(positionStart, positionEnd);
+
+        assertTrue(CuT.isJumpMove(move));
+
+        //invalid move: trying to move a
+        //non red or kinged piece down
+        positionStart = new Position(1, 1);
+        positionEnd = new Position(2, 3);
+        move = new Move(positionStart, positionEnd);
+        board = new Board(customPiecesWhiteMove3);
+        CuT = new Game(red, white, board);
+
+        assertFalse(CuT.isJumpMove(move));
+
 
     }
 }

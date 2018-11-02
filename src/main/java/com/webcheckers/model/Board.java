@@ -1,7 +1,5 @@
 package com.webcheckers.model;
 
-import static java.lang.Math.abs;
-
 /**
  * Represents the Checkers Board and all the logical operations that need to be done on 
  * pieces for the game to function.
@@ -17,10 +15,9 @@ public class Board {
    * board - the boardview being sent to the GetGameRoute
    *
    */
-  private static int ROWS = 8;
-  private static int COLUMNS = 8;
+  public final static int ROWS = 8;
+  public final static int COLUMNS = 8;
   private Piece[][] pieces;
-  private BoardView boardView;
 
   /**
    * Board constructor that initializes and sets up the 2d Piece array.
@@ -29,7 +26,6 @@ public class Board {
   public Board(){
       pieces = new Piece[ROWS][COLUMNS];
       setUpBoard();
-      boardView = new BoardView(pieces);
   }
 
   /**
@@ -39,7 +35,6 @@ public class Board {
   public Board(Piece[][] customPieces){
     pieces = customPieces;
     setUpBoard();
-    boardView = new BoardView(pieces);
 }
 
   /**
@@ -92,7 +87,7 @@ public class Board {
    * @return the boardview associated with this board.
    */
   public BoardView getBoardView(){
-    return boardView;
+    return new BoardView(pieces);
   }
 
   /**
@@ -163,12 +158,16 @@ public class Board {
       int rowEnd = endingPosition.getRow();
       int colEnd = endingPosition.getCell();
 
-      Piece movingPiece = pieces[rowStart][colStart];
+      Piece startingPiece = pieces[rowStart][colStart];
+      pieces[rowEnd][colEnd] = startingPiece;
       pieces[rowStart][colStart] = null;
-      pieces[rowEnd][colEnd] = movingPiece;
-
   }
 
+  /**
+   * Performs a jump move by updating the piece moved and removing the
+   * jumped piece.
+   * @param move Jump move to be performed on board.
+   */
   public void makeJumpMove(Move move){
       Position startingPosition = move.getStart();
       Position endingPosition = move.getEnd();
@@ -184,7 +183,6 @@ public class Board {
 
       int rowDistance = rowEnd - rowStart;
       int colDistance = colEnd - colStart;
-
 
       //If row or column distance is 2, then the jump is going up/right, so the piece in between is one above the start.
       //Otherwise, the jump is going down/left, so the piece is one below the start.
@@ -206,6 +204,59 @@ public class Board {
       }
 
       pieces[jumpedRow][jumpedCol] = null;
+
+  }
+
+  /**
+   * Performs a back up for a jump move by updating the piece that jumped
+   * and by placing the piece that was jumped back into the board.
+   * @param move Jump move to be performed on board.
+   */
+  public void makeBackUpJumpMove(Move move, Color activeColor){
+    Position startingPosition = move.getStart();
+    Position endingPosition = move.getEnd();
+
+    int rowStart = startingPosition.getRow();
+    int colStart = startingPosition.getCell();
+    int rowEnd = endingPosition.getRow();
+    int colEnd = endingPosition.getCell();
+
+    Piece startingPiece = pieces[rowStart][colStart];
+    pieces[rowStart][colStart] = null;
+    pieces[rowEnd][colEnd] = startingPiece;
+
+    int rowDistance = rowEnd - rowStart;
+    int colDistance = colEnd - colStart;
+
+
+    //If row or column distance is 2, then the jump is going up/right, so the piece in between is one above the start.
+    //Otherwise, the jump is going down/left, so the piece is one below the start.
+    int jumpedRow;
+    int jumpedCol;
+
+    if(rowDistance == 2){
+      jumpedRow = rowStart + 1;
+    }
+    else{
+      jumpedRow = rowStart - 1;
+    }
+
+    if(colDistance == 2){
+      jumpedCol = colStart + 1;
+    }
+    else{
+      jumpedCol = colStart - 1;
+    }
+
+    //Place removed piece that got jumped back into board
+    if(move.isBackUpMove()){
+      if(activeColor.equals(Color.RED)) {
+        pieces[jumpedRow][jumpedCol] = new Piece(Color.WHITE, Piece.Type.SINGLE);
+      }
+      else{
+        pieces[jumpedRow][jumpedCol] = new Piece(Color.RED, Piece.Type.SINGLE);
+      }
+    }
 
   }
 }

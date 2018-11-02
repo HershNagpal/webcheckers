@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.*;
 import spark.*;
 
@@ -12,43 +13,44 @@ import java.util.Objects;
  */
 public class PostSubmitTurnRoute implements Route {
 
-    private TemplateEngine templateEngine;
+    /**
+     * The game center
+     */
+    private GameCenter gameCenter;
+
+    /**
+     * Interprets and converts json
+     */
     private Gson gson;
 
-    public PostSubmitTurnRoute(TemplateEngine templateEngine, Gson gson) {
-        Objects.requireNonNull(templateEngine, "templateEngine must not be null");
-        this.templateEngine = templateEngine;
+    /**
+     * The constructor for the {@code POST /game} route handler to submit
+     * the players turn. A turn consists of a valid move and changing whose
+     * turn it is.
+     *
+     * @param gameCenter holds the ongoing games
+     * @param gson used to interpret and convert json
+     */
+    public PostSubmitTurnRoute(GameCenter gameCenter, Gson gson) {
+        Objects.requireNonNull(gameCenter, "gameCenter must not be null");
+        Objects.requireNonNull(gson, "gson must not be null");
+
+        this.gameCenter = gameCenter;
         this.gson = gson;
     }
 
+    /**
+     * Handles the request to submit a turn. Submitting a turn may be unsuccessful
+     * indicated by the message. @see Game::submitTurn()
+     * @param request The HTTP request
+     * @param response The HTTP response
+     * @return Message, error if turn invalid, info if turn is valid and turn processed.
+     */
     @Override
     public Object handle(Request request, Response response) {
         Session session = request.session();
         Player player = session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR);
-        Game game = player.getGame();
-        //String messageJSON = request.body();
-        //System.out.println(messageJSON);
-        //Message message = gson.fromJson(messageJSON, Message.class);
-        //System.out.println(message);
-        //MessageType type = message.getType();
-        //switch (type) {
-        //    case ERROR:
-        //        // Error occurred display error message
-        //        return gson.toJson(new Message("Turn was not processed. Error occurred.", MessageType.ERROR));
-        //    case INFO:
-        //        // Turn was processed
-        //
-        //        return gson.toJson(new Message("Turn was submitted", MessageType.INFO));
-        //}
-        Move move = session.attribute("move");
-
-        //if this is a move from the red player
-        //we should flip the move to match our model
-        if (game.isRedPlayer(player)){
-            move = move.flipMove();
-        }
-        game.makeMove(move);
-        game.switchActiveColor();
-        return gson.toJson(new Message("", MessageType.INFO));
+        Message message = gameCenter.submitTurn(player);
+        return gson.toJson(message);
     }
 }
