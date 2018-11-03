@@ -188,6 +188,14 @@ public class BoardTest {
   }
 
   /**
+   * Test for makeBackUpJumpMove
+   */
+  @Test
+  public void testMakeBackUpJumpMove(){
+
+  }
+
+  /**
    * Test for getPieceAtFlippedPosition
    */
   @Test
