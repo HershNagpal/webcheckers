@@ -85,7 +85,6 @@ public class BoardTest {
    */
   @BeforeEach
   public void setup(){
-    CuT = new Board();
     redPiece = new Piece(Color.RED, Piece.Type.SINGLE);
     whitePiece = new Piece(Color.WHITE,Piece.Type.SINGLE);
     expectedBoardView = new BoardView(expectedPieces);
@@ -186,6 +185,22 @@ public class BoardTest {
       assertTrue(Arrays.deepEquals(expectedPieces[row],actualPieces[row]));
     }
 
+  }
+
+  /**
+   * Test for getPieceAtFlippedPosition
+   */
+  @Test
+  public void testGetPieceAtFlippedPosition(){
+    /*
+    From CuT(expectedPieces)
+    Original position at (7,4) contains whitePiece
+    Flipped position at (0,3) contains redPiece
+    */
+
+    Position originalPosition = new Position(7,4);
+    //expected = redPiece, actual = CuT.getPieceAtFlippedPosition(7,4)
+    assertEquals(redPiece,CuT.getPieceAtFlippedPosition(originalPosition));
   }
 
   /**
