@@ -10,6 +10,9 @@ import static org.mockito.Mockito.when;
 
 import com.webcheckers.model.Piece.Type;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Unit test suite for the Game class.
  *
@@ -33,6 +36,7 @@ public class GameTest {
 	private Color color;
 	private Piece redPiece;
 	private Piece whitePiece;
+	private Piece[][] customPiecesTestMovable;
 	Piece[][] customPieces;
 
 	// Boards that result from making a move
@@ -56,7 +60,7 @@ public class GameTest {
 	private Position emptyPosition5 = new Position(6, 4);
 	private Position emptyPosition6 = new Position(5, 5);
 	// Create moves to be tested in validateMove
-    private Move validRedMove1 = new Move(redPosition1, emptyPosition1);
+	private Move validRedMove1 = new Move(redPosition1, emptyPosition1);
 	private Move validRedMove2 = new Move(redPosition1, emptyPosition2);
 	private Move invalidRedMove1 = new Move(redPosition1, whitePosition1);
 	private Move invalidRedMove2 = new Move(redPosition1, emptyPosition3);
@@ -70,10 +74,21 @@ public class GameTest {
 	 */
 	@BeforeEach
 	public void setup(){
-	    white = mock(Player.class);
-	    red = mock(Player.class);
-		Piece whitePiece = new Piece(Color.WHITE, Type.SINGLE);
-		Piece redPiece = new Piece(Color.RED, Type.SINGLE);
+		white = mock(Player.class);
+		red = mock(Player.class);
+		whitePiece = new Piece(Color.WHITE, Type.SINGLE);
+		redPiece = new Piece(Color.RED, Type.SINGLE);
+
+		customPiecesTestMovable = new Piece[][]{
+			{null, null, null, null, null, null, null, null},
+			{null, redPiece, null, null, null, null, null, null},
+			{null, null, whitePiece, null, null, null, null, null},
+			{null, redPiece, null, null, null, null, null, null},
+			{null, null, null, null, null, null, null, null},
+			{null, null, null, null, null, null, null, null},
+			{null, null, null, null, null, null, null, null},
+			{null, null, null, null, null, null, null, null}
+		};
 
 		customPieces = 	new Piece[][]{
 			{null, null, redPiece, null, null, null, null, null},
@@ -146,7 +161,7 @@ public class GameTest {
 
 
 		board = new Board(customPieces);
-	    CuT = new Game(red, white, board);
+		CuT = new Game(red, white, board);
 	}
 
 	/**
@@ -296,22 +311,6 @@ public class GameTest {
         CuT = new Game(red, white, board);
 
         assertFalse(CuT.isJumpMove(move));
-	}
-	
-	/**
-	 * Test for the checkForValidPieces method.
-	 */
-	@Test
-	public void testCheckForValidPieces() {
-
-	}
-
-	/**
-	 * Test for the checkJumpLocation method.
-	 */
-	@Test
-	public void testCheckJumpLocation() {
-
 	}
 
 	/**

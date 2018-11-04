@@ -129,9 +129,11 @@ public class Game {
     if( !getActiveColor().equals(movedPieceColor) ) {
       return false;
     }
+    // Check space piece is moving into is empty
     if(board.getPieceAtPosition(move.getEnd()) != null) {
       return false;
     }
+
     if(isNormalMove(move)) {
       lastMoves.add(move);
       lastMove = move;
@@ -383,14 +385,103 @@ public class Game {
    * @return whether or not the current player can make a jump move.
    */
   public boolean jumpMoveExists(){
-    boolean canMakeJump = false;
-    List<Position> movablePieceLocations = checkForValidPieces();
+    List<Position> movablePieceLocations = getMovablePieceLocations();
     for (Position indexPosition : movablePieceLocations) {
-      if(checkJumpLocation(indexPosition).size() > 0) {
-        canMakeJump = true;
+      // Check if piece at indexPosition has a position to jump to
+      //System.out.println("JUMP LOCATIONS: "+getJumpLocations(indexPosition));
+      if(getJumpLocations(indexPosition).size()>0) {
+        //System.out.println("************************");
+        return true;
       }
     }
-    return canMakeJump;
+    //System.out.println("************************");
+    return false;
+  }
+
+  /**
+   * This method will get the location of a piece and check the jump locations of that piece.
+   * @TODO make this so that it only checks kinged jump moves if the piece is a king.
+   * @param position location of an active player's piece
+   * @return true if piece at position has a position to jump to
+   */
+  public List<Position> getJumpLocations(Position position) {
+    Piece movingPiece = board.getPieceAtPosition(position);
+
+    int row = position.getRow();
+    int col = position.getCell();
+    List<Position> possibleJumpPos = new ArrayList<>();
+    Position upperLeft, upperRight, lowerLeft, lowerRight;
+
+    upperLeft = new Position(row - 2, col - 2);
+    upperRight = new Position(row - 2, col + 2);
+    lowerLeft = new Position(row + 2, col -2);
+    lowerRight = new Position(row + 2, col +2);
+
+    possibleJumpPos.add(upperLeft);
+    possibleJumpPos.add(upperRight);
+    possibleJumpPos.add(lowerLeft);
+    possibleJumpPos.add(lowerRight);
+
+    List<Position> jumpedPositions = new ArrayList<>();
+    jumpedPositions.add(new Position(row - 1, col - 1));
+    jumpedPositions.add(new Position(row - 1, col + 1));
+    jumpedPositions.add(new Position(row + 1, col - 1));
+    jumpedPositions.add(new Position(row + 1, col + 1));
+
+    List<Position> validJumpPositions = new ArrayList<>();
+
+    for(int i = 0; i<possibleJumpPos.size(); i++){
+      Position pos = possibleJumpPos.get(i);
+
+      //make sure positions are on the board
+      if(pos.getRow() < 0 || pos.getCell() < 0 || pos.getRow() >= Board.ROWS || pos.getCell() >= Board.COLUMNS){
+        //continue
+      }
+
+      // Check if position jumping into is not empty
+      else if(board.getPieceAtPosition(pos)==null){
+        // Check if there is a piece being jumped
+        Position positionJumped = new Position(pos.getRow(),pos.getCell());
+
+        // Checking if its equal to null because you cannot call .equals on null
+        if(board.getPieceAtPosition(jumpedPositions.get(i))==null) {
+          //continue
+        }
+        else{
+          Piece jumpedPiece = board.getPieceAtPosition(jumpedPositions.get(i));
+          //Valid jump if the piece jumped is the opposite color of the active color.
+          if(!jumpedPiece.getColor().equals(activeColor)){
+            System.out.println(jumpedPiece);
+            //Invalid jump if the piece is type SINGLE and going in the wrong direction
+            if(!movingPiece.getType().equals(Type.KING)){
+              //SINGLE red piece cant jump up
+              if(activeColor.equals(Color.RED)){
+                if(i==0 || i==1){
+                  continue;
+                }
+                else{
+                  validJumpPositions.add(pos);
+                }
+              }
+              //SINGLE white piece cant jump down
+              else{
+                if(i==2 || i==3){
+                  continue;
+                }
+                else{
+                  validJumpPositions.add(pos);
+                }
+              }
+            }
+            else{
+              validJumpPositions.add(pos);
+            }
+          }
+        }
+      }
+    }
+
+    return validJumpPositions;
   }
 
   /**
@@ -398,8 +489,8 @@ public class Game {
    * 
    * @return a list of positions that have pieces that can move.
    */
-  public List<Position> checkForValidPieces() {
-    List<Position> possiblePiecesToMove = new ArrayList<Position>();
+  public List<Position> getMovablePieceLocations() {
+    List<Position> movablePieceLocations = new ArrayList<>();
     Position indexPosition;
     Piece indexPiece;
     
@@ -411,50 +502,12 @@ public class Game {
           indexPiece = board.getPieceAtPosition(indexPosition);
           // Add the possible positions of pieces that are the active color to the array.
           if (indexPiece.getColor() == getActiveColor()) {
-            possiblePiecesToMove.add(indexPosition);
+            movablePieceLocations.add(indexPosition);
           }
         }
       }
     }
-    return possiblePiecesToMove;
-  }
-
-  /**
-  * This method will get a piece and check the jump locations of that piece.
-  * @TODO make this so that it only checks kinged jump moves if the piece is a king.
-  * @param piece
-  * @return
-  */
-  public List<Position> checkJumpLocation(Position position) {
-    int row = position.getRow();
-    int col = position.getCell();
-    List<Position> possibleJumps = new ArrayList<>();
-    Position upperLeft, upperRight, lowerLeft, lowerRight;
-    Piece[][] pieces = board.getPieces();
-
-    upperLeft = new Position(row - 2, col - 2);
-    upperRight = new Position(row - 2, col + 2);
-    lowerLeft = new Position(row + 2, col -2);
-    lowerRight = new Position(row + 2, col +2);
-
-    possibleJumps.add(upperLeft);
-    possibleJumps.add(upperRight);
-    possibleJumps.add(lowerLeft);
-    possibleJumps.add(lowerRight);
-
-    for(Position p: possibleJumps){
-        //make sure positions are on the board
-        row = p.getRow();
-        col = p.getCell();
-        if(row < 0 || col < 0 || row >= Board.ROWS || col >= Board.COLUMNS)
-            possibleJumps.remove(p);
-        //now check if spaces are empty
-        Piece test = pieces[row][col];
-        if(!(test.equals(null))){
-            possibleJumps.remove(p);
-        }
-    }
-    return possibleJumps;
+    return movablePieceLocations;
   }
 }
 
