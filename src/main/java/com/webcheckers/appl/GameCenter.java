@@ -125,4 +125,14 @@ public class GameCenter {
         return messenger.backupMove(game);
     }
 
+    /**
+     * Get the message from the messenger about resigning the game.
+     *
+     * @return Message with correct type
+     */
+    public Message resignGame(Player player) {
+        Game game = getGame(player);
+        return messenger.resignGame(game);
+    }
+
 }

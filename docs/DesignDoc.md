@@ -40,10 +40,6 @@ play under the American rules for checkers until a player wins or resigns.
 
 This section describes the features of the application.
 
-> _In this section you do not need to be exhaustive and list every
-> story.  Focus on top-level features from the Vision document and
-> maybe Epics and critical Stories._
-
 ### Definition of MVP
 WebCheckers is an application in which players can challenge each other to
 checkers games over the internet. Players will be able to log in to a website 
@@ -53,11 +49,27 @@ The game will follow the regulations of American Checkers. Players can resign at
 any time.
 
 ### MVP Features
-> _Provide a list of top-level Epics and/or Stories of the MVP._
+- Player Sign-In
+- Player Sign-Out
+- Start A Game
+- Piece Movement
+  : Normal Move
+  : Jump Move
+  : Multiple Jump Move
+- King Pieces
+- End Game
+  : Player Resigns
+  : All Pieces Eliminated
+  : No More Valid Moves
 
 ### Roadmap of Enhancements
-> _Provide a list of top-level features in the order you plan to consider them._
-
+1. AI Player: Players may play a game against an artificial intelligence player.
+2. Replay Mode: Games can be stored and then reviewed at a later date.
+3. Player Help: Extend the Game View to support the ability to request help.
+4. Spectator Mode: Other players may view an on-going game that they are not playing.
+5. Asynchronous Play: Players can play asynchronously.
+6. Multiple Games: A player may play more than one game at a time.
+7. Tournament Play: Players can enter into checkers tournaments including player statistics.
 
 ## Application Domain
 
@@ -102,8 +114,8 @@ Users can expect to be connected to the home page where they will have the optio
 Upon visiting the sign in page, users are prompted to enter a username. A username must follow
 specific criteria to be valid. Once a user has signed in, they will be able to see other players
 that are signed in on the home page. The user can start a game by selecting another player that
-is not yet in a game. The user that starts the game gets to go first and each player takes turns
-making moves until a winner has been decided. When a game of checkers is over, both users will
+is not yet in a game. When a game starts, the user that starts the game gets to go first. Each player
+takes turns making moves until a winner has been decided. When a game of checkers is over, both users will
 return to the home page.
 
 
