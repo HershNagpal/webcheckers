@@ -141,6 +141,20 @@ be able to go back to the home page to start a new game.
 > separate section for describing significant features. Place this after
 > you describe the design of the three tiers._
 
+#### Summary
+The server-side UI tier is structured by the actions needed for displaying and updating pages.
+Each route is specialized to do a task by communicating with the application tier services.
+Listed below is each page and the routes that are used as well as a description.
+- Home Page
+  * This is the first page a user sees. They are greeted by a page that shows information depending
+  on the login status of the user.
+  * The GetHomeRoute handles what the page displays. If a player is not yet signed-in, they see
+  the number of players online. If a player is signed-in, they see the names of other online players.
+  * From the home page, a signed-in player can select another player to start a game. If both players
+  a
+  * The route also checks if the user is in an ongoing game to redirect them to the game page.
+- Game Page
+  *
 
 ### Application Tier
 > _Provide a summary of the Application tier of your architecture. This
