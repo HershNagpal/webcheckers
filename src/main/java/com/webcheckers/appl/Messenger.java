@@ -67,12 +67,12 @@ public class Messenger {
     }
 
     /**
-     * Get the message from the game about resigning from a game.
+     * Get the message from the game about the player resigning.
      *
      * @return Message
      */
-    public Message resignGame(Game game) {
-        return game.resignGame() ? RESIGN_TRUE : RESIGN_FALSE;
+    public Message resignGame(Game game, Player player) {
+        return game.resignGame(player) ? RESIGN_TRUE : RESIGN_FALSE;
     }
 
 }
