@@ -3,11 +3,6 @@ geometry: margin=1in
 ---
 # PROJECT Design Documentation
 
-> _The following template provides the headings for your Design
-> Documentation.  As you edit each section make sure you remove these
-> commentary 'blockquotes'; the lines that start with a > character
-> and appear in the generated PDF in italics._
-
 ## Team Information
 * Team name: Banana
 * Team members
@@ -53,14 +48,14 @@ any time.
 - Player Sign-Out
 - Start A Game
 - Piece Movement
-  : Normal Move
-  : Jump Move
-  : Multiple Jump Move
+  * Normal Move
+  * Jump Move
+  * Multiple Jump Move
 - King Pieces
 - End Game
-  : Player Resigns
-  : All Pieces Eliminated
-  : No More Valid Moves
+  * Player Resigns
+  * All Pieces Eliminated
+  * No More Valid Moves
 
 ### Roadmap of Enhancements
 1. AI Player: Players may play a game against an artificial intelligence player.
@@ -78,8 +73,8 @@ This section describes the application domain.
 ![The WebCheckers Domain Model](domain-model.png)
 
 Players sign in to play the game of checkers. The game is played on a standard 8x8
-checkers board. The checker pieces are located on individual spaces. Players play
-against another player, taking turns moving pieces and capturing their opponents pieces.
+checkers board. The pieces are located on individual spaces. Players play against
+another player, taking turns moving pieces and capturing their opponents pieces.
 
 
 ## Architecture and Design
@@ -98,7 +93,8 @@ some minimal CSS for styling the page.  There is also some JavaScript
 that has been provided to the team by the architect.
 
 The server-side tiers include the UI Tier that is composed of UI Controllers and Views.
-Controllers are built using the Spark framework and View are built using the FreeMarker framework.  The Application and Model tiers are built using plain-old Java objects (POJOs).
+Controllers are built using the Spark framework and View are built using the FreeMarker framework.
+The Application and Model tiers are built using plain-old Java objects (POJOs).
 
 Details of the components within these tiers are supplied below.
 
@@ -115,8 +111,11 @@ Upon visiting the sign in page, users are prompted to enter a username. A userna
 specific criteria to be valid. Once a user has signed in, they will be able to see other players
 that are signed in on the home page. The user can start a game by selecting another player that
 is not yet in a game. When a game starts, the user that starts the game gets to go first. Each player
-takes turns making moves until a winner has been decided. When a game of checkers is over, both users will
-return to the home page.
+takes turns making moves until a winner has been decided. A turn consists of a player making a valid
+move on the board and then having a choice of confirming or undoing their move using the submit turn
+and backup buttons. A player may also choose to resign from the game before making a move. When a
+game of checkers is over, both users will see a message indicating the outcome of the game and now
+be able to go back to the home page to start a new game.
 
 
 ### UI Tier
