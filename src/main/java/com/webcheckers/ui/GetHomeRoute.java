@@ -84,7 +84,7 @@ public class GetHomeRoute implements Route {
 
     Player player = session.attribute(PLAYER_ATTR);
     if (player != null) {
-      if (gameCenter.playerInGame(player)) {
+      if (gameCenter.wasChallenged(player)) {
         response.redirect(WebServer.GAME_URL);
       }
       vm.put(PLAYER_ATTR, player);

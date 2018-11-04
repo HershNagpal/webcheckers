@@ -36,9 +36,6 @@ public class PostResignGameRoute implements Route {
         Session session = request.session();
         Player player = session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR);
         Message message = gameCenter.resignGame(player);
-        if (message.getType() == MessageType.info) {
-            response.redirect(WebServer.HOME_URL);
-        }
         return gson.toJson(message);
     }
 }
