@@ -29,6 +29,8 @@ public class GetGameRoute implements Route{
     static final String BOARD_ATTR = "board";
     static final String MESSAGE_ATTR = "message";
     static final String IN_GAME_ERROR = "That player is already in game!";
+    static final String OPP_RESIGN = "Your opponent resigned. You win!";
+    static final String PLAYER_RESIGN = "You resigned. You lose!";
 
     static final String TITLE = "Game Board";
 
@@ -92,9 +94,15 @@ public class GetGameRoute implements Route{
             // Create a new game
             game = gameCenter.createGame(player, opponent);
         }
-        BoardView boardView = game.getBoardView(player);
+        if (gameCenter.isGameOver(game)) {
+            if (gameCenter.isWinner(game, player)) {
+                vm.put(MESSAGE_ATTR, new Message(OPP_RESIGN, MessageType.info));
+            } else {
+                vm.put(MESSAGE_ATTR, new Message(PLAYER_RESIGN, MessageType.info));
+            }
+        }
 
-        vm.put(BOARD_ATTR, boardView);
+        vm.put(BOARD_ATTR, game.getBoardView(player));
         vm.put(CURRENT_PLAYER_ATTR, player);
         vm.put(VIEW_MODE_ATTR, ViewMode.PLAY);
         vm.put(RED_PLAYER_ATTR, game.getRedPlayer());

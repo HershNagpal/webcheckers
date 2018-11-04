@@ -15,6 +15,8 @@ import java.util.List;
  */
 public class Game {
 
+  private boolean resigned;
+  private Player winner;
   private Player redPlayer;
   private Player whitePlayer;
   private Board board;
@@ -64,6 +66,15 @@ public class Game {
    */
   public boolean isRedPlayer(Player player) {
     return redPlayer == player;
+  }
+
+  /**
+   * Checks if the player is the white player in the game.
+   * @param player The player to check
+   * @return Is the player the white player
+   */
+  public boolean isWhitePlayer(Player player) {
+    return whitePlayer == player;
   }
 
   /**
@@ -509,5 +520,36 @@ public class Game {
     }
     return movablePieceLocations;
   }
+
+  /**
+   * Check if the player is the winner
+   * @param player Player to check
+   * @return If the player won
+   */
+  public boolean isWinner(Player player) {
+    return player == winner;
+  }
+
+  /**
+   * Resign the game. This ends the game and makes the current player
+   * lose and the other player win.
+   * @return True if successful
+   */
+  public boolean resignGame() {
+    // game over
+    winner = activeColor == Color.RED ? whitePlayer : redPlayer;
+    if (activeColor == Color.RED) {
+      winner = whitePlayer;
+    } else {
+      winner = redPlayer;
+    }
+    resigned = true;
+    return true;
+  }
+
+  public boolean didPlayerResign() {
+    return resigned;
+  }
+
 }
 

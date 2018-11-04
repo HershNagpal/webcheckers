@@ -70,6 +70,8 @@ public class WebServer {
 
   public static final String BACKUP_MOVE_URL = "/backupMove";
 
+  public static final String RESIGN_URL = "/resignGame";
+
   //
   // Attributes
   //
@@ -174,6 +176,8 @@ public class WebServer {
     post(SUBMIT_TURN_URL, new PostSubmitTurnRoute(gameCenter, gson));
 
     post(BACKUP_MOVE_URL, new PostBackupMoveRoute(gameCenter, gson));
+
+    post(RESIGN_URL, new PostResignGameRoute(gameCenter, gson));
 
     LOG.config("WebServer is initialized.");
   }
