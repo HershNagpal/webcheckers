@@ -20,7 +20,7 @@ public class GameCenterTest {
     /**
      * Component under test
      */
-    private GameCenter gameCenter;
+    private GameCenter CuT;
 
     /**
      * friendly objects
@@ -47,8 +47,8 @@ public class GameCenterTest {
         dummy = mock(Player.class);
         move = mock(Move.class);
 
-        gameCenter = new GameCenter(messenger);
-        game = gameCenter.createGame(player, opponent);
+        CuT = new GameCenter(messenger);
+        game = CuT.createGame(player, opponent);
     }
 
     /**
@@ -56,8 +56,17 @@ public class GameCenterTest {
      */
     @Test
     public void testPlayerInGame() {
-        assertTrue(gameCenter.playerInGame(player));
-        assertFalse(gameCenter.playerInGame(dummy));
+        assertTrue(CuT.playerInGame(player));
+        assertFalse(CuT.playerInGame(dummy));
+    }
+
+    /**
+     * Test that the given player was challenged to a game or not.
+     */
+    @Test
+    public void testWasChallenged() {
+        assertTrue(CuT.wasChallenged(opponent));
+        assertFalse(CuT.wasChallenged(dummy));
     }
 
     /**
@@ -65,8 +74,8 @@ public class GameCenterTest {
      */
     @Test
     public void testGetGame() {
-        assertEquals(game, gameCenter.getGame(player));
-        assertNull(gameCenter.getGame(dummy));
+        assertEquals(game, CuT.getGame(player));
+        assertNull(CuT.getGame(dummy));
     }
 
     /**
@@ -74,7 +83,7 @@ public class GameCenterTest {
      */
     @Test
     public void testCreateGame() {
-        game = gameCenter.createGame(player, opponent);
+        game = CuT.createGame(player, opponent);
         assertSame(game.getRedPlayer(), player);
         assertSame(game.getWhitePlayer(), opponent);
         assertTrue(game.isActivePlayer(player));
@@ -85,9 +94,25 @@ public class GameCenterTest {
      */
     @Test
     public void testRemoveGame() {
-        gameCenter.removeGame(game);
-        assertNull(gameCenter.getGame(player));
-        assertNull(gameCenter.getGame(opponent));
+        CuT.removeGame(game);
+        assertNull(CuT.getGame(player));
+        assertNull(CuT.getGame(opponent));
+    }
+
+    /**
+     * Test that to check if the given game is over.
+     */
+    @Test
+    public void testIsGameOver() {
+        assertFalse(CuT.isGameOver(game));
+    }
+
+    /**
+     * Test that to check if the given player is a winner.
+     */
+    @Test
+    public void testIsWinner() {
+        assertFalse(CuT.isWinner(game, player));
     }
 
     /**
@@ -97,7 +122,7 @@ public class GameCenterTest {
     public void testCheckTurn() {
         Message message = new Message("true", MessageType.info);
         when(messenger.checkTurn(game, player)).thenReturn(message);
-        Message centerMessage = gameCenter.checkTurn(player);
+        Message centerMessage = CuT.checkTurn(player);
         assertEquals(centerMessage.getType(), messenger.checkTurn(game, player).getType());
         assertEquals(centerMessage.getText(), messenger.checkTurn(game, player).getText());
     }
@@ -109,7 +134,7 @@ public class GameCenterTest {
     public void testValidateMove() {
         Message message = new Message("", MessageType.info);
         when(messenger.validateMove(game, move)).thenReturn(message);
-        Message centerMessage = gameCenter.validateMove(player, move);
+        Message centerMessage = CuT.validateMove(player, move);
         assertEquals(centerMessage.getType(), messenger.validateMove(game, move).getType());
         assertEquals(centerMessage.getText(), messenger.validateMove(game, move).getText());
     }
@@ -121,7 +146,7 @@ public class GameCenterTest {
     public void testSubmitTurn() {
         Message message = new Message("", MessageType.info);
         when(messenger.submitTurn(game)).thenReturn(message);
-        Message centerMessage = gameCenter.submitTurn(player);
+        Message centerMessage = CuT.submitTurn(player);
         assertEquals(centerMessage.getType(), message.getType());
         assertEquals(centerMessage.getText(), message.getText());
     }
@@ -133,7 +158,7 @@ public class GameCenterTest {
     public void testBackupMove() {
         Message message = new Message("", MessageType.info);
         when(messenger.backupMove(game)).thenReturn(message);
-        Message centerMessage = gameCenter.backupMove(player);
+        Message centerMessage = CuT.backupMove(player);
         assertEquals(centerMessage.getType(), message.getType());
         assertEquals(centerMessage.getText(), message.getText());
     }
@@ -145,7 +170,7 @@ public class GameCenterTest {
     public void testResignGame() {
         Message message = new Message("", MessageType.info);
         when(messenger.resignGame(game, player)).thenReturn(message);
-        Message centerMessage = gameCenter.resignGame(player);
+        Message centerMessage = CuT.resignGame(player);
         assertEquals(centerMessage.getType(), message.getType());
         assertEquals(centerMessage.getText(), message.getText());
     }
