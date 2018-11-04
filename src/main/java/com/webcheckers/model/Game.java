@@ -146,6 +146,11 @@ public class Game {
     }
 
     if(isNormalMove(move)) {
+      // Forcing jump move
+      if(jumpMoveExists()){
+        System.out.println("JUMP MOVE EXISTS");
+        return false;
+      }
       lastMoves.add(move);
       lastMove = move;
       makeMove(move);
