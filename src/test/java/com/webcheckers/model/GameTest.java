@@ -320,4 +320,27 @@ public class GameTest {
 	public void testJumpMoveExists() {
 
 	}
+
+  /**
+   * Test getMovablePieceLocations
+   */
+  @Test
+  public void testGetMovablePieceLocations(){
+    board = new Board(customPiecesTestMovable);
+    CuT = new Game(red, white, board);
+
+    //set red player as active
+    if(!CuT.isActivePlayer(red)){
+      CuT.switchActiveColor();
+    }
+
+    //Test red player movablePieceLocations
+    List<Position> expectedMovablePieceLocations = new ArrayList<>();
+    expectedMovablePieceLocations.add(new Position(1,1));
+    expectedMovablePieceLocations.add(new Position(3, 1));
+
+    List<Position> actualMovablePieceLocations = CuT.getMovablePieceLocations();
+
+    assertEquals(expectedMovablePieceLocations,actualMovablePieceLocations);
+  }
 }
