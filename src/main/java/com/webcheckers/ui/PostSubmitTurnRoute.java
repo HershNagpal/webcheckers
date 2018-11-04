@@ -48,9 +48,11 @@ public class PostSubmitTurnRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) {
+        Message message;
         Session session = request.session();
         Player player = session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR);
-        Message message = gameCenter.submitTurn(player);
+        message = gameCenter.submitTurn(player);
+
         return gson.toJson(message);
     }
 }
