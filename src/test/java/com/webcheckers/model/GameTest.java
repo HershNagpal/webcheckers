@@ -343,4 +343,41 @@ public class GameTest {
 
     assertEquals(expectedMovablePieceLocations,actualMovablePieceLocations);
   }
+
+  @Test
+  /**
+   * Test jumpPositionExists
+   */
+  public void testGetJumpLocations() {
+    board = new Board(customPiecesTestMovable);
+    CuT = new Game(red, white, board);
+
+    //set red player as active
+    if(!CuT.isActivePlayer(red)){
+      CuT.switchActiveColor();
+    }
+
+    //Test jumpPositions for red piece on row 1, col 1
+    List<Position> expectedJumpPositions = new ArrayList<>();
+    expectedJumpPositions.add(new Position(3,3));
+
+    List<Position> actualJumpPositions = CuT.getJumpLocations(new Position(1,1));
+    System.out.println("Expected: "+expectedJumpPositions);
+    System.out.println("Actual: "+actualJumpPositions);
+
+    assertEquals(expectedJumpPositions,actualJumpPositions);
+
+    //set white player as active
+    CuT.switchActiveColor();
+
+    //Test jumpPositions for white piece on row 2, col 2
+    expectedJumpPositions.clear();
+    expectedJumpPositions.add(new Position(0, 0));
+
+    actualJumpPositions = CuT.getJumpLocations(new Position(2,2));
+    System.out.println("Expected: "+expectedJumpPositions);
+    System.out.println("Actual: "+actualJumpPositions);
+
+    assertEquals(expectedJumpPositions,actualJumpPositions);
+  }
 }
