@@ -115,6 +115,7 @@ public class Game {
    * First ensures that it is the correct player's turn and that there is no piece at the destination.
    * Checks if the move is a normal diagonal movement.
    * If not, then checks if the move is a jump move over an opponent's piece.
+   * @TODO debug jumpMoveExists and integrate it here.
    * @param move The Move object that the player is making
    * @return True if the move is valid, false if it is invalid.
    */
@@ -382,19 +383,23 @@ public class Game {
    * @return whether or not the current player can make a jump move.
    */
   public boolean jumpMoveExists(){
-    // for(int ir = 0; ir < Board.ROWS; ir++){
-    //     for(int ic = 0; ic < Board.COLUMNS; ic++){
-    //         current = pieces[ir][ic];
-    //         //make sure the space has a piece
-    //         if(!(current.equals(null))){
-    //             //see if current is the same color as active player
-    //             if(current.getColor().equals(getActiveColor())){
-    //             }
-    //         }
-    //     }
-    // }
-    Color currentColor = getActiveColor();
-    List possiblePiecesToMove = new ArrayList<Position>();
+    boolean canMakeJump = false;
+    List<Position> movablePieceLocations = checkForValidPieces();
+    for (Position indexPosition : movablePieceLocations) {
+      if(checkJumpLocation(indexPosition).size() > 0) {
+        canMakeJump = true;
+      }
+    }
+    return canMakeJump;
+  }
+
+  /**
+   * Helper method that returns all of the locations of pieces that can make moves.
+   * 
+   * @return a list of positions that have pieces that can move.
+   */
+  public List<Position> checkForValidPieces() {
+    List<Position> possiblePiecesToMove = new ArrayList<Position>();
     Position indexPosition;
     Piece indexPiece;
     
@@ -402,20 +407,22 @@ public class Game {
     for(int row = 0; row < Board.ROWS; row++) {
       for(int col = 0; col < Board.COLUMNS; col++) {
         indexPosition = new Position(row, col);
-        indexPiece = board.getPieceAtPosition(indexPosition);
-
-        // Add the possible positions of pieces that are the active color to the array.
-
+        if (board.getPieceAtPosition(indexPosition) != null) {
+          indexPiece = board.getPieceAtPosition(indexPosition);
+          // Add the possible positions of pieces that are the active color to the array.
+          if (indexPiece.getColor() == getActiveColor()) {
+            possiblePiecesToMove.add(indexPosition);
+          }
+        }
       }
     }
-
-    return false;
+    return possiblePiecesToMove;
   }
 
   /**
-  * This method will get a piece and check
-  * the jump location
-  * @param
+  * This method will get a piece and check the jump locations of that piece.
+  * @TODO make this so that it only checks kinged jump moves if the piece is a king.
+  * @param piece
   * @return
   */
   public List<Position> checkJumpLocation(Position position) {
@@ -424,22 +431,25 @@ public class Game {
     List<Position> possibleJumps = new ArrayList<>();
     Position upperLeft, upperRight, lowerLeft, lowerRight;
     Piece[][] pieces = board.getPieces();
-     upperLeft = new Position(row-2, col-2);
+
+    upperLeft = new Position(row - 2, col - 2);
     upperRight = new Position(row - 2, col + 2);
     lowerLeft = new Position(row + 2, col -2);
     lowerRight = new Position(row + 2, col +2);
-     possibleJumps.add(upperLeft);
+
+    possibleJumps.add(upperLeft);
     possibleJumps.add(upperRight);
     possibleJumps.add(lowerLeft);
     possibleJumps.add(lowerRight);
-     for(Position p: possibleJumps){
+
+    for(Position p: possibleJumps){
         //make sure positions are on the board
         row = p.getRow();
         col = p.getCell();
         if(row < 0 || col < 0 || row >= Board.ROWS || col >= Board.COLUMNS)
             possibleJumps.remove(p);
         //now check if spaces are empty
-        Piece test = pieces[row][ col];
+        Piece test = pieces[row][col];
         if(!(test.equals(null))){
             possibleJumps.remove(p);
         }

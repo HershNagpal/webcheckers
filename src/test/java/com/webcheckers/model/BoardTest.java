@@ -43,6 +43,10 @@ public class BoardTest {
           {whitePiece, null, whitePiece, null, whitePiece, null, whitePiece, null},
   };
 
+  // Boards to test flipping the board
+  Piece[][] customFlippedPieces;
+  Piece[][] customPiecesFlip01;
+
   // Boards that result from making a move
   Piece[][] customPieces;
   Piece[][] customPiecesRedMove1;
@@ -81,10 +85,21 @@ public class BoardTest {
    */
   @BeforeEach
   public void setup(){
-    CuT = new Board();
     redPiece = new Piece(Color.RED, Piece.Type.SINGLE);
     whitePiece = new Piece(Color.WHITE,Piece.Type.SINGLE);
     expectedBoardView = new BoardView(expectedPieces);
+
+    customFlippedPieces = new Piece[][]{
+            {redPiece, null, whitePiece},
+            {redPiece, null, null},
+            {null, null, whitePiece}
+    };
+
+    customPiecesFlip01 = new Piece[][]{
+            {whitePiece, null, null},
+            {null, null, redPiece},
+            {whitePiece, null, redPiece}
+    };
 
     customPieces = 	new Piece[][]{
             {null, null, redPiece, null, null, null, null, null},
@@ -173,11 +188,37 @@ public class BoardTest {
   }
 
   /**
+   * Test for makeBackUpJumpMove
+   */
+  @Test
+  public void testMakeBackUpJumpMove(){
+
+  }
+
+  /**
+   * Test for getPieceAtFlippedPosition
+   */
+  @Test
+  public void testGetPieceAtFlippedPosition(){
+    /*
+    From CuT(expectedPieces)
+    Original position at (7,4) contains whitePiece
+    Flipped position at (0,3) contains redPiece
+    */
+
+    Position originalPosition = new Position(7,4);
+    //expected = redPiece, actual = CuT.getPieceAtFlippedPosition(7,4)
+    assertEquals(redPiece,CuT.getPieceAtFlippedPosition(originalPosition));
+  }
+
+  /**
    * Test for getFlippedBoardView()
    */
   @Test
   public void testFlippedBoard(){
     Piece[][] actualPiecesFlipped = CuT.getFlippedPieces();
+    BoardView actualFlippedBoardView = CuT.getFlippedBoardView();
+
 
     Piece[][] expectedPiecesFlipped = new Piece[][]{
             {null, whitePiece, null, whitePiece, null, whitePiece, null, whitePiece},
@@ -189,10 +230,12 @@ public class BoardTest {
             {null, redPiece, null, redPiece, null, redPiece, null, redPiece},
             {redPiece, null, redPiece, null, redPiece, null, redPiece, null},
     };
+    BoardView expectedFlippedBoardView = new BoardView(CuT.getFlippedPieces());
 
     for(int row = 0; row < expectedPiecesFlipped.length; row++){
       assertTrue(Arrays.deepEquals(expectedPiecesFlipped[row],actualPiecesFlipped[row]));
     }
+    assertTrue(actualFlippedBoardView.equals(expectedFlippedBoardView));
   }
 
   /**

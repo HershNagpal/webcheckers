@@ -41,7 +41,6 @@ public class PostBackupMoveRouteTest {
     private Messenger messengerFail;
     private GameCenter gameCenterFail;
 
-
     /**
      * mock objects
      */

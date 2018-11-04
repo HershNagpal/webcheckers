@@ -296,7 +296,29 @@ public class GameTest {
         CuT = new Game(red, white, board);
 
         assertFalse(CuT.isJumpMove(move));
+	}
+	
+	/**
+	 * Test for the checkForValidPieces method.
+	 */
+	@Test
+	public void testCheckForValidPieces() {
 
+	}
 
-    }
+	/**
+	 * Test for the checkJumpLocation method.
+	 */
+	@Test
+	public void testCheckJumpLocation() {
+
+	}
+
+	/**
+	 * Test for the jumpMoveExists method.
+	 */
+	@Test
+	public void testJumpMoveExists() {
+
+	}
 }
