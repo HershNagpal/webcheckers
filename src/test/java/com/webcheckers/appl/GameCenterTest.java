@@ -138,4 +138,17 @@ public class GameCenterTest {
         assertEquals(centerMessage.getText(), message.getText());
     }
 
+    /**
+     * Test that the player resigning was successful or not.
+     */
+    @Test
+    public void testResignGame() {
+        Message message = new Message("", MessageType.info);
+        when(messenger.resignGame(game, player)).thenReturn(message);
+        Message centerMessage = gameCenter.resignGame(player);
+        assertEquals(centerMessage.getType(), message.getType());
+        assertEquals(centerMessage.getText(), message.getText());
+    }
+
+
 }

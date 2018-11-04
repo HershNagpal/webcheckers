@@ -75,7 +75,7 @@ public class PostResignGameRouteTest {
         Message message = new Message("", MessageType.info);
         // Arrange the test scenario; the player checks the turn and it is their turn
         when(session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR)).thenReturn(player);
-        when(messenger.resignGame(game)).thenReturn(message);
+        when(messenger.resignGame(game, player)).thenReturn(message);
         // Invoke the test
         CuT.handle(request, response);
         assertEquals(gameCenter.resignGame(player).getText(), message.getText());
@@ -90,7 +90,7 @@ public class PostResignGameRouteTest {
         Message message = new Message("", MessageType.error);
         // Arrange the test scenario; the player checks the turn and it is their turn
         when(session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR)).thenReturn(player);
-        when(messenger.resignGame(game)).thenReturn(message);
+        when(messenger.resignGame(game, player)).thenReturn(message);
         // Invoke the test
         CuT.handle(request, response);
         assertEquals(gameCenter.resignGame(player).getText(), message.getText());
