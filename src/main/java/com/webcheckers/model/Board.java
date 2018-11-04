@@ -34,7 +34,6 @@ public class Board {
    */
   public Board(Piece[][] customPieces){
     pieces = customPieces;
-    setUpBoard();
 }
 
   /**

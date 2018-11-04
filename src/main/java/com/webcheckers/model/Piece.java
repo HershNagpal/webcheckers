@@ -60,6 +60,15 @@ public class Piece {
     } else return false;
   }
 
+  /**
+   * Display piece's color and type. Used for testing.
+   * @return string representation of Piece.
+   */
+  @Override
+  public String toString(){
+    return "Color: "+this.color+", Type: "+this.type;
+  }
+
 /**
  * Overriding equals() for deep equality between Piece Objects.
  * This method is used for testing.
