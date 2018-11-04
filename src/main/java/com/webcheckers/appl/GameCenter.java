@@ -169,14 +169,14 @@ public class GameCenter {
     /**
      * TODO: update tests
      * Get the message from the messenger about resigning the game.
-     * Update the lists
+     * Update the list of ended games
      *
      * @return Message with correct type
      */
     public Message resignGame(Player player) {
         Game game = getGame(player);
         endedGames.add(game);
-        return messenger.resignGame(game);
+        return messenger.resignGame(game, player);
     }
 
 }

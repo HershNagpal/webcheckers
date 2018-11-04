@@ -538,18 +538,12 @@ public class Game {
   }
 
   /**
-   * Resign the game. This ends the game and makes the current player
-   * lose and the other player win.
+   * Resign the game for the given player. The other player is the winner.
    * @return True if successful
    */
-  public boolean resignGame() {
+  public boolean resignGame(Player player) {
     // game over
-    winner = activeColor == Color.RED ? whitePlayer : redPlayer;
-    if (activeColor == Color.RED) {
-      winner = whitePlayer;
-    } else {
-      winner = redPlayer;
-    }
+    winner = player == redPlayer ? whitePlayer : redPlayer;
     resigned = true;
     return true;
   }
