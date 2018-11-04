@@ -150,11 +150,22 @@ Listed below is each page and the routes that are used as well as a description.
   on the login status of the user.
   * The GetHomeRoute handles what the page displays. If a player is not yet signed-in, they see
   the number of players online. If a player is signed-in, they see the names of other online players.
-  * From the home page, a signed-in player can select another player to start a game. If both players
-  a
+  * From the home page, a signed-in player can select another player to start a game. If the other player
+  is already in a game then no game is started and the user is informed by a message.
   * The route also checks if the user is in an ongoing game to redirect them to the game page.
+- Sign-In Page
+  * Upon clicking the sign-in link in the navigation bar, the user go to the sign-in page by the GetSignInRoute.
+  * The user will proceed to enter a name into the sign-in form. PostSignInRoute makes sure that the username
+  is valid in all cases (the name has not been taken and follows the sign-in conventions).
+  * Once the user enters a valid name, PostSignInRoute redirects the now logged-in player back to the home page.
 - Game Page
-  *
+  * Players will see the board view representation of the board that is oriented to the bottom of the grid.
+  * The turn is checked by the PostCheckTurnRoute every 5 seconds by the ajax call.
+  * When a player makes a move on the board, the PostValidateMoveRoute makes sure that the move is valid.
+  * After making a valid move, a player will then have the choice of submitting the turn or backing up from
+  the move. These actions are handled by the PostSubmitTurnRoute and PostBackupMoveRoute.
+  * At any point of the game, a player can resign from the game and return to the home page. The other player
+  will see a message indicating that this player resigned.
 
 ### Application Tier
 The application tier facilitates interactions between the game objects of the model and the server and
