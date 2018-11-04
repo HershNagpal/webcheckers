@@ -15,6 +15,10 @@ import java.util.List;
  */
 public class Game {
 
+  //Used to prevent player from making successive simple moves
+  //and for enforcing the completion of jump moves.
+  private boolean canContinueMoving = true;
+
   private boolean resigned;
   private Player winner;
   private Player redPlayer;
@@ -145,7 +149,7 @@ public class Game {
       return false;
     }
 
-    if(isNormalMove(move)) {
+    if(isNormalMove(move) && canContinueMoving) {
       // Forcing jump move
       if(jumpMoveExists()){
         System.out.println("JUMP MOVE EXISTS");
@@ -153,6 +157,7 @@ public class Game {
       }
       lastMoves.add(move);
       lastMove = move;
+      canContinueMoving = false;
       makeMove(move);
       return true;
     }
@@ -340,6 +345,9 @@ public class Game {
     lastMoves.clear();
     lastMove = null;
     switchActiveColor();
+
+    this.canContinueMoving = false;
+
     return true;
   }
 
@@ -369,6 +377,7 @@ public class Game {
       lastMove = null;
     }
 
+    canContinueMoving = true;
     return true;
   }
 
