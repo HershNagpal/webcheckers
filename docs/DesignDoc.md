@@ -157,15 +157,18 @@ Listed below is each page and the routes that are used as well as a description.
   *
 
 ### Application Tier
-> _Provide a summary of the Application tier of your architecture. This
-> section will follow the same instructions that are given for the UI
-> Tier above._
+The application tier facilitates interactions between the game objects of the model and the server and
+client communication of the UI. When the UI requires access to the model classes, whether to create,
+alter, or display them, the UI first goes through the correct application tier manager class.
+The GameCenter creates and manages Games, the PlayerLobby holds the players who are currently signed in
+and are waiting for a game, and the Messenger handles sending ajax calls between the server and client.
 
 
 ### Model Tier
-> _Provide a summary of the Application tier of your architecture. This
-> section will follow the same instructions that are given for the UI
-> Tier above._
+The model tier is a collection is a collection of objects and types that make up the basic structure
+of the checkers game. The Board, Space, and Piece classes are examples of game objects. Color,
+MessageType, and ViewMode are examples of types that describe other objects or states that objects
+can be in. The main heirarchy of the board is contained in the Board class.
 
 ### Design Improvements
 > _Discuss design improvements that you would make if the project were
