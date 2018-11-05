@@ -29,25 +29,12 @@ public class BoardTest {
   private Piece whitePiece;
   private BoardView expectedBoardView;
 
-  /**
-   * Expected piece 2d array
-   */
-  private Piece[][] expectedPieces = new Piece[][]{
-          {null, redPiece, null, redPiece, null, redPiece, null, redPiece},
-          {redPiece, null, redPiece, null, redPiece, null, redPiece, null},
-          {null, redPiece, null, redPiece, null, redPiece, null, redPiece},
-          {null, null, null, null, null, null, null, null},
-          {null, null, null, null, null, null, null, null},
-          {whitePiece, null, whitePiece, null, whitePiece, null, whitePiece, null},
-          {null, whitePiece, null, whitePiece, null, whitePiece, null, whitePiece},
-          {whitePiece, null, whitePiece, null, whitePiece, null, whitePiece, null},
-  };
-
   // Boards to test flipping the board
   Piece[][] customFlippedPieces;
   Piece[][] customPiecesFlip01;
 
   // Boards that result from making a move
+  private Piece[][] expectedPieces;
   Piece[][] customPieces;
   Piece[][] customPiecesRedMove1;
   Piece[][] customPiecesRedMove2;
@@ -85,6 +72,11 @@ public class BoardTest {
    */
   @BeforeEach
   public void setup(){
+      /**
+   * Expected piece 2d array
+   */
+  
+
     redPiece = new Piece(Color.RED, Piece.Type.SINGLE);
     whitePiece = new Piece(Color.WHITE,Piece.Type.SINGLE);
     expectedBoardView = new BoardView(expectedPieces);
@@ -100,6 +92,17 @@ public class BoardTest {
             {null, null, redPiece},
             {whitePiece, null, redPiece}
     };
+
+    expectedPieces = new Piece[][]{
+      {null, redPiece, null, redPiece, null, redPiece, null, redPiece},
+      {redPiece, null, redPiece, null, redPiece, null, redPiece, null},
+      {null, redPiece, null, redPiece, null, redPiece, null, redPiece},
+      {null, null, null, null, null, null, null, null},
+      {null, null, null, null, null, null, null, null},
+      {whitePiece, null, whitePiece, null, whitePiece, null, whitePiece, null},
+      {null, whitePiece, null, whitePiece, null, whitePiece, null, whitePiece},
+      {whitePiece, null, whitePiece, null, whitePiece, null, whitePiece, null},
+      };
 
     customPieces = 	new Piece[][]{
             {null, null, redPiece, null, null, null, null, null},
@@ -216,6 +219,7 @@ public class BoardTest {
    */
   @Test
   public void testFlippedBoard(){
+    
     Piece[][] actualPiecesFlipped = CuT.getFlippedPieces();
     BoardView actualFlippedBoardView = CuT.getFlippedBoardView();
 
