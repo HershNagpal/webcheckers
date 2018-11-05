@@ -36,17 +36,19 @@ public class GameTest {
 	private Color color;
 	private Piece redPiece;
 	private Piece whitePiece;
-	private Piece[][] customPiecesTestMovable;
-	Piece[][] customPieces;
+
+	private Piece[][] customPieces;
+  private Piece[][] customPiecesTestMovable;
+  private Piece[][] customPiecesTestLastMoveJump;
 
 	// Boards that result from making a move
-	Piece[][] customPiecesRedMove1;
-	Piece[][] customPiecesRedMove2;
-	Piece[][] customPiecesWhiteMove1;
-	Piece[][] customPiecesWhiteMove2;
-	Piece[][] customPiecesWhiteMove3;
-	Piece[][] multipleJumpMove1;
-	Piece[][] multipleJumpMove2;
+	private Piece[][] customPiecesRedMove1;
+  private Piece[][] customPiecesRedMove2;
+  private Piece[][] customPiecesWhiteMove1;
+  private Piece[][] customPiecesWhiteMove2;
+  private Piece[][] customPiecesWhiteMove3;
+  private Piece[][] multipleJumpMove1;
+  private Piece[][] multipleJumpMove2;
 
 	// Positions on the mock board that can be called.
 	private Position redPosition1 = new Position(0, 2);
@@ -91,6 +93,17 @@ public class GameTest {
 			{null, null, null, null, null, null, null, null},
 			{null, null, null, null, null, null, null, null}
 		};
+
+    customPiecesTestLastMoveJump = 	new Piece[][]{
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, whitePiece, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, redPiece, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null}
+    };
 
 		customPieces = 	new Piece[][]{
 			{null, null, redPiece, null, null, null, null, null},
@@ -373,10 +386,10 @@ public class GameTest {
     assertEquals(expectedMovablePieceLocations,actualMovablePieceLocations);
   }
 
-  @Test
   /**
    * Test jumpPositionExists
    */
+  @Test
   public void testGetJumpLocations() {
     board = new Board(customPiecesTestMovable);
     CuT = new Game(red, white, board);
@@ -408,5 +421,49 @@ public class GameTest {
     System.out.println("Actual: "+actualJumpPositions);
 
     assertEquals(expectedJumpPositions,actualJumpPositions);
+  }
+
+  @Test
+  public void testIsLastMoveJump(){
+    
+    //Setup Test
+    board = new Board(customPiecesTestLastMoveJump);
+    CuT = new Game(red, white, board);
+
+    //test lastMoveJump true when white piece jumps "up/left" -2 col, -2 rows
+    Position positionStart = new Position(4, 2);
+    Position positionEnd = new Position(2, 4);
+    Move move = new Move(positionStart, positionEnd);
+    assertTrue(CuT.isLastMoveJump(move));
+
+    //test last move valid when white piece jumps "up/right" +2 col, +2 rows
+    positionStart = new Position(4, 6);
+    positionEnd = new Position(2, 4);
+    move = new Move(positionStart, positionEnd);
+    assertTrue(CuT.isLastMoveJump(move));
+
+    //test last move valid when red piece jumps "down/left" -2 col, +2 rows
+    positionStart = new Position(3, 4);
+    positionEnd = new Position(5, 2);
+    move = new Move(positionStart, positionEnd);
+    assertTrue(CuT.isLastMoveJump(move));
+
+    //test last move valid when red piece jumps "down/right" +2 col, +2 rows
+    positionStart = new Position(3, 0);
+    positionEnd = new Position(5, 2);
+    move = new Move(positionStart, positionEnd);
+    assertTrue(CuT.isLastMoveJump(move));
+
+    //test lastMoveJump false when white piece makes a non jump move
+    positionStart = new Position(3, 3);
+    positionEnd = new Position(2, 4);
+    move = new Move(positionStart, positionEnd);
+    assertFalse(CuT.isLastMoveJump(move));
+
+    //test lastMoveJump false when red piece makes a non jump move
+    positionStart = new Position(4, 1);
+    positionEnd = new Position(5, 2);
+    move = new Move(positionStart, positionEnd);
+    assertFalse(CuT.isLastMoveJump(move));
   }
 }
