@@ -165,9 +165,20 @@ alter, or display them, the UI first goes through the correct application tier m
     3. GetGameRoute must acquire the game object that the session's player started in order to render the game page
     by first checking if the session's player is in a game already. The route checks if this is true using the method
     playerInGame(player) in gameCenter which uses the list of games that exist to check if player is in one of them.
-
-  * GameCenter also uses messenger to get the appropriate message for routes on the UI tier that require to return
-  a Json representation of the message on the .ftl files.
+    GetGameRoute also uses the method getGame(player) to get the game object from a player already in a game in order
+    to render the game. The route also uses the methods isGameOver and isWinner in gameCenter to display the
+    appropriate message given that a player resigns.
+  * GameCenter uses messenger to get the appropriate message for routes on the UI tier that must return
+  a Json representation of the message to the .ftl files that render the pages.
+- Messenger
+  * Many routes require appropriate messages to display depending on system events like valid/invalid move or opponent
+  resignation. The class Messenger was created to hold all messages needed to be displayed for all system events.
+  Routes that require messages from messenger go through gameCenter which will call the appropriate messenger method.
+  Messenger methods will in turn return the appropriate message by checking game state through a game object. The
+  following are examples of Messenger usage.
+    1.
+    2.
+    3.
 
   the PlayerLobby holds the players who are currently signed in
 and are waiting for a game, and the Messenger handles sending ajax calls between the server and client.
