@@ -114,6 +114,7 @@ public class PlayerLobbyTest {
         assertNull(CuT.getPlayer(name));
         CuT.signIn(player);
         assertEquals(player, CuT.getPlayer(name));
+        assertNull(CuT.getPlayer("fake"));
     }
 
     /**
