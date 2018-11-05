@@ -119,54 +119,33 @@ be able to go back to the home page to start a new game.
 
 
 ### UI Tier
-> _Provide a summary of the Server-side UI tier of your architecture.
-> Describe the types of components in the tier and describe their
-> responsibilities.  This should be a narrative description, i.e. it has
-> a flow or "story line" that the reader can follow._
-
-> _At appropriate places as part of this narrative provide one or more
-> static models (UML class structure or object diagrams) with some
-> details such as critical attributes and methods._
-
-> _You must also provide any dynamic models, such as statechart and
-> sequence diagrams, as is relevant to a particular aspect of the design
-> that you are describing.  For example, in WebCheckers you might create
-> a sequence diagram of the `POST /validateMove` HTTP request processing
-> or you might show a statechart diagram if the Game component uses a
-> state machine to manage the game._
-
-> _If a dynamic model, such as a statechart describes a feature that is
-> not mostly in this tier and cuts across multiple tiers, you can
-> consider placing the narrative description of that feature in a
-> separate section for describing significant features. Place this after
-> you describe the design of the three tiers._
-
-#### Summary
 The server-side UI tier is structured by the actions needed for displaying and updating pages.
 Each route is specialized to do a task by communicating with the application tier services.
 Provided below is each page and the routes that are used as well as a description.
+
+#### Pages
 - Home Page
-  * This is the first page a user sees. They are greeted by a page that shows information depending
-  on the login status of the user.
+  * This is the first page a user sees. They are greeted by a page that shows information
+   depending on the login status of the user.
   * The GetHomeRoute handles what the page displays. If a player is not yet signed-in, they see
   the number of players online. If a player is signed-in, they see the names of other online players.
-  * From the home page, a signed-in player can select another player to start a game. If the other player
-  is already in a game then no game is started and the user is informed by a message.
+  * From the home page, a signed-in player can select another player to start a game. If the
+  other player is already in a game then no game is started and the user is informed by a message.
   * The route also checks if the user is in an ongoing game to redirect them to the game page.
 - Sign-In Page
   * Upon clicking the sign-in link in the navigation bar, the user go to the sign-in page by the GetSignInRoute.
-  * The user will proceed to enter a name into the sign-in form. PostSignInRoute makes sure that the username
-  is valid in all cases (the name has not been taken and follows the sign-in conventions).
+  * The user will proceed to enter a name into the sign-in form. PostSignInRoute makes sure that the
+  username is valid in all cases (the name has not been taken and follows the sign-in conventions).
   * Once the user enters a valid name, PostSignInRoute redirects the now logged-in player back to the home page.
 - Game Page
   * Players will see the board view representation of the board that is oriented to the bottom of the grid.
   * The turn is checked by the PostCheckTurnRoute every 5 seconds by an ajax call.
   * When a player makes a move on the board, the PostValidateMoveRoute makes sure that the move is valid.
-  * After making a valid move, a player will then have the choice of submitting the turn or backing up from
-  the move. These actions are handled by the PostSubmitTurnRoute and PostBackupMoveRoute.
-  * At any point of the game, a player can resign from the game and return to the home page. The other player
-  will see a message indicating that this player resigned.
-  * See the game state diagram below. ![The Game Statechart](game-statechart.png)
+  * After making a valid move, a player will then have the choice of submitting the turn or backing up
+  from the move. These actions are handled by the PostSubmitTurnRoute and PostBackupMoveRoute.
+  * At any point of the game, a player can resign from the game and return to the home page.
+  The other player will see a message indicating that this player resigned.
+  ![The Game Statechart](game-statechart.png)
 
 ### Application Tier
 The application tier facilitates interactions between the game objects of the model and the server and
@@ -180,7 +159,7 @@ and are waiting for a game, and the Messenger handles sending ajax calls between
 The model tier is a collection is a collection of objects and types that make up the basic structure
 of the checkers game. The Board, Space, and Piece classes are examples of game objects. Color,
 MessageType, and ViewMode are examples of types that describe other objects or states that objects
-can be in. The main heirarchy of the board is contained in the Board class.
+can be in. The main hierarchy of the board is contained in the Board class.
 
 ### Design Improvements
 > _Discuss design improvements that you would make if the project were
