@@ -14,13 +14,26 @@ import java.util.logging.Logger;
  */
 public class GetSignInRoute implements Route {
 
-    // Values used for rendering the sign in view
+    /**
+     * Attribute for the title of the page
+     */
     static final String TITLE_ATTR = "title";
+
+    /**
+     * The actual title for the page
+     */
     static final String TITLE = "Sign In";
+
+    /**
+     * Attribute for the view name
+     */
     static final String VIEW_NAME = "signin.ftl";
 
     private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
 
+    /**
+     * The template engine used to render the page
+     */
     private final TemplateEngine templateEngine;
 
     /**
