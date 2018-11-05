@@ -113,7 +113,11 @@ public class GameCenter {
      * @return If this game been resigned
      */
     public boolean isGameOver(Game game) {
-        return endedGames.contains(game);
+        if (endedGames.contains(game)) {
+            games.remove(game);
+            return true;
+        }
+        return false;
     }
 
     /**

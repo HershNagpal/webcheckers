@@ -107,7 +107,6 @@ public class GetGameRoute implements Route{
             } else {
                 vm.put(MESSAGE_ATTR, new Message(PLAYER_RESIGN, MessageType.info));
             }
-            gameCenter.removeGame(game);
         }
         return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
     }
