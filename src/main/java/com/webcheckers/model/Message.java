@@ -6,26 +6,26 @@ package com.webcheckers.model;
  */
 public class Message {
 
-  /**
-   * text - the text for the message to display.
-   * type - the context of the message (informational or error).
-   */
-  private String text;
-  private MessageType type;
-  
-  //
-  // Constructor
-  //
-  public Message(String text, MessageType type) {
-    this.text = text;
-    this.type = type;
-  }
+    /**
+     * text - the text for the message to display.
+     * type - the context of the message (informational or error).
+     */
+    private String text;
+    private MessageType type;
 
-  public String getText(){
-    return this.text;
-  }
+    //
+    // Constructor
+    //
+    public Message(String text, MessageType type) {
+        this.text = text;
+        this.type = type;
+    }
 
-  public MessageType getType(){
-    return this.type;
-  }
+    public String getText(){
+        return this.text;
+    }
+
+    public MessageType getType(){
+        return this.type;
+    }
 }

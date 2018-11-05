@@ -105,6 +105,9 @@ public class GameCenterTest {
     @Test
     public void testIsGameOver() {
         assertFalse(CuT.isGameOver(game));
+        when(messenger.resignGame(game, player)).thenReturn(new Message("", MessageType.info));
+        CuT.resignGame(player);
+        assertTrue(CuT.isGameOver(game));
     }
 
     /**

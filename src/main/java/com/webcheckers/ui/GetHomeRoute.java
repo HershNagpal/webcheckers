@@ -18,89 +18,117 @@ import spark.*;
  */
 public class GetHomeRoute implements Route {
 
-  static final String TITLE_ATTR = "title";
-  static final String TITLE = "Welcome!";
-  static final String NUM_PLAYERS_ATTR = "numPlayers";
-  static final String PLAYER_LIST_ATTR = "playerList";
-  static final String PLAYER_ATTR = "currentPlayer";
-  static final String MESSAGE_ATTR = "message";
-  static final String VIEW_NAME = "home.ftl";
+    /**
+     * Attribute for the title of the page
+     */
+    static final String TITLE_ATTR = "title";
 
-  private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
+    /**
+     * The actual title of the page
+     */
+    static final String TITLE = "Welcome!";
 
-  /**
-   * The game center
-   */
-  private final GameCenter gameCenter;
+    /**
+     * Attribute for the number of players
+     */
+    static final String NUM_PLAYERS_ATTR = "numPlayers";
 
-  /**
-   * The player lobby
-   */
-  private final PlayerLobby playerLobby;
-  /**
-   * Renders the model and view map
-   */
-  private final TemplateEngine templateEngine;
+    /**
+     * Attribute for the list of players
+     */
+    static final String PLAYER_LIST_ATTR = "playerList";
 
-  /**
-   * Create the Spark Route (UI controller) for the
-   * {@code GET /} HTTP request.
-   *
-   * @param templateEngine
-   *   the HTML template rendering engine
-   */
-  public GetHomeRoute(final GameCenter gameCenter, final PlayerLobby playerLobby, final TemplateEngine templateEngine) {
-    // validation
-    Objects.requireNonNull(gameCenter, "gameCenter must not be null");
-    Objects.requireNonNull(playerLobby, "playerLobby must not be null");
-    Objects.requireNonNull(templateEngine, "templateEngine must not be null");
-    //
-    this.gameCenter = gameCenter;
-    this.playerLobby = playerLobby;
-    this.templateEngine = templateEngine;
-    //
-    LOG.config("GetHomeRoute is initialized.");
-  }
+    /**
+     * Attribute for the current player
+     */
+    static final String PLAYER_ATTR = "currentPlayer";
 
-  /**
-   * Render the WebCheckers Home page.
-   *
-   * @param request
-   *   the HTTP request
-   * @param response
-   *   the HTTP response
-   *
-   * @return
-   *   the rendered HTML for the Home page
-   */
-  @Override
-  public Object handle(Request request, Response response) {
-    LOG.finer("GetHomeRoute is invoked.");
+    /**
+     * Attribute for all messages
+     */
+    static final String MESSAGE_ATTR = "message";
 
-    final Session session = request.session();
+    /**
+     * Attribute for the view name
+     */
+    static final String VIEW_NAME = "home.ftl";
 
-    Map<String, Object> vm = new HashMap<>();
-    vm.put(TITLE_ATTR, TITLE);
+    private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
 
-    Player player = session.attribute(PLAYER_ATTR);
-    if (player != null) {
-      if (gameCenter.wasChallenged(player)) {
-        response.redirect(WebServer.GAME_URL);
-      }
-      vm.put(PLAYER_ATTR, player);
-      List<String> players = playerLobby.getPlayerLobbyNames(player);
-      if (players.size() != 0) {
-        vm.put(PLAYER_LIST_ATTR, players);
-      }
-      if (session.attribute(MESSAGE_ATTR) != null) {
-        vm.put(MESSAGE_ATTR, session.attribute(MESSAGE_ATTR));
-      }
-    }
-    else {
-      vm.put(NUM_PLAYERS_ATTR, playerLobby.size());
+    /**
+     * The game center
+     */
+    private final GameCenter gameCenter;
+
+    /**
+     * The player lobby
+     */
+    private final PlayerLobby playerLobby;
+
+    /**
+     * Renders the model and view map
+     */
+    private final TemplateEngine templateEngine;
+
+    /**
+     * Create the Spark Route (UI controller) for the
+     * {@code GET /} HTTP request.
+     *
+     * @param templateEngine
+     *   the HTML template rendering engine
+     */
+    public GetHomeRoute(final GameCenter gameCenter, final PlayerLobby playerLobby, final TemplateEngine templateEngine) {
+        // validation
+        Objects.requireNonNull(gameCenter, "gameCenter must not be null");
+        Objects.requireNonNull(playerLobby, "playerLobby must not be null");
+        Objects.requireNonNull(templateEngine, "templateEngine must not be null");
+        //
+        this.gameCenter = gameCenter;
+        this.playerLobby = playerLobby;
+        this.templateEngine = templateEngine;
+        //
+        LOG.config("GetHomeRoute is initialized.");
     }
 
-    return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
-  }
+    /**
+     * Render the WebCheckers Home page.
+     *
+     * @param request
+     *   the HTTP request
+     * @param response
+     *   the HTTP response
+     *
+     * @return
+     *   the rendered HTML for the Home page
+     */
+    @Override
+    public Object handle(Request request, Response response) {
+        LOG.finer("GetHomeRoute is invoked.");
+
+        final Session session = request.session();
+
+        Map<String, Object> vm = new HashMap<>();
+        vm.put(TITLE_ATTR, TITLE);
+
+        Player player = session.attribute(PLAYER_ATTR);
+        if (player != null) {
+            if (gameCenter.wasChallenged(player)) {
+                response.redirect(WebServer.GAME_URL);
+            }
+            vm.put(PLAYER_ATTR, player);
+            List<String> players = playerLobby.getPlayerLobbyNames(player);
+            if (players.size() != 0) {
+                vm.put(PLAYER_LIST_ATTR, players);
+            }
+            if (session.attribute(MESSAGE_ATTR) != null) {
+                vm.put(MESSAGE_ATTR, session.attribute(MESSAGE_ATTR));
+            }
+        }
+        else {
+            vm.put(NUM_PLAYERS_ATTR, playerLobby.size());
+        }
+
+        return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
+    }
 
 }
