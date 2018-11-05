@@ -144,7 +144,7 @@ be able to go back to the home page to start a new game.
 #### Summary
 The server-side UI tier is structured by the actions needed for displaying and updating pages.
 Each route is specialized to do a task by communicating with the application tier services.
-Listed below is each page and the routes that are used as well as a description.
+Provided below is each page and the routes that are used as well as a description.
 - Home Page
   * This is the first page a user sees. They are greeted by a page that shows information depending
   on the login status of the user.
@@ -160,12 +160,13 @@ Listed below is each page and the routes that are used as well as a description.
   * Once the user enters a valid name, PostSignInRoute redirects the now logged-in player back to the home page.
 - Game Page
   * Players will see the board view representation of the board that is oriented to the bottom of the grid.
-  * The turn is checked by the PostCheckTurnRoute every 5 seconds by the ajax call.
+  * The turn is checked by the PostCheckTurnRoute every 5 seconds by an ajax call.
   * When a player makes a move on the board, the PostValidateMoveRoute makes sure that the move is valid.
   * After making a valid move, a player will then have the choice of submitting the turn or backing up from
   the move. These actions are handled by the PostSubmitTurnRoute and PostBackupMoveRoute.
   * At any point of the game, a player can resign from the game and return to the home page. The other player
   will see a message indicating that this player resigned.
+  * See the game state diagram below. ![The Game Statechart](game-statechart.png)
 
 ### Application Tier
 The application tier facilitates interactions between the game objects of the model and the server and
