@@ -171,11 +171,11 @@ alter, or display them, the UI first goes through the correct application tier m
   * GameCenter uses messenger to get the appropriate message for routes on the UI tier that must return
   a Json representation of the message to the .ftl files that render the pages.
 - Messenger
-  * Many routes require appropriate messages to display depending on system events like valid/invalid move or opponent
-  resignation. The class Messenger was created to hold all messages needed to be displayed for all system events.
-  Routes that require messages from messenger go through gameCenter which will call the appropriate messenger method.
-  Messenger methods will in turn return the appropriate message by checking game state through a game object. The
-  following are examples of Messenger usage.
+  * Many routes require appropriate messages to display depending on system events like valid/invalid move, opponent
+  resignation, or player resignation. The class Messenger was created to hold all messages needed to be displayed for
+  all system events. Routes that require messages from messenger go through gameCenter which will call the appropriate
+  messenger method. Messenger methods will in turn return the appropriate message by checking game state through a game
+  object. The following are examples of Messenger usage.
     1.
     2.
     3.

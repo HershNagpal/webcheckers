@@ -45,6 +45,8 @@ public class GameTest {
 	Piece[][] customPiecesWhiteMove1;
 	Piece[][] customPiecesWhiteMove2;
 	Piece[][] customPiecesWhiteMove3;
+	Piece[][] multipleJumpMove1;
+	Piece[][] multipleJumpMove2;
 
 	// Positions on the mock board that can be called.
 	private Position redPosition1 = new Position(0, 2);
@@ -157,6 +159,29 @@ public class GameTest {
                 {null, null, redPiece, null, null, null, null, null},
                 {null, null, null, whitePiece, null, null, null, null}
         };
+        multipleJumpMove1 = new Piece[][]{
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, null, null, redPiece, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, redPiece, null, null, null, null},
+				{null, null, whitePiece, null, null, null, null, null}
+		};
+        //this is a case where the white player can
+		//either choose to take a double or single jump
+        multipleJumpMove2 = new Piece[][]{
+				{null, null, null, null, null, null, null, null},
+				{null, null, whitePiece, null, null, null, null, null},
+				{null, redPiece, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, null, null, redPiece, null, null, null, null},
+				{null, null, null, null, null, null, null, null},
+				{null, redPiece, null, null, null, null, null, null},
+				{whitePiece, null, null, null, null, null, null, null}
+		};
+
 
 
 
@@ -318,7 +343,11 @@ public class GameTest {
 	 */
 	@Test
 	public void testJumpMoveExists() {
-
+		assertTrue(CuT.jumpMoveExists());
+		board = new Board(multipleJumpMove1);
+		CuT = new Game(red, white, board);
+		CuT.switchActiveColor();
+		assertTrue(CuT.jumpMoveExists());
 	}
 
   /**

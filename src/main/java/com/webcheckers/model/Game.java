@@ -191,7 +191,7 @@ public class Game {
       makeMove(move);
       return true;
     }
-    else if (isJumpMove(move)) {
+    else if (isJumpMove(move) && canContinueMoving) {
       lastMoves.add(move);
       lastMove = move;
       makeMove(move);
@@ -236,6 +236,48 @@ public class Game {
     }
 
     return isSingleMove;
+  }
+
+  /**
+   * Checks if the given Move is a valid jump move
+   * @param move The Move object that the player is making.
+   * @return true if the move is a valid jump move, false if it is invalid or not a jump move.
+   */
+  public boolean isLastMoveJump(Move move) {
+    int row1 = move.getStart().getRow();
+    int col1 = move.getStart().getCell();
+
+    int row2 = move.getEnd().getRow();
+    int col2 = move.getEnd().getCell();
+
+    //Piece is now at the end position of the move
+    Piece movingPiece = board.getPieceAtPosition(move.getEnd());
+
+    boolean isJumpMove = false;
+
+    // The piece must either be Red or a King to move towards the bottom of the board.
+    if(movingPiece.getColor() == Color.RED || movingPiece.getType() == Type.KING) {
+      // The move must be two down and two to the right or..
+      if(checkDistance(row2,row1,2) && checkDistance(col2,col1,2)) {
+        isJumpMove = true;
+      }
+      // The move must be two down and two to the left
+      else if(checkDistance(row2,row1,2) && checkDistance(col2,col1,-2)) {
+        isJumpMove = true;
+      }
+    }
+    // The piece must either be White or a King to move to the top of the board
+    if(movingPiece.getColor() == Color.WHITE || movingPiece.getType() == Type.KING) {
+      // The move must be two up and two to the left
+      if(checkDistance(row2,row1,-2) && checkDistance(col2,col1,2)) {
+          isJumpMove = true;
+      }
+      // The move must be two up and two to the left
+      else if(checkDistance(row2,row1,-2) && checkDistance(col2,col1,-2)) {
+        isJumpMove = true;
+      }
+    }
+    return isJumpMove;
   }
 
   /**
@@ -368,6 +410,14 @@ public class Game {
     if (lastMove == null) {
       return false;
     }
+
+    //Enforce player ending a multiple jump move
+    Position lastMoveEndPos = lastMove.getEnd();
+    //Multiple jump move has not been completed
+    if (isLastMoveJump(lastMove) && getJumpLocations(lastMoveEndPos).size()>0){
+      return false;
+    }
+
     //reset lastMoves and lastMove
     lastMoves.clear();
     lastMove = null;
