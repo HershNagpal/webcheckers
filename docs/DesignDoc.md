@@ -151,6 +151,8 @@ Provided below is each page and the routes that are used as well as a descriptio
 The application tier facilitates interactions between the game objects of the model and the server and
 client communication of the UI. When the UI requires access to the model classes, whether to create,
 alter, or display them, the UI first goes through the correct application tier manager class.
+
+#### Services
 - GameCenter
   * Each route located in the UI tier uses GameCenter to get information from game objects in the model package.
   GameCenter creates and manages games by storing them in a list of ongoing games and ended games. Given that
