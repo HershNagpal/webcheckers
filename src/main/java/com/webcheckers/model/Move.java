@@ -55,6 +55,15 @@ public class Move {
     }
 
     /**
+     * Used for testing moves.
+     * @return String representation of move.
+     */
+    @Override
+    public String toString(){
+        return "Start Position: "+this.start+", End Position: "+this.end+", BackUpMove: "+this.isBackUpMove;
+    }
+
+    /**
      * Overriding equals() for deep equality between Move Objects.
      * This method is used for testing.
      * @param obj Object being compared to "this" Move
