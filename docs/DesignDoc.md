@@ -3,11 +3,6 @@ geometry: margin=1in
 ---
 # PROJECT Design Documentation
 
-> _The following template provides the headings for your Design
-> Documentation.  As you edit each section make sure you remove these
-> commentary 'blockquotes'; the lines that start with a > character
-> and appear in the generated PDF in italics._
-
 ## Team Information
 * Team name: Banana
 * Team members
@@ -40,10 +35,6 @@ play under the American rules for checkers until a player wins or resigns.
 
 This section describes the features of the application.
 
-> _In this section you do not need to be exhaustive and list every
-> story.  Focus on top-level features from the Vision document and
-> maybe Epics and critical Stories._
-
 ### Definition of MVP
 WebCheckers is an application in which players can challenge each other to
 checkers games over the internet. Players will be able to log in to a website 
@@ -53,11 +44,27 @@ The game will follow the regulations of American Checkers. Players can resign at
 any time.
 
 ### MVP Features
-> _Provide a list of top-level Epics and/or Stories of the MVP._
+- Player Sign-In
+- Player Sign-Out
+- Start A Game
+- Piece Movement
+  * Normal Move
+  * Jump Move
+  * Multiple Jump Move
+- King Pieces
+- End Game
+  * Player Resigns
+  * All Pieces Eliminated
+  * No More Valid Moves
 
 ### Roadmap of Enhancements
-> _Provide a list of top-level features in the order you plan to consider them._
-
+1. AI Player: Players may play a game against an artificial intelligence player.
+2. Replay Mode: Games can be stored and then reviewed at a later date.
+3. Player Help: Extend the Game View to support the ability to request help.
+4. Spectator Mode: Other players may view an on-going game that they are not playing.
+5. Asynchronous Play: Players can play asynchronously.
+6. Multiple Games: A player may play more than one game at a time.
+7. Tournament Play: Players can enter into checkers tournaments including player statistics.
 
 ## Application Domain
 
@@ -66,8 +73,8 @@ This section describes the application domain.
 ![The WebCheckers Domain Model](domain-model.png)
 
 Players sign in to play the game of checkers. The game is played on a standard 8x8
-checkers board. The checker pieces are located on individual spaces. Players play
-against another player, taking turns moving pieces and capturing their opponents pieces.
+checkers board. The pieces are located on individual spaces. Players play against
+another player, taking turns moving pieces and capturing their opponents pieces.
 
 
 ## Architecture and Design
@@ -86,7 +93,8 @@ some minimal CSS for styling the page.  There is also some JavaScript
 that has been provided to the team by the architect.
 
 The server-side tiers include the UI Tier that is composed of UI Controllers and Views.
-Controllers are built using the Spark framework and View are built using the FreeMarker framework.  The Application and Model tiers are built using plain-old Java objects (POJOs).
+Controllers are built using the Spark framework and View are built using the FreeMarker framework.
+The Application and Model tiers are built using plain-old Java objects (POJOs).
 
 Details of the components within these tiers are supplied below.
 
@@ -102,45 +110,87 @@ Users can expect to be connected to the home page where they will have the optio
 Upon visiting the sign in page, users are prompted to enter a username. A username must follow
 specific criteria to be valid. Once a user has signed in, they will be able to see other players
 that are signed in on the home page. The user can start a game by selecting another player that
-is not yet in a game. The user that starts the game gets to go first and each player takes turns
-making moves until a winner has been decided. When a game of checkers is over, both users will
-return to the home page.
+is not yet in a game. When a game starts, the user that starts the game gets to go first. Each player
+takes turns making moves until a winner has been decided. A turn consists of a player making a valid
+move on the board and then having a choice of confirming or undoing their move using the submit turn
+and backup buttons. A player may also choose to resign from the game before making a move. When a
+game of checkers is over, both users will see a message indicating the outcome of the game and now
+be able to go back to the home page to start a new game.
 
 
 ### UI Tier
-> _Provide a summary of the Server-side UI tier of your architecture.
-> Describe the types of components in the tier and describe their
-> responsibilities.  This should be a narrative description, i.e. it has
-> a flow or "story line" that the reader can follow._
+The server-side UI tier is structured by the actions needed for displaying and updating pages.
+Each route is specialized to do a task by communicating with the application tier services.
+Provided below is each page and the routes that are used as well as a description.
 
-> _At appropriate places as part of this narrative provide one or more
-> static models (UML class structure or object diagrams) with some
-> details such as critical attributes and methods._
-
-> _You must also provide any dynamic models, such as statechart and
-> sequence diagrams, as is relevant to a particular aspect of the design
-> that you are describing.  For example, in WebCheckers you might create
-> a sequence diagram of the `POST /validateMove` HTTP request processing
-> or you might show a statechart diagram if the Game component uses a
-> state machine to manage the game._
-
-> _If a dynamic model, such as a statechart describes a feature that is
-> not mostly in this tier and cuts across multiple tiers, you can
-> consider placing the narrative description of that feature in a
-> separate section for describing significant features. Place this after
-> you describe the design of the three tiers._
-
+#### Pages
+- Home Page
+  * This is the first page a user sees. They are greeted by a page that shows information
+   depending on the login status of the user.
+  * The GetHomeRoute handles what the page displays. If a player is not yet signed-in, they see
+  the number of players online. If a player is signed-in, they see the names of other online players.
+  * From the home page, a signed-in player can select another player to start a game. If the
+  other player is already in a game then no game is started and the user is informed by a message.
+  * The route also checks if the user is in an ongoing game to redirect them to the game page.
+- Sign-In Page
+  * Upon clicking the sign-in link in the navigation bar, the user go to the sign-in page by the GetSignInRoute.
+  * The user will proceed to enter a name into the sign-in form. PostSignInRoute makes sure that the
+  username is valid in all cases (the name has not been taken and follows the sign-in conventions).
+  * Once the user enters a valid name, PostSignInRoute redirects the now logged-in player back to the home page.
+- Game Page
+  * Players will see the board view representation of the board that is oriented to the bottom of the grid.
+  * The turn is checked by the PostCheckTurnRoute every 5 seconds by an ajax call.
+  * When a player makes a move on the board, the PostValidateMoveRoute makes sure that the move is valid.
+  * After making a valid move, a player will then have the choice of submitting the turn or backing up
+  from the move. These actions are handled by the PostSubmitTurnRoute and PostBackupMoveRoute.
+  * At any point of the game, a player can resign from the game and return to the home page.
+  The other player will see a message indicating that this player resigned.
+  ![The Game Statechart](game-statechart.png)
 
 ### Application Tier
-> _Provide a summary of the Application tier of your architecture. This
-> section will follow the same instructions that are given for the UI
-> Tier above._
+The application tier facilitates interactions between the game objects of the model and the server and
+client communication of the UI. When the UI requires access to the model classes, whether to create,
+alter, or display them, the UI first goes through the correct application tier manager class.
+
+#### Services
+- GameCenter
+  * Each route located in the UI tier uses GameCenter to get information from game objects in the model package.
+  GameCenter creates and manages games by storing them in a list of ongoing games and ended games. Given that
+  the games are managed in this class, we adhere to both the information expert and single responsibility design
+  principles as we contain the responsibility of getting the current player's game and calling the appropriate method
+  from that game in GameCenter. The following are examples of how GameCenter connects UI tier routes to games.
+    1. PostSubmitTurnRoute requires a message communicating whether the player's submit action is valid or not. The
+    route calls the method "submitTurn" in gameCenter that gets the player's game and returns the appropriate message.
+    2. PostCheckTurnRoute requires a message communicating whether the player's opponent has submitted a turn. The
+    route calls the method "checkTurn" in gameCenter that gets the player's game from the list of games and returns the
+    appropriate message.
+    3. GetGameRoute must acquire the game object that the session's player started in order to render the game page
+    by first checking if the session's player is in a game already. The route checks if this is true using the method
+    playerInGame(player) in gameCenter which uses the list of games that exist to check if player is in one of them.
+    GetGameRoute also uses the method getGame(player) to get the game object from a player already in a game in order
+    to render the game. The route also uses the methods isGameOver and isWinner in gameCenter to display the
+    appropriate message given that a player resigns.
+  * GameCenter uses messenger to get the appropriate message for routes on the UI tier that must return
+  a Json representation of the message to the .ftl files that render the pages.
+- Messenger
+  * Many routes require appropriate messages to display depending on system events like valid/invalid move, opponent
+  resignation, or player resignation. The class Messenger was created to hold all messages needed to be displayed for
+  all system events. Routes that require messages from messenger go through gameCenter which will call the appropriate
+  messenger method. Messenger methods will in turn return the appropriate message by checking game state through a game
+  object. The following are examples of Messenger usage.
+    1.
+    2.
+    3.
+
+  the PlayerLobby holds the players who are currently signed in
+and are waiting for a game, and the Messenger handles sending ajax calls between the server and client.
 
 
 ### Model Tier
-> _Provide a summary of the Application tier of your architecture. This
-> section will follow the same instructions that are given for the UI
-> Tier above._
+The model tier is a collection is a collection of objects and types that make up the basic structure
+of the checkers game. The Board, Space, and Piece classes are examples of game objects. Color,
+MessageType, and ViewMode are examples of types that describe other objects or states that objects
+can be in. The main hierarchy of the board is contained in the Board class.
 
 ### Design Improvements
 > _Discuss design improvements that you would make if the project were

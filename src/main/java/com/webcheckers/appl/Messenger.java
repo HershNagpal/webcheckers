@@ -23,6 +23,8 @@ public class Messenger {
     private static final Message SUBMIT_FALSE = new Message("Invalid move. Cannot submit turn.", MessageType.error);
     private static final Message BACKUP_TRUE = new Message("", MessageType.info);
     private static final Message BACKUP_FALSE = new Message("Cannot Backup, there are no moves to undo.", MessageType.error);
+    private static final Message RESIGN_TRUE = new Message("", MessageType.info);
+    private static final Message RESIGN_FALSE = new Message("", MessageType.error);
 
     /**
      * Get the message from the game about whose turn it is.
@@ -30,6 +32,10 @@ public class Messenger {
      * @return Message
      */
     public Message checkTurn(Game game, Player player) {
+        // A player resigned
+        if (game.didPlayerResign()) {
+            return TURN_TRUE;
+        }
         return game.isActivePlayer(player) ? TURN_TRUE : TURN_FALSE;
     }
 
@@ -58,6 +64,15 @@ public class Messenger {
      */
     public Message backupMove(Game game) {
         return game.backUpMove() ? BACKUP_TRUE : BACKUP_FALSE;
+    }
+
+    /**
+     * Get the message from the game about the player resigning.
+     *
+     * @return Message
+     */
+    public Message resignGame(Game game, Player player) {
+        return game.resignGame(player) ? RESIGN_TRUE : RESIGN_FALSE;
     }
 
 }

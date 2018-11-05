@@ -1,17 +1,24 @@
 package com.webcheckers.ui;
 
+
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
-import com.webcheckers.model.*;
-import spark.*;
+import com.webcheckers.model.Message;
+import com.webcheckers.model.MessageType;
+import com.webcheckers.model.Player;
+import spark.Request;
+import spark.Response;
+import spark.Route;
+import spark.Session;
 
 import java.util.Objects;
 
 /**
- * The {@code POST /game} route handler for submitting player turns.
+ * The {@code POST /game} route handler for resigning a game.
+ *
  * @author Michael Kha
  */
-public class PostSubmitTurnRoute implements Route {
+public class PostResignGameRoute implements Route {
 
     /**
      * The game center
@@ -24,14 +31,13 @@ public class PostSubmitTurnRoute implements Route {
     private Gson gson;
 
     /**
-     * The constructor for the {@code POST /game} route handler to submit
-     * the players turn. A turn consists of a valid move and changing whose
-     * turn it is.
+     * The constructor for the {@code POST /game} route handler to resign
+     * from a game.
      *
      * @param gameCenter holds the ongoing games
      * @param gson used to interpret and convert json
      */
-    public PostSubmitTurnRoute(GameCenter gameCenter, Gson gson) {
+    public PostResignGameRoute(GameCenter gameCenter, Gson gson) {
         Objects.requireNonNull(gameCenter, "gameCenter must not be null");
         Objects.requireNonNull(gson, "gson must not be null");
 
@@ -40,19 +46,16 @@ public class PostSubmitTurnRoute implements Route {
     }
 
     /**
-     * Handles the request to submit a turn. Submitting a turn may be unsuccessful
-     * indicated by the message. @see Game::submitTurn()
+     * This action tells the game that the current player is attempting to resign.
      * @param request The HTTP request
      * @param response The HTTP response
-     * @return Message, error if turn invalid, info if turn is valid and turn processed.
+     * @return Message indicating if the user successfully resigned or not
      */
     @Override
     public Object handle(Request request, Response response) {
-        Message message;
         Session session = request.session();
         Player player = session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR);
-        message = gameCenter.submitTurn(player);
-
+        Message message = gameCenter.resignGame(player);
         return gson.toJson(message);
     }
 }

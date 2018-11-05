@@ -19,17 +19,17 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * Unit test suite for PostSubmitTurnRoute
+ * Unit test suite for PostResignGameRoute
  *
  * @author Michael Kha
  */
 @Tag("UI-tier")
-public class PostSubmitTurnRouteTest {
+public class PostResignGameRouteTest {
 
     /**
      * Component under test
      */
-    private PostSubmitTurnRoute CuT;
+    private PostResignGameRoute CuT;
 
     /**
      * friendly objects
@@ -63,37 +63,38 @@ public class PostSubmitTurnRouteTest {
         game = gameCenter.createGame(player, opponent);
         Gson gson = new Gson();
 
-        CuT = new PostSubmitTurnRoute(gameCenter, gson);
+        CuT = new PostResignGameRoute(gameCenter, gson);
     }
 
     /**
-     * Validate that the message is correct for when submitting the turn
+     * Validate that the message is correct for when a resignation
      * is successful.
      */
     @Test
-    public void testSubmitSuccessful() {
+    public void testResignSuccessful() {
         Message message = new Message("", MessageType.info);
         // Arrange the test scenario; the player checks the turn and it is their turn
         when(session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR)).thenReturn(player);
-        when(messenger.submitTurn(game)).thenReturn(message);
+        when(messenger.resignGame(game, player)).thenReturn(message);
         // Invoke the test
         CuT.handle(request, response);
-        assertEquals(gameCenter.submitTurn(player).getText(), message.getText());
-        assertEquals(gameCenter.submitTurn(player).getType(), message.getType());
+        assertEquals(gameCenter.resignGame(player).getText(), message.getText());
+        assertEquals(gameCenter.resignGame(player).getType(), message.getType());
     }
 
     /**
-     * Validate that the message is correct for when submitting the turn fails.
+     * Validate that the message is correct for when a resignation fails.
      */
     @Test
-    public void testSubmitFailed() {
-        Message message = new Message("Invalid move. Cannot submit turn.", MessageType.info);
+    public void testResignFailed() {
+        Message message = new Message("", MessageType.error);
         // Arrange the test scenario; the player checks the turn and it is their turn
         when(session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR)).thenReturn(player);
-        when(messenger.submitTurn(game)).thenReturn(message);
+        when(messenger.resignGame(game, player)).thenReturn(message);
         // Invoke the test
         CuT.handle(request, response);
-        assertEquals(gameCenter.submitTurn(player).getText(), message.getText());
-        assertEquals(gameCenter.submitTurn(player).getType(), message.getType());
+        assertEquals(gameCenter.resignGame(player).getText(), message.getText());
+        assertEquals(gameCenter.resignGame(player).getType(), message.getType());
     }
+
 }

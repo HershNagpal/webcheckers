@@ -167,7 +167,7 @@ public class GetHomeRouteTest {
     public void testInAGame() {
         // Arrange test scenario: the player joins but is already in game
         when(session.attribute(GetHomeRoute.PLAYER_ATTR)).thenReturn(player);
-        when(gameCenter.playerInGame(player)).thenReturn(true);
+        when(gameCenter.wasChallenged(player)).thenReturn(true);
         // Mock up the view model
         final TemplateEngineTester testHelper = new TemplateEngineTester();
         when(templateEngine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());

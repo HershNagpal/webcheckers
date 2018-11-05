@@ -27,6 +27,15 @@ public class Position {
     }
 
     /**
+     * Display position's row and cell. Used for testing.
+     * @return string representation of Position
+     */
+    @Override
+    public String toString(){
+        return "Row: "+row+", Column: "+cell;
+    }
+
+    /**
      * Overriding equals() for deep equality between Position Objects.
      * This method is used for testing.
      * @param obj Object being compared to "this" Position

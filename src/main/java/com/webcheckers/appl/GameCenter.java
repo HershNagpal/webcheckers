@@ -6,9 +6,7 @@ import com.webcheckers.model.Move;
 import com.webcheckers.model.Player;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Holds all games that are occurring on the application.
@@ -19,9 +17,14 @@ import java.util.Map;
 public class GameCenter {
 
     /**
-     * All ongoing games and their respective messengers
+     * All ongoing games
      */
     private List<Game> games;
+
+    /**
+     * All games that have ended
+     */
+    private List<Game> endedGames;
 
     /**
      * Manages messages
@@ -33,8 +36,8 @@ public class GameCenter {
      */
     public GameCenter(Messenger messenger) {
         games = new ArrayList<>();
+        endedGames = new ArrayList<>();
         this.messenger = messenger;
-    //    messenger = new Messenger();
     }
 
     /**
@@ -45,6 +48,21 @@ public class GameCenter {
     public Boolean playerInGame(Player player) {
         for (Game game : games) {
             if (game.playerInGame(player)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Was the given player challenged to a game
+     * @param player Player to check
+     * @return If the player was challenged
+     */
+    public Boolean wasChallenged(Player player) {
+        for (Game game : games) {
+            // White player is the challenged player
+            if (game.isWhitePlayer(player) && !game.didPlayerResign()) {
                 return true;
             }
         }
@@ -78,11 +96,36 @@ public class GameCenter {
     }
 
     /**
+     * TODO: Delete and update test suite
      * Used to remove games that ended.
      * @param game Game that ended
      */
     public void removeGame(Game game) {
         games.remove(game);
+    }
+
+    /**
+     * Check if the game has been resigned. Resigned games are tracked
+     * by the game center.
+     * @param game Game to check
+     * @return If this game been resigned
+     */
+    public boolean isGameOver(Game game) {
+        if (endedGames.contains(game)) {
+            games.remove(game);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Is the player the winner of the game.
+     * @param game Game to check
+     * @param player Player to check
+     * @return If player is the winner
+     */
+    public boolean isWinner(Game game, Player player) {
+        return game.isWinner(player);
     }
 
     /**
@@ -123,6 +166,19 @@ public class GameCenter {
     public Message backupMove(Player player) {
         Game game = getGame(player);
         return messenger.backupMove(game);
+    }
+
+    /**
+     * TODO: update tests
+     * Get the message from the messenger about resigning the game.
+     * Update the list of ended games
+     *
+     * @return Message with correct type
+     */
+    public Message resignGame(Player player) {
+        Game game = getGame(player);
+        endedGames.add(game);
+        return messenger.resignGame(game, player);
     }
 
 }
