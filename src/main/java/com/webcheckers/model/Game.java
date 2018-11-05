@@ -380,7 +380,7 @@ public class Game {
    * @return Whether or not the piece was kinged.
    */
   private boolean checkIfKinged(Move move) {
-    int endRow = move.getEnd().getCell();
+    int endRow = move.getEnd().getRow();
     Piece currentPiece = board.getPieceAtPosition(move.getEnd());
     Color pieceColor = currentPiece.getColor();
 
