@@ -13,6 +13,7 @@ import java.util.List;
  * @author Christopher Daukshus
  * @author Hersh Nagpal
  * @author Michael Kha
+ * @author Matthew Bollinger
  */
 public class Game {
 
