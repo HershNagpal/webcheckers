@@ -32,7 +32,7 @@ public class Messenger {
      * @return Message
      */
     public Message checkTurn(Game game, Player player) {
-        // Opponent resigned
+        // A player resigned
         if (game.didPlayerResign()) {
             return TURN_TRUE;
         }

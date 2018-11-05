@@ -550,6 +550,9 @@ public class Game {
   public boolean resignGame(Player player) {
     // game over
     winner = player == redPlayer ? whitePlayer : redPlayer;
+    if (isActivePlayer(player)) {
+      switchActiveColor();
+    }
     resigned = true;
     return true;
   }
