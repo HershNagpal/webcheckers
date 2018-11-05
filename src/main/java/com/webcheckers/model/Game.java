@@ -23,6 +23,11 @@ public class Game {
   private boolean canContinueMoving = true;
 
   /**
+   * The game completion state
+   */
+  private boolean gameOver;
+
+  /**
    * The resign state of the game.
    */
   private boolean resigned;
@@ -74,6 +79,7 @@ public class Game {
     this.redPlayer = redPlayer;
     this.whitePlayer = whitePlayer;
     this.board = board;
+    gameOver = false;
     activeColor = Color.RED;
   }
 
@@ -87,6 +93,7 @@ public class Game {
     this.whitePlayer = whitePlayer;
     activeColor = Color.RED;
     board = new Board();
+    gameOver = false;
   }
 
   public boolean playerInGame(Player player) {
@@ -615,6 +622,14 @@ public class Game {
   }
 
   /**
+   * Get the status of the game
+   * @return Is the game over or still going
+   */
+  public boolean isGameOver() {
+    return gameOver;
+  }
+
+  /**
    * Check if the player is the winner
    * @param player Player to check
    * @return If the player won
@@ -634,6 +649,7 @@ public class Game {
       switchActiveColor();
     }
     resigned = true;
+    gameOver = true;
     return true;
   }
 
