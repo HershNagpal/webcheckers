@@ -94,13 +94,6 @@ public class GetGameRoute implements Route{
             // Create a new game
             game = gameCenter.createGame(player, opponent);
         }
-        if (gameCenter.isGameOver(game)) {
-            if (gameCenter.isWinner(game, player)) {
-                vm.put(MESSAGE_ATTR, new Message(OPP_RESIGN, MessageType.info));
-            } else {
-                vm.put(MESSAGE_ATTR, new Message(PLAYER_RESIGN, MessageType.info));
-            }
-        }
 
         vm.put(BOARD_ATTR, game.getBoardView(player));
         vm.put(CURRENT_PLAYER_ATTR, player);
@@ -108,7 +101,14 @@ public class GetGameRoute implements Route{
         vm.put(RED_PLAYER_ATTR, game.getRedPlayer());
         vm.put(WHITE_PLAYER_ATTR, game.getWhitePlayer());
         vm.put(ACTIVE_COLOR_ATTR, game.getActiveColor());
-
+        if (gameCenter.isGameOver(game)) {
+            if (gameCenter.isWinner(game, player)) {
+                vm.put(MESSAGE_ATTR, new Message(OPP_RESIGN, MessageType.info));
+            } else {
+                vm.put(MESSAGE_ATTR, new Message(PLAYER_RESIGN, MessageType.info));
+            }
+            gameCenter.removeGame(game);
+        }
         return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
     }
 }

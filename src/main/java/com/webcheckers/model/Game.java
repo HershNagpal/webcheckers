@@ -12,22 +12,56 @@ import java.util.List;
  * @author Luis Gutierrez
  * @author Christopher Daukshus
  * @author Hersh Nagpal
+ * @author Michael Kha
  */
 public class Game {
 
+  /**
+   * Used to prevent player from making successive simple moves
+   * and for enforcing the completion of jump moves.
+   */
+  private boolean canContinueMoving = true;
+
+  /**
+   * The resign state of the game.
+   */
   private boolean resigned;
+
+  /**
+   * The winning player
+   */
   private Player winner;
+
+  /**
+   * The red player denoting the challenger.
+   */
   private Player redPlayer;
+
+  /**
+   * The white player denoting the challenged player.
+   */
   private Player whitePlayer;
+
+  /**
+   * The state of the board and its pieces
+   */
   private Board board;
+
+  /**
+   * The color of the player taking their turn.
+   */
   private Color activeColor;
 
-  //Last move made before a move is submitted.
-  //lastMove is the move at the end of lastMoves.
+  /**
+   * Last move made before a move is submitted.
+   * lastMove is the move at the end of lastMoves.
+   */
   private Move lastMove;
 
-  //List of moves made before a move is submitted.
-  //Used for backing up a move.
+  /**
+   * List of moves made before a move is submitted.
+   * Used for backing up a move.
+   */
   private List<Move> lastMoves = new ArrayList<>();
 
   /**
@@ -145,7 +179,7 @@ public class Game {
       return false;
     }
 
-    if(isNormalMove(move)) {
+    if(isNormalMove(move) && canContinueMoving) {
       // Forcing jump move
       if(jumpMoveExists()){
         System.out.println("JUMP MOVE EXISTS");
@@ -153,6 +187,7 @@ public class Game {
       }
       lastMoves.add(move);
       lastMove = move;
+      canContinueMoving = false;
       makeMove(move);
       return true;
     }
@@ -333,11 +368,13 @@ public class Game {
     if (lastMove == null) {
       return false;
     }
-      
     //reset lastMoves and lastMove
     lastMoves.clear();
     lastMove = null;
     switchActiveColor();
+
+    this.canContinueMoving = true;
+
     return true;
   }
 
@@ -367,6 +404,7 @@ public class Game {
       lastMove = null;
     }
 
+    canContinueMoving = true;
     return true;
   }
 
@@ -542,10 +580,17 @@ public class Game {
   public boolean resignGame(Player player) {
     // game over
     winner = player == redPlayer ? whitePlayer : redPlayer;
+    if (isActivePlayer(player)) {
+      switchActiveColor();
+    }
     resigned = true;
     return true;
   }
 
+  /**
+   * Has this game been resigned?
+   * @return If the game has been resigned by a player.
+   */
   public boolean didPlayerResign() {
     return resigned;
   }
