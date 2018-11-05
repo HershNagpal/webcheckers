@@ -357,6 +357,26 @@ public class GameTest {
 
     }
 
+    @Test
+    public void testBackUpMove(){
+
+    }
+
+    @Test
+    public void testResignGame(){
+
+    }
+
+    @Test
+    public void testSubmitTurn(){
+
+    }
+
+    @Test
+    public void testGetBoardView(){
+        
+    }
+
     /**
      * If there is a valid jump move to be made
      * then this method should return true
