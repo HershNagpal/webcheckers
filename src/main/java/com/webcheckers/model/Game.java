@@ -482,7 +482,7 @@ public class Game {
     if (endRow == 7 && pieceColor == Color.RED) {
       return currentPiece.kingPiece();
     }
-    else if (endRow == 7 && pieceColor == Color.RED) {
+    else if (endRow == 7 && pieceColor == Color.WHITE) {
       return currentPiece.kingPiece();
     }
     return false;
@@ -662,4 +662,3 @@ public class Game {
   }
 
 }
-
