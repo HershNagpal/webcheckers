@@ -28,6 +28,8 @@ public class MessengerTest {
     private static final Message SUBMIT_FALSE = new Message("Invalid move. Cannot submit turn.", MessageType.error);
     private static final Message BACKUP_TRUE = new Message("", MessageType.info);
     private static final Message BACKUP_FALSE = new Message("Cannot Backup, there are no moves to undo.", MessageType.error);
+    private static final Message RESIGN_TRUE = new Message("", MessageType.info);
+    private static final Message RESIGN_FALSE = new Message("", MessageType.error);
 
     /**
      * Component under test
@@ -73,6 +75,18 @@ public class MessengerTest {
         Message message = CuT.checkTurn(game, player);
         assertEquals(message.getType(), TURN_FALSE.getType());
         assertEquals(message.getText(), TURN_FALSE.getText());
+    }
+
+    /**
+     * Test that the true message is returned when a player resigned.
+     */
+    @Test
+    public void testCheckTurnResign() {
+        when(game.isActivePlayer(player)).thenReturn(true);
+        when(game.didPlayerResign()).thenReturn(true);
+        Message message = CuT.checkTurn(game, player);
+        assertEquals(message.getType(), TURN_TRUE.getType());
+        assertEquals(message.getText(), TURN_TRUE.getText());
     }
 
     /**
@@ -142,6 +156,28 @@ public class MessengerTest {
         Message message = CuT.backupMove(game);
         assertEquals(message.getType(), BACKUP_FALSE.getType());
         assertEquals(message.getText(), BACKUP_FALSE.getText());
+    }
+
+    /**
+     * Test that the true message is returned by backing up a move.
+     */
+    @Test
+    public void testResignGameTrue() {
+        when(game.resignGame(player)).thenReturn(true);
+        Message message = CuT.resignGame(game, player);
+        assertEquals(message.getType(), RESIGN_TRUE.getType());
+        assertEquals(message.getText(), RESIGN_TRUE.getText());
+    }
+
+    /**
+     * Test that the true message is returned by backing up a move.
+     */
+    @Test
+    public void testResignGameFalse() {
+        when(game.resignGame(player)).thenReturn(false);
+        Message message = CuT.resignGame(game, player);
+        assertEquals(message.getType(), RESIGN_FALSE.getType());
+        assertEquals(message.getText(), RESIGN_FALSE.getText());
     }
 
 }
