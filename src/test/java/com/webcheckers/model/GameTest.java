@@ -40,6 +40,7 @@ public class GameTest {
     private Piece[][] customPieces;
     private Piece[][] customPiecesTestMovable;
     private Piece[][] customPiecesTestLastMoveJump;
+    private Piece[][] customPiecesTestValidateMove;
 
     // Boards that result from making a move
     private Piece[][] customPiecesRedMove1;
@@ -105,6 +106,24 @@ public class GameTest {
                 {null, null, null, null, null, null, null, null}
         };
 
+        /*
+        Used to test red valid jump move and white single move
+         */
+        customPiecesTestValidateMove = new Piece[][]{
+                {null, null, redPiece, null, null, null, null, redPiece},
+                {null, whitePiece, null, null, null, null, whitePiece, null},
+                {null, null, null, null, null, whitePiece, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, whitePiece, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
+        };
+
+        /*
+        Used to test redPiece valid jump move and whitePiece valid jump move,
+        invalid single moves given that there exists a jump move.
+         */
         customPieces = 	new Piece[][]{
                 {null, null, redPiece, null, null, null, null, null},
                 {null, whitePiece, null, null, null, null, null, null},
@@ -276,26 +295,37 @@ public class GameTest {
      */
     @Test
     public void testValidateMove(){
-        // First the Red pieces will be tested.
+        //Setup test
+        board = new Board(customPiecesTestValidateMove);
+        CuT = new Game(red, white, board);
+
+        //Make red player active
         if(CuT.getActiveColor() == Color.WHITE) {
             CuT.switchActiveColor();
         }
 
-        assertTrue(CuT.validateMove(validRedMove1));
-        assertTrue(CuT.validateMove(validRedMove2));
-        assertFalse(CuT.validateMove(invalidRedMove1));
-        assertFalse(CuT.validateMove(invalidRedMove2));
-        assertFalse(CuT.validateMove(validWhiteMove1));
-        assertFalse(CuT.validateMove(invalidWhiteMove1));
+        //Flip moves for red moves because moves are flipped in validateMove()
 
+        //Test invalid red single move due to a jump move being available
+        assertFalse(CuT.validateMove(validRedMove2.flipMove()));
+
+        //Test valid red jump move
+        assertTrue(CuT.validateMove(validRedMove1.flipMove()));
+
+        //Test invalid move due to active color (piece moved is white, active color is red)
+        Move invalidMoveActiveColor = new Move(new Position(5,3),new Position(4,2)).flipMove();
+        assertFalse(CuT.validateMove(invalidMoveActiveColor));
+
+        //Test invalid move due to space moving into not being empty
+        Move invalidMoveSpaceNotEmpty = new Move(new Position(0, 7), new Position(2, 5)).flipMove();
+        assertFalse(CuT.validateMove(invalidMoveSpaceNotEmpty));
+
+        //Change active color to white
         CuT.switchActiveColor();
 
-        assertTrue(CuT.validateMove(validWhiteMove1));
-        assertTrue(CuT.validateMove(validWhiteMove2));
-        assertFalse(CuT.validateMove(invalidWhiteMove1));
-        assertFalse(CuT.validateMove(invalidWhiteMove2));
-        assertFalse(CuT.validateMove(validRedMove1));
-        assertFalse(CuT.validateMove(invalidRedMove1));
+        //Test valid white single move
+        Move validWhiteSingleMove = new Move(new Position(5,3), new Position(4,4));
+        assertTrue(CuT.validateMove(validWhiteSingleMove));
     }
 
     /**
@@ -307,12 +337,12 @@ public class GameTest {
             CuT.switchActiveColor();
         }
 
-        CuT.makeMove(validRedMove2);
+        CuT.makeMove(validRedMove2.flipMove());
         assertEquals(CuT.getBoard().getPieces(),customPiecesRedMove2);
 
         CuT = new Game(red, white, board);
 
-        CuT.makeMove(validRedMove1);
+        CuT.makeMove(validRedMove1.flipMove());
         assertEquals(CuT.getBoard().getPieces(),customPiecesRedMove1);
 
         CuT = new Game(red, white, board);
@@ -325,6 +355,26 @@ public class GameTest {
         CuT.makeMove(validWhiteMove2);
         assertEquals(CuT.getBoard().getPieces(),customPiecesWhiteMove2);
 
+    }
+
+    @Test
+    public void testBackUpMove(){
+
+    }
+
+    @Test
+    public void testResignGame(){
+
+    }
+
+    @Test
+    public void testSubmitTurn(){
+
+    }
+
+    @Test
+    public void testGetBoardView(){
+        
     }
 
     /**
