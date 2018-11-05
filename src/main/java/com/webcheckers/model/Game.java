@@ -338,15 +338,12 @@ public class Game {
     if (lastMove == null) {
       return false;
     }
-    /*if (jumpMoveExists()){
-        return false;
-    }*/
     //reset lastMoves and lastMove
     lastMoves.clear();
     lastMove = null;
     switchActiveColor();
 
-    this.canContinueMoving = false;
+    this.canContinueMoving = true;
 
     return true;
   }
