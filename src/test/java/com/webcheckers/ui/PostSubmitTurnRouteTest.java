@@ -67,7 +67,7 @@ public class PostSubmitTurnRouteTest {
     }
 
     /**
-     * Validate that the message is correct for when a resignation
+     * Validate that the message is correct for when submitting the turn
      * is successful.
      */
     @Test
@@ -83,7 +83,7 @@ public class PostSubmitTurnRouteTest {
     }
 
     /**
-     * Validate that the message is correct for when a resignation fails.
+     * Validate that the message is correct for when submitting the turn fails.
      */
     @Test
     public void testSubmitFailed() {
