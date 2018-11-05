@@ -338,9 +338,9 @@ public class Game {
     if (lastMove == null) {
       return false;
     }
-    if (jumpMoveExists()){
+    /*if (jumpMoveExists()){
         return false;
-    }
+    }*/
     //reset lastMoves and lastMove
     lastMoves.clear();
     lastMove = null;

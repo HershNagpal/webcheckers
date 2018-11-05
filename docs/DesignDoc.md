@@ -172,7 +172,25 @@ Provided below is each page and the routes that are used as well as a descriptio
 The application tier facilitates interactions between the game objects of the model and the server and
 client communication of the UI. When the UI requires access to the model classes, whether to create,
 alter, or display them, the UI first goes through the correct application tier manager class.
-The GameCenter creates and manages Games, the PlayerLobby holds the players who are currently signed in
+- GameCenter
+  * Each route located in the UI tier uses GameCenter to get information from game objects in the model package.
+  GameCenter creates and manages games by storing them in a list of ongoing games and ended games. Given that
+  the games are managed in this class, we adhere to both the information expert and single responsibility design
+  principles as we contain the responsibility of getting the current player's game and calling the appropriate method
+  from that game in GameCenter. The following are examples of how GameCenter connects UI tier routes to games.
+    1. PostSubmitTurnRoute requires a message communicating whether the player's submit action is valid or not. The
+    route calls the method "submitTurn" in gameCenter that gets the player's game and returns the appropriate message.
+    2. PostCheckTurnRoute requires a message communicating whether the player's opponent has submitted a turn. The
+    route calls the method "checkTurn" in gameCenter that gets the player's game from the list of games and returns the
+    appropriate message.
+    3. GetGameRoute must acquire the game object that the session's player started in order to render the game page
+    by first checking if the session's player is in a game already. The route checks if this is true using the method
+    playerInGame(player) in gameCenter which uses the list of games that exist to check if player is in one of them.
+
+  * GameCenter also uses messenger to get the appropriate message for routes on the UI tier that require to return
+  a Json representation of the message on the .ftl files.
+
+  the PlayerLobby holds the players who are currently signed in
 and are waiting for a game, and the Messenger handles sending ajax calls between the server and client.
 
 
