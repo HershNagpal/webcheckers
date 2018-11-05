@@ -410,6 +410,14 @@ public class Game {
     if (lastMove == null) {
       return false;
     }
+
+    //Enforce player ending a multiple jump move
+    Position lastMoveEndPos = lastMove.getEnd();
+    //Multiple jump move has not been completed
+    if (isLastMoveJump(lastMove) && getJumpLocations(lastMoveEndPos).size()>0){
+      return false;
+    }
+
     //reset lastMoves and lastMove
     lastMoves.clear();
     lastMove = null;
