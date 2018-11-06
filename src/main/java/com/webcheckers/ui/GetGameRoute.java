@@ -14,6 +14,7 @@ import java.util.logging.Logger;
  *
  * @author Michael Kha
  * @author Hersh Nagpal
+ * @author Matthew Bollinger
  */
 public class GetGameRoute implements Route{
 

@@ -4,6 +4,7 @@ package com.webcheckers.model;
  * Represents the Checkers Board and all the logical operations that need to be done on
  * pieces for the game to function.
  * @author Christopher Daukshus
+ * @author Matthew Bollinger
  *
  */
 public class Board {
