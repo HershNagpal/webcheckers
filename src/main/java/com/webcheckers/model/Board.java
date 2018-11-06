@@ -118,11 +118,10 @@ public class Board {
 
         for(int row = 0; row < this.pieces.length; row++){
             for(int col = 0; col < this.pieces[row].length; col++){
-                if(this.pieces[row][col] == null && b2.pieces[row][col] == null){
-                    //continue
-                }
-                else if(!(this.pieces[row][col].equals(b2.pieces[row][col]))){
-                    deepEqual = false;
+                if(this.pieces[row][col] != null && b2.pieces[row][col] != null){
+                    if(!(this.pieces[row][col].equals(b2.pieces[row][col]))){
+                        deepEqual = false;
+                    }
                 }
 
             }

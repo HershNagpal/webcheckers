@@ -82,4 +82,17 @@ public class MoveTest {
       assertEquals(CuT.getEnd(), position2);
     }
 
+    /**
+     * Test the equals method
+     */
+    @Test
+    public void testEquals() {
+        Move copy = CuT;
+        Move a = new Move(position2, position1);
+        String fake = "fake";
+        assertEquals(copy, CuT);
+        assertNotEquals(CuT, fake);
+        assertNotEquals(a, CuT);
+    }
+
 }

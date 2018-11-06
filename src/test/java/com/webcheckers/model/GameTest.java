@@ -305,6 +305,18 @@ public class GameTest {
     }
 
     /**
+     * Tests the isActivePlayer method
+     */
+    @Test
+    public void testIsActivePlayer() {
+        assertTrue(CuT.isActivePlayer(red));
+        assertFalse(CuT.isActivePlayer(white));
+        CuT.switchActiveColor();
+        assertTrue(CuT.isActivePlayer(white));
+        assertFalse(CuT.isActivePlayer(red));
+    }
+
+    /**
      * Tests the ValidateMove and makeMove method with single pieces.
      */
     @Test

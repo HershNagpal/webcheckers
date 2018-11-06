@@ -122,9 +122,11 @@ public class RowTest {
 	@Test
 	public void testEquals() {
 		Row copy = row3;
+		Row a = new Row(pieces3, 1);
 		String fake = "fake";
 		assertEquals(copy, row3);
 		assertNotEquals(row3, fake);
+		assertNotEquals(a, row3);
 	}
 
 }
