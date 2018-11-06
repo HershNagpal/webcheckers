@@ -203,8 +203,8 @@ can be in. The main hierarchy of the board is contained in the Board class.
 > suggested design improvements to address those hot spots._
 
 ## Testing
-> _This section will provide information about the testing performed
-> and the results of the testing._
+Tests were performed mainly by running the game server and manually creating situations in which the
+code could be tested.
 
 ### Acceptance Testing
 > _Report on the number of user stories that have passed all their
@@ -214,12 +214,12 @@ can be in. The main hierarchy of the board is contained in the Board class.
 > acceptance testing and if there are any concerns._
 
 ### Unit Testing and Code Coverage
-Our testing strategy was to use as many cases as possible to ensure all conditional
-paths are traversed by the testing. Every possible case is tested unless it is simple
-enough to be falsifiable by eye. Coverage targets were chosen based on the ease by
-which classes could be tested and all conditional paths traversed. Lower coverage
-targets indicates that the tier had more difficult code to traverse in tests.
+Our testing strategy was to use as many cases as possible to ensure all conditional paths are traversed
+by the testing. Every possible case is tested unless it is simple enough to be falsifiable by eye.
+Coverage targets were chosen based on the ease by which classes could be tested and all conditional
+paths traversed. Lower coverage targets indicates that the tier had more difficult code to traverse in tests.
+
 Coverage targets:
-Model: 90%
-UI: 80%
-Application: 80%
+Model - 90%
+UI - 80%
+Application - 80%

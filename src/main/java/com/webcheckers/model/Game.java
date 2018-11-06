@@ -164,7 +164,8 @@ public class Game {
 
   /**
    * Checks if the move being made by a player is valid or not.
-   * First ensures that it is the correct player's turn and that there is no piece at the destination.
+   * First ensures that it is the correct player's turn and that there is no 
+   * piece at the destination.
    * Checks if the move is a normal diagonal movement.
    * If not, then checks if the move is a jump move over an opponent's piece.
    * @TODO debug jumpMoveExists and integrate it here.
