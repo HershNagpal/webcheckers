@@ -177,10 +177,7 @@ alter, or display them, the UI first goes through the correct application tier m
   resignation, or player resignation. The class Messenger was created to hold all messages needed to be displayed for
   all system events. Routes that require messages from messenger go through gameCenter which will call the appropriate
   messenger method. Messenger methods will in turn return the appropriate message by checking game state through a game
-  object. The following are examples of Messenger usage.
-    1. The PlayerLobby holds the players who are currently signed in and are waiting for a game, and the Messenger handles sending ajax calls between the server and client.
-    2. 
-    3. 
+  object.
 
 
 ### Model Tier
