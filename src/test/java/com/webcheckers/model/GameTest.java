@@ -364,6 +364,22 @@ public class GameTest {
 
     @Test
     public void testResignGame(){
+        //Setup test
+        board = new Board(customPiecesTestValidateMove);
+        CuT = new Game(red, white, board);
+
+        //Red Player resigns
+        CuT.resignGame(red);
+
+        //Winner should be white player
+        assertEquals(white,CuT.getWinner());
+
+        assertTrue(CuT.getGameOver());
+        assertTrue(CuT.getResigned());
+    }
+
+    @Test
+    public void testDidPlayerResign(){
 
     }
 
@@ -374,7 +390,7 @@ public class GameTest {
 
     @Test
     public void testGetBoardView(){
-        
+
     }
 
     /**

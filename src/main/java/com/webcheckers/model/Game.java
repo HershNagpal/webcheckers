@@ -640,6 +640,7 @@ public class Game {
 
   /**
    * Resign the game for the given player. The other player is the winner.
+   * @param player Player resigning
    * @return True if successful
    */
   public boolean resignGame(Player player) {
@@ -651,6 +652,18 @@ public class Game {
     resigned = true;
     gameOver = true;
     return true;
+  }
+
+  public boolean getResigned(){
+    return resigned;
+  }
+
+  public boolean getGameOver(){
+    return gameOver;
+  }
+
+  public Player getWinner(){
+    return winner;
   }
 
   /**
