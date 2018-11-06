@@ -18,6 +18,7 @@ import java.util.List;
  *
  * @author Hersh Nagpal
  * @author Matthew Bollinger
+ * @author Luis Gutierrez
  */
 @Tag("Model-tier")
 public class GameTest {
@@ -407,14 +408,28 @@ public class GameTest {
         assertFalse(CuT.isGameOver());
     }
 
-    /*@Test
+    @Test
     public void testDidPlayerResign(){
 
     }
 
+    /**
+     * Test for submitTurn()
+     */
     @Test
     public void testSubmitTurn(){
+        //Setup test
+        board = new Board(customPiecesTestValidateMove);
+        CuT = new Game(red, white, board);
 
+        //Test invalid submit turn when no move is made
+        assertFalse(CuT.submitTurn());
+
+        //Perform red jump move
+        CuT.validateMove(validRedMove1.flipMove());
+
+        //Test submit red jump move
+        assertTrue(CuT.submitTurn());
     }
 
     @Test
