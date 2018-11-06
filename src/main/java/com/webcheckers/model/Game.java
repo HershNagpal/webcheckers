@@ -675,5 +675,4 @@ public class Game {
   public boolean didPlayerResign() {
     return resigned;
   }
-
 }
