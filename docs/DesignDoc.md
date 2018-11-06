@@ -193,18 +193,20 @@ MessageType, and ViewMode are examples of types that describe other objects or s
 can be in. The main hierarchy of the board is contained in the Board class.
 
 ### Design Improvements
-> _Discuss design improvements that you would make if the project were
-> to continue. These improvement should be based on your direct
-> analysis of where there are problems in the code base which could be
-> addressed with design changes, and describe those suggested design
-> improvements. After completion of the Code metrics exercise, you
-> will also discuss the resutling metric measurements.  Indicate the
-> hot spots the metrics identified in your code base, and your
-> suggested design improvements to address those hot spots._
+Currently, the Game class contains over 660 lines of code. Many of these lines are used for the
+implementation of the piece movement feature. As a team, we have discussed creating a separate class
+dedicated to piece movement in order to clean up the look of the class. This would increase cohesion,
+but a new class would have to be made. The benefit of this class being made would have to outweigh
+the hassle of documentation, lack of readability, and length of the Game class. Another solution is
+to delegate piece movement to a class that already exists but is much shorter. The Move class is an
+example of this type of class. However, Move is a class that specifically creates an object with values.
+To put logic in this class would lower is cohesiveness.
 
 ## Testing
 Tests were performed mainly by running the game server and manually creating situations in which the
-code could be tested.
+code could be tested. After the feature was verified to be working ideally in game, each conditional
+branch that could be reached through unit testing reasonably. Code coverage and unit tests are
+discussed further in the below sections.
 
 ### Acceptance Testing
 > _Report on the number of user stories that have passed all their
