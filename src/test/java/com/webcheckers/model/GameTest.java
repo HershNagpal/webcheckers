@@ -305,7 +305,7 @@ public class GameTest {
     }
 
     /**
-     * Tests the ValidateMove method with single pieces.
+     * Tests the ValidateMove and makeMove method with single pieces.
      */
     @Test
     public void testValidateMove(){
@@ -340,42 +340,6 @@ public class GameTest {
         //Test valid white single move
         Move validWhiteSingleMove = new Move(new Position(5,3), new Position(4,4));
         assertTrue(CuT.validateMove(validWhiteSingleMove));
-    }
-
-    /**
-     * Tests if making a move changes the board appropriately.
-     */
-    @Test
-    public void testMakeMove(){
-        //Setup test
-        board = new Board(customPiecesTestValidateMove);
-        CuT = new Game(red, white, board);
-
-        //Change active color to red
-        if(CuT.getActiveColor() == Color.WHITE){
-            CuT.switchActiveColor();
-        }
-
-        CuT.makeMove(validRedMove1.flipMove());
-        //assertEquals(CuT.getBoard().getPieces(),customPiecesTestSubmitMove01);
-        assertEquals(CuT.getActiveColor(),Color.WHITE);
-
-        /*
-        CuT = new Game(red, white, board);
-
-        CuT.makeMove(validRedMove1.flipMove());
-        assertEquals(CuT.getBoard().getPieces(),customPiecesRedMove1);
-
-        CuT = new Game(red, white, board);
-
-        CuT.makeMove(validWhiteMove1);
-        assertEquals(CuT.getBoard().getPieces(),customPiecesWhiteMove1);
-
-        CuT = new Game(red, white, board);
-
-        CuT.makeMove(validWhiteMove2);
-        assertEquals(CuT.getBoard().getPieces(),customPiecesWhiteMove2);*/
-
     }
 
     /**
