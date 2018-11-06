@@ -343,7 +343,7 @@ public class GameTest {
     }
 
     /**
-     * Tests if making a move changes the board in the appropriate ways.
+     * Tests if making a move changes the board appropriately.
      */
     @Test
     public void testMakeMove(){
@@ -351,15 +351,16 @@ public class GameTest {
         board = new Board(customPiecesTestValidateMove);
         CuT = new Game(red, white, board);
 
-        /*
         //Change active color to red
         if(CuT.getActiveColor() == Color.WHITE){
             CuT.switchActiveColor();
         }
 
         CuT.makeMove(validRedMove1.flipMove());
-        assertEquals(CuT.getBoard().getPieces(),customPiecesTestSubmitMove01);
+        //assertEquals(CuT.getBoard().getPieces(),customPiecesTestSubmitMove01);
+        assertEquals(CuT.getActiveColor(),Color.WHITE);
 
+        /*
         CuT = new Game(red, white, board);
 
         CuT.makeMove(validRedMove1.flipMove());
@@ -377,6 +378,9 @@ public class GameTest {
 
     }
 
+    /**
+     * Test for backUpMove
+     */
     @Test
     public void testBackUpMove(){
         //Setup test
