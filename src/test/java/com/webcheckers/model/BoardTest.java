@@ -35,11 +35,11 @@ public class BoardTest {
 
   // Boards that result from making a move
   private Piece[][] expectedPieces;
-  Piece[][] customPieces;
-  Piece[][] customPiecesRedMove1;
-  Piece[][] customPiecesRedMove2;
-  Piece[][] customPiecesWhiteMove1;
-  Piece[][] customPiecesWhiteMove2;
+  private Piece[][] customPieces;
+  private Piece[][] customPiecesRedMove1;
+  private Piece[][] customPiecesRedMove2;
+  private Piece[][] customPiecesWhiteMove1;
+  private Piece[][] customPiecesWhiteMove2;
 
   // Positions on the mock board that can be called.
   private Position redPosition1 = new Position(0, 2);
@@ -161,7 +161,7 @@ public class BoardTest {
 
 
 
-    CuT = new Board(expectedPieces);
+    CuT = new Board();
     CuT2 = new Board(customPieces);
 
   }
@@ -171,6 +171,7 @@ public class BoardTest {
    */
   @Test
   public void testBoardSetUp(){
+
     Piece[][] actualPieces = CuT.getPieces();
 
     Piece[][] expectedPieces = new Piece[][]{
