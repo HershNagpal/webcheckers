@@ -230,6 +230,7 @@ public class GameTest {
 
 
 
+
         board = new Board(customPieces);
         CuT = new Game(red, white, board);
     }
@@ -395,6 +396,16 @@ public class GameTest {
     }
 
     /**
+     * Test for checking if the player is the winner.
+     */
+    @Test
+    public void testIsWinner() {
+        assertFalse(CuT.isWinner(white));
+        CuT.resignGame(red);
+        assertTrue(CuT.isWinner(white));
+    }
+
+    /**
      * Test for resignGame
      */
     @Test
@@ -425,9 +436,14 @@ public class GameTest {
         assertFalse(CuT.isGameOver());
     }
 
+    /**
+     * Test that the resign flag changes
+     */
     @Test
     public void testDidPlayerResign(){
-
+        assertFalse(CuT.didPlayerResign());
+        CuT.resignGame(white);
+        assertTrue(CuT.didPlayerResign());
     }
 
     /**
@@ -601,4 +617,5 @@ public class GameTest {
         move = new Move(positionStart, positionEnd);
         assertFalse(CuT.isLastMoveJump(move));
     }
+
 }
