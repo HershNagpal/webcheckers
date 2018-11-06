@@ -46,4 +46,14 @@ public class PlayerTest {
 		assertNotEquals("Orange", playerTangerine.getName());
 	}
 
+	/**
+	 * Tests the equals method
+	 */
+	@Test
+	public void testEquals() {
+		Player copy = playerOrange;
+		String fake = "fake";
+		assertEquals(copy, playerOrange);
+		assertNotEquals(playerOrange, fake);
+	}
 }

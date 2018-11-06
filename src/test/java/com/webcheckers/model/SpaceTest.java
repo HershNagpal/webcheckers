@@ -107,4 +107,15 @@ class SpaceTest {
 		assertNotEquals(new Piece(Color.WHITE, Type.KING), blackSpaceWithoutPiece.getPiece());
 		assertNotEquals(new Piece(Color.RED, Type.KING), blackSpaceWithoutPiece.getPiece());
 	}
+
+	/**
+	 * Test the equals method
+	 */
+	@Test
+	public void testEquals() {
+		Space copy = blackSpaceWithoutPiece;
+		String fake = "fake";
+		assertEquals(copy, blackSpaceWithoutPiece);
+		assertNotEquals(blackSpaceWithoutPiece, fake);
+	}
 }

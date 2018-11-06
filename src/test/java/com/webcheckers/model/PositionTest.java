@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 /**
  * Class to test Position Class and its
@@ -13,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class PositionTest {
 
     /**
-     * Componet under test
+     * Component under test
      */
     private Position CuT;
 
@@ -34,5 +35,16 @@ public class PositionTest {
     public void testGetters(){
         assertEquals(CuT.getRow(), 0);
         assertEquals(CuT.getCell(), 1);
+    }
+
+    /**
+     * Test the equals method
+     */
+    @Test
+    public void testEquals() {
+        Position copy = CuT;
+        String fake = "fake";
+        assertEquals(copy, CuT);
+        assertNotEquals(CuT, fake);
     }
 }
