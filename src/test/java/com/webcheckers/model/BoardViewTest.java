@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import java.util.Iterator;
 
@@ -28,9 +26,9 @@ public class BoardViewTest {
 	/**
 	 * Friendly Objects
 	 */
-	private Piece mockRedPiece;
+	private Piece redPiece;
 
-	// Board created with mock pieces. Every other row has 8 mock red pieces while the odd rows have none.
+	// Board created with pieces. Every other row has 8 red pieces while the odd rows have none.
 	private Piece[][] pieces;
 
 	/**
@@ -38,22 +36,20 @@ public class BoardViewTest {
 	 */
 	@BeforeEach
 	public void setup(){
-		mockRedPiece = mock(Piece.class);
-		when(mockRedPiece.getColor()).thenReturn(Color.RED);
-		when(mockRedPiece.getType()).thenReturn(Type.SINGLE);
+		redPiece = new Piece(Color.RED, Type.SINGLE);
 
 		pieces = new Piece[][]{
-			{mockRedPiece, mockRedPiece, mockRedPiece, mockRedPiece, 
-				mockRedPiece, mockRedPiece, mockRedPiece, mockRedPiece},
+			{redPiece, redPiece, redPiece, redPiece, 
+				redPiece, redPiece, redPiece, redPiece},
 			{null, null, null, null, null, null, null, null},
-			{mockRedPiece, mockRedPiece, mockRedPiece, mockRedPiece, 
-				mockRedPiece, mockRedPiece, mockRedPiece, mockRedPiece},
+			{redPiece, redPiece, redPiece, redPiece, 
+				redPiece, redPiece, redPiece, redPiece},
 			{null, null, null, null, null, null, null, null},
-			{mockRedPiece, mockRedPiece, mockRedPiece, mockRedPiece, 
-				mockRedPiece, mockRedPiece, mockRedPiece, mockRedPiece},
+			{redPiece, redPiece, redPiece, redPiece, 
+				redPiece, redPiece, redPiece, redPiece},
 			{null, null, null, null, null, null, null, null},
-			{mockRedPiece, mockRedPiece, mockRedPiece, mockRedPiece, 
-				mockRedPiece, mockRedPiece, mockRedPiece, mockRedPiece},
+			{redPiece, redPiece, redPiece, redPiece, 
+				redPiece, redPiece, redPiece, redPiece},
 			{null, null, null, null, null, null, null, null}
 			};
 
@@ -81,7 +77,7 @@ public class BoardViewTest {
 					spacesFromRow = currentRow.iterator();
 					while(spacesFromRow.hasNext()) {
 						currentPiece = spacesFromRow.next().getPiece();
-						assertEquals(mockRedPiece,currentPiece);
+						assertEquals(redPiece,currentPiece);
 					}
 					break;
 				case 1:

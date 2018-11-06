@@ -11,6 +11,9 @@ import java.util.List;
  */
 public class BoardView {
 
+    /**
+     * rows - The List containing each Row object that is part of the Board.
+     */
     private List<Row> rows;
 
     //

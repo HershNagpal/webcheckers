@@ -128,6 +128,7 @@ public class PlayerLobbyTest {
             CuT.signIn(player);
             names.add("" + i);
         }
+        CuT.signIn(player);
         assertEquals(names, CuT.getPlayerLobbyNames(player));
     }
 

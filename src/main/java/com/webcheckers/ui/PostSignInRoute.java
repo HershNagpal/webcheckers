@@ -61,6 +61,9 @@ public class PostSignInRoute implements Route {
     static final Message NAME_TAKEN = new Message("Name has already " +
             "been taken.", MessageType.error);
 
+    static final Message INVALID_MESSAGE = new Message(INVALID_NAME, MessageType.ERROR);
+    static final Message TAKEN_MESSAGE = new Message(NAME_TAKEN, MessageType.ERROR);
+
     private static final Logger LOG = Logger.getLogger(PostSignInRoute.class.getName());
 
     /**

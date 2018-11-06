@@ -23,8 +23,7 @@ public class PlayerLobby {
      * Initialize the set of players
      */
     public PlayerLobby(){
-        players = new HashSet<Player>(){};
-
+        players = new HashSet<>();
     }
 
     /**

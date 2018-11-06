@@ -9,6 +9,7 @@ package com.webcheckers.model;
  */
 public class Board {
 
+
     /**
      * ROWS - number of rows on the board
      * COLUMNS - number of columns on the board
@@ -139,6 +140,7 @@ public class Board {
         int row = position.getRow();
         int col = position.getCell();
         return pieces[row][col];
+
     }
 
     public Piece getPieceAtFlippedPosition(Position position) {

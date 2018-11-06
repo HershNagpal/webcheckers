@@ -8,7 +8,8 @@ package com.webcheckers.model;
 public class Player {
 
     /**
-     * Name of the player
+     * name - The name of the player
+     * game - the game that this player is in.
      */
     private String name;
 
