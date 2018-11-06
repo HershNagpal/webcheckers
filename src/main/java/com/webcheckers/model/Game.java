@@ -655,7 +655,7 @@ public class Game {
     return true;
   }
 
-  public boolean getResigned(){
+  /*public boolean getResigned(){
     return resigned;
   }
 
@@ -665,7 +665,7 @@ public class Game {
 
   public Player getWinner(){
     return winner;
-  }
+  }*/
 
   /**
    * Has this game been resigned?
