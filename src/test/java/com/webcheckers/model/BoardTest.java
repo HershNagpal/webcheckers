@@ -72,14 +72,8 @@ public class BoardTest {
    */
   @BeforeEach
   public void setup(){
-      /**
-   * Expected piece 2d array
-   */
-  
-
     redPiece = new Piece(Color.RED, Piece.Type.SINGLE);
     whitePiece = new Piece(Color.WHITE,Piece.Type.SINGLE);
-    expectedBoardView = new BoardView(expectedPieces);
 
     customFlippedPieces = new Piece[][]{
             {redPiece, null, whitePiece},
@@ -103,6 +97,8 @@ public class BoardTest {
       {null, whitePiece, null, whitePiece, null, whitePiece, null, whitePiece},
       {whitePiece, null, whitePiece, null, whitePiece, null, whitePiece, null},
       };
+
+    expectedBoardView = new BoardView(expectedPieces);
 
     customPieces = 	new Piece[][]{
             {null, null, redPiece, null, null, null, null, null},
@@ -186,7 +182,13 @@ public class BoardTest {
    */
   @Test
   public void testMakeBackUpJumpMove(){
-
+      /*
+    CuT.makeJumpMove(validRedMove1);
+    assertNull(CuT.getPieceAtPosition(whitePosition1));
+    assertEquals(redPiece, CuT.getPieceAtPosition(emptyPosition1));
+    CuT.makeBackUpJumpMove(validRedMove1, Color.RED);
+    //assertEquals(whitePiece, CuT.getPieceAtPosition(whitePosition1));
+    */
   }
 
   /**
@@ -292,12 +294,13 @@ public class BoardTest {
   public void testJumpMove(){
     /*
     CuT2.makeJumpMove(validRedMove1);
-    assertEquals(CuT2.getPieces(),customPiecesRedMove1);
+    assertEquals(CuT2.getPieces(), customPiecesRedMove1);
 
     CuT2 = new Board(customPieces);
 
     CuT2.makeNormalMove(validWhiteMove1);
     assertEquals(CuT2.getPieces(),customPiecesWhiteMove1);
+    assertEquals(CuT2.getPieces(), customPiecesWhiteMove1);
     */
   }
 }
