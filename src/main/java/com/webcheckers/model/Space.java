@@ -141,8 +141,6 @@ public class Space {
 
         Space space2 = (Space)obj;
 
-        return this.row == space2.row && this.column == space2.column
-                && this.spaceType.equals(space2.spaceType)
-                && this.spaceColor.equals(space2.spaceColor);
+        return this.row == space2.row && this.column == space2.column;
     }
 }
