@@ -12,15 +12,21 @@ import java.util.List;
 public class Row {
 
     /**
-     * index - the vertical row (Y) index of this row on the board.
-     * spaces - List of Space objects that are within this row.
+     * The column location
      */
     private int index;
+
+    /**
+     * The spaces in the row
+     */
     private List<Space> spaces;
 
-    //
-    // Constructor
-    //
+    /**
+     * Initialize the row with the array of pieces. The row is
+     * located at the index
+     * @param pieces Array containing pieces and null
+     * @param index Column location
+     */
     public Row(Piece[] pieces, int index) {
         this.index = index;
         spaces = new ArrayList<>();

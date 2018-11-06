@@ -68,7 +68,7 @@ public class BoardViewTest {
 		Row currentRow;
 		Piece currentPiece;
 
-		
+
 		while(rows.hasNext()){
 			currentRow = rows.next();
 			switch(counter % 2) {
@@ -92,4 +92,16 @@ public class BoardViewTest {
 			counter++;
 		}
 	}
+
+	/**
+	 * Test the equals method.
+	 */
+	@Test
+	public void testEquals() {
+		BoardView copy = boardView;
+		String fake = "fake";
+		assertEquals(copy, boardView);
+		assertNotEquals(boardView, fake);
+	}
+
 }

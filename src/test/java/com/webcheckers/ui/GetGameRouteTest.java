@@ -1,7 +1,9 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.*;
+import freemarker.template.Template;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -14,16 +16,25 @@ import static org.mockito.Mockito.*;
 /**
  * The unit test class for {@link GetGameRoute} componet.
  *
- * author: Matthew Bollinger mxb9771@rit.edu
+ * @author Matthew Bollinger mxb9771@rit.edu
+ * @author Michael Kha
  */
 @Tag("UI-tier")
 public class GetGameRouteTest {
 
     /**
-     * The componet being tested
+     * Component under test
      */
     private GetGameRoute CuT;
 
+    /**
+     * friendly objects
+     */
+    private Color activeColor;
+
+    /**
+     * mock objects
+     */
     private Request request;
     private Session session;
     private Response response;
@@ -31,7 +42,13 @@ public class GetGameRouteTest {
     private PlayerLobby playerLobby;
     private Player p1;
     private Player p2;
+    private GameCenter gameCenter;
+    private Game game;
+    private BoardView boardView;
 
+    /**
+     * Setup the objects for each test.
+     */
     @BeforeEach
     public void setup(){
         request = mock(Request.class);
@@ -42,54 +59,60 @@ public class GetGameRouteTest {
         playerLobby = mock(PlayerLobby.class);
         p1 = mock(Player.class);
         p2 = mock(Player.class);
+        gameCenter = mock(GameCenter.class);
+        game = mock(Game.class);
+        boardView = mock(BoardView.class);
+        activeColor = Color.RED;
 
-        CuT = new GetGameRoute(playerLobby, engine);
+        when(session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR)).thenReturn(p1);
+        when(playerLobby.getPlayer(request.queryParams("pid"))).thenReturn(p2);
+        when(gameCenter.createGame(p1, p2)).thenReturn(game);
+        when(game.getBoardView(p1)).thenReturn(boardView);
+        when(game.getBoardView(p2)).thenReturn(boardView);
+        when(game.getRedPlayer()).thenReturn(p1);
+        when(game.getWhitePlayer()).thenReturn(p2);
+        when(game.getActiveColor()).thenReturn(activeColor);
+
+        CuT = new GetGameRoute(gameCenter, playerLobby, engine);
     }
 
     /**
-     * Test that if you attempt to start a game with a playewr who is already in
-     * game then you should be redirected to home with message
+     * Test that if you attempt to start a game with a player who is already in
+     * game then you should be redirected to home with a message.
      */
     @Test
     public void testPlayerInGame() {
-        Game game = mock(Game.class);
+        // Player one is not in a game, player two is in a game
+        when(gameCenter.playerInGame(p1)).thenReturn(false);
+        when(gameCenter.playerInGame(p2)).thenReturn(true);
 
-        //get players
-        when(session.attribute((GetGameRoute.CURRENT_PLAYER_ATTR))).thenReturn(p1);
-        when(playerLobby.getPlayer(request.queryParams("pid"))).thenReturn(p2);
-        //player two is already in a game
-        when(p2.getGame()).thenReturn(game);
-
-        final  TemplateEngineTester tester = new TemplateEngineTester();
+        final TemplateEngineTester tester = new TemplateEngineTester();
         when(engine.render(any(ModelAndView.class))).thenAnswer(tester.makeAnswer());
-        //invoke test
+        // Invoke test
         CuT.handle(request, response);
-        //verify that user is sent back to home
+        // Verify that user is sent back to home
         verify(response).redirect(WebServer.HOME_URL);
 
     }
 
     /**
-     * Test if a new game is created automattically when
-     * is no game
+     * Test if a new game is created automatically when both players
+     * are not in game.
      */
     @Test
     public void newGame(){
-        //getting players
-        when(session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR)).thenReturn(p1);
-        when(playerLobby.getPlayer(request.queryParams("pid"))).thenReturn(p2);
-        //set games to null
-        when(p1.getGame()).thenReturn(null);
-        when(p1.getGame()).thenReturn(null);
+        // Both players are not in a game
+        when(gameCenter.playerInGame(p1)).thenReturn(false);
+        when(gameCenter.playerInGame(p2)).thenReturn(false);
 
         final TemplateEngineTester tester = new TemplateEngineTester();
         when(engine.render(any(ModelAndView.class))).thenAnswer(tester.makeAnswer());
-        //start test
+        // Invoke the test
         CuT.handle(request,response);
-        //make sure engine is setup
+        // Make sure engine is setup
         tester.assertViewModelExists();
         tester.assertViewModelIsaMap();
-        //make view model is populated correctly
+        // Make view model is populated correctly
         tester.assertViewModelAttributeIsPresent(GetGameRoute.BOARD_ATTR);
         tester.assertViewModelAttributeIsPresent(GetGameRoute.VIEW_MODE_ATTR);
         tester.assertViewModelAttributeIsPresent(GetGameRoute.CURRENT_PLAYER_ATTR);
@@ -99,26 +122,22 @@ public class GetGameRouteTest {
     }
 
     /**
-     * This method test if a player already has a they are redirected back to
-     * their game
+     * Test if a player already is already in a game they rejoin their game.
      */
     @Test
     public void rejoinGame(){
-        when(session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR)).thenReturn(p1);
-        //make player one already have a game
-        Game game = mock(Game.class);
-        Board board = mock(Board.class);
-        when(p1.getGame()).thenReturn(game);
-        when(game.getBoard()).thenReturn(board);
+        // Player one is in a game
+        when(gameCenter.playerInGame(p1)).thenReturn(true);
+        when(gameCenter.getGame(p1)).thenReturn(game);
 
         final TemplateEngineTester tester = new TemplateEngineTester();
         when(engine.render(any(ModelAndView.class))).thenAnswer(tester.makeAnswer());
-        //invoke test
+        // Invoke test
         CuT.handle(request, response);
-        //make sure engine is setup
+        // Make sure engine is setup
         tester.assertViewModelExists();
         tester.assertViewModelIsaMap();
-        //make sure view model is populated correctly
+        // Make sure view model is populated correctly
         tester.assertViewModelAttributeIsPresent(GetGameRoute.BOARD_ATTR);
         tester.assertViewModelAttributeIsPresent(GetGameRoute.VIEW_MODE_ATTR);
         tester.assertViewModelAttributeIsPresent(GetGameRoute.CURRENT_PLAYER_ATTR);
@@ -127,5 +146,60 @@ public class GetGameRouteTest {
         tester.assertViewModelAttributeIsPresent(GetGameRoute.ACTIVE_COLOR_ATTR);
     }
 
+    /**
+     * Test when the game is over, the right message is displayed to the winner.
+     */
+    @Test
+    public void testGameOverWinner() {
+        // Create scenario: player one in a game where the game is over
+        when(gameCenter.playerInGame(p1)).thenReturn(true);
+        when(gameCenter.getGame(p1)).thenReturn(game);
+        when(gameCenter.isGameOver(game)).thenReturn(true);
+        when(gameCenter.isWinner(game, p1)).thenReturn(true);
+
+        final TemplateEngineTester tester = new TemplateEngineTester();
+        when(engine.render(any(ModelAndView.class))).thenAnswer(tester.makeAnswer());
+        // Invoke the test
+        CuT.handle(request, response);
+        // Make sure engine is setup
+        tester.assertViewModelExists();
+        tester.assertViewModelIsaMap();
+        // Make sure view model is populated correctly
+        tester.assertViewModelAttributeIsPresent(GetGameRoute.BOARD_ATTR);
+        tester.assertViewModelAttributeIsPresent(GetGameRoute.VIEW_MODE_ATTR);
+        tester.assertViewModelAttributeIsPresent(GetGameRoute.CURRENT_PLAYER_ATTR);
+        tester.assertViewModelAttributeIsPresent(GetGameRoute.RED_PLAYER_ATTR);
+        tester.assertViewModelAttributeIsPresent(GetGameRoute.WHITE_PLAYER_ATTR);
+        tester.assertViewModelAttributeIsPresent(GetGameRoute.ACTIVE_COLOR_ATTR);
+        tester.assertViewModelAttributeIsPresent(GetGameRoute.MESSAGE_ATTR);
+    }
+
+    /**
+     * Test when the game is over, the right message is displayed to the loser.
+     */
+    @Test
+    public void testGameOverLoser() {
+        // Create scenario: player one in a game where the game is over
+        when(gameCenter.playerInGame(p1)).thenReturn(true);
+        when(gameCenter.getGame(p1)).thenReturn(game);
+        when(gameCenter.isGameOver(game)).thenReturn(true);
+        when(gameCenter.isWinner(game, p1)).thenReturn(false);
+
+        final TemplateEngineTester tester = new TemplateEngineTester();
+        when(engine.render(any(ModelAndView.class))).thenAnswer(tester.makeAnswer());
+        // Invoke the test
+        CuT.handle(request, response);
+        // Make sure engine is setup
+        tester.assertViewModelExists();
+        tester.assertViewModelIsaMap();
+        // Make sure view model is populated correctly
+        tester.assertViewModelAttributeIsPresent(GetGameRoute.BOARD_ATTR);
+        tester.assertViewModelAttributeIsPresent(GetGameRoute.VIEW_MODE_ATTR);
+        tester.assertViewModelAttributeIsPresent(GetGameRoute.CURRENT_PLAYER_ATTR);
+        tester.assertViewModelAttributeIsPresent(GetGameRoute.RED_PLAYER_ATTR);
+        tester.assertViewModelAttributeIsPresent(GetGameRoute.WHITE_PLAYER_ATTR);
+        tester.assertViewModelAttributeIsPresent(GetGameRoute.ACTIVE_COLOR_ATTR);
+        tester.assertViewModelAttributeIsPresent(GetGameRoute.MESSAGE_ATTR);
+    }
 
 }

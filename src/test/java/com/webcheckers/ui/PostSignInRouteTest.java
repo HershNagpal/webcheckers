@@ -74,7 +74,7 @@ public class PostSignInRouteTest {
         testHelper.assertViewModelIsaMap();
         // Check view model has the necessary data
         testHelper.assertViewModelAttribute(PostSignInRoute.TITLE_ATTR, PostSignInRoute.TITLE);
-        testHelper.assertViewModelAttribute(PostSignInRoute.MESSAGE_ATTR, PostSignInRoute.INVALID_MESSAGE);
+        testHelper.assertViewModelAttribute(PostSignInRoute.MESSAGE_ATTR, PostSignInRoute.INVALID_NAME);
         // Check view model does not have certain data
         testHelper.assertViewModelAttributeIsAbsent(PostSignInRoute.PLAYER_ATTR);
         // Check view name
@@ -99,7 +99,7 @@ public class PostSignInRouteTest {
         testHelper.assertViewModelIsaMap();
         // Check view model has the necessary data
         testHelper.assertViewModelAttribute(PostSignInRoute.TITLE_ATTR, PostSignInRoute.TITLE);
-        testHelper.assertViewModelAttribute(PostSignInRoute.MESSAGE_ATTR, PostSignInRoute.TAKEN_MESSAGE);
+        testHelper.assertViewModelAttribute(PostSignInRoute.MESSAGE_ATTR, PostSignInRoute.NAME_TAKEN);
         // Check view model does not have certain data
         testHelper.assertViewModelAttributeIsAbsent(PostSignInRoute.PLAYER_ATTR);
         // Check view name

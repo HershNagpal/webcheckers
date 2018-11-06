@@ -18,23 +18,62 @@ import java.util.logging.Logger;
  */
 public class PostSignInRoute implements Route {
 
+    /**
+     * Attribute for the title of the page
+     */
     static final String TITLE_ATTR = "title";
+
+    /**
+     * Attribute for all messages
+     */
     static final String MESSAGE_ATTR = "message";
+
+    /**
+     * Attribute for the current player
+     */
     static final String PLAYER_ATTR = "currentPlayer";
-    static final String NAME_PARAM = "myName";
+
+    /**
+     * Attribute for the view name
+     */
     static final String VIEW_NAME = "signin.ftl";
 
+    /**
+     * Parameter for the posted name
+     */
+    static final String NAME_PARAM = "myName";
+
+    /**
+     * The actual title for the page
+     */
     static final String TITLE = "Sign In";
-    static final String INVALID_NAME = "Name must have at least one alphanumeric character" +
-            " and contain no special characters.";
-    static final String NAME_TAKEN = "Name has already been taken.";
+
+    /**
+     * Message for invalid naming conventions
+     */
+    static final Message INVALID_NAME = new Message("Name must have at least" +
+            " one alphanumeric character and contain no special characters.",
+            MessageType.error);
+
+    /**
+     * Message for a taken name
+     */
+    static final Message NAME_TAKEN = new Message("Name has already " +
+            "been taken.", MessageType.error);
 
     static final Message INVALID_MESSAGE = new Message(INVALID_NAME, MessageType.ERROR);
     static final Message TAKEN_MESSAGE = new Message(NAME_TAKEN, MessageType.ERROR);
 
     private static final Logger LOG = Logger.getLogger(PostSignInRoute.class.getName());
 
+    /**
+     * The player lobby that holds all signed-in players
+     */
     private final PlayerLobby playerLobby;
+
+    /**
+     * The template engine used to render the page
+     */
     private final TemplateEngine templateEngine;
 
     /**
@@ -69,12 +108,12 @@ public class PostSignInRoute implements Route {
         final String name = request.queryParams(NAME_PARAM);
 
         if (!playerLobby.isValidUsername(name)) {
-            vm.put(MESSAGE_ATTR, INVALID_MESSAGE);
+            vm.put(MESSAGE_ATTR, INVALID_NAME);
             return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
         }
 
         if (playerLobby.isUsernameTaken(name)) {
-            vm.put(MESSAGE_ATTR, TAKEN_MESSAGE);
+            vm.put(MESSAGE_ATTR, NAME_TAKEN);
             return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
         }
 

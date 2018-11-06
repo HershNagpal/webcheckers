@@ -5,6 +5,6 @@ package com.webcheckers.model;
  * @author Michael Kha
  */
 public enum MessageType {
-    INFO,
-    ERROR
+    info,
+    error
 }

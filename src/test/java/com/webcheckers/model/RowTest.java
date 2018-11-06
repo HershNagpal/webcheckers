@@ -109,4 +109,18 @@ public class RowTest {
 		assertNotEquals(0, row3.getIndex());
 		assertNotEquals(16, row7.getIndex());
 	}
+
+	/**
+	 * Test the equals method
+	 */
+	@Test
+	public void testEquals() {
+		Row copy = row3;
+		Row a = new Row(pieces3, 1);
+		String fake = "fake";
+		assertEquals(copy, row3);
+		assertNotEquals(row3, fake);
+		assertNotEquals(a, row3);
+	}
+
 }

@@ -66,10 +66,12 @@ class SpaceTest {
 	public void testCheckColor() {
 		// Black Spaces are false
 		assertFalse(blackSpaceWithPiece.checkColor());
-		assertFalse(blackSpaceWithPiece.checkColor());
+		assertFalse(blackSpaceWithoutPiece.checkColor());
+		assertTrue(blackKingSpaceWithoutPiece.checkColor());
 		// White Spaces are true
 		assertTrue(whiteSpaceWithoutPiece.checkColor());
 		assertTrue(whiteSpaceWithPiece.checkColor());
+		assertTrue(whiteKingSpaceWithoutPiece.checkColor());
 	}
 
 	/**
@@ -123,5 +125,21 @@ class SpaceTest {
 		assertNotEquals(new Piece(Color.RED, Type.KING), blackSpaceWithoutPiece.getPiece());
 	}
 
+	/**
+	 * Test the equals method
+	 */
+	@Test
+	public void testEquals() {
+		Space hardCopy = new Space(3, 4, null);
+		Space a = new Space(3, 5, null);
+		Space b = new Space(4, 4, null);
+		Space copy = blackSpaceWithoutPiece;
+		String fake = "fake";
+		assertEquals(blackSpaceWithoutPiece, hardCopy);
+		assertEquals(copy, blackSpaceWithoutPiece);
+		assertNotEquals(blackSpaceWithoutPiece, fake);
+		assertNotEquals(blackSpaceWithoutPiece, a);
+		assertNotEquals(blackSpaceWithoutPiece, b);
+	}
 
 }
