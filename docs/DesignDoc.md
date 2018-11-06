@@ -178,12 +178,9 @@ alter, or display them, the UI first goes through the correct application tier m
   all system events. Routes that require messages from messenger go through gameCenter which will call the appropriate
   messenger method. Messenger methods will in turn return the appropriate message by checking game state through a game
   object. The following are examples of Messenger usage.
-    1.
-    2.
-    3.
-
-  the PlayerLobby holds the players who are currently signed in
-and are waiting for a game, and the Messenger handles sending ajax calls between the server and client.
+    1. The PlayerLobby holds the players who are currently signed in and are waiting for a game, and the Messenger handles sending ajax calls between the server and client.
+    2. 
+    3. 
 
 
 ### Model Tier
@@ -209,11 +206,8 @@ branch that could be reached through unit testing reasonably. Code coverage and 
 discussed further in the below sections.
 
 ### Acceptance Testing
-> _Report on the number of user stories that have passed all their
-> acceptance criteria tests, the number that have some acceptance
-> criteria tests failing, and the number of user stories that
-> have not had any testing yet. Highlight the issues found during
-> acceptance testing and if there are any concerns._
+All user stories have passed except for two (33/35). The failed tests are part of the "All Pieces Eliminated"
+feature. This feature was worth 2 story points and is the only feature for this sprint that is not complete.
 
 ### Unit Testing and Code Coverage
 Our testing strategy was to use as many cases as possible to ensure all conditional paths are traversed
