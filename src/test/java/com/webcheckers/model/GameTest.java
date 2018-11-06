@@ -334,6 +334,11 @@ public class GameTest {
      */
     @Test
     public void testMakeMove(){
+        //Setup test
+        board = new Board(customPiecesTestValidateMove);
+        CuT = new Game(red, white, board);
+
+        //Change active color to red
         if(CuT.getActiveColor() == Color.WHITE){
             CuT.switchActiveColor();
         }
@@ -434,7 +439,15 @@ public class GameTest {
 
     @Test
     public void testGetBoardView(){
+        //Setup test
+        board = new Board(customPiecesTestValidateMove);
+        CuT = new Game(red, white, board);
 
+        //Create expected boardView
+        BoardView expectedBoardView = board.getBoardView();
+
+        //Test that expected board view is the same as actual board view
+        assertEquals(expectedBoardView,CuT.getBoardView(white));
     }
 
     /**
