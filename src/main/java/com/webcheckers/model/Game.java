@@ -569,19 +569,13 @@ public class Game {
             if(!movingPiece.getType().equals(Type.KING)){
               //SINGLE red piece cant jump up
               if(activeColor.equals(Color.RED)){
-                if(i==0 || i==1){
-                  continue;
-                }
-                else{
+                if(i!=0 && i!=1){
                   validJumpPositions.add(pos);
                 }
               }
               //SINGLE white piece cant jump down
               else{
-                if(i==2 || i==3){
-                  continue;
-                }
-                else{
+                if(i!=2 && i!=3){
                   validJumpPositions.add(pos);
                 }
               }
