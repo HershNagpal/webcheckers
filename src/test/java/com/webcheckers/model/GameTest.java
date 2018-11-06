@@ -351,6 +351,7 @@ public class GameTest {
         board = new Board(customPiecesTestValidateMove);
         CuT = new Game(red, white, board);
 
+        /*
         //Change active color to red
         if(CuT.getActiveColor() == Color.WHITE){
             CuT.switchActiveColor();
@@ -359,7 +360,7 @@ public class GameTest {
         CuT.makeMove(validRedMove1.flipMove());
         assertEquals(CuT.getBoard().getPieces(),customPiecesTestSubmitMove01);
 
-        /*CuT = new Game(red, white, board);
+        CuT = new Game(red, white, board);
 
         CuT.makeMove(validRedMove1.flipMove());
         assertEquals(CuT.getBoard().getPieces(),customPiecesRedMove1);
