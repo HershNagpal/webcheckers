@@ -230,6 +230,7 @@ public class GameTest {
 
 
 
+
         board = new Board(customPieces);
         CuT = new Game(red, white, board);
     }
