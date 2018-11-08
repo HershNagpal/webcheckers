@@ -306,6 +306,14 @@ public class BoardTest {
             }
         }
     }
+  }
+
+  /**
+   * Test if the check for all pieces of a color being eliminated is correct
+   */
+  @Test
+  public void testAllPiecesElimiated(){
 
   }
+
 }
