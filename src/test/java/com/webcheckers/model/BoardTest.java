@@ -173,7 +173,7 @@ public class BoardTest {
     for (int row = 0; row < 8; row++) {
       for (int col = 0; col < 8; col++) {
           if (actualPieces[row][col] != null) {
-              assertTrue(actualPieces[row][col].getColor().equals(expectedPieces[row][col].getColor()));
+              assertEquals(actualPieces[row][col].getColor(), (expectedPieces[row][col].getColor()));
           }
       }
     }
