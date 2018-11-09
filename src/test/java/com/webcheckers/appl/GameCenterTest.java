@@ -109,7 +109,7 @@ public class GameCenterTest {
         Message message = new Message("", MessageType.info);
         assertFalse(CuT.isGameOver(game));
         when(messenger.resignGame(game, player)).thenReturn(message);
-        CuT.resignGame(player);
+        game.resignGame(player);
         assertTrue(CuT.isGameOver(game));
     }
 
@@ -135,6 +135,11 @@ public class GameCenterTest {
         Message centerMessage = CuT.checkTurn(player);
         assertEquals(centerMessage.getType(), messenger.checkTurn(game, player).getType());
         assertEquals(centerMessage.getText(), messenger.checkTurn(game, player).getText());
+        // Case where game ended and therefore removed from list of games
+        game.resignGame(player);
+        CuT.resignGame(player);
+        CuT.isGameOver(game);
+        assertNull(CuT.checkTurn(player));
     }
 
     /**
