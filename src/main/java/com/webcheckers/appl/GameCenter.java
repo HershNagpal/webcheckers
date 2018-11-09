@@ -22,6 +22,7 @@ public class GameCenter {
     private List<Game> games;
 
     /**
+     * TODO: remove later if not needed for replays
      * All games that have ended
      */
     private List<Game> endedGames;
@@ -96,7 +97,6 @@ public class GameCenter {
     }
 
     /**
-     * TODO: Delete and update test suite
      * Used to remove games that ended.
      * @param game Game that ended
      */
