@@ -135,6 +135,9 @@ public class GameCenter {
      */
     public Message checkTurn(Player player) {
         Game game = getGame(player);
+        if (game == null) {
+            return null;
+        }
         return messenger.checkTurn(game, player);
     }
 
