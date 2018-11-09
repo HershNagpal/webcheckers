@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import com.webcheckers.model.Piece.Type;
+
 /**
  * Represents the Checkers Board and all the logical operations that need to be done on
  * pieces for the game to function.
@@ -15,11 +17,21 @@ public class Board {
      * COLUMNS - number of columns on the board
      * pieces - 2D array showing where each piece is being kept
      * board - the boardview being sent to the GetGameRoute
-     *
+     * DEBUG_PIECES - a custom set of pieces to be used for testing purposes.
      */
     public final static int ROWS = 8;
     public final static int COLUMNS = 8;
     private Piece[][] pieces;
+    public final static Piece[][] DEBUG_PIECES =
+            {   {null, new Piece(Color.WHITE, Type.SINGLE), null, new Piece(Color.WHITE, Type.SINGLE), null, null, null, null},
+                {null, null, null, null, new Piece(Color.WHITE, Type.SINGLE), null, null, null},
+                {null, null, null, null, null, new Piece(Color.WHITE, Type.SINGLE), null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, new Piece(Color.WHITE, Type.SINGLE), null, null},
+                {null, null, null, null, new Piece(Color.RED, Type.SINGLE), null, new Piece(Color.RED, Type.SINGLE), null},
+                {null, null, null, null, null, new Piece(Color.RED, Type.SINGLE), null, new Piece(Color.RED, Type.SINGLE)},
+                {new Piece(Color.RED, Type.SINGLE), null, null, null, null, null, new Piece(Color.RED, Type.SINGLE), null},
+            };
 
     /**
      * Board constructor that initializes and sets up the 2d Piece array.

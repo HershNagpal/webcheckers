@@ -16,7 +16,6 @@ import java.util.List;
  * @author Matthew Bollinger
  */
 public class Game {
-
     /**
      * Used to prevent player from making successive simple moves
      * and for enforcing the completion of jump moves.
@@ -79,7 +78,16 @@ public class Game {
     public Game(Player redPlayer, Player whitePlayer, Board board){
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
-        this.board = board;
+        if(redPlayer.getName().equals("degbug") && whitePlayer.getName().equals("test")) {
+            this.board = new Board(Board.DEBUG_PIECES);
+            System.out.println("Custom Board initialized");
+        } else if (redPlayer.getName().equals("test") && whitePlayer.getName().equals("debug")) {
+            System.out.println("Custom Board initialized");
+            this.board = new Board(Board.DEBUG_PIECES);
+        } else {
+            System.out.println("Normal Board initialized");
+            this.board = board;
+        }
         gameOver = false;
         activeColor = Color.RED;
     }
