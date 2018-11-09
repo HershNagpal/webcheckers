@@ -173,11 +173,6 @@ public class GetGameRoute implements Route{
         if (gameCenter.isGameOver(game)) {
             Message message = gameCenter.isWinner(game, player);
             vm.put(MESSAGE_ATTR, message);
-            //if (gameCenter.isWinner(game, player)) {
-            //    vm.put(MESSAGE_ATTR, OPP_RESIGN);
-            //} else {
-            //    vm.put(MESSAGE_ATTR, PLAYER_RESIGN);
-            //}
         }
         return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
     }

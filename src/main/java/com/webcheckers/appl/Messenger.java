@@ -15,39 +15,39 @@ public class Messenger {
     /**
      * All possible messages
      */
-    private static final Message TURN_TRUE = new Message("true", MessageType.info);
-    private static final Message TURN_FALSE = new Message("false", MessageType.info);
-    private static final Message MOVE_TRUE = new Message("", MessageType.info);
-    private static final Message MOVE_FALSE = new Message("Invalid move. Try again.", MessageType.error);
-    private static final Message SUBMIT_TRUE = new Message("", MessageType.info);
-    private static final Message SUBMIT_FALSE = new Message("Invalid move. Cannot submit turn.", MessageType.error);
-    private static final Message BACKUP_TRUE = new Message("", MessageType.info);
-    private static final Message BACKUP_FALSE = new Message("Cannot Backup, there are no moves to undo.", MessageType.error);
-    private static final Message RESIGN_TRUE = new Message("", MessageType.info);
-    private static final Message RESIGN_FALSE = new Message("", MessageType.error);
+    static final Message TURN_TRUE = new Message("true", MessageType.info);
+    static final Message TURN_FALSE = new Message("false", MessageType.info);
+    static final Message MOVE_TRUE = new Message("", MessageType.info);
+    static final Message MOVE_FALSE = new Message("Invalid move. Try again.", MessageType.error);
+    static final Message SUBMIT_TRUE = new Message("", MessageType.info);
+    static final Message SUBMIT_FALSE = new Message("Invalid move. Cannot submit turn.", MessageType.error);
+    static final Message BACKUP_TRUE = new Message("", MessageType.info);
+    static final Message BACKUP_FALSE = new Message("Cannot Backup, there are no moves to undo.", MessageType.error);
+    static final Message RESIGN_TRUE = new Message("", MessageType.info);
+    static final Message RESIGN_FALSE = new Message("", MessageType.error);
 
     /**
      * Message to display when the opponent player has resigned.
      */
-    private static final Message OPP_RESIGN = new Message(
+    static final Message OPP_RESIGN = new Message(
             "Your opponent resigned. You win!", MessageType.info);
 
     /**
      * Message to display when the player resigns.
      */
-    private static final Message PLAYER_RESIGN = new Message(
+    static final Message PLAYER_RESIGN = new Message(
             "You resigned. You lose!", MessageType.info);
 
     /**
      * Message to display when the player wins.
      */
-    private static final Message PLAYER_WIN = new Message(
+    static final Message PLAYER_WIN = new Message(
             "You won the game!", MessageType.info);
 
     /**
      * Message to display when the player loses.
      */
-    private static final Message PLAYER_LOSE = new Message(
+    static final Message PLAYER_LOSE = new Message(
             "You lost the game!", MessageType.info);
 
     /**
