@@ -28,7 +28,7 @@ public class Board {
                 {null, null, null, null, null, new Piece(Color.WHITE, Type.SINGLE), null, null},
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, new Piece(Color.WHITE, Type.SINGLE), null, null},
-                {null, null, null, null, new Piece(Color.RED, Type.SINGLE), null, new Piece(Color.RED, Type.SINGLE), null},
+                {null, null, new Piece(Color.WHITE, Type.SINGLE), null, null, null, null, null},
                 {null, null, null, null, null, new Piece(Color.RED, Type.SINGLE), null, new Piece(Color.RED, Type.SINGLE)},
                 {new Piece(Color.RED, Type.SINGLE), null, null, null, null, null, new Piece(Color.RED, Type.SINGLE), null},
             };
