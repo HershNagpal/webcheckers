@@ -63,7 +63,6 @@ public class PlayerLobby {
 
     /**
      * Let the player sign into the lobby
-     * TODO check if sign ins need to be synchronized
      * @param player Player signing in
      */
     public void signIn(Player player) {

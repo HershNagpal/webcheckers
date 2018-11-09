@@ -5,7 +5,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import static com.webcheckers.appl.Messenger.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -16,20 +18,6 @@ import static org.mockito.Mockito.when;
  */
 @Tag("Application-tier")
 public class MessengerTest {
-
-    /**
-     * All possible messages
-     */
-    private static final Message TURN_TRUE = new Message("true", MessageType.info);
-    private static final Message TURN_FALSE = new Message("false", MessageType.info);
-    private static final Message MOVE_TRUE = new Message("", MessageType.info);
-    private static final Message MOVE_FALSE = new Message("Invalid move. Try again.", MessageType.error);
-    private static final Message SUBMIT_TRUE = new Message("", MessageType.info);
-    private static final Message SUBMIT_FALSE = new Message("Invalid move. Cannot submit turn.", MessageType.error);
-    private static final Message BACKUP_TRUE = new Message("", MessageType.info);
-    private static final Message BACKUP_FALSE = new Message("Cannot Backup, there are no moves to undo.", MessageType.error);
-    private static final Message RESIGN_TRUE = new Message("", MessageType.info);
-    private static final Message RESIGN_FALSE = new Message("", MessageType.error);
 
     /**
      * Component under test
@@ -53,6 +41,52 @@ public class MessengerTest {
         move = mock(Move.class);
 
         CuT = new Messenger();
+    }
+
+    /**
+     * Test that the winner happened by resign and the opponent
+     * did resign.
+     */
+    @Test
+    public void testIsWinnerByResign() {
+        Player opponent = mock(Player.class);
+        when(game.didPlayerResign()).thenReturn(true);
+        when(game.isWinner(player)).thenReturn(true);
+        Message message = CuT.isWinner(game, player);
+        assertEquals(message.getType(), OPP_RESIGN.getType());
+        assertEquals(message.getText(), OPP_RESIGN.getText());
+        message = CuT.isWinner(game, opponent);
+        assertEquals(message.getType(), PLAYER_RESIGN.getType());
+        assertEquals(message.getText(), PLAYER_RESIGN.getText());
+    }
+
+    /**
+     * Test that the winner happened by an end game condition
+     * and the other player lost.
+     */
+    @Test
+    public void testIsWinnerByEndCondition() {
+        Player opponent = mock(Player.class);
+        when(game.didPlayerResign()).thenReturn(false);
+        when(game.isWinner(player)).thenReturn(true);
+        when(game.isGameOver()).thenReturn(true);
+        Message message = CuT.isWinner(game, player);
+        assertEquals(message.getType(), PLAYER_WIN.getType());
+        assertEquals(message.getText(), PLAYER_WIN.getText());
+        message = CuT.isWinner(game, opponent);
+        assertEquals(message.getType(), PLAYER_LOSE.getType());
+        assertEquals(message.getText(), PLAYER_LOSE.getText());
+    }
+
+    /**
+     * Test that there is no winner and the game is still going.
+     */
+    @Test
+    public void testIsWinnerNoWinner() {
+        when(game.didPlayerResign()).thenReturn(false);
+        when(game.isWinner(player)).thenReturn(true);
+        Message message = CuT.isWinner(game, player);
+        assertNull(message);
     }
 
     /**

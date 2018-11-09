@@ -44,6 +44,12 @@ public class GameTest {
     private Piece[][] customPiecesTestValidateMove;
     private Piece[][] customPiecesTestSubmitMove01;
 
+    /**
+     * Boards to test isGameOver
+     */
+    private Piece[][] cpNoRed;
+    private Piece[][] cpNoWhite;
+
     // Boards that result from making a move
     private Piece[][] customPiecesRedMove1;
     private Piece[][] customPiecesRedMove2;
@@ -227,7 +233,27 @@ public class GameTest {
                 {whitePiece, null, null, null, null, null, null, null}
         };
 
+        cpNoRed = new Piece[][]{
+                {null, null, null, null, null, null, null, null},
+                {null, whitePiece, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, whitePiece, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
+        };
 
+        cpNoWhite = new Piece[][]{
+                {null, null, null, null, null, null, null, null},
+                {null, null, redPiece, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, redPiece, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, redPiece, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
+        };
 
 
 
@@ -414,7 +440,23 @@ public class GameTest {
         board = new Board(customPiecesTestValidateMove);
         CuT = new Game(red, white, board);
 
+        //Test game is not over
         assertFalse(CuT.isGameOver());
+
+        //Test game is over by resignation
+        //Red player resigns
+        CuT.resignGame(red);
+        assertTrue(CuT.isGameOver());
+
+        //Test game is over by all pieces eliminated
+        //Red has no more pieces
+        board = new Board(cpNoRed);
+        CuT = new Game(red, white, board);
+        assertTrue(CuT.isGameOver());
+        //White has no more pieces
+        board = new Board(cpNoWhite);
+        CuT = new Game(red, white, board);
+        assertTrue(CuT.isGameOver());
     }
 
     /**

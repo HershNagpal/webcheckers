@@ -277,4 +277,35 @@ public class Board {
         }
 
     }
+
+    /**
+     * Tests the board to check if all pieces of a certain color have been eliminated
+     *
+     * @return color of piece that has been entirely eliminated. null if both colors still have pieces
+     */
+    public Color checkAllPiecesEliminated(){
+        boolean hasRed = false;
+        boolean hasWhite = false;
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                Piece currentPiece = pieces[row][col];
+                if(currentPiece != null) {
+                    if (currentPiece.getColor() == Color.RED) {
+                        hasRed = true;
+                    } else if (currentPiece.getColor() == Color.WHITE) {
+                        hasWhite = true;
+                    }
+                }
+            }
+        }
+        if(!hasRed){
+            return Color.RED;
+        }
+        else if(!hasWhite){
+            return Color.WHITE;
+        }
+        else{
+            return null;
+        }
+    }
 }

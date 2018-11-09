@@ -67,6 +67,8 @@ public class GameCenterTest {
     public void testWasChallenged() {
         assertTrue(CuT.wasChallenged(opponent));
         assertFalse(CuT.wasChallenged(dummy));
+        game.resignGame(player);
+        assertFalse(CuT.wasChallenged(opponent));
     }
 
     /**
@@ -104,9 +106,10 @@ public class GameCenterTest {
      */
     @Test
     public void testIsGameOver() {
+        Message message = new Message("", MessageType.info);
         assertFalse(CuT.isGameOver(game));
-        when(messenger.resignGame(game, player)).thenReturn(new Message("", MessageType.info));
-        CuT.resignGame(player);
+        when(messenger.resignGame(game, player)).thenReturn(message);
+        game.resignGame(player);
         assertTrue(CuT.isGameOver(game));
     }
 
@@ -115,7 +118,11 @@ public class GameCenterTest {
      */
     @Test
     public void testIsWinner() {
-        assertFalse(CuT.isWinner(game, player));
+        Message message = new Message("", MessageType.info);
+        when(messenger.isWinner(game, player)).thenReturn(message);
+        Message centerMessage = CuT.isWinner(game, player);
+        assertEquals(centerMessage.getType(), messenger.isWinner(game, player).getType());
+        assertEquals(centerMessage.getText(), messenger.isWinner(game, player).getText());
     }
 
     /**
@@ -128,6 +135,11 @@ public class GameCenterTest {
         Message centerMessage = CuT.checkTurn(player);
         assertEquals(centerMessage.getType(), messenger.checkTurn(game, player).getType());
         assertEquals(centerMessage.getText(), messenger.checkTurn(game, player).getText());
+        // Case where game ended and therefore removed from list of games
+        game.resignGame(player);
+        CuT.resignGame(player);
+        CuT.isGameOver(game);
+        assertNull(CuT.checkTurn(player));
     }
 
     /**
