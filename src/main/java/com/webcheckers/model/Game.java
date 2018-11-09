@@ -100,9 +100,18 @@ public class Game {
     public Game(Player redPlayer, Player whitePlayer) {
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
-        activeColor = Color.RED;
-        board = new Board();
+        if(redPlayer.getName().equals("degbug") && whitePlayer.getName().equals("test")) {
+            this.board = new Board(Board.DEBUG_PIECES);
+            System.out.println("Custom Board initialized");
+        } else if (redPlayer.getName().equals("test") && whitePlayer.getName().equals("debug")) {
+            System.out.println("Custom Board initialized");
+            this.board = new Board(Board.DEBUG_PIECES);
+        } else {
+            System.out.println("Normal Board initialized");
+            this.board = new Board();
+        }
         gameOver = false;
+        activeColor = Color.RED;
     }
 
     public boolean playerInGame(Player player) {
