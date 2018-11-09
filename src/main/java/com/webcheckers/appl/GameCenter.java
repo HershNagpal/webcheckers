@@ -105,14 +105,14 @@ public class GameCenter {
     }
 
     /**
-     * Check if the game has been resigned. Resigned games are tracked
-     * by the game center.
+     * Check if the game has ended by any condition.
      * @param game Game to check
      * @return If this game been resigned
      */
     public boolean isGameOver(Game game) {
-        if (endedGames.contains(game)) {
+        if (game.isGameOver()) {
             games.remove(game);
+            endedGames.add(game);
             return true;
         }
         return false;
@@ -179,7 +179,6 @@ public class GameCenter {
      */
     public Message resignGame(Player player) {
         Game game = getGame(player);
-        endedGames.add(game);
         return messenger.resignGame(game, player);
     }
 

@@ -80,18 +80,6 @@ public class GetGameRoute implements Route{
     static final Message IN_GAME_ERROR = new Message(
             "That player is already in game!", MessageType.error);
 
-    /**
-     * Message to display when the opponent player has resigned.
-     */
-    static final Message OPP_RESIGN = new Message(
-            "Your opponent resigned. You win!", MessageType.info);
-
-    /**
-     * Message to display when the player resigns.
-     */
-    static final Message PLAYER_RESIGN = new Message(
-            "You resigned. You lose!", MessageType.info);
-
     private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());
 
     /**
