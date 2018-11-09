@@ -67,6 +67,8 @@ public class GameCenterTest {
     public void testWasChallenged() {
         assertTrue(CuT.wasChallenged(opponent));
         assertFalse(CuT.wasChallenged(dummy));
+        game.resignGame(player);
+        assertFalse(CuT.wasChallenged(opponent));
     }
 
     /**
@@ -113,7 +115,6 @@ public class GameCenterTest {
 
     /**
      * Test that to check if the given player is a winner.
-     * TODO: remove old test
      */
     @Test
     public void testIsWinner() {
