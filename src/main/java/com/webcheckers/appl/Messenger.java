@@ -27,7 +27,52 @@ public class Messenger {
     private static final Message RESIGN_FALSE = new Message("", MessageType.error);
 
     /**
-     * Get the message from the game about whose turn it is.
+     * Message to display when the opponent player has resigned.
+     */
+    private static final Message OPP_RESIGN = new Message(
+            "Your opponent resigned. You win!", MessageType.info);
+
+    /**
+     * Message to display when the player resigns.
+     */
+    private static final Message PLAYER_RESIGN = new Message(
+            "You resigned. You lose!", MessageType.info);
+
+    /**
+     * Message to display when the player wins.
+     */
+    private static final Message PLAYER_WIN = new Message(
+            "You won the game!", MessageType.info);
+
+    /**
+     * Message to display when the player loses.
+     */
+    private static final Message PLAYER_LOSE = new Message(
+            "You lost the game!", MessageType.info);
+
+    /**
+     * Message to display when
+     */
+
+    /**
+     * Get the message from the game's response about the winner and how they won.
+     *
+     * @return Message
+     */
+    public Message isWinner(Game game, Player player) {
+        if (game.didPlayerResign()) {
+            return game.isWinner(player) ? OPP_RESIGN : PLAYER_RESIGN;
+        }
+        // if all pieces eliminated return the proper message
+        if (game.isGameOver()) {
+            return game.isWinner(player) ? PLAYER_WIN : PLAYER_LOSE;
+        }
+        // null: no message will be displayed from freemarker template
+        return null;
+    }
+
+    /**
+     * Get the message from the game's response about whose turn it is.
      *
      * @return Message
      */
@@ -40,7 +85,7 @@ public class Messenger {
     }
 
     /**
-     * Get the message from the game about a valid move.
+     * Get the message from the game's response about a valid move.
      *
      * @return Message
      */
@@ -49,7 +94,7 @@ public class Messenger {
     }
 
     /**
-     * Get the message from the game about submitting a turn.
+     * Get the message from the game's response about submitting a turn.
      *
      * @return Message
      */
@@ -58,7 +103,7 @@ public class Messenger {
     }
 
     /**
-     * Get the message from the game about backing up a move.
+     * Get the message from the game's response about backing up a move.
      *
      * @return Message
      */
@@ -67,7 +112,7 @@ public class Messenger {
     }
 
     /**
-     * Get the message from the game about the player resigning.
+     * Get the message from the game's response about the player resigning.
      *
      * @return Message
      */

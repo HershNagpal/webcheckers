@@ -155,7 +155,6 @@ public class GetGameRouteTest {
         when(gameCenter.playerInGame(p1)).thenReturn(true);
         when(gameCenter.getGame(p1)).thenReturn(game);
         when(gameCenter.isGameOver(game)).thenReturn(true);
-        when(gameCenter.isWinner(game, p1)).thenReturn(true);
 
         final TemplateEngineTester tester = new TemplateEngineTester();
         when(engine.render(any(ModelAndView.class))).thenAnswer(tester.makeAnswer());
@@ -183,7 +182,6 @@ public class GetGameRouteTest {
         when(gameCenter.playerInGame(p1)).thenReturn(true);
         when(gameCenter.getGame(p1)).thenReturn(game);
         when(gameCenter.isGameOver(game)).thenReturn(true);
-        when(gameCenter.isWinner(game, p1)).thenReturn(false);
 
         final TemplateEngineTester tester = new TemplateEngineTester();
         when(engine.render(any(ModelAndView.class))).thenAnswer(tester.makeAnswer());

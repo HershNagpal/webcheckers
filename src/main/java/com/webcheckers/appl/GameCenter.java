@@ -118,14 +118,25 @@ public class GameCenter {
         return false;
     }
 
+    // TODO: Remove old implementation
+//    /**
+//     * Is the player the winner of the game.
+//     * @param game Game to check
+//     * @param player Player to check
+//     * @return If player is the winner
+//     */
+//    public boolean isWinner(Game game, Player player) {
+//        return game.isWinner(player);
+//    }
+
     /**
-     * Is the player the winner of the game.
+     * Get the message from the messenger about the winner and how they won.
      * @param game Game to check
      * @param player Player to check
-     * @return If player is the winner
+     * @return Message with correct type
      */
-    public boolean isWinner(Game game, Player player) {
-        return game.isWinner(player);
+    public Message isWinner(Game game, Player player) {
+        return messenger.isWinner(game, player);
     }
 
     /**

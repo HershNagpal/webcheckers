@@ -79,11 +79,13 @@ public class GetGameRoute implements Route{
      */
     static final Message IN_GAME_ERROR = new Message(
             "That player is already in game!", MessageType.error);
+
     /**
      * Message to display when the opponent player has resigned.
      */
     static final Message OPP_RESIGN = new Message(
             "Your opponent resigned. You win!", MessageType.info);
+
     /**
      * Message to display when the player resigns.
      */
@@ -169,11 +171,13 @@ public class GetGameRoute implements Route{
         vm.put(WHITE_PLAYER_ATTR, game.getWhitePlayer());
         vm.put(ACTIVE_COLOR_ATTR, game.getActiveColor());
         if (gameCenter.isGameOver(game)) {
-            if (gameCenter.isWinner(game, player)) {
-                vm.put(MESSAGE_ATTR, OPP_RESIGN);
-            } else {
-                vm.put(MESSAGE_ATTR, PLAYER_RESIGN);
-            }
+            Message message = gameCenter.isWinner(game, player);
+            vm.put(MESSAGE_ATTR, message);
+            //if (gameCenter.isWinner(game, player)) {
+            //    vm.put(MESSAGE_ATTR, OPP_RESIGN);
+            //} else {
+            //    vm.put(MESSAGE_ATTR, PLAYER_RESIGN);
+            //}
         }
         return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
     }

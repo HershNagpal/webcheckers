@@ -104,18 +104,24 @@ public class GameCenterTest {
      */
     @Test
     public void testIsGameOver() {
+        Message message = new Message("", MessageType.info);
         assertFalse(CuT.isGameOver(game));
-        when(messenger.resignGame(game, player)).thenReturn(new Message("", MessageType.info));
+        when(messenger.resignGame(game, player)).thenReturn(message);
         CuT.resignGame(player);
         assertTrue(CuT.isGameOver(game));
     }
 
     /**
      * Test that to check if the given player is a winner.
+     * TODO: remove old test
      */
     @Test
     public void testIsWinner() {
-        assertFalse(CuT.isWinner(game, player));
+        Message message = new Message("", MessageType.info);
+        when(messenger.isWinner(game, player)).thenReturn(message);
+        Message centerMessage = CuT.isWinner(game, player);
+        assertEquals(centerMessage.getType(), messenger.isWinner(game, player).getType());
+        assertEquals(centerMessage.getText(), messenger.isWinner(game, player).getText());
     }
 
     /**
