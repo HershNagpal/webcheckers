@@ -286,10 +286,10 @@ public class Board {
                 }
             }
         }
-        if(hasRed == false){
+        if(!hasRed){
             return Color.RED;
         }
-        else if(hasWhite == false){
+        else if(!hasWhite){
             return Color.WHITE;
         }
         else{
