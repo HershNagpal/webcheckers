@@ -234,34 +234,8 @@ public class Game {
      * @return true if the move is a valid normal, non-jump move, false if it is invalid or not a normal move.
      */
     private boolean isNormalMove(Move move) {
-        int row1 = move.getStart().getRow();
-        int col1 = move.getStart().getCell();
-
-        int row2 = move.getEnd().getRow();
-        int col2 = move.getEnd().getCell();
-
         Piece movingPiece = board.getPieceAtPosition(move.getStart());
-
-        boolean isSingleMove = false;
-        // Red pieces move to higher rows, White pieces move to lower rows. Kings can do both.
-        if(movingPiece.getColor() == Color.RED || movingPiece.getType() == Type.KING) {
-            if(checkDistance(row2,row1,1) && checkDistance(col2,col1,1)) {
-                isSingleMove = true;
-            }
-            else if(checkDistance(row2,row1,1) && checkDistance(col2,col1,-1)) {
-                isSingleMove = true;
-            }
-        }
-        if(movingPiece.getColor() == Color.WHITE || movingPiece.getType() == Type.KING) {
-            if(checkDistance(row2,row1,-1) && checkDistance(col2,col1,1)) {
-                isSingleMove = true;
-            }
-            else if(checkDistance(row2,row1,-1) && checkDistance(col2,col1,-1)) {
-                isSingleMove = true;
-            }
-        }
-
-        return isSingleMove;
+        return MoveManager.isNormalMoveHelper(move, movingPiece);
     }
 
     /**
