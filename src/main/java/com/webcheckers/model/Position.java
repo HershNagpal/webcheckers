@@ -40,7 +40,6 @@ public class Position {
     }
 
     /**
-     * TODO: check and write tests
      * Is the other position oriented diagonally to this position?
      * @param other Other position
      * @return If these positions are diagonal to each other
@@ -51,7 +50,6 @@ public class Position {
     }
 
     /**
-     * TODO: check and write tests
      * Is this position in front of the other position?
      * @param other End position
      * @return If other position is in front of this position

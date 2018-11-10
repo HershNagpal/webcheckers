@@ -311,8 +311,7 @@ public class Board {
     }
 
     /**
-     * 1. TODO: some optimizations
-     * 2. TODO: check and write tests
+     * TODO: check and write tests
      * Check the board to see if the pieces of the given color can still
      * move at any instance.
      * @param color The color of the pieces to check
