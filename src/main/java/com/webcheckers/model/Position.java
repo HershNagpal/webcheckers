@@ -27,6 +27,24 @@ public class Position {
     }
 
     /**
+     * Is the end position oriented diagonally to this position?
+     * @param end End position
+     * @return If these positions are diagonal to each other
+     */
+    public boolean isDiagonalTo(Position end) {
+        return true;
+    }
+
+    /**
+     * Is the end position in front of this position?
+     * @param end End position
+     * @return If end position is in front of this position
+     */
+    public boolean isForwardTo(Position end) {
+        return true;
+    }
+
+    /**
      * Display position's row and cell. Used for testing.
      * @return string representation of Position
      */

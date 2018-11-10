@@ -322,16 +322,21 @@ public class Board {
             for (int col = 0; col < 8; col++) {
                 Position start = new Position(row, col);
                 // Check piece
-                Piece piece = getPieceAtPosition(start);
+                Piece startPiece = getPieceAtPosition(start);
                 // Preliminary checks: no piece or wrong color
                 if (getPieceAtPosition(start) == null ||
-                        piece.getColor() != color) {
+                        startPiece.getColor() != color) {
                     continue;
                 }
                 // Get the end position
                 for (int r = 0; r < 8; r++) {
                     for (int c = 0; c < 8; c++) {
                         Position end = new Position(r, c);
+                        // Preliminary checks: piece exists or not diagonal
+                        Piece endPiece = getPieceAtPosition(end);
+                        if (getPieceAtPosition(end) != null) {
+                            continue;
+                        }
                         // Create the move through these positions
                         Move move = new Move(start, end);
                         // call method(s) to validate the move and return
