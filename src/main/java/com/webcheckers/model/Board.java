@@ -322,7 +322,7 @@ public class Board {
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
                 Position start = new Position(row, col);
-                // Preliminary checks: no piece or wrong color
+                // Preliminary checks
                 if (startChecks(start, color)) {
                     continue;
                 }
@@ -330,8 +330,7 @@ public class Board {
                 for (int r = 0; r < 8; r++) {
                     for (int c = 0; c < 8; c++) {
                         Position end = new Position(r, c);
-                        // Preliminary checks: piece exists,
-                        // not a forward position, or not diagonal
+                        // Preliminary checks
                         if (endChecks(start, end)) {
                             continue;
                         }
@@ -371,7 +370,8 @@ public class Board {
      */
     private boolean endChecks(Position start, Position end) {
         Piece endPiece = getPieceAtPosition(end);
-        return (endPiece != null || !end.isDiagonalTo(start) || !end.isForwardTo(start));
+        return (endPiece != null || !end.isDiagonalTo(start) ||
+                !end.isForwardTo(start));
     }
 
 }
