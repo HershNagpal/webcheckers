@@ -321,9 +321,8 @@ public class Board {
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
                 Position start = new Position(row, col);
-                // Check piece
-                Piece startPiece = getPieceAtPosition(start);
                 // Preliminary checks: no piece or wrong color
+                Piece startPiece = getPieceAtPosition(start);
                 if (getPieceAtPosition(start) == null ||
                         startPiece.getColor() != color) {
                     continue;
@@ -334,12 +333,13 @@ public class Board {
                         Position end = new Position(r, c);
                         // Preliminary checks: piece exists or not diagonal
                         Piece endPiece = getPieceAtPosition(end);
-                        if (getPieceAtPosition(end) != null) {
+                        if (endPiece != null || !start.isDiagonalTo(end)) {
                             continue;
                         }
                         // Create the move through these positions
                         Move move = new Move(start, end);
                         // call method(s) to validate the move and return
+                        // (presumably method in MoveManager)
 
                         // if any move is valid
                         return true;
