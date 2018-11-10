@@ -323,9 +323,7 @@ public class Board {
             for (int col = 0; col < 8; col++) {
                 Position start = new Position(row, col);
                 // Preliminary checks: no piece or wrong color
-                Piece startPiece = getPieceAtPosition(start);
-                if (getPieceAtPosition(start) == null ||
-                        startPiece.getColor() != color) {
+                if (startChecks(start, color)) {
                     continue;
                 }
                 // Get the end position
@@ -334,8 +332,7 @@ public class Board {
                         Position end = new Position(r, c);
                         // Preliminary checks: piece exists,
                         // not a forward position, or not diagonal
-                        Piece endPiece = getPieceAtPosition(end);
-                        if (endPiece != null || !end.isDiagonalTo(start) || !end.isForwardTo(start)) {
+                        if (endChecks(start, end)) {
                             continue;
                         }
                         // Create the move through these positions
@@ -350,6 +347,31 @@ public class Board {
             }
         }
         return false;
+    }
+
+    /**
+     * TODO: check and write tests
+     * Helper method for checking no more valid moves. The start position
+     * must have a piece and be a piece of the given color.
+     * @param start Start position
+     * @param color Color of the piece to check
+     * @return If conditions are satisfied
+     */
+    private boolean startChecks(Position start, Color color) {
+        Piece startPiece = getPieceAtPosition(start);
+        return (getPieceAtPosition(start) == null ||
+                startPiece.getColor() != color);
+    }
+
+    /**
+     * TODO: check and write tests
+     * Helper method for checking no more valid moves. The end position
+     * must have not have a piece, is diagonal to the start position, and
+     * is forward to the start position.
+     */
+    private boolean endChecks(Position start, Position end) {
+        Piece endPiece = getPieceAtPosition(end);
+        return (endPiece != null || !end.isDiagonalTo(start) || !end.isForwardTo(start));
     }
 
 }
