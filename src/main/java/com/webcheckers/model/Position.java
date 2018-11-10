@@ -46,17 +46,18 @@ public class Position {
      * @return If these positions are diagonal to each other
      */
     public boolean isDiagonalTo(Position other) {
-        return ((this.row - other.row) / (this.cell - other.cell)) == 1;
+        return ((double)(this.row - other.row)
+                / (double)(this.cell - other.cell) == 1);
     }
 
     /**
      * TODO: check and write tests
-     * Is the other position in front of this position?
+     * Is this position in front of the other position?
      * @param other End position
      * @return If other position is in front of this position
      */
     public boolean isForwardTo(Position other) {
-        return this.row < other.row;
+        return this.row > other.row;
     }
 
     /**
