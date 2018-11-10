@@ -279,6 +279,7 @@ public class Board {
     }
 
     /**
+     * TODO: revise method to take in the current player's color (activeColor)
      * Tests the board to check if all pieces of a certain color have been eliminated
      *
      * @return color of piece that has been entirely eliminated. null if both colors still have pieces
