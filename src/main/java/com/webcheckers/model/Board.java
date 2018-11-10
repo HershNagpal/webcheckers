@@ -308,4 +308,33 @@ public class Board {
             return null;
         }
     }
+
+    /**
+     * Check the board to see if the pieces of the given color can still
+     * move at any instance.
+     * @param color The color of the pieces to check
+     * @return If there is a case where there can be a valid move made
+     */
+    public boolean checkNoMoreValidMoves(Color color) {
+        // Get the first position
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                Position start = new Position(row, col);
+                // Get the second position
+                for (int r = 0; r < 8; r++) {
+                    for (int c = 0; c < 8; c++) {
+                        Position end = new Position(r, c);
+                        // Create the move through these positions
+                        Move move = new Move(start, end);
+                        // call method(s) to validate the move and return
+
+                        // if any move is valid
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
 }
