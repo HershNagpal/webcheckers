@@ -13,15 +13,28 @@ public class Position {
     private int row;
     private int cell;
 
+    /**
+     * Create a position on the board.
+     * @param row Row location
+     * @param cell Cell location
+     */
     public Position(int row, int cell) {
         this.row = row;
         this.cell = cell;
     }
 
+    /**
+     * Get the row of this position.
+     * @return Row
+     */
     public int getRow() {
         return row;
     }
 
+    /**
+     * Get the cell of this position.
+     * @return Cell
+     */
     public int getCell() {
         return cell;
     }
