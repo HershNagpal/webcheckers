@@ -27,21 +27,23 @@ public class Position {
     }
 
     /**
-     * Is the end position oriented diagonally to this position?
-     * @param end End position
+     * TODO: check and write tests
+     * Is the other position oriented diagonally to this position?
+     * @param other Other position
      * @return If these positions are diagonal to each other
      */
-    public boolean isDiagonalTo(Position end) {
-        return true;
+    public boolean isDiagonalTo(Position other) {
+        return ((this.row - other.row) / (this.cell - other.cell)) == 1;
     }
 
     /**
-     * Is the end position in front of this position?
-     * @param end End position
-     * @return If end position is in front of this position
+     * TODO: check and write tests
+     * Is the other position in front of this position?
+     * @param other End position
+     * @return If other position is in front of this position
      */
-    public boolean isForwardTo(Position end) {
-        return true;
+    public boolean isForwardTo(Position other) {
+        return this.row < other.row;
     }
 
     /**

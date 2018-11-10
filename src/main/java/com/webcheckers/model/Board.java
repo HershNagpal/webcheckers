@@ -310,7 +310,8 @@ public class Board {
     }
 
     /**
-     * TODO: some optimizations
+     * 1. TODO: some optimizations
+     * 2. TODO: check and write tests
      * Check the board to see if the pieces of the given color can still
      * move at any instance.
      * @param color The color of the pieces to check
@@ -331,9 +332,10 @@ public class Board {
                 for (int r = 0; r < 8; r++) {
                     for (int c = 0; c < 8; c++) {
                         Position end = new Position(r, c);
-                        // Preliminary checks: piece exists or not diagonal
+                        // Preliminary checks: piece exists,
+                        // not a forward position, or not diagonal
                         Piece endPiece = getPieceAtPosition(end);
-                        if (endPiece != null || !start.isDiagonalTo(end)) {
+                        if (endPiece != null || !end.isDiagonalTo(start) || !end.isForwardTo(start)) {
                             continue;
                         }
                         // Create the move through these positions
