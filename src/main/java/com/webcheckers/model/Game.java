@@ -186,7 +186,6 @@ public class Game {
      * piece at the destination.
      * Checks if the move is a normal diagonal movement.
      * If not, then checks if the move is a jump move over an opponent's piece.
-     * @TODO debug jumpMoveExists and integrate it here.
      * @param move The Move object that the player is making
      * @return True if the move is valid, false if it is invalid.
      */
@@ -250,6 +249,7 @@ public class Game {
     }
 
     /**
+     * TODO Create helper function in MoveManager containing this method's move logic.
      * Checks if the given Move is a valid jump move
      * @param move The Move object that the player is making.
      * @return true if the move is a valid jump move, false if it is invalid or not a jump move.
@@ -307,7 +307,7 @@ public class Game {
     }
 
     /**
-     *
+     * TODO Remove from game (checkDistance is involved in move logic should be in MoveManager)
      * @param val1 col or row value to check distance with another value
      * @param val2 col or row value to check distance with another value.
      * @param expected expected difference between val2 and val1.
@@ -335,6 +335,7 @@ public class Game {
     }
 
     /**
+     * TODO Create helper method in MoveManager containing move logic
      * Updates the board to implement a move
      * @param move starting position and ending position
      */
