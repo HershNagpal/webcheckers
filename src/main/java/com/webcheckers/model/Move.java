@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import com.webcheckers.model.Piece.Type;
+
 /**
  * Represents the movement of pieces.
  */
@@ -30,6 +32,35 @@ public class Move {
 
         Move flippedMove = new Move(posStartFlipped,posEndFlipped);
         return flippedMove;
+    }
+
+    /**
+     * Returns whether or not this move is a King move.
+     * @return True if this is a King move, false otherwise.
+     */
+    public boolean isKingMove(Piece piece) {
+        Color color = piece.getColor();
+        Type type = piece.getType();
+
+        if(type != Type.KING) return false;
+
+        if(color == Color.RED && this.isMoveFacingRed()) {
+            return true;
+        } 
+        else if (color == Color.WHITE && !this.isMoveFacingRed()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Returns whether or not the move is facing the RED side of the board.
+     * @return True if the move is facing the RED side of the board, false otherwise.
+     */
+    public boolean isMoveFacingRed() {
+        if(this.getStart().getRow() > this.getEnd().getRow()) return true;
+        return false;
     }
 
     /**
