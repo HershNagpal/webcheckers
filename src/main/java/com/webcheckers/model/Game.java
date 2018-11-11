@@ -189,7 +189,7 @@ public class Game {
         Color pieceColor = board.getPieceAtPosition(move.getStart()).getColor();
         
         if(pieceColor == getActiveColor()) {
-            return MoveManager.validateMove(move, board);
+            return MoveManager.isValidMove(move, board);
         }
         return false;
     }

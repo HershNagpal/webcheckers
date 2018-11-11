@@ -8,11 +8,12 @@ package com.webcheckers.model;
 public class MoveManager {
 
     /**
+     * @TODO Make this compatible with backup moves.
      * Returns whether or not the given move is valid according to checkers rules.
      * @param move The move to be checked for validity.
      * @return True if the given move is valid, false otherwise.
      */
-    public static boolean validateMove(Move move, Board board) {
+    public static boolean isValidMove(Move move, Board board) {
         if(isSingleMove(move, board)) {
             return true;
         } 
@@ -77,7 +78,7 @@ public class MoveManager {
     }
 
     /**
-     * TODO Create helper function in MoveManager containing this method's move logic.
+     * @TODO Implement this.
      * Checks if the given Move is a valid jump move
      * @param move The Move object that the player is making.
      * @return true if the move is a valid jump move, false if it is invalid or not a jump move.
@@ -138,6 +139,7 @@ public class MoveManager {
 
 
     /**
+     * @TODO Implement this.
      * Checks if the given Move is a valid jump move
      * @param move The Move object that the player is making.
      * @return true if the move is a valid jump move, false if it is invalid or not a jump move.
@@ -175,17 +177,4 @@ public class MoveManager {
         */
         return false;
     }
-
-   
-/**
-     * Returns whether or not the distance between the two values is the expected amount.
-     * @param val1 col or row value to check distance with another value
-     * @param val2 col or row value to check distance with another value.
-     * @param expected expected difference between val2 and val1.
-     * @return true if the distance between p1 and p2 is equal to the expected value.
-     */
-    public static boolean checkDistance(int val2, int val1, int expected){
-        return (val2-val1) == expected;
-    }
-
 }
