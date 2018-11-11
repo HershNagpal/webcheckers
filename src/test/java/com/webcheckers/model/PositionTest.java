@@ -106,6 +106,7 @@ public class PositionTest {
     /**
      * Test the isDiagonalJumpTo method
      */
+    @Test
     public void testIsDiagonalJumpTo() {
         Position valid1 = new Position(2, 3);
 

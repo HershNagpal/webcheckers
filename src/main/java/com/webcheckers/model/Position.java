@@ -75,7 +75,22 @@ public class Position {
      * @return True if the positions are diagonal, on the board, and within jump move distance.
      */
     public boolean isDiagonalJumpTo(Position other) {
-        return false;
+        int x1 = this.getCell();
+        int y1 = this.getRow();
+
+        int x2 = other.getCell();
+        int y2 = other.getRow();
+
+        // Positions must be diagonal.
+        if(!this.isDiagonalTo(other)) return false;
+        // Positions must be positive.
+        if(x1 < 0 || y1 < 0) return false;
+        if(x2 < 0 || y2 < 0) return false;
+        // Positions must be within board limits.
+        if(x1 > Board.COLUMNS || y1 > Board.ROWS) return false;
+        if(x2 > Board.COLUMNS || y2 > Board.ROWS) return false;
+
+        return isDistanceExpectedValue(x1, x2, 2) && isDistanceExpectedValue(y1, y2, 2);
     }
 
      /**
