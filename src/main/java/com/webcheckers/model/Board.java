@@ -338,9 +338,10 @@ public class Board {
                         Move move = new Move(start, end);
                         // call method(s) to validate the move and return
                         // (presumably method in MoveManager)
-
-                        // if any move is valid
-                        return true;
+                    //    if (MoveManager.validateMove(move)) {
+                    //        // there is at least one valid move, stop checking
+                    //        return true;
+                    //    }
                     }
                 }
             }
