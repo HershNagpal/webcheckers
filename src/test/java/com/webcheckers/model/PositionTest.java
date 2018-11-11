@@ -123,5 +123,7 @@ public class PositionTest {
         assert(!CuT.isDiagonalAdjacentTo(invalid3)); 
         assert(!CuT.isDiagonalAdjacentTo(invalid4));
         assert(!CuT.isDiagonalAdjacentTo(invalid4));
+        assert(!CuT.isDiagonalAdjacentTo(invalid5));
+
     }
 }

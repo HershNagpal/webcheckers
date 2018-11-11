@@ -181,11 +181,7 @@ public class Game {
     }
 
     /**
-     * Checks if the move being made by a player is valid or not.
-     * First ensures that it is the correct player's turn and that there is no
-     * piece at the destination.
-     * Checks if the move is a normal diagonal movement.
-     * If not, then checks if the move is a jump move over an opponent's piece.
+     * Checks if the move being made by a player is valid or not.  
      * @param move The Move object that the player is making
      * @return True if the move is valid, false if it is invalid.
      */
@@ -194,37 +190,10 @@ public class Game {
         if (activeColor.equals(Color.RED)) {
             move = move.flipMove();
         }
-        Color movedPieceColor = board.getPieceAtPosition(move.getStart()).getColor();
-        // Check valid move conditions
-        if( !getActiveColor().equals(movedPieceColor) ) {
-            return false;
-        }
-        // Check space piece is moving into is empty
-        if(board.getPieceAtPosition(move.getEnd()) != null) {
-            return false;
-        }
+        
 
-        if(isNormalMove(move) && canContinueMoving) {
-            // Forcing jump move
-            if(jumpMoveExists()){
-                System.out.println("JUMP MOVE EXISTS");
-                return false;
-            }
-            lastMoves.add(move);
-            lastMove = move;
-            canContinueMoving = false;
-            makeMove(move);
-            return true;
-        }
-        else if (isJumpMove(move) && canContinueMoving) {
-            lastMoves.add(move);
-            lastMove = move;
-            makeMove(move);
-            return true;
-        }
-        else {
-            return false;
-        }
+        return MoveManager.validateMove(move);
+        
     }
 
     /**

@@ -5,6 +5,30 @@ package com.webcheckers.model;
  */
 public class MoveManager {
 
+    public static boolean validateMove(Move move) {
+        return false;
+    }
+
+    /**
+     * Returns whether or not this move is a King move.
+     * @return True if this is a King move, false otherwise.
+     */
+    public boolean isKingMove(Move move, Piece piece) {
+        Color color = piece.getColor();
+        Piece.Type type = piece.getType();
+
+        if(type != Piece.Type.KING) return false;
+
+        if(color == Color.RED && move.isFacingRed()) {
+            return true;
+        } 
+        else if (color == Color.WHITE && !move.isFacingRed()) {
+            return true;
+        }
+
+        return false;
+    }
+
     /**
      * Checks if the given Move is a valid normal, non-jump move.
      * @param move The Move object that the player is making

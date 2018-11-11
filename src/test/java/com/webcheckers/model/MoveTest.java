@@ -17,10 +17,16 @@ public class MoveTest {
    * Component to test
    */
   private Move CuT;
+  private Move CuT2;
 
-
+  /**
+   * Friendly Objects
+   */
   private Position position1;
   private Position position2;
+
+  private Position position3;
+  private Position position4;
 
   /**
    * Setting up objects before each test
@@ -31,46 +37,58 @@ public class MoveTest {
       position2 = new Position(1,2);
       CuT = new Move(position1, position2);
 
+      position3 = new Position(3,2);
+      position4 = new Position(2,1);
+      CuT2 = new Move(position3, position4);
   }
 
     /**
-     *Test that when flipMove is given
-     * a move it will return a flipped
-     * version of the move
+     * Test for the isFacingRed method.
      */
-  @Test
-  public void flipMoveTest(){
-      Position initialPos = new Position(5,2);
-      Position endPos = new Position(4,3);
+    @Test
+    public void testIsFacingRed() {
+        assert(CuT.isFacingRed());
+        assert(!CuT.isFacingRed());
+    }
 
-      Move move = new Move(initialPos,endPos);
+    /**
+     *Test that when flipMove is given
+    * a move it will return a flipped
+    * version of the move
+    */
+    @Test
+    public void flipMoveTest(){
+        Position initialPos = new Position(5,2);
+        Position endPos = new Position(4,3);
 
-      Position flippedInitialPos = new Position(2,5);
-      Position flippedEndPos = new Position(3,4);
+        Move move = new Move(initialPos,endPos);
 
-      Move expectedFlippedMove = new Move(flippedInitialPos,flippedEndPos);
+        Position flippedInitialPos = new Position(2,5);
+        Position flippedEndPos = new Position(3,4);
 
-      assertEquals(move, expectedFlippedMove.flipMove());
-      assertEquals(expectedFlippedMove, move.flipMove());
-      System.out.println(expectedFlippedMove);
-      System.out.println(move.flipMove());
-      assertTrue(expectedFlippedMove.equals(move.flipMove()));
-  }
+        Move expectedFlippedMove = new Move(flippedInitialPos,flippedEndPos);
+
+        assertEquals(move, expectedFlippedMove.flipMove());
+        assertEquals(expectedFlippedMove, move.flipMove());
+        System.out.println(expectedFlippedMove);
+        System.out.println(move.flipMove());
+        assertTrue(expectedFlippedMove.equals(move.flipMove()));
+    }
 
     /**
      * Ensures that createBackupMove will
      * siwtch the start and end position and set
      * isBackUpMove to true
      */
-  @Test
-  public void createBackupMoveTest(){
-      Move test;
-      test = CuT.createBackUpMove();
+    @Test
+    public void createBackupMoveTest(){
+        Move test;
+        test = CuT.createBackUpMove();
 
-      assertTrue(test.getStart().equals(CuT.getEnd()));
+        assertTrue(test.getStart().equals(CuT.getEnd()));
 
-      assertTrue(test.isBackUpMove());
-  }
+        assertTrue(test.isBackUpMove());
+    }
 
     /**
      * Test that Move's getters
@@ -78,8 +96,8 @@ public class MoveTest {
      */
     @Test
     public void gettersTest(){
-      assertEquals(CuT.getStart(), position1);
-      assertEquals(CuT.getEnd(), position2);
+        assertEquals(CuT.getStart(), position1);
+        assertEquals(CuT.getEnd(), position2);
     }
 
     /**
