@@ -190,14 +190,8 @@ public class Game {
         if (resigned) {
             return true;
         }
-        // TODO: have this method take in the color as a parameter
-        Color color = board.checkAllPiecesEliminated();
-        if (color != null) {
-            winner = color == Color.RED ? whitePlayer : redPlayer;
-            return true;
-        }
         // TODO: make sure activeColor is always the right color needed
-        if (board.checkNoMoreValidMoves(activeColor)) {
+        if (board.checkEndConditions(activeColor)) {
             winner = activeColor == Color.RED ? whitePlayer : redPlayer;
             return true;
         }

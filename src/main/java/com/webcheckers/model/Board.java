@@ -279,7 +279,6 @@ public class Board {
     }
 
     /**
-     * TODO: revise method to take in the current player's color (activeColor)
      * Tests the board to check if all pieces of a certain color have been eliminated
      *
      * @return color of piece that has been entirely eliminated. null if both colors still have pieces
@@ -312,12 +311,45 @@ public class Board {
 
     /**
      * TODO: check and write tests
+     * Check if all pieces have been eliminated or there are no more moves
+     * for a given color.
+     * @param color The color of the pieces to check
+     * @return If any end condition on the board is met
+     */
+    public boolean checkEndConditions(Color color) {
+        return checkAllPiecesEliminated(color) || checkNoMoreValidMoves(color);
+    }
+
+    /**
+     * TODO: check and write tests
+     * Check the board to see if the pieces of the given color are
+     * eliminated.
+     * @param color The color of the pieces to check
+     * @return If there are no more pieces of the given color
+     */
+    private boolean checkAllPiecesEliminated(Color color) {
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                Piece currentPiece = pieces[row][col];
+                if(currentPiece != null) {
+                    if (currentPiece.getColor() == color) {
+                        return false;
+                    }
+                }
+            }
+        }
+        // Could not find a piece of the given color
+        return true;
+    }
+
+    /**
+     * TODO: check and write tests
      * Check the board to see if the pieces of the given color can still
      * move at any instance.
      * @param color The color of the pieces to check
      * @return If there is a case where there can be a valid move made
      */
-    public boolean checkNoMoreValidMoves(Color color) {
+    private boolean checkNoMoreValidMoves(Color color) {
         // Get the start position
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
