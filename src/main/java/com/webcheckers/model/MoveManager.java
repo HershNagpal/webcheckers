@@ -78,16 +78,16 @@ public class MoveManager {
         return isJumpMove;
     }
 
-    /**
-     *
+   
+/**
+     * Returns whether or not the distance between the two values is the expected amount.
      * @param val1 col or row value to check distance with another value
      * @param val2 col or row value to check distance with another value.
      * @param expected expected difference between val2 and val1.
-     * @return true if the distance between p1 and p2 is equal to the expected value
+     * @return true if the distance between p1 and p2 is equal to the expected value.
      */
     public static boolean checkDistance(int val2, int val1, int expected){
         return (val2-val1) == expected;
     }
-
 
 }

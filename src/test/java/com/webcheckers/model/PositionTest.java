@@ -47,4 +47,28 @@ public class PositionTest {
         assertEquals(copy, CuT);
         assertNotEquals(CuT, fake);
     }
+
+    /**
+     * Test the isDiagonalTo method
+     */
+    @Test
+    public void testIsDiagonalTo() {
+
+    }
+
+    /**
+     * Test the isDistanceExpectedValue method
+     */
+    @Test
+    public void testIsDistanceExpectedValue() {
+
+    }
+
+    /**
+     * Test the isDiagonalAdjacentTo method
+     */
+    @Test
+    public void testIsDiagonalAdjacentTo() {
+
+    }
 }

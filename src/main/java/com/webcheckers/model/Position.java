@@ -61,9 +61,7 @@ public class Position {
         boolean xIsDiagonalAdjacent = false;
         boolean yIsDiagonalAdjacent = false;
 
-
-
-        return true;
+        return isDistanceExpectedValue(x1, x2, 1) && isDistanceExpectedValue(y1, y2, 1);
     }
 
      /**
@@ -73,7 +71,7 @@ public class Position {
      * @param expected expected difference between val2 and val1.
      * @return true if the distance between p1 and p2 is equal to the expected value.
      */
-    public boolean checkDistance(int val2, int val1, int expected){
+    public boolean isDistanceExpectedValue(int val2, int val1, int expected){
         return (val2-val1) == expected;
     }
 
