@@ -2,10 +2,17 @@ package com.webcheckers.model;
 
 /**
  * Class holding all move logic done in Game.
+ * @author Luis Gutierrez
+ * @author Hersh Nagpal
  */
 public class MoveManager {
 
-    public static boolean validateMove(Move move) {
+    /**
+     * Returns whether or not the given move is valid according to checkers rules.
+     * @param move The move to be checked for validity.
+     * @return True if the given move is valid, false otherwise.
+     */
+    public static boolean validateMove(Move move, Board board) {
         return false;
     }
 
@@ -35,36 +42,32 @@ public class MoveManager {
      * @param pieceType The type of the piece making the move (King or Single).
      * @return true if the move is a valid normal, non-jump move, false if it is invalid or not a normal move.
      */
-    public static boolean isNormalMove(Move move, Piece movingPiece) {
+    public static boolean isSingleMove(Move move, Board board) {
         Position startPosition = move.getStart();
         Position endPosition = move.getEnd();
-        Piece.Type pieceType = movingPiece.getType();
+
+        Piece movingPiece = board.getPieceAtPosition(startPosition);
         Color pieceColor = movingPiece.getColor();
-        boolean isSingleMove = false;
 
-        if(startPosition.isDiagonalAdjacentTo(endPosition)) {
-            
+        // Positions must be diagonal adjacent
+        if(!startPosition.isDiagonalAdjacentTo(endPosition)) {
+            return false;
+        }
+        // Destination must be empty
+        if(board.getPieceAtPosition(move.getEnd()) !=  null) {
+            return false;
         }
 
-        // Red pieces move to higher rows, White pieces move to lower rows. Kings can do both.
-        if(pieceColor == Color.RED || isKingMove(move, movingPiece)) {
-            if(startPosition.isDiagonalAdjacentTo(endPosition)) {
-                isSingleMove = true;
-            }
-            else if(startPosition.isDiagonalAdjacentTo(endPosition)) {
-                isSingleMove = true;
-            }
-        }
-        if(pieceColor == Color.WHITE || pieceType == Piece.Type.KING) {
-            if(startPosition.isDiagonalAdjacentTo(endPosition)) {
-                isSingleMove = true;
-            }
-            else if(startPosition.isDiagonalAdjacentTo(endPosition)) {
-                isSingleMove = true;
+        // Must either be a King move or moving away from its side.
+        if(!isKingMove(move, movingPiece)) {
+            if(move.isFacingRed() && pieceColor == Color.RED) {
+                return false;
+            } else if(!move.isFacingRed() && pieceColor == Color.WHITE) {
+                return false;
             }
         }
 
-        return isSingleMove;
+        return true;
     }
 
     /**
@@ -134,11 +137,8 @@ public class MoveManager {
      * @return true if the move is a valid jump move, false if it is invalid or not a jump move.
      */
     public static boolean isLastMoveJump(Move move, Piece movingPiece) {
-        int row1 = move.getStart().getRow();
-        int col1 = move.getStart().getCell();
-
-        int row2 = move.getEnd().getRow();
-        int col2 = move.getEnd().getCell();
+        Position startPosition = move.getStart();
+        Position endPosition = move.getEnd();
 
         boolean isJumpMove = false;
 
