@@ -65,4 +65,46 @@ public class MoveManagerTest {
         Move validWhiteKingMove01 = new Move(new Position(3,3), new Position(4,4));
         assertTrue(MoveManager.isNormalMove(validWhiteKingMove01,whiteKingPiece));
     }
+
+    /**
+     * Test for isLastMoveJump
+     */
+    @Test
+    public void testIsLastMoveJump(){
+        //test lastMoveJump true when white piece jumps "up/left" -2 col, -2 rows
+        Position positionStart = new Position(4, 2);
+        Position positionEnd = new Position(2, 4);
+        Move move = new Move(positionStart, positionEnd);
+        assertTrue(MoveManager.isLastMoveJump(move, whitePiece));
+
+        //test last move valid when white piece jumps "up/right" +2 col, +2 rows
+        positionStart = new Position(4, 6);
+        positionEnd = new Position(2, 4);
+        move = new Move(positionStart, positionEnd);
+        assertTrue(MoveManager.isLastMoveJump(move, whitePiece));
+
+        //test last move valid when red piece jumps "down/left" -2 col, +2 rows
+        positionStart = new Position(3, 4);
+        positionEnd = new Position(5, 2);
+        move = new Move(positionStart, positionEnd);
+        assertTrue(MoveManager.isLastMoveJump(move, redPiece));
+
+        //test last move valid when red piece jumps "down/right" +2 col, +2 rows
+        positionStart = new Position(3, 0);
+        positionEnd = new Position(5, 2);
+        move = new Move(positionStart, positionEnd);
+        assertTrue(MoveManager.isLastMoveJump(move, redPiece));
+
+        //test lastMoveJump false when white piece makes a non jump move
+        positionStart = new Position(3, 3);
+        positionEnd = new Position(2, 4);
+        move = new Move(positionStart, positionEnd);
+        assertFalse(MoveManager.isLastMoveJump(move, whitePiece));
+
+        //test lastMoveJump false when red piece makes a non jump move
+        positionStart = new Position(4, 1);
+        positionEnd = new Position(5, 2);
+        move = new Move(positionStart, positionEnd);
+        assertFalse(MoveManager.isLastMoveJump(move, whitePiece));
+    }
 }
