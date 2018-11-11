@@ -80,12 +80,10 @@ public class Game {
         this.whitePlayer = whitePlayer;
         if(redPlayer.getName().equals("degbug") && whitePlayer.getName().equals("test")) {
             this.board = new Board(Board.DEBUG_PIECES);
-            System.out.println("Custom Board initialized");
         } else if (redPlayer.getName().equals("test") && whitePlayer.getName().equals("debug")) {
-            System.out.println("Custom Board initialized");
             this.board = new Board(Board.DEBUG_PIECES);
+
         } else {
-            System.out.println("Normal Board initialized");
             this.board = board;
         }
         gameOver = false;
@@ -102,12 +100,9 @@ public class Game {
         this.whitePlayer = whitePlayer;
         if(redPlayer.getName().equals("degbug") && whitePlayer.getName().equals("test")) {
             this.board = new Board(Board.DEBUG_PIECES);
-            System.out.println("Custom Board initialized");
         } else if (redPlayer.getName().equals("test") && whitePlayer.getName().equals("debug")) {
-            System.out.println("Custom Board initialized");
             this.board = new Board(Board.DEBUG_PIECES);
         } else {
-            System.out.println("Normal Board initialized");
             this.board = new Board();
         }
         gameOver = false;
@@ -191,12 +186,34 @@ public class Game {
             move = move.flipMove();
         }
 
-        Piece movingPiece = board.getPieceAtPosition(move.getStart());
+        Color pieceColor = board.getPieceAtPosition(move.getStart()).getColor();
         
-        if(movingPiece.getColor() == getActiveColor()) {
-            return MoveManager.validateMove(move);
+        if(pieceColor == getActiveColor()) {
+            return MoveManager.validateMove(move, board);
         }
         return false;
+    }
+
+    /**
+     * Checks if the given Move is a valid normal, non-jump move.
+     * @param move The Move object that the player is making
+     * @param pieceType The type of the piece making the move (King or Single).
+     * @return true if the move is a valid normal, non-jump move, false if it is invalid or not a normal move.
+     */
+    public static boolean isSingleMove(Move move, Piece movingPiece) {
+        Position startPosition = move.getStart();
+        Position endPosition = move.getEnd();
+
+        Piece.Type pieceType = movingPiece.getType();
+        Color pieceColor = movingPiece.getColor();
+
+        boolean isSingleMove = false;
+
+        if(!startPosition.isDiagonalAdjacentTo(endPosition)) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

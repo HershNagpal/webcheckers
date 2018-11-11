@@ -13,6 +13,12 @@ public class MoveManager {
      * @return True if the given move is valid, false otherwise.
      */
     public static boolean validateMove(Move move, Board board) {
+        if(isSingleMove(move, board)) {
+            return true;
+        } 
+        else if (isJumpMove(move, board)) {
+            return true;
+        }
         return false;
     }
 
@@ -76,7 +82,7 @@ public class MoveManager {
      * @param move The Move object that the player is making.
      * @return true if the move is a valid jump move, false if it is invalid or not a jump move.
      */
-    public static boolean isJumpMove(Move move, Piece movingPiece) {
+    public static boolean isJumpMove(Move move, Board board) {
         /*
         int row1 = move.getStart().getRow();
         int col1 = move.getStart().getCell();
@@ -137,6 +143,7 @@ public class MoveManager {
      * @return true if the move is a valid jump move, false if it is invalid or not a jump move.
      */
     public static boolean isLastMoveJump(Move move, Piece movingPiece) {
+        /*
         Position startPosition = move.getStart();
         Position endPosition = move.getEnd();
 
@@ -165,6 +172,8 @@ public class MoveManager {
             }
         }
         return isJumpMove;
+        */
+        return false;
     }
 
    
