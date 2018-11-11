@@ -279,55 +279,13 @@ public class Board {
     }
 
     /**
-     * Tests the board to check if all pieces of a certain color have been eliminated
-     *
-     * @return color of piece that has been entirely eliminated. null if both colors still have pieces
-     */
-    public Color checkAllPiecesEliminated(){
-        boolean hasRed = false;
-        boolean hasWhite = false;
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
-                Piece currentPiece = pieces[row][col];
-                if(currentPiece != null) {
-                    if (currentPiece.getColor() == Color.RED) {
-                        hasRed = true;
-                    } else if (currentPiece.getColor() == Color.WHITE) {
-                        hasWhite = true;
-                    }
-                }
-            }
-        }
-        if(!hasRed){
-            return Color.RED;
-        }
-        else if(!hasWhite){
-            return Color.WHITE;
-        }
-        else{
-            return null;
-        }
-    }
-
-    /**
-     * TODO: check and write tests
-     * Check if all pieces have been eliminated or there are no more moves
-     * for a given color.
-     * @param color The color of the pieces to check
-     * @return If any end condition on the board is met
-     */
-    public boolean checkEndConditions(Color color) {
-        return checkAllPiecesEliminated(color) || checkNoMoreValidMoves(color);
-    }
-
-    /**
      * TODO: check and write tests
      * Check the board to see if the pieces of the given color are
      * eliminated.
      * @param color The color of the pieces to check
      * @return If there are no more pieces of the given color
      */
-    private boolean checkAllPiecesEliminated(Color color) {
+    public boolean checkAllPiecesEliminated(Color color) {
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
                 Piece currentPiece = pieces[row][col];
@@ -349,7 +307,7 @@ public class Board {
      * @param color The color of the pieces to check
      * @return If there is a case where there can be a valid move made
      */
-    private boolean checkNoMoreValidMoves(Color color) {
+    public boolean checkNoMoreValidMoves(Color color) {
         // Get the start position
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
@@ -374,6 +332,7 @@ public class Board {
                     //        // there is at least one valid move, stop checking
                     //        return true;
                     //    }
+
                     }
                 }
             }

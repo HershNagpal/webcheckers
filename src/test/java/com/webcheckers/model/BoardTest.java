@@ -341,10 +341,30 @@ public class BoardTest {
    */
   @Test
   public void testCheckAllPiecesEliminated(){
-      assertEquals(CuT.checkAllPiecesEliminated(),null);
-      assertEquals(CuT2.checkAllPiecesEliminated(), null);
-      assertEquals(CuTNoRed.checkAllPiecesEliminated(), Color.RED);
-      assertEquals(CuTNoWhite.checkAllPiecesEliminated(), Color.WHITE);
+      assertFalse(CuT.checkAllPiecesEliminated(Color.RED));
+      assertFalse(CuT2.checkAllPiecesEliminated(Color.WHITE));
+      assertTrue(CuTNoRed.checkAllPiecesEliminated(Color.RED));
+      assertTrue(CuTNoWhite.checkAllPiecesEliminated(Color.WHITE));
+  }
+
+  /**
+   * Test if the check for no more valid moves is correct
+   */
+  @Test
+  public void testCheckEndConditions() {
+    Piece[][] pieces = new Piece[][]{
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, redPiece, null, redPiece, null, null, null},
+            {null, null, null, whitePiece, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+    };
+    CuT = new Board(pieces);
+    assertFalse(CuT.checkNoMoreValidMoves(Color.RED));
+    assertTrue(CuT.checkNoMoreValidMoves(Color.WHITE));
   }
 
 }

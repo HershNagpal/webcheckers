@@ -191,7 +191,8 @@ public class Game {
             return true;
         }
         // TODO: make sure activeColor is always the right color needed
-        if (board.checkEndConditions(activeColor)) {
+        if (board.checkNoMoreValidMoves(activeColor) ||
+                board.checkAllPiecesEliminated(activeColor)) {
             winner = activeColor == Color.RED ? whitePlayer : redPlayer;
             return true;
         }
