@@ -187,23 +187,16 @@ public class Game {
      */
     public boolean validateMove(Move move) {
         // If it is red turn, move is flipped
-        if (activeColor.equals(Color.RED)) {
+        if (getActiveColor().equals(Color.RED)) {
             move = move.flipMove();
         }
-        
 
-        return MoveManager.validateMove(move);
-        
-    }
-
-    /**
-     * Checks if the given Move is a valid normal, non-jump move.
-     * @param move The Move object that the player is making
-     * @return true if the move is a valid normal, non-jump move, false if it is invalid or not a normal move.
-     */
-    private boolean isNormalMove(Move move) {
         Piece movingPiece = board.getPieceAtPosition(move.getStart());
-        return MoveManager.isNormalMove(move, movingPiece);
+        
+        if(movingPiece.getColor() == getActiveColor()) {
+            return MoveManager.validateMove(move);
+        }
+        return false;
     }
 
     /**

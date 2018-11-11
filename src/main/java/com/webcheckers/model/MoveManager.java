@@ -13,7 +13,7 @@ public class MoveManager {
      * Returns whether or not this move is a King move.
      * @return True if this is a King move, false otherwise.
      */
-    public boolean isKingMove(Move move, Piece piece) {
+    public static boolean isKingMove(Move move, Piece piece) {
         Color color = piece.getColor();
         Piece.Type type = piece.getType();
 
@@ -42,8 +42,12 @@ public class MoveManager {
         Color pieceColor = movingPiece.getColor();
         boolean isSingleMove = false;
 
+        if(startPosition.isDiagonalAdjacentTo(endPosition)) {
+            
+        }
+
         // Red pieces move to higher rows, White pieces move to lower rows. Kings can do both.
-        if(pieceColor == Color.RED || pieceType == Piece.Type.KING) {
+        if(pieceColor == Color.RED || isKingMove(move, movingPiece)) {
             if(startPosition.isDiagonalAdjacentTo(endPosition)) {
                 isSingleMove = true;
             }
