@@ -1,0 +1,20 @@
+﻿1. Open up the command prompt and navigate to the web checkers folder
+2. Type the command “mvn compile exec:java”
+3. After maven has finished setting up and the server is launched open up a web browser
+and go to “localhost:4567”. 
+You will need to sign in as “debug” and “test” to load our test board.
+4. Complete acceptance test until you get to simple diagonal move (row 21 of acceptance
+spreadsheet)
+
+
+For the following test please use the red pieces to conduct the test and randomly move the two upper left white pieces to reset turns! 
+We will call Rows A-H and Columns 0-7 
+
+
+5. For Valid move test move (H,0) to (G,1).
+6. For valid jump test (G,1) to (E,3)
+7. For Multiple jump move (F,6) to (D,4), then (D,4) to (B,6)
+8. For king piece move (B,6) to (A,7)
+9. To test king valid move (A,7) to (B,6) Then move from (B,6) to (A,5)
+10. To test a king jump move, move from (A,5) to (C,3)
+11. Eliminate white pieces to test end game
