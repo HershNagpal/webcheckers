@@ -89,15 +89,6 @@ public class GameCenter {
     }
 
     /**
-     * TODO: remove method
-     * Used to remove games that ended.
-     * @param game Game that ended
-     */
-    public void removeGame(Game game) {
-    //    games.remove(game);
-    }
-
-    /**
      * Check if the game has ended by any condition.
      * @param game Game to check
      * @return If this game been resigned

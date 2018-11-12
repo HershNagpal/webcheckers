@@ -92,16 +92,6 @@ public class GameCenterTest {
     }
 
     /**
-     * Test that a game can be removed from the game center.
-     */
-    @Test
-    public void testRemoveGame() {
-        CuT.removeGame(game);
-        assertNull(CuT.getGame(player));
-        assertNull(CuT.getGame(opponent));
-    }
-
-    /**
      * Test that to check if the given game is over.
      */
     @Test
