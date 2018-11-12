@@ -14,6 +14,16 @@ public class MoveManager {
      * @return True if the given move is valid, false otherwise.
      */
     public static boolean isValidMove(Move move, Board board) {
+
+        // If there is no piece being moved, return false.
+        if(board.getPieceAtPosition(move.getStart()) == null) {
+            return false;
+        }
+        // Destination must be empty
+        if(board.getPieceAtPosition(move.getEnd()) !=  null) {
+            return false;
+        }
+
         if(isSingleMove(move, board)) {
             return true;
         } 
@@ -24,8 +34,8 @@ public class MoveManager {
     }
 
     /**
-     * Returns whether or not this move is a King move.
-     * @return True if this is a King move, false otherwise.
+     * Returns whether or not this move involves a piece moving towards its own side.
+     * @return True if this is a 'King' move, false otherwise.
      */
     public static boolean isKingMove(Move move, Piece piece) {
         Color color = piece.getColor();
@@ -58,10 +68,6 @@ public class MoveManager {
 
         // Positions must be diagonal adjacent
         if(!startPosition.isDiagonalAdjacentTo(endPosition)) {
-            return false;
-        }
-        // Destination must be empty
-        if(board.getPieceAtPosition(move.getEnd()) !=  null) {
             return false;
         }
 

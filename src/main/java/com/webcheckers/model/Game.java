@@ -237,6 +237,10 @@ public class Game {
         if (getActiveColor().equals(Color.RED)) {
             move = move.flipMove();
         }
+    
+        if(board.getPieceAtPosition(move.getStart()) == null) {
+            return false;
+        }
 
         Color pieceColor = board.getPieceAtPosition(move.getStart()).getColor();
         
