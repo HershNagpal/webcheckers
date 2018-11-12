@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import com.webcheckers.model.Piece.Type;
+
 /**
  * Represents the movement of pieces.
  */
@@ -30,6 +32,15 @@ public class Move {
 
         Move flippedMove = new Move(posStartFlipped,posEndFlipped);
         return flippedMove;
+    }
+
+    /**
+     * Returns whether or not the move is facing the RED side of the board.
+     * @return True if the move is facing the RED side of the board, false otherwise.
+     */
+    public boolean isFacingRed() {
+        if(this.getStart().getRow() > this.getEnd().getRow()) return true;
+        return false;
     }
 
     /**

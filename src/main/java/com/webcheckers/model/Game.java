@@ -76,12 +76,10 @@ public class Game {
         this.whitePlayer = whitePlayer;
         if(redPlayer.getName().equals("debug") && whitePlayer.getName().equals("test")) {
             this.board = new Board(Board.DEBUG_PIECES);
-            System.out.println("Custom Board initialized");
         } else if (redPlayer.getName().equals("test") && whitePlayer.getName().equals("debug")) {
-            System.out.println("Custom Board initialized");
             this.board = new Board(Board.DEBUG_PIECES);
+
         } else {
-            System.out.println("Normal Board initialized");
             this.board = board;
         }
         activeColor = Color.RED;
@@ -98,12 +96,9 @@ public class Game {
         this.whitePlayer = whitePlayer;
         if(redPlayer.getName().equals("debug") && whitePlayer.getName().equals("test")) {
             this.board = new Board(Board.DEBUG_PIECES);
-            System.out.println("Custom Board initialized");
         } else if (redPlayer.getName().equals("test") && whitePlayer.getName().equals("debug")) {
-            System.out.println("Custom Board initialized");
             this.board = new Board(Board.DEBUG_PIECES);
         } else {
-            System.out.println("Normal Board initialized");
             this.board = new Board();
         }
         activeColor = Color.RED;
@@ -231,86 +226,46 @@ public class Game {
         return resigned;
     }
 
-    /**
-     * Checks if the move being made by a player is valid or not.
-     * First ensures that it is the correct player's turn and that there is no
-     * piece at the destination.
-     * Checks if the move is a normal diagonal movement.
-     * If not, then checks if the move is a jump move over an opponent's piece.
-     *
+     * Checks if the move being made by a player is valid or not.  
      * @param move The Move object that the player is making
      * @return True if the move is valid, false if it is invalid.
      * @TODO debug jumpMoveExists and integrate it here.
      */
     public boolean validateMove(Move move) {
         // If it is red turn, move is flipped
-        if (activeColor.equals(Color.RED)) {
+        if (getActiveColor().equals(Color.RED)) {
             move = move.flipMove();
         }
-        Color movedPieceColor = board.getPieceAtPosition(move.getStart()).getColor();
-        // Check valid move conditions
-        if (!getActiveColor().equals(movedPieceColor)) {
-            return false;
-        }
-        // Check space piece is moving into is empty
-        if (board.getPieceAtPosition(move.getEnd()) != null) {
-            return false;
-        }
 
-        if (isNormalMove(move) && canContinueMoving) {
-            // Forcing jump move
-            if (jumpMoveExists()) {
-                System.out.println("JUMP MOVE EXISTS");
-                return false;
-            }
-            lastMoves.add(move);
-            lastMove = move;
-            canContinueMoving = false;
-            makeMove(move);
-            return true;
-        } else if (isJumpMove(move) && canContinueMoving) {
-            lastMoves.add(move);
-            lastMove = move;
-            makeMove(move);
-            return true;
-        } else {
-            return false;
+        Color pieceColor = board.getPieceAtPosition(move.getStart()).getColor();
+        
+        if(pieceColor == getActiveColor()) {
+            return MoveManager.isValidMove(move, board);
         }
+        return false;
     }
 
     /**
      * Checks if the given Move is a valid normal, non-jump move.
      *
      * @param move The Move object that the player is making
+     * @param pieceType The type of the piece making the move (King or Single).
      * @return true if the move is a valid normal, non-jump move, false if it is invalid or not a normal move.
      */
-    private boolean isNormalMove(Move move) {
-        int row1 = move.getStart().getRow();
-        int col1 = move.getStart().getCell();
+    public static boolean isSingleMove(Move move, Piece movingPiece) {
+        Position startPosition = move.getStart();
+        Position endPosition = move.getEnd();
 
-        int row2 = move.getEnd().getRow();
-        int col2 = move.getEnd().getCell();
-
-        Piece movingPiece = board.getPieceAtPosition(move.getStart());
+        Piece.Type pieceType = movingPiece.getType();
+        Color pieceColor = movingPiece.getColor();
 
         boolean isSingleMove = false;
-        // Red pieces move to higher rows, White pieces move to lower rows. Kings can do both.
-        if (movingPiece.getColor() == Color.RED || movingPiece.getType() == Type.KING) {
-            if (checkDistance(row2, row1, 1) && checkDistance(col2, col1, 1)) {
-                isSingleMove = true;
-            } else if (checkDistance(row2, row1, 1) && checkDistance(col2, col1, -1)) {
-                isSingleMove = true;
-            }
-        }
-        if (movingPiece.getColor() == Color.WHITE || movingPiece.getType() == Type.KING) {
-            if (checkDistance(row2, row1, -1) && checkDistance(col2, col1, 1)) {
-                isSingleMove = true;
-            } else if (checkDistance(row2, row1, -1) && checkDistance(col2, col1, -1)) {
-                isSingleMove = true;
-            }
+
+        if(!startPosition.isDiagonalAdjacentTo(endPosition)) {
+            return false;
         }
 
-        return isSingleMove;
+        return true;
     }
 
     /**
@@ -320,43 +275,13 @@ public class Game {
      * @return true if the move is a valid jump move, false if it is invalid or not a jump move.
      */
     public boolean isLastMoveJump(Move move) {
-        int row1 = move.getStart().getRow();
-        int col1 = move.getStart().getCell();
-
-        int row2 = move.getEnd().getRow();
-        int col2 = move.getEnd().getCell();
-
         //Piece is now at the end position of the move
         Piece movingPiece = board.getPieceAtPosition(move.getEnd());
-
-        boolean isJumpMove = false;
-
-        // The piece must either be Red or a King to move towards the bottom of the board.
-        if (movingPiece.getColor() == Color.RED || movingPiece.getType() == Type.KING) {
-            // The move must be two down and two to the right or..
-            if (checkDistance(row2, row1, 2) && checkDistance(col2, col1, 2)) {
-                isJumpMove = true;
-            }
-            // The move must be two down and two to the left
-            else if (checkDistance(row2, row1, 2) && checkDistance(col2, col1, -2)) {
-                isJumpMove = true;
-            }
-        }
-        // The piece must either be White or a King to move to the top of the board
-        if (movingPiece.getColor() == Color.WHITE || movingPiece.getType() == Type.KING) {
-            // The move must be two up and two to the left
-            if (checkDistance(row2, row1, -2) && checkDistance(col2, col1, 2)) {
-                isJumpMove = true;
-            }
-            // The move must be two up and two to the left
-            else if (checkDistance(row2, row1, -2) && checkDistance(col2, col1, -2)) {
-                isJumpMove = true;
-            }
-        }
-        return isJumpMove;
+        return MoveManager.isLastMoveJump(move,movingPiece);
     }
 
     /**
+     * TODO Create helper function in MoveManager containing this method's move logic.
      * Checks if the given Move is a valid jump move
      *
      * @param move The Move object that the player is making.
@@ -415,8 +340,9 @@ public class Game {
     }
 
     /**
-     * @param val1     col or row value to check distance with another value
-     * @param val2     col or row value to check distance with another value.
+     * TODO Remove from game (checkDistance is involved in move logic should be in MoveManager)
+     * @param val1 col or row value to check distance with another value
+     * @param val2 col or row value to check distance with another value.
      * @param expected expected difference between val2 and val1.
      * @return true if the distance between p1 and p2 is equal to the expected value
      */
@@ -443,6 +369,7 @@ public class Game {
     }
 
     /**
+     * TODO Create helper method in MoveManager containing move logic
      * Updates the board to implement a move
      *
      * @param move starting position and ending position
