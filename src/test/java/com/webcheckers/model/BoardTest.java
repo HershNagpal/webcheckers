@@ -355,7 +355,7 @@ public class BoardTest {
     Piece[][] pieces = new Piece[][]{
             {null, null, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
+            {null, redPiece, null, null, null, redPiece, null, null},
             {null, null, redPiece, null, redPiece, null, null, null},
             {null, null, null, whitePiece, null, null, null, null},
             {null, null, null, null, null, null, null, null},

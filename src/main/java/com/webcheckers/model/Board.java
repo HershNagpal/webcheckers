@@ -312,18 +312,10 @@ public class Board {
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
                 Position start = new Position(row, col);
-                // Preliminary checks
-                if (startChecks(start, color)) {
-                    continue;
-                }
                 // Get the end position
                 for (int r = 0; r < 8; r++) {
                     for (int c = 0; c < 8; c++) {
                         Position end = new Position(r, c);
-                        // Preliminary checks
-                        if (endChecks(start, end)) {
-                            continue;
-                        }
                         // Create the move through these positions
                         Move move = new Move(start, end);
                         // Check if move is valid
