@@ -226,6 +226,7 @@ public class Game {
         return resigned;
     }
 
+    /**
      * Checks if the move being made by a player is valid or not.  
      * @param move The Move object that the player is making
      * @return True if the move is valid, false if it is invalid.
