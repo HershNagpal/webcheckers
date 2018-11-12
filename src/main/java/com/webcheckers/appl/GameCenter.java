@@ -6,7 +6,9 @@ import com.webcheckers.model.Move;
 import com.webcheckers.model.Player;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Holds all games that are occurring on the application.
@@ -19,13 +21,13 @@ public class GameCenter {
     /**
      * All ongoing games
      */
-    private List<Game> games;
+    private Map<Player, Game> games;
 
     /**
      * TODO: remove later if not needed for replays
      * All games that have ended
      */
-    private List<Game> endedGames;
+    private Map<Player, Game> endedGames;
 
     /**
      * Manages messages
@@ -36,8 +38,8 @@ public class GameCenter {
      * Initialize the list of games.
      */
     public GameCenter(Messenger messenger) {
-        games = new ArrayList<>();
-        endedGames = new ArrayList<>();
+        games = new HashMap<>();
+        endedGames = new HashMap<>();
         this.messenger = messenger;
     }
 
@@ -47,12 +49,8 @@ public class GameCenter {
      * @return If the player is in a game
      */
     public Boolean playerInGame(Player player) {
-        for (Game game : games) {
-            if (game.playerInGame(player)) {
-                return true;
-            }
-        }
-        return false;
+        Game game = games.get(player);
+        return game != null;
     }
 
     /**
@@ -61,13 +59,11 @@ public class GameCenter {
      * @return If the player was challenged
      */
     public Boolean wasChallenged(Player player) {
-        for (Game game : games) {
-            // White player is the challenged player
-            if (game.isWhitePlayer(player) && !game.didPlayerResign()) {
-                return true;
-            }
+        if (!playerInGame(player)) {
+            return false;
         }
-        return false;
+        Game game = games.get(player);
+        return (game.isWhitePlayer(player) && !game.didPlayerResign());
     }
 
     /**
@@ -76,12 +72,7 @@ public class GameCenter {
      * @return The game or null
      */
     public Game getGame(Player player) {
-        for (Game game : games) {
-            if (game.playerInGame(player)) {
-                return game;
-            }
-        }
-        return null;
+        return games.get(player);
     }
 
     /**
@@ -92,16 +83,18 @@ public class GameCenter {
      */
     public Game createGame(Player player, Player opponent) {
         Game game = new Game(player, opponent);
-        games.add(game);
+        games.put(player, game);
+        games.put(opponent, game);
         return game;
     }
 
     /**
+     * TODO: remove method
      * Used to remove games that ended.
      * @param game Game that ended
      */
     public void removeGame(Game game) {
-        games.remove(game);
+    //    games.remove(game);
     }
 
     /**
@@ -111,8 +104,12 @@ public class GameCenter {
      */
     public boolean isGameOver(Game game) {
         if (game.isGameOver()) {
-            games.remove(game);
-            endedGames.add(game);
+            Player red = game.getRedPlayer();
+            Player white = game.getWhitePlayer();
+            games.remove(red);
+            games.remove(white);
+            endedGames.put(red, game);
+            endedGames.put(white, game);
             return true;
         }
         return false;
@@ -135,9 +132,6 @@ public class GameCenter {
      */
     public Message checkTurn(Player player) {
         Game game = getGame(player);
-        if (game == null) {
-            return null;
-        }
         return messenger.checkTurn(game, player);
     }
 
