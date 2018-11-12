@@ -37,17 +37,6 @@ public class PositionTest {
     }
 
     /**
-     * Test to check if two positions are diagonal to each other
-     */
-    @Test
-    public void testIsDiagonalTo() {
-        Position other = new Position(1, 2);
-        Position bad = new Position(3, 3);
-        assertTrue(CuT.isDiagonalTo(other));
-        assertFalse(CuT.isDiagonalTo(bad));
-    }
-
-    /**
      * Test to check if one position is forward another position.
      */
     @Test

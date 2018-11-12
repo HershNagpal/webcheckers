@@ -351,7 +351,7 @@ public class BoardTest {
    * Test if the check for no more valid moves is correct
    */
   @Test
-  public void testCheckEndConditions() {
+  public void testCheckNoMoreValidMoves() {
     Piece[][] pieces = new Piece[][]{
             {null, null, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},

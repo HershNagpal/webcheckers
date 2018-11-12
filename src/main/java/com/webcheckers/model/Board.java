@@ -326,18 +326,17 @@ public class Board {
                         }
                         // Create the move through these positions
                         Move move = new Move(start, end);
-                        // call method(s) to validate the move and return
-                        // (presumably method in MoveManager)
-                    //    if (MoveManager.validateMove(move)) {
-                    //        // there is at least one valid move, stop checking
-                    //        return true;
-                    //    }
+                        // Check if move is valid
+                        if (MoveManager.isValidMove(move, this)) {
+                            // there is at least one valid move, stop checking
+                            return false;
+                        }
 
                     }
                 }
             }
         }
-        return false;
+        return true;
     }
 
     /**
