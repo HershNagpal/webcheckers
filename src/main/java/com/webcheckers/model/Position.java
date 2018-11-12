@@ -40,31 +40,12 @@ public class Position {
     }
 
     /**
-     * Is the other position oriented diagonally to this position?
-     * @param other Other position
-     * @return If these positions are diagonal to each other
-     */
-    public boolean isDiagonalTo(Position other) {
-        return ((double)(this.row - other.row)
-                / (double)(this.cell - other.cell) == 1);
-    }
-
-    /**
      * Is this position in front of the other position?
      * @param other End position
      * @return If other position is in front of this position
      */
     public boolean isForwardTo(Position other) {
         return this.row > other.row;
-    }
-
-    /**
-     * Display position's row and cell. Used for testing.
-     * @return string representation of Position
-     */
-    @Override
-    public String toString(){
-        return "Row: "+row+", Column: "+cell;
     }
 
     /**
@@ -134,6 +115,15 @@ public class Position {
      */
     public static boolean isDistanceExpectedValue(int val2, int val1, int expected){
         return Math.abs((val2-val1)) == Math.abs(expected);
+    }
+
+    /**
+     * Display position's row and cell. Used for testing.
+     * @return string representation of Position
+     */
+    @Override
+    public String toString(){
+        return "Row: "+row+", Column: "+cell;
     }
 
     /**
