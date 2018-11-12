@@ -21,6 +21,8 @@ public class BoardTest {
    */
   private Board CuT;
   private Board CuT2;
+  private Board CuTNoRed;
+  private Board CuTNoWhite;
 
   /**
    * Friendly Objects
@@ -40,6 +42,8 @@ public class BoardTest {
   private Piece[][] customPiecesRedMove2;
   private Piece[][] customPiecesWhiteMove1;
   private Piece[][] customPiecesWhiteMove2;
+  private Piece[][] cpNoRed;
+  private Piece[][] cpNoWhite;
 
   // Positions on the mock board that can be called.
   private Position redPosition1 = new Position(0, 2);
@@ -155,10 +159,34 @@ public class BoardTest {
             {null, null, null, whitePiece, null, null, null, null}
     };
 
+    cpNoRed = new Piece[][]{
+            {null, null, null, null, null, null, null, null},
+            {null, whitePiece, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, whitePiece, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null}
+    };
+
+    cpNoWhite = new Piece[][]{
+            {null, null, null, null, null, null, null, null},
+            {null, null, redPiece, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, redPiece, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, redPiece, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null}
+    };
+
 
 
     CuT = new Board();
     CuT2 = new Board(customPieces);
+    CuTNoRed = new Board(cpNoRed);
+    CuTNoWhite = new Board(cpNoWhite);
 
   }
 
@@ -173,7 +201,7 @@ public class BoardTest {
     for (int row = 0; row < 8; row++) {
       for (int col = 0; col < 8; col++) {
           if (actualPieces[row][col] != null) {
-              assertTrue(actualPieces[row][col].getColor().equals(expectedPieces[row][col].getColor()));
+              assertEquals(actualPieces[row][col].getColor(), (expectedPieces[row][col].getColor()));
           }
       }
     }
@@ -306,6 +334,37 @@ public class BoardTest {
             }
         }
     }
-
   }
+
+  /**
+   * Test if the check for all pieces of a color being eliminated is correct
+   */
+  @Test
+  public void testCheckAllPiecesEliminated(){
+      assertFalse(CuT.checkAllPiecesEliminated(Color.RED));
+      assertFalse(CuT2.checkAllPiecesEliminated(Color.WHITE));
+      assertTrue(CuTNoRed.checkAllPiecesEliminated(Color.RED));
+      assertTrue(CuTNoWhite.checkAllPiecesEliminated(Color.WHITE));
+  }
+
+  /**
+   * Test if the check for no more valid moves is correct
+   */
+  @Test
+  public void testCheckEndConditions() {
+    Piece[][] pieces = new Piece[][]{
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, redPiece, null, redPiece, null, null, null},
+            {null, null, null, whitePiece, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+    };
+    CuT = new Board(pieces);
+    assertFalse(CuT.checkNoMoreValidMoves(Color.RED));
+    assertTrue(CuT.checkNoMoreValidMoves(Color.WHITE));
+  }
+
 }

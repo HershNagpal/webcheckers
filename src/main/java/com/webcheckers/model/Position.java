@@ -13,17 +13,49 @@ public class Position {
     private int row;
     private int cell;
 
+    /**
+     * Create a position on the board.
+     * @param row Row location
+     * @param cell Cell location
+     */
     public Position(int row, int cell) {
         this.row = row;
         this.cell = cell;
     }
 
+    /**
+     * Get the row of this position.
+     * @return Row
+     */
     public int getRow() {
         return row;
     }
 
+    /**
+     * Get the cell of this position.
+     * @return Cell
+     */
     public int getCell() {
         return cell;
+    }
+
+    /**
+     * Is the other position oriented diagonally to this position?
+     * @param other Other position
+     * @return If these positions are diagonal to each other
+     */
+    public boolean isDiagonalTo(Position other) {
+        return ((double)(this.row - other.row)
+                / (double)(this.cell - other.cell) == 1);
+    }
+
+    /**
+     * Is this position in front of the other position?
+     * @param other End position
+     * @return If other position is in front of this position
+     */
+    public boolean isForwardTo(Position other) {
+        return this.row > other.row;
     }
 
     /**

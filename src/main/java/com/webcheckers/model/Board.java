@@ -28,7 +28,7 @@ public class Board {
                 {null, null, null, null, null, new Piece(Color.WHITE, Type.SINGLE), null, null},
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, new Piece(Color.WHITE, Type.SINGLE), null, null},
-                {null, null, null, null, new Piece(Color.RED, Type.SINGLE), null, new Piece(Color.RED, Type.SINGLE), null},
+                {null, null, new Piece(Color.WHITE, Type.SINGLE), null, null, null, null, null},
                 {null, null, null, null, null, new Piece(Color.RED, Type.SINGLE), null, new Piece(Color.RED, Type.SINGLE)},
                 {new Piece(Color.RED, Type.SINGLE), null, null, null, null, null, new Piece(Color.RED, Type.SINGLE), null},
             };
@@ -277,4 +277,93 @@ public class Board {
         }
 
     }
+
+    /**
+     * TODO: check and write tests
+     * Check the board to see if the pieces of the given color are
+     * eliminated.
+     * @param color The color of the pieces to check
+     * @return If there are no more pieces of the given color
+     */
+    public boolean checkAllPiecesEliminated(Color color) {
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                Piece currentPiece = pieces[row][col];
+                if(currentPiece != null) {
+                    if (currentPiece.getColor() == color) {
+                        return false;
+                    }
+                }
+            }
+        }
+        // Could not find a piece of the given color
+        return true;
+    }
+
+    /**
+     * TODO: check and write tests
+     * Check the board to see if the pieces of the given color can still
+     * move at any instance.
+     * @param color The color of the pieces to check
+     * @return If there is a case where there can be a valid move made
+     */
+    public boolean checkNoMoreValidMoves(Color color) {
+        // Get the start position
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                Position start = new Position(row, col);
+                // Preliminary checks
+                if (startChecks(start, color)) {
+                    continue;
+                }
+                // Get the end position
+                for (int r = 0; r < 8; r++) {
+                    for (int c = 0; c < 8; c++) {
+                        Position end = new Position(r, c);
+                        // Preliminary checks
+                        if (endChecks(start, end)) {
+                            continue;
+                        }
+                        // Create the move through these positions
+                        Move move = new Move(start, end);
+                        // call method(s) to validate the move and return
+                        // (presumably method in MoveManager)
+                    //    if (MoveManager.validateMove(move)) {
+                    //        // there is at least one valid move, stop checking
+                    //        return true;
+                    //    }
+
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * TODO: check and write tests
+     * Helper method for checking no more valid moves. The start position
+     * must have a piece and be a piece of the given color.
+     * @param start Start position
+     * @param color Color of the piece to check
+     * @return If conditions are satisfied
+     */
+    private boolean startChecks(Position start, Color color) {
+        Piece startPiece = getPieceAtPosition(start);
+        return (getPieceAtPosition(start) == null ||
+                startPiece.getColor() != color);
+    }
+
+    /**
+     * TODO: check and write tests
+     * Helper method for checking no more valid moves. The end position
+     * must have not have a piece, is diagonal to the start position, and
+     * is forward to the start position.
+     */
+    private boolean endChecks(Position start, Position end) {
+        Piece endPiece = getPieceAtPosition(end);
+        return (endPiece != null || !end.isDiagonalTo(start) ||
+                !end.isForwardTo(start));
+    }
+
 }
