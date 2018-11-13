@@ -65,11 +65,13 @@ public class PositionTest {
         Position valid1 = new Position(1,2);
         Position valid2 = new Position(2,3);
         Position valid3 = new Position(4,5);
+        Position valid4 = new Position(1, 0);
         Position invalid1 = new Position(6,2);
         Position invalid2 = new Position(2,1);
         assert(CuT.isDiagonalTo(valid1)); 
         assert(CuT.isDiagonalTo(valid2)); 
-        assert(CuT.isDiagonalTo(valid3)); 
+        assert(CuT.isDiagonalTo(valid3));
+        assert(CuT.isDiagonalTo(valid4));
         assert(!CuT.isDiagonalTo(invalid1)); 
         assert(!CuT.isDiagonalTo(invalid2)); 
     }

@@ -54,8 +54,8 @@ public class Position {
      * @return If these positions are diagonal to each other
      */
     public boolean isDiagonalTo(Position other) {
-        return ((double)(this.row - other.row) 
-                    / (double)(this.cell - other.cell) == 1);
+        return (Math.abs((double)(this.row - other.row)
+                    / (double)(this.cell - other.cell)) == 1);
     }
 
     /**

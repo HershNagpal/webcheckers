@@ -56,7 +56,6 @@ public class MoveManager {
     /**
      * Checks if the given Move is a valid normal, non-jump move.
      * @param move The Move object that the player is making
-     * @param pieceType The type of the piece making the move (King or Single).
      * @return true if the move is a valid normal, non-jump move, false if it is invalid or not a normal move.
      */
     public static boolean isSingleMove(Move move, Board board) {
@@ -151,36 +150,33 @@ public class MoveManager {
      * @return true if the move is a valid jump move, false if it is invalid or not a jump move.
      */
     public static boolean isLastMoveJump(Move move, Piece movingPiece) {
-        /*
         Position startPosition = move.getStart();
         Position endPosition = move.getEnd();
+        int row1 = startPosition.getRow();
+        int row2 = endPosition.getRow();
+        int col1 = startPosition.getRow();
+        int col2 = endPosition.getRow();
 
         boolean isJumpMove = false;
 
         // The piece must either be Red or a King to move towards the bottom of the board.
         if (movingPiece.getColor() == Color.RED || movingPiece.getType() == Piece.Type.KING) {
-            // The move must be two down and two to the right or..
-            if (checkDistance(row2, row1, 2) && checkDistance(col2, col1, 2)) {
-                isJumpMove = true;
-            }
-            // The move must be two down and two to the left
-            else if (checkDistance(row2, row1, 2) && checkDistance(col2, col1, -2)) {
+            // The move must be two down and two to the right or two down and two to the left
+            if (Position.isDistanceExpectedValue(row2, row1, 2) && Position.isDistanceExpectedValue(col2, col1, 2)) {
                 isJumpMove = true;
             }
         }
         // The piece must either be White or a King to move to the top of the board
         if(movingPiece.getColor() == Color.WHITE || movingPiece.getType() == Piece.Type.KING) {
-            // The move must be two up and two to the left
-            if(checkDistance(row2,row1,-2) && checkDistance(col2,col1,2)) {
+            // The move must be two up and two to the left or two up and two to the left
+            if(Position.isDistanceExpectedValue(row2,row1,-2) && Position.isDistanceExpectedValue(col2,col1,2)) {
                 isJumpMove = true;
             }
             // The move must be two up and two to the left
-            else if(checkDistance(row2,row1,-2) && checkDistance(col2,col1,-2)) {
+            else if(Position.isDistanceExpectedValue(row2,row1,-2) && Position.isDistanceExpectedValue(col2,col1,-2)) {
                 isJumpMove = true;
             }
         }
         return isJumpMove;
-        */
-        return false;
     }
 }
