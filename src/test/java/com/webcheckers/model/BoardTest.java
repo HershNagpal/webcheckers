@@ -56,7 +56,7 @@ public class BoardTest {
   private Position emptyPosition3 = new Position(2, 4);
   // The 3 positions the White piece in position 1 will try to jump to
   private Position emptyPosition4 = new Position(5, 1);
-  private Position emptyPosition5 = new Position(6, 4);
+  private Position emptyPosition5 = new Position(6, 5);
   private Position emptyPosition6 = new Position(5, 5);
   // Create moves to be tested in validateMove
   Move validRedMove1 = new Move(redPosition1, emptyPosition1);
@@ -117,7 +117,7 @@ public class BoardTest {
 
     customPiecesRedMove2 = 	new Piece[][]{
             {null, null, null, null, null, null, null, null},
-            {null, whitePiece, redPiece, null, null, null, null, null},
+            {null, whitePiece, null, redPiece, null, null, null, null},
             {null, null, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},
@@ -155,8 +155,8 @@ public class BoardTest {
             {null, null, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},
-            {null, null, redPiece, null, null, null, null, null},
-            {null, null, null, whitePiece, null, null, null, null}
+            {null, null, redPiece, null, whitePiece, null, null, null},
+            {null, null, null, null, null, null, null, null}
     };
 
     cpNoRed = new Piece[][]{
@@ -306,15 +306,29 @@ public class BoardTest {
    */
   @Test
   public void testMakeNormalMove(){
-    /*
-    CuT.makeNormalMove(validRedMove2);
-    assertEquals(CuT.getPieces(),customPiecesRedMove2);
+    CuT2.makeNormalMove(validRedMove2);
+    Piece[][] pieces = CuT2.getPieces();
 
-    CuT = new Board(customPieces);
+    for (int row = 0; row < 8; row++) {
+      for (int col = 0; col < 8; col++) {
+        if (pieces[row][col] != null) {
+          assertEquals(pieces[row][col].getColor(), customPiecesRedMove2[row][col].getColor());
+          assertEquals(pieces[row][col].getType(), customPiecesRedMove2[row][col].getType());
+        }
+      }
+    }
 
-    CuT.makeNormalMove(validWhiteMove2);
-    assertEquals(CuT.getPieces(),customPiecesWhiteMove2);
-    */
+    CuT2 = new Board(customPieces);
+    CuT2.makeNormalMove(validWhiteMove2);
+    pieces = CuT2.getPieces();
+    for (int row = 0; row < 8; row++) {
+      for (int col = 0; col < 8; col++) {
+        if (pieces[row][col] != null) {
+          assertEquals(pieces[row][col].getColor(), customPiecesWhiteMove2[row][col].getColor());
+          assertEquals(pieces[row][col].getType(), customPiecesWhiteMove2[row][col].getType());
+        }
+      }
+    }
   }
 
   /**
