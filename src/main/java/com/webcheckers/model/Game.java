@@ -237,40 +237,27 @@ public class Game {
         if (getActiveColor().equals(Color.RED)) {
             move = move.flipMove();
         }
-    
-        if(board.getPieceAtPosition(move.getStart()) == null) {
+
+        //Get piece from start position
+        Piece movingPiece = board.getPieceAtPosition(move.getStart());
+        Color pieceColor = movingPiece.getColor();
+
+        // Destination must be empty
+        if(board.getPieceAtPosition(move.getEnd()) == null) {
             return false;
         }
 
-        Color pieceColor = board.getPieceAtPosition(move.getStart()).getColor();
-        
-        if(pieceColor == getActiveColor()) {
-            return MoveManager.isValidMove(move, board);
-        }
-        return false;
+        return pieceColor == getActiveColor() && MoveManager.isValidMove(move, movingPiece);
     }
 
     /**
      * Checks if the given Move is a valid normal, non-jump move.
      *
      * @param move The Move object that the player is making
-     * @param pieceType The type of the piece making the move (King or Single).
      * @return true if the move is a valid normal, non-jump move, false if it is invalid or not a normal move.
      */
-    public static boolean isSingleMove(Move move, Piece movingPiece) {
-        Position startPosition = move.getStart();
-        Position endPosition = move.getEnd();
-
-        Piece.Type pieceType = movingPiece.getType();
-        Color pieceColor = movingPiece.getColor();
-
-        boolean isSingleMove = false;
-
-        if(!startPosition.isDiagonalAdjacentTo(endPosition)) {
-            return false;
-        }
-
-        return true;
+    public boolean isSingleMove(Move move, Piece movingPiece) {
+        return MoveManager.isSingleMove(move, movingPiece);
     }
 
     /**

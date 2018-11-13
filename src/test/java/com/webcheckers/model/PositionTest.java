@@ -65,11 +65,13 @@ public class PositionTest {
         Position valid1 = new Position(1,2);
         Position valid2 = new Position(2,3);
         Position valid3 = new Position(4,5);
+        Position valid4 = new Position(1, 0);
         Position invalid1 = new Position(6,2);
         Position invalid2 = new Position(2,1);
         assert(CuT.isDiagonalTo(valid1)); 
         assert(CuT.isDiagonalTo(valid2)); 
-        assert(CuT.isDiagonalTo(valid3)); 
+        assert(CuT.isDiagonalTo(valid3));
+        assert(CuT.isDiagonalTo(valid4));
         assert(!CuT.isDiagonalTo(invalid1)); 
         assert(!CuT.isDiagonalTo(invalid2)); 
     }
@@ -119,20 +121,20 @@ public class PositionTest {
     public void testIsDiagonalJumpTo() {
         Position valid1 = new Position(2, 3);
 
-        Position invalid1 = new Position(2, 3);
+        Position invalid1 = new Position(3, 3);
         Position invalid2 = new Position(4, 5);
         Position invalid3 = new Position(9, 2);
         Position invalid4 = new Position(2, 1);
         Position invalid5 = new Position(2, -1);
 
-        assert(CuT.isDiagonalAdjacentTo(valid1));
+        assert(CuT.isDiagonalJumpTo(valid1));
 
-        assert(!CuT.isDiagonalAdjacentTo(invalid1)); 
-        assert(!CuT.isDiagonalAdjacentTo(invalid2)); 
-        assert(!CuT.isDiagonalAdjacentTo(invalid3)); 
-        assert(!CuT.isDiagonalAdjacentTo(invalid4));
-        assert(!CuT.isDiagonalAdjacentTo(invalid4));
-        assert(!CuT.isDiagonalAdjacentTo(invalid5));
+        assert(!CuT.isDiagonalJumpTo(invalid1));
+        assert(!CuT.isDiagonalJumpTo(invalid2));
+        assert(!CuT.isDiagonalJumpTo(invalid3));
+        assert(!CuT.isDiagonalJumpTo(invalid4));
+        assert(!CuT.isDiagonalJumpTo(invalid4));
+        assert(!CuT.isDiagonalJumpTo(invalid5));
 
     }
 }

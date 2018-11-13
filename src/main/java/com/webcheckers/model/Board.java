@@ -318,8 +318,10 @@ public class Board {
                         Position end = new Position(r, c);
                         // Create the move through these positions
                         Move move = new Move(start, end);
+                        //Get movingPiece from start Position
+                        Piece movingPiece = this.getPieceAtPosition(move.getStart());
                         // Check if move is valid
-                        if (MoveManager.isValidMove(move, this)) {
+                        if (MoveManager.isValidMove(move, movingPiece)) {
                             // there is at least one valid move, stop checking
                             return false;
                         }

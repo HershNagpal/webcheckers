@@ -47,8 +47,10 @@ public class MoveTest {
      */
     @Test
     public void testIsFacingRed() {
-        assert(CuT.isFacingRed());
+        //Testing move done going up from white players point of view
         assert(!CuT.isFacingRed());
+        //Testing move done going down from white players point of view
+        assert(CuT2.isFacingRed());
     }
 
     /**

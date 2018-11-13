@@ -37,6 +37,8 @@ public class Move {
 
     /**
      * Returns whether or not the move is facing the RED side of the board.
+     * "Facing the red side of the board" means that the move goes up when
+     * seen from the white players perspective.
      * @return True if the move is facing the RED side of the board, false otherwise.
      */
     public boolean isFacingRed() {
