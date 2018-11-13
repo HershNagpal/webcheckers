@@ -13,24 +13,14 @@ public class MoveManager {
      * @param move The move to be checked for validity.
      * @return True if the given move is valid, false otherwise.
      */
-    public static boolean isValidMove(Move move, Board board) {
+    public static boolean isValidMove(Move move, Piece movingPiece) {
 
         // If there is no piece being moved, return false.
-        if(board.getPieceAtPosition(move.getStart()) == null) {
-            return false;
-        }
-        // Destination must be empty
-        if(board.getPieceAtPosition(move.getEnd()) !=  null) {
+        if(movingPiece == null) {
             return false;
         }
 
-        if(isSingleMove(move, board)) {
-            return true;
-        } 
-        else if (isJumpMove(move, board)) {
-            return true;
-        }
-        return false;
+        return isSingleMove(move, movingPiece) || isJumpMove(move, movingPiece);
     }
 
     /**
@@ -58,11 +48,10 @@ public class MoveManager {
      * @param move The Move object that the player is making
      * @return true if the move is a valid normal, non-jump move, false if it is invalid or not a normal move.
      */
-    public static boolean isSingleMove(Move move, Board board) {
+    public static boolean isSingleMove(Move move, Piece movingPiece) {
         Position startPosition = move.getStart();
         Position endPosition = move.getEnd();
 
-        Piece movingPiece = board.getPieceAtPosition(startPosition);
         Color pieceColor = movingPiece.getColor();
 
         // Positions must be diagonal adjacent
@@ -74,7 +63,8 @@ public class MoveManager {
         if(!isKingMove(move, movingPiece)) {
             if(move.isFacingRed() && pieceColor == Color.RED) {
                 return false;
-            } else if(!move.isFacingRed() && pieceColor == Color.WHITE) {
+            }
+            else if(!move.isFacingRed() && pieceColor == Color.WHITE) {
                 return false;
             }
         }
@@ -88,7 +78,7 @@ public class MoveManager {
      * @param move The Move object that the player is making.
      * @return true if the move is a valid jump move, false if it is invalid or not a jump move.
      */
-    public static boolean isJumpMove(Move move, Board board) {
+    public static boolean isJumpMove(Move move, Piece movingPiece) {
         /*
         int row1 = move.getStart().getRow();
         int col1 = move.getStart().getCell();
@@ -150,12 +140,31 @@ public class MoveManager {
      * @return true if the move is a valid jump move, false if it is invalid or not a jump move.
      */
     public static boolean isLastMoveJump(Move move, Piece movingPiece) {
-        Position startPosition = move.getStart();
+
+        /*Position startPosition = move.getStart();
         Position endPosition = move.getEnd();
-        int row1 = startPosition.getRow();
-        int row2 = endPosition.getRow();
-        int col1 = startPosition.getRow();
-        int col2 = endPosition.getRow();
+
+        Piece movingPiece = board.getPieceAtPosition(startPosition);
+        Color pieceColor = movingPiece.getColor();
+
+        // Positions must be diagonal adjacent
+        if(!startPosition.isDiagonalAdjacentTo(endPosition)) {
+            return false;
+        }
+
+        // Must either be a King move or moving away from its side.
+        if(!isKingMove(move, movingPiece)) {
+            if(move.isFacingRed() && pieceColor == Color.RED) {
+                return false;
+            } else if(!move.isFacingRed() && pieceColor == Color.WHITE) {
+                return false;
+            }
+        }
+
+        return true;*/
+
+        /*Position startPosition = move.getStart();
+        Position endPosition = move.getEnd();
 
         boolean isJumpMove = false;
 
@@ -178,5 +187,7 @@ public class MoveManager {
             }
         }
         return isJumpMove;
+*/
+        return false;
     }
 }
