@@ -8,7 +8,6 @@ package com.webcheckers.model;
 public class MoveManager {
 
     /**
-     * @TODO Make this compatible with backup moves.
      * Returns whether or not the given move is valid according to checkers rules.
      * @param move The move to be checked for validity.
      * @return True if the given move is valid, false otherwise.
@@ -134,21 +133,18 @@ public class MoveManager {
 
 
     /**
-     * @TODO Implement this.
      * Checks if the given Move is a valid jump move
      * @param move The Move object that the player is making.
      * @return true if the move is a valid jump move, false if it is invalid or not a jump move.
      */
     public static boolean isLastMoveJump(Move move, Piece movingPiece) {
-
-        /*Position startPosition = move.getStart();
+        Position startPosition = move.getStart();
         Position endPosition = move.getEnd();
 
-        Piece movingPiece = board.getPieceAtPosition(startPosition);
         Color pieceColor = movingPiece.getColor();
 
-        // Positions must be diagonal adjacent
-        if(!startPosition.isDiagonalAdjacentTo(endPosition)) {
+        //Positions must be within jump move distance
+        if(!startPosition.isDiagonalJumpTo(endPosition)){
             return false;
         }
 
@@ -156,38 +152,12 @@ public class MoveManager {
         if(!isKingMove(move, movingPiece)) {
             if(move.isFacingRed() && pieceColor == Color.RED) {
                 return false;
-            } else if(!move.isFacingRed() && pieceColor == Color.WHITE) {
+            }
+            else if(!move.isFacingRed() && pieceColor == Color.WHITE) {
                 return false;
             }
         }
 
-        return true;*/
-
-        /*Position startPosition = move.getStart();
-        Position endPosition = move.getEnd();
-
-        boolean isJumpMove = false;
-
-        // The piece must either be Red or a King to move towards the bottom of the board.
-        if (movingPiece.getColor() == Color.RED || movingPiece.getType() == Piece.Type.KING) {
-            // The move must be two down and two to the right or two down and two to the left
-            if (Position.isDistanceExpectedValue(row2, row1, 2) && Position.isDistanceExpectedValue(col2, col1, 2)) {
-                isJumpMove = true;
-            }
-        }
-        // The piece must either be White or a King to move to the top of the board
-        if(movingPiece.getColor() == Color.WHITE || movingPiece.getType() == Piece.Type.KING) {
-            // The move must be two up and two to the left or two up and two to the left
-            if(Position.isDistanceExpectedValue(row2,row1,-2) && Position.isDistanceExpectedValue(col2,col1,2)) {
-                isJumpMove = true;
-            }
-            // The move must be two up and two to the left
-            else if(Position.isDistanceExpectedValue(row2,row1,-2) && Position.isDistanceExpectedValue(col2,col1,-2)) {
-                isJumpMove = true;
-            }
-        }
-        return isJumpMove;
-*/
-        return false;
+        return true;
     }
 }

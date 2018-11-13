@@ -36,7 +36,7 @@ public class MoveManagerTest {
      * Test for isNormalMove.
      */
     @Test
-    public void testIsNormalMove(){
+    public void testIsSingleMove(){
         /*
         //Test red single moving piece, moving down and right (Valid)
         Move validRedSingleMove01 = new Move(new Position(0,0), new Position(1,1));
