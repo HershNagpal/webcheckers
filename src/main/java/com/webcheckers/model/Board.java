@@ -23,14 +23,14 @@ public class Board {
     public final static int COLUMNS = 8;
     private Piece[][] pieces;
     public final static Piece[][] DEBUG_PIECES =
-            {   {null, new Piece(Color.WHITE, Type.SINGLE), null, new Piece(Color.WHITE, Type.SINGLE), null, null, null, null},
-                {null, null, null, null, new Piece(Color.WHITE, Type.SINGLE), null, null, null},
-                {null, null, null, null, null, new Piece(Color.WHITE, Type.SINGLE), null, null},
+            {   {null, new Piece(Color.RED, Type.SINGLE), null, new Piece(Color.RED, Type.SINGLE), null, null, null, null},
+                {null, null, null, null, new Piece(Color.RED, Type.SINGLE), null, null, null},
+                {null, null, null, null, null, new Piece(Color.RED, Type.SINGLE), null, null},
                 {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, new Piece(Color.WHITE, Type.SINGLE), null, null},
-                {null, null, new Piece(Color.WHITE, Type.SINGLE), null, null, null, null, null},
-                {null, null, null, null, null, new Piece(Color.RED, Type.SINGLE), null, new Piece(Color.RED, Type.SINGLE)},
-                {new Piece(Color.RED, Type.SINGLE), null, null, null, null, null, new Piece(Color.RED, Type.SINGLE), null},
+                {null, null, null, null, null, new Piece(Color.RED, Type.SINGLE), null, null},
+                {null, null, new Piece(Color.RED, Type.SINGLE), null, null, null, null, null},
+                {null, null, null, null, null, new Piece(Color.WHITE, Type.SINGLE), null, new Piece(Color.WHITE, Type.SINGLE)},
+                {new Piece(Color.WHITE, Type.SINGLE), null, null, null, null, null, new Piece(Color.WHITE, Type.SINGLE), null},
             };
 
     /**

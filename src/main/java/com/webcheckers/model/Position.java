@@ -4,6 +4,7 @@ package com.webcheckers.model;
  * Represents a position on the board.
  *
  * @author Michael Kha
+ * @author Hersh Nagpal
  */
 public class Position {
 
