@@ -37,35 +37,33 @@ public class MoveManagerTest {
      */
     @Test
     public void testIsSingleMove(){
-        /*
         //Test red single moving piece, moving down and right (Valid)
         Move validRedSingleMove01 = new Move(new Position(0,0), new Position(1,1));
         assertTrue(MoveManager.isSingleMove(validRedSingleMove01,redPiece));
 
         //Test red single moving piece, moving down and left (Valid)
         Move validRedSingleMove02 = new Move(new Position(1,1), new Position(2,0));
-        assertTrue(MoveManager.isNormalMove(validRedSingleMove02,redPiece));
+        assertTrue(MoveManager.isSingleMove(validRedSingleMove02,redPiece));
 
         //Test white single moving piece, moving up and right (Valid)
         Move validWhiteSingleMove01 = new Move(new Position(5,5), new Position(4,6));
-        assertTrue(MoveManager.isNormalMove(validWhiteSingleMove01,whitePiece));
+        assertTrue(MoveManager.isSingleMove(validWhiteSingleMove01,whitePiece));
 
         //Test white single moving piece, moving up and left (Valid)
         Move validWhiteSingleMove02 = new Move(new Position(5,5), new Position(4,4));
-        assertTrue(MoveManager.isNormalMove(validWhiteSingleMove02,whitePiece));
+        assertTrue(MoveManager.isSingleMove(validWhiteSingleMove02,whitePiece));
 
         //Test red single moving piece, moving up and right (Invalid)
         Move invalidRedSingleMove01 = new Move(new Position(3,3), new Position(2,4));
-        assertFalse(MoveManager.isNormalMove(invalidRedSingleMove01,redPiece));
+        assertFalse(MoveManager.isSingleMove(invalidRedSingleMove01,redPiece));
 
         //Test red king moving piece, moving up and left (Valid)
         Move validRedKingMove01 = new Move(new Position(3,3), new Position(2,2));
-        assertTrue(MoveManager.isNormalMove(validRedKingMove01,redKingPiece));
+        assertTrue(MoveManager.isSingleMove(validRedKingMove01,redKingPiece));
 
         //Test white king moving piece, moving down and right (Valid)
         Move validWhiteKingMove01 = new Move(new Position(3,3), new Position(4,4));
-        assertTrue(MoveManager.isNormalMove(validWhiteKingMove01,whiteKingPiece));
-        */
+        assertTrue(MoveManager.isSingleMove(validWhiteKingMove01,whiteKingPiece));
     }
 
     /**

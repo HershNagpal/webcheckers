@@ -72,12 +72,32 @@ public class MoveManager {
     }
 
     /**
-     * @TODO Implement this.
      * Checks if the given Move is a valid jump move
      * @param move The Move object that the player is making.
      * @return true if the move is a valid jump move, false if it is invalid or not a jump move.
      */
     public static boolean isJumpMove(Move move, Piece movingPiece) {
+        Position startPosition = move.getStart();
+        Position endPosition = move.getEnd();
+
+        Color pieceColor = movingPiece.getColor();
+
+        //Positions must be within jump move distance
+        if(!startPosition.isDiagonalJumpTo(endPosition)){
+            return false;
+        }
+
+        // Must either be a King move or moving away from its side.
+        if(!isKingMove(move, movingPiece)) {
+            if(move.isFacingRed() && pieceColor == Color.RED) {
+                return false;
+            }
+            else if(!move.isFacingRed() && pieceColor == Color.WHITE) {
+                return false;
+            }
+        }
+
+        return true;
         /*
         int row1 = move.getStart().getRow();
         int col1 = move.getStart().getCell();
@@ -127,7 +147,6 @@ public class MoveManager {
         }
         return isJumpMove;
         */
-        return false;
     }
 
 
