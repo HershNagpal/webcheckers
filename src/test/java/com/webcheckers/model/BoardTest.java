@@ -381,4 +381,48 @@ public class BoardTest {
     assertTrue(CuT.checkNoMoreValidMoves(Color.WHITE));
   }
 
+  @Test
+  public void testIsBadStart() {
+    Piece[][] pieces = new Piece[][]{
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, redPiece, null, null, null, redPiece, null, null},
+            {null, null, redPiece, null, redPiece, null, null, null},
+            {null, null, null, whitePiece, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+    };
+    CuT = new Board(pieces);
+    Position start = new Position(1, 2);
+    assertTrue(CuT.isBadStart(start, Color.RED));
+    start = new Position(2, 1);
+    assertFalse(CuT.isBadStart(start, Color.RED));
+    assertTrue(CuT.isBadStart(start, Color.WHITE));
+  }
+
+  @Test
+  public void testIsBadEnd() {
+    Piece[][] pieces = new Piece[][]{
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, redPiece, null, null, null, redPiece, null, null},
+            {null, null, redPiece, null, redPiece, null, null, null},
+            {null, null, null, whitePiece, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+    };
+    CuT = new Board(pieces);
+    Position start = new Position(1, 2);
+    Position end = new Position(1, 2);
+    assertTrue(CuT.isBadEnd(start, end));
+    start = new Position(2, 1);
+    assertTrue(CuT.isBadEnd(start, end));
+    assertTrue(CuT.isBadEnd(end, start));
+    end = new Position(3, 2);
+    assertTrue(CuT.isBadEnd(start, end));
+
+  }
+
 }

@@ -1,6 +1,5 @@
 package com.webcheckers.model;
 
-import com.webcheckers.model.Piece.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,13 +90,14 @@ public class Game {
     public Game(Player redPlayer, Player whitePlayer) {
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
+        /*
         if(redPlayer.getName().equals("debug") && whitePlayer.getName().equals("test")) {
             this.board = new Board(Board.DEBUG_PIECES);
         } else if (redPlayer.getName().equals("test") && whitePlayer.getName().equals("debug")) {
             this.board = new Board(Board.DEBUG_PIECES);
-        } else {
+        } else {*/
             this.board = new Board();
-        }
+        //}
         activeColor = Color.RED;
     }
 
