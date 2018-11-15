@@ -42,8 +42,34 @@ public class Move {
      * @return True if the move is facing the RED side of the board, false otherwise.
      */
     public boolean isFacingRed() {
-        if(this.getStart().getRow() > this.getEnd().getRow()) return true;
-        return false;
+        return this.getStart().getRow() > this.getEnd().getRow();
+    }
+
+    /**
+     * Returns the piece that is being jumped. Null if none.
+     * Should only be called on jump moves or will not work properly.
+     * @return the piece in the middle of a jump move. Returns null if no piece.
+     */
+    public Position getJumpedPiece() {
+        Position jumpedPosition;
+        
+        if(this.isFacingRed()) {
+            // Facing the left side of the board
+            if (this.getEnd().getCell() < this.getStart().getCell()) {
+                jumpedPosition = new Position(this.getStart().getRow()-1, this.getStart().getCell()-1);
+            } else {
+                jumpedPosition = new Position(this.getStart().getRow()-1, this.getStart().getCell()+1);
+            }
+        } 
+        else {
+            if (this.getEnd().getCell() < this.getStart().getCell()) {
+                jumpedPosition = new Position(this.getStart().getRow()+1, this.getStart().getCell()-1);
+            } else {
+                jumpedPosition = new Position(this.getStart().getRow()+1, this.getStart().getCell()+1);
+            }
+        }
+
+        return jumpedPosition;
     }
 
     /**
