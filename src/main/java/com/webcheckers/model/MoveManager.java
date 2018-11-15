@@ -12,14 +12,15 @@ public class MoveManager {
      * @param move The move to be checked for validity.
      * @return True if the given move is valid, false otherwise.
      */
-    public static boolean isValidMove(Move move, Piece movingPiece) {
+    public static boolean isValidMove(Move move, Board board) {
+        Piece movingPiece = board.getPieceAtPosition(move.getStart());
 
         // If there is no piece being moved, return false.
         if(movingPiece == null) {
             return false;
         }
 
-        return isSingleMove(move, movingPiece) || isJumpMove(move, movingPiece);
+        return isSingleMove(move, movingPiece) || isJumpMove(move, board);
     }
 
     /**
