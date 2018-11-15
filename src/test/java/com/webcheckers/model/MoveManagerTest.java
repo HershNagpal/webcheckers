@@ -67,6 +67,16 @@ public class MoveManagerTest {
     }
 
     /**
+     * Test for isJumpMove.
+     */
+    @Test
+    public void testIsJumpMove() {
+        //Test red single moving piece, moving down and right (Valid)
+        Move validRedSingleMove01 = new Move(new Position(0,0), new Position(2,2));
+        assertTrue(MoveManager.isJumpMove(validRedSingleMove01,redPiece));
+    }
+
+    /**
      * Test for isLastMoveJump
      */
     @Test
