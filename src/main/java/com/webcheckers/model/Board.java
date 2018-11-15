@@ -315,10 +315,18 @@ public class Board {
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
                 Position start = new Position(row, col);
+                // Is this a bad start position?
+                if (isBadStart(start, color)) {
+                    continue;
+                }
                 // Get the end position
                 for (int r = 0; r < 8; r++) {
                     for (int c = 0; c < 8; c++) {
                         Position end = new Position(r, c);
+                        // Is this a bad end position?
+                        if (isBadEnd(start, end)) {
+                            continue;
+                        }
                         // Create the move through these positions
                         Move move = new Move(start, end);
                         // Check if move is valid
@@ -332,6 +340,31 @@ public class Board {
             }
         }
         return true;
+    }
+
+    /**
+     * TODO: check and write tests
+     * Helper method for checking no more valid moves. The start position
+     * must have a piece and be a piece of the given color.
+     * @param start Start position
+     * @param color Color of the piece to check
+     * @return If conditions are satisfied
+     */
+    public boolean isBadStart(Position start, Color color) {
+        Piece startPiece = getPieceAtPosition(start);
+        return (startPiece == null || startPiece.getColor() != color);
+    }
+
+    /**
+     * TODO: check and write tests
+     * Helper method for checking no more valid moves. The end position
+     * must have not have a piece, is diagonal to the start position, and
+     * is forward to the start position.
+     */
+    public boolean isBadEnd(Position start, Position end) {
+        Piece endPiece = getPieceAtPosition(end);
+        return (endPiece != null || !end.isDiagonalTo(start) ||
+                end.isAbove(start));
     }
     
     /**
