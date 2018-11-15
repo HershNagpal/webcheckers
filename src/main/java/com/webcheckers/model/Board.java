@@ -450,7 +450,7 @@ public class Board {
                 }
             }
         }
+        
         return movablePieceLocations;
     }
-
 }

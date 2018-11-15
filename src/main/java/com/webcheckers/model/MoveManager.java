@@ -86,7 +86,6 @@ public class MoveManager {
 
         Color pieceColor = movingPiece.getColor();
         
-
         //Positions must be within jump move distance
         if(!startPosition.isDiagonalJumpTo(endPosition)){
             return false;
@@ -109,8 +108,6 @@ public class MoveManager {
 
         return true;      
     }
-
-
 
     /**
      * Checks if the given Move is a valid jump move
