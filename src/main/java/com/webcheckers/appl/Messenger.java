@@ -22,9 +22,9 @@ public class Messenger {
     static final Message SUBMIT_TRUE = new Message("", MessageType.info);
     static final Message SUBMIT_FALSE = new Message("Invalid move. Cannot submit turn.", MessageType.error);
     static final Message BACKUP_TRUE = new Message("", MessageType.info);
-    static final Message BACKUP_FALSE = new Message("Cannot Backup, there are no moves to undo.", MessageType.error);
+    static final Message BACKUP_FALSE = new Message("Cannot backup, there are no moves to undo.", MessageType.error);
     static final Message RESIGN_TRUE = new Message("", MessageType.info);
-    static final Message RESIGN_FALSE = new Message("", MessageType.error);
+    static final Message RESIGN_FALSE = new Message("Could not resign. Your opponent already resigned.", MessageType.error);
 
     /**
      * Message to display when the opponent player has resigned.

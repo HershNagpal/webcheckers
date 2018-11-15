@@ -216,7 +216,11 @@ public class Game {
      * @return True if successful
      */
     public boolean resignGame(Player player) {
-        // game over
+        // Resign already occurred
+        if (resigned) {
+            return false;
+        }
+        // Game over update state
         winner = player == redPlayer ? whitePlayer : redPlayer;
         if (isActivePlayer(player)) {
             switchActiveColor();
