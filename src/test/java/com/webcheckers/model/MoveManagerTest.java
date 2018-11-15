@@ -132,11 +132,23 @@ public class MoveManagerTest {
     /**
      * Test for isKingMove
      */
+    @Test
     public void testIsKingMove() {
         Move whiteKingMove1 = new Move(new Position(1,6), new Position(2,5));
         Move whiteKingMove2 = new Move(new Position(1,2), new Position(1,3));
-        Move redKingMove1 = new Move(new Position(1,2), new Position(1,3));
+        Move redKingMove1 = new Move(new Position(5,2), new Position(3,0));
+        Move redKingMove2 = new Move(new Position(6,3), new Position(4,5));
 
         Move normalWhiteMove1 = new Move(new Position(1,6), new Position(0,7));
+        Move normalRedMove1 = new Move(new Position(5,1), new Position(6,0));
+
+        assertTrue(MoveManager.isKingMove(whiteKingMove1, whiteKingPiece));
+        assertTrue(MoveManager.isKingMove(whiteKingMove2, whiteKingPiece));
+        assertTrue(MoveManager.isKingMove(redKingMove1, redKingPiece));
+        assertTrue(MoveManager.isKingMove(redKingMove2, redKingPiece));
+
+        assertFalse(MoveManager.isKingMove(redKingMove2, RedP));
+        assertFalse(MoveManager.isKingMove(normalWhiteMove1, whiteKingPiece));
+        assertFalse(MoveManager.isKingMove(normalRedMove1, redKingPiece));
     }
 }
