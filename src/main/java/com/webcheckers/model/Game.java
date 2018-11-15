@@ -1,9 +1,6 @@
 package com.webcheckers.model;
 
-import static java.lang.Math.abs;
-
 import com.webcheckers.model.Piece.Type;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -380,89 +377,10 @@ public class Game {
         List<Position> movablePieceLocations = board.getMovablePieceLocations(getActiveColor());
         for (Position indexPosition : movablePieceLocations) {
             // Check if piece at indexPosition has a position to jump to
-            if (getJumpLocations(indexPosition).size() > 0) {
+            if (board.getJumpLocations(indexPosition).size() > 0) {
                 return true;
             }
         }
         return false;
-    }
-
-    /**
-     * This method will get the location of a piece and check the jump locations of that piece.
-     *
-     * @param position location of an active player's piece
-     * @return true if piece at position has a position to jump to
-     * @TODO make this so that it only checks kinged jump moves if the piece is a king.
-     */
-    public List<Position> getJumpLocations(Position position) {
-        Piece movingPiece = board.getPieceAtPosition(position);
-
-        int row = position.getRow();
-        int col = position.getCell();
-        List<Position> possibleJumpPos = new ArrayList<>();
-        Position upperLeft, upperRight, lowerLeft, lowerRight;
-
-        upperLeft = new Position(row - 2, col - 2);
-        upperRight = new Position(row - 2, col + 2);
-        lowerLeft = new Position(row + 2, col - 2);
-        lowerRight = new Position(row + 2, col + 2);
-
-        possibleJumpPos.add(upperLeft);
-        possibleJumpPos.add(upperRight);
-        possibleJumpPos.add(lowerLeft);
-        possibleJumpPos.add(lowerRight);
-
-        List<Position> jumpedPositions = new ArrayList<>();
-        jumpedPositions.add(new Position(row - 1, col - 1));
-        jumpedPositions.add(new Position(row - 1, col + 1));
-        jumpedPositions.add(new Position(row + 1, col - 1));
-        jumpedPositions.add(new Position(row + 1, col + 1));
-
-        List<Position> validJumpPositions = new ArrayList<>();
-
-        for (int i = 0; i < possibleJumpPos.size(); i++) {
-            Position pos = possibleJumpPos.get(i);
-
-            //make sure positions are on the board
-            if (pos.getRow() < 0 || pos.getCell() < 0 || pos.getRow() >= Board.ROWS || pos.getCell() >= Board.COLUMNS) {
-                //continue
-            }
-
-            // Check if position jumping into is not empty
-            else if (board.getPieceAtPosition(pos) == null) {
-                // Check if there is a piece being jumped
-                Position positionJumped = new Position(pos.getRow(), pos.getCell());
-
-                // Checking if its equal to null because you cannot call .equals on null
-                if (board.getPieceAtPosition(jumpedPositions.get(i)) == null) {
-                    //continue
-                } else {
-                    Piece jumpedPiece = board.getPieceAtPosition(jumpedPositions.get(i));
-                    //Valid jump if the piece jumped is the opposite color of the active color.
-                    if (!jumpedPiece.getColor().equals(activeColor)) {
-                        System.out.println(jumpedPiece);
-                        //Invalid jump if the piece is type SINGLE and going in the wrong direction
-                        if (!movingPiece.getType().equals(Type.KING)) {
-                            //SINGLE red piece cant jump up
-                            if (activeColor.equals(Color.RED)) {
-                                if (i != 0 && i != 1) {
-                                    validJumpPositions.add(pos);
-                                }
-                            }
-                            //SINGLE white piece cant jump down
-                            else {
-                                if (i != 2 && i != 3) {
-                                    validJumpPositions.add(pos);
-                                }
-                            }
-                        } else {
-                            validJumpPositions.add(pos);
-                        }
-                    }
-                }
-            }
-        }
-
-        return validJumpPositions;
     }
 }

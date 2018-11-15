@@ -357,7 +357,102 @@ public class Board {
     private boolean endChecks(Position start, Position end) {
         Piece endPiece = getPieceAtPosition(end);
         return (endPiece != null || !end.isDiagonalTo(start) ||
-                !end.isForwardTo(start));
+                end.isAbove(start));
+    }
+    
+    /**
+     * Takes in the position of a piece and returns all locations that it cn make a valid jump move.
+     * Must be a piece at given location.
+     * @param position the position of a piece.
+     * @return a list of the possible valid jump moves this piece can make.
+     */
+    public List<Position> getJumpLocations(Position start) {
+        Piece movingPiece = this.getPieceAtPosition(start);
+
+        List<Position> validJumpPositions = new ArrayList<>();
+        
+        List<Position> possibleJumpPositions = this.findPossibleJumpPositions(start);
+        
+        Move possibleJumpMove;
+        for (Position currentEnd : possibleJumpPositions) {
+            possibleJumpMove = new Move(start, currentEnd);
+            if(MoveManager.isJumpMove(possibleJumpMove, this)) {
+                validJumpPositions.add(currentEnd);
+            }
+        }
+
+        return validJumpPositions;
+    }
+
+    /**
+     * Returns a list of positions to be jumped to on the board from a given position.
+     * @param position the position of the piece to be checked for possible jump locations.
+     * @return a list of the possible locations to be jumped to from this position.
+     */
+    public List<Position> findJumpedPositions(Position start, List<Position> possibleJumpPositions) {
+        List<Position> jumpedPositions = new ArrayList<>();
+        int row = start.getRow();
+        int col = start.getCell();
+
+        for (Position currentPosition : possibleJumpPositions) {
+
+            // Upper 
+            if(currentPosition.isAbove(start)) {
+                if(currentPosition.isRightOf(start)) {
+                    // Right
+                    possibleJumpPositions.add((new Position(row - 1, col + 1)));
+                } else {
+                    // Left
+                    possibleJumpPositions.add((new Position(row - 1, col - 1)));
+                }
+            } else {
+                if(currentPosition.isRightOf(start)) {
+                    // Right
+                    possibleJumpPositions.add((new Position(row + 1, col + 1)));
+                } else {
+                    // Left
+                    possibleJumpPositions.add((new Position(row + 1, col - 1)));
+                }
+            }
+        }
+
+        return jumpedPositions;
+    }
+
+    /**
+     * Returns a list of positions to be jumped to on the board from a given position.
+     * @param position the position of the piece to be checked for possible jump locations.
+     * @return a list of the possible locations to be jumped to from this position.
+     */
+    public List<Position> findPossibleJumpPositions(Position position) {
+        List<Position> possibleJumpPositions = new ArrayList<>();
+        int row = position.getRow();
+        int col = position.getCell();
+
+        // Upper
+        if(row - 2 > 0) {
+            if (col - 2 > 0) {
+                // Left
+                possibleJumpPositions.add((new Position(row - 2, col - 2))); 
+            }
+            if (col + 2 < Board.COLUMNS) {
+                // Right
+                possibleJumpPositions.add((new Position(row - 2, col + 2)));
+            }
+        }
+        // Lower
+        if(row + 2 < Board.ROWS) {
+            if (col - 2 > 0) {
+                // Left
+                possibleJumpPositions.add((new Position(row + 2, col - 2))); 
+            }
+            if (col + 2 < Board.COLUMNS) {
+                // Right
+                possibleJumpPositions.add((new Position(row + 2, col + 2)));
+            }
+        }
+
+        return possibleJumpPositions;
     }
 
     /**

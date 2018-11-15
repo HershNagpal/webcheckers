@@ -41,12 +41,21 @@ public class Position {
     }
 
     /**
-     * Is this position in front of the other position?
+     * Is this position on a lower row number than the other?
      * @param other End position
-     * @return If other position is in front of this position
+     * @return true if this position higher on the board than this position.
      */
-    public boolean isForwardTo(Position other) {
-        return this.row > other.row;
+    public boolean isAbove(Position other) {
+        return this.row < other.row;
+    }
+
+    /**
+     * Is this position on a greater column number than the other?
+     * @param other End position
+     * @return true if this position is to the right of the other position.
+     */
+    public boolean isRightOf(Position other) {
+        return this.cell > other.cell;
     }
 
     /**
