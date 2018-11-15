@@ -1,5 +1,8 @@
 package com.webcheckers.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.webcheckers.model.Piece.Type;
 
 /**
@@ -318,10 +321,8 @@ public class Board {
                         Position end = new Position(r, c);
                         // Create the move through these positions
                         Move move = new Move(start, end);
-                        //Get movingPiece from start Position
-                        Piece movingPiece = this.getPieceAtPosition(move.getStart());
                         // Check if move is valid
-                        if (MoveManager.isValidMove(move, movingPiece)) {
+                        if (MoveManager.isValidMove(move, this)) {
                             // there is at least one valid move, stop checking
                             return false;
                         }
@@ -357,6 +358,32 @@ public class Board {
         Piece endPiece = getPieceAtPosition(end);
         return (endPiece != null || !end.isDiagonalTo(start) ||
                 !end.isForwardTo(start));
+    }
+
+    /**
+     * Returns all of the locations of pieces that can make moves.
+     *
+     * @return a list of positions that have pieces that can move.
+     */
+    public List<Position> getMovablePieceLocations(Color activeColor) {
+        List<Position> movablePieceLocations = new ArrayList<>();
+        Position indexPosition;
+        Piece indexPiece;
+
+        // Iterate through all pieces to see which ones are valid to move this turn.
+        for (int row = 0; row < Board.ROWS; row++) {
+            for (int col = 0; col < Board.COLUMNS; col++) {
+                indexPosition = new Position(row, col);
+                if (this.getPieceAtPosition(indexPosition) != null) {
+                    indexPiece = this.getPieceAtPosition(indexPosition);
+                    // Add the possible positions of pieces that are the active color to the array.
+                    if (indexPiece.getColor() == activeColor) {
+                        movablePieceLocations.add(indexPosition);
+                    }
+                }
+            }
+        }
+        return movablePieceLocations;
     }
 
 }

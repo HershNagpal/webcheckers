@@ -314,12 +314,16 @@ public class Game {
             return false;
         }
 
+
         //Enforce player ending a multiple jump move
         Position lastMoveEndPos = lastMove.getEnd();
         //Multiple jump move has not been completed
+
+        /* @TODO make this compatible so there are no errors.
         if (isLastMoveJump(lastMove) && getJumpLocations(lastMoveEndPos).size() > 0) {
             return false;
         }
+        */
 
         //reset lastMoves and lastMove
         lastMoves.clear();
@@ -390,7 +394,7 @@ public class Game {
      * @return whether or not the current player can make a jump move.
      */
     public boolean jumpMoveExists() {
-        List<Position> movablePieceLocations = getMovablePieceLocations();
+        List<Position> movablePieceLocations = board.getMovablePieceLocations(getActiveColor());
         for (Position indexPosition : movablePieceLocations) {
             // Check if piece at indexPosition has a position to jump to
             //System.out.println("JUMP LOCATIONS: "+getJumpLocations(indexPosition));
@@ -481,31 +485,4 @@ public class Game {
 
         return validJumpPositions;
     }
-
-    /**
-     * Helper method that returns all of the locations of pieces that can make moves.
-     *
-     * @return a list of positions that have pieces that can move.
-     */
-    public List<Position> getMovablePieceLocations() {
-        List<Position> movablePieceLocations = new ArrayList<>();
-        Position indexPosition;
-        Piece indexPiece;
-
-        // Iterate through all pieces to see which ones are valid to move this turn.
-        for (int row = 0; row < Board.ROWS; row++) {
-            for (int col = 0; col < Board.COLUMNS; col++) {
-                indexPosition = new Position(row, col);
-                if (board.getPieceAtPosition(indexPosition) != null) {
-                    indexPiece = board.getPieceAtPosition(indexPosition);
-                    // Add the possible positions of pieces that are the active color to the array.
-                    if (indexPiece.getColor() == getActiveColor()) {
-                        movablePieceLocations.add(indexPosition);
-                    }
-                }
-            }
-        }
-        return movablePieceLocations;
-    }
-
 }
