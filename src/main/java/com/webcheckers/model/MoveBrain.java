@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * This class finds all valid moves
@@ -24,13 +25,26 @@ public class MoveBrain {
         this.AIColor = AIColor;
     }
 
+    /**
+     * this method will use a list of valid
+     * moves from getAIMoves and choose a
+     * random move from the list to return
+     *
+     * @return A valid AI Move
+     */
     public Move generateAIMove(){
-
-        return null;
+        List<Move> AIMoves = getAIMoves();
+        int size = AIMoves.size();
+        int rand = getRandomIntegerBetweenRange(0, size-1);
+        return AIMoves.get(rand);
     }
 
     /**
+     * this method will return a list of valid moves for
+     * the AI to make. If there is a valid jump move then
+     * the list will only contain jump moves
      *
+     *@return a list of valid AIMoves.
      */
     private List<Move> getAIMoves(){
         List<Move> AIMoves = new ArrayList<>();
@@ -61,6 +75,18 @@ public class MoveBrain {
             }
         }
         return AIMoves;
+    }
+
+    /**
+     * this method will generate a random int from a given range
+     *
+     * @param min the min value in desired range
+     * @param max the max value in desired range
+     * @return a random int from given range
+     */
+    private int getRandomIntegerBetweenRange(double min, double max){
+        int x = (int) ((Math.random()*((max-min)+1))+min);
+        return x;
     }
 
 }
