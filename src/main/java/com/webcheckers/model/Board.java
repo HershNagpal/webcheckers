@@ -2,6 +2,9 @@ package com.webcheckers.model;
 
 import com.webcheckers.model.Piece.Type;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Represents the Checkers Board and all the logical operations that need to be done on
  * pieces for the game to function.
@@ -307,5 +310,54 @@ public class Board {
         else{
             return null;
         }
+    }
+
+    /**
+     * @param centerPiece position of the piece you want to find valid
+     *                    move positions for
+     *
+     * given a position this method will find vlaid simple moves that
+     * can be made. This method takes into account piece color and type
+     *
+     *@return a list of valid positions that centerPiece can move to
+     */
+    public List<Position> getValidNormalMovePositions(Position centerPiece){
+        List<Position> movePositions = new ArrayList<>();
+        Color centerPieceColor = this.getPieceAtPosition(centerPiece).getColor();
+        Position upperL =
+                new Position(centerPiece.getRow()-1, centerPiece.getCell()-1);
+        Position upperR =
+                new Position(centerPiece.getRow()-1, centerPiece.getCell()+1);
+        Position lowerL =
+                new Position(centerPiece.getRow()+1, centerPiece.getCell()-1);
+        Position lowerR =
+                new Position(centerPiece.getRow()+1, centerPiece.getCell()+1);
+        movePositions.add(upperL);
+        movePositions.add(upperR);
+        movePositions.add(lowerL);
+        movePositions.add(lowerR);
+        //remove invalid positions based on piece color and type
+        if (centerPieceColor.equals(Color.RED) && !(this.getPieceAtPosition(centerPiece).getType().equals(Piece.Type.KING))){
+            movePositions.remove(upperL);
+            movePositions.remove(upperR);
+        }
+        if (centerPieceColor.equals(Color.WHITE) && !(this.getPieceAtPosition(centerPiece).getType().equals(Piece.Type.KING))) {
+            movePositions.remove(lowerL);
+            movePositions.remove(lowerR);
+        }
+        //remove positions that are off the board or occupied
+        for(Position position: movePositions){
+            if (position.getRow() >= Board.ROWS || position.getRow() < 0 ||
+                    position.getCell() >= Board.COLUMNS || position.getCell() < 0){
+                movePositions.remove(position);
+            }
+            else{
+                if (!(this.getPieceAtPosition(position) == null)){
+                    movePositions.remove(position);
+                }
+            }
+        }
+
+        return movePositions;
     }
 }

@@ -24,10 +24,15 @@ public class MoveBrain {
         this.AIColor = AIColor;
     }
 
+    public Move generateAIMove(){
+
+        return null;
+    }
+
     /**
      *
      */
-    public List<Move> getAIMoves(){
+    private List<Move> getAIMoves(){
         List<Move> AIMoves = new ArrayList<>();
         List<Position> AIPieces = game.getMovablePieceLocations();
         Boolean jumpMoveFound = false;
@@ -43,47 +48,19 @@ public class MoveBrain {
                 }
             }
         }
-        for(Position position: AIPieces){
-
+        //if there are no jump moves found then make a list of simple moves
+        if(!(jumpMoveFound)){
+            //iterate over AIPieces
+            for (Position position: AIPieces){
+                List<Position> validPositionList;
+                validPositionList = game.getBoard().getvalidNormalMovePositions(position);
+                for (Position end: validPositionList){
+                    Move move = new Move(position, end);
+                    AIMoves.add(move);
+                }
+            }
         }
         return AIMoves;
-    }
-
-    //@TODO
-    public List<Position> getvalidNormalMovePositions(Position centerPiece){
-        List<Position> movePositions = new ArrayList<>();
-        Position upperL =
-                new Position(centerPiece.getRow()-1, centerPiece.getCell()-1);
-        Position upperR =
-                new Position(centerPiece.getRow()-1, centerPiece.getCell()+1);
-        Position lowerL =
-                new Position(centerPiece.getRow()+1, centerPiece.getCell()-1);
-        Position lowerR =
-                new Position(centerPiece.getRow()+1, centerPiece.getCell()+1);
-        movePositions.add(upperL);
-        movePositions.add(upperR);
-        movePositions.add(lowerL);
-        movePositions.add(lowerR);
-        //remove invalid positions based on piece color and type
-        if (AIColor.equals(Color.RED) && !(game.getBoard().getPieceAtPosition(centerPiece).getType().equals(Piece.Type.KING))){
-            movePositions.remove(upperL);
-            movePositions.remove(upperR);
-        }
-        if (AIColor.equals(Color.WHITE) && !(game.getBoard().getPieceAtPosition(centerPiece).getType().equals(Piece.Type.KING))) {
-            movePositions.remove(lowerL);
-            movePositions.remove(lowerR);
-        }
-        //remove positions that are off the board or occupied
-        for(Position position: movePositions){
-            if (position.getRow() >= Board.ROWS || position.getRow() < 0 ||
-                    position.getCell() >= Board.COLUMNS || position.getCell() < 0){
-                movePositions.remove(position);
-            }
-            else{
-            }
-        }
-
-        return null;
     }
 
 }
