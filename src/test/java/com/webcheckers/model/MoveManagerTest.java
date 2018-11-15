@@ -80,11 +80,22 @@ public class MoveManagerTest {
      */
     @Test
     public void testIsJumpMove() {
+        Piece[][] pieces = new Piece[][]{
+                {null, null, null, null, null, RedP, null, null},
+                {null, RedP, null, null, null, null, WhtP, null},
+                {null, null, WhtP, WhtP, null, RedP, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, WhtP, null, RedP, null, null, WhtP},
+                {null, null, null, WhtP, null, null, RedP, null},
+                {RedP, null, null, null, null, null, null, RedP}
+        };
+        Board board = new Board(pieces);
 
-        //Test red single moving piece, moving down and right (Valid)
-        Move validRedSingleMove01 = new Move(new Position(0,0), new Position(2,2));
+        //Test red jump moving piece, moving down and right (Valid)
+        Move validRedJumpMove01 = new Move(new Position(1,1), new Position(3,3));
 
-        //assertTrue(MoveManager.isJumpMove(validRedSingleMove01, board));
+        assertTrue(MoveManager.isJumpMove(validRedJumpMove01, board));
     }
 
     /**
