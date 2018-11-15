@@ -22,13 +22,31 @@ public class MoveBrainTest {
 
 
     Game game;
+    Player player;
+    Player AI;
+    Board board;
+    Piece[][] pieces;
 
     /**
      *Run before each test
      */
     @BeforeEach
     public void setup(){
-        game = mock(Game.class);
+        Piece[][] testBoard00 = new Piece[][]{
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null}
+        };
+
+        player = mock(Player.class);
+        AI = mock(Player.class);
+        board = new Board(pieces);
+        game = new Game(player, AI, board);
         CuT = new MoveBrain(game);
     }
 

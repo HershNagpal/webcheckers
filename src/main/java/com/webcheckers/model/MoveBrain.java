@@ -48,8 +48,8 @@ public class MoveBrain {
             //first check for jump positions
             List<Position> pieceJumpPositions = game.getJumpLocations(position);
             if (pieceJumpPositions.size() != 0){
-                for (Position jumpTargerPosition : pieceJumpPositions) {
-                    Move move = new Move(position, jumpTargerPosition);
+                for (Position jumpTargetPosition : pieceJumpPositions) {
+                    Move move = new Move(position, jumpTargetPosition);
                     AIMoves.add(move);
                     jumpMoveFound = true;
                 }
