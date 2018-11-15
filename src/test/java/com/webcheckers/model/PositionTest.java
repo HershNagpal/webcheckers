@@ -42,8 +42,8 @@ public class PositionTest {
     @Test
     public void testIsForwardTo() {
         Position other = new Position(1, 2);
-        assertTrue(other.isForwardTo(CuT));
-        assertFalse(CuT.isForwardTo(other));
+        assertFalse(other.isAbove(CuT));
+        assertTrue(CuT.isAbove(other));
     }
 
     /**

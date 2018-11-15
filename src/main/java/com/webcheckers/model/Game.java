@@ -301,7 +301,7 @@ public class Game {
         //Enforce player ending a multiple jump move
         Position lastMoveEndPos = lastMove.getEnd();
         //Multiple jump move has not been completed
-        if (MoveManager.isLastMoveJump(lastMove, movingPiece) && getJumpLocations(lastMoveEndPos).size() > 0) {
+        if (MoveManager.isLastMoveJump(lastMove, movingPiece) && board.getJumpLocations(lastMoveEndPos).size() > 0) {
             return false;
         }
         
