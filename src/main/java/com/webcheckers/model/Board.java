@@ -333,32 +333,6 @@ public class Board {
         }
         return true;
     }
-
-    /**
-     * TODO: check and write tests
-     * Helper method for checking no more valid moves. The start position
-     * must have a piece and be a piece of the given color.
-     * @param start Start position
-     * @param color Color of the piece to check
-     * @return If conditions are satisfied
-     */
-    private boolean startChecks(Position start, Color color) {
-        Piece startPiece = getPieceAtPosition(start);
-        return (getPieceAtPosition(start) == null ||
-                startPiece.getColor() != color);
-    }
-
-    /**
-     * TODO: check and write tests
-     * Helper method for checking no more valid moves. The end position
-     * must have not have a piece, is diagonal to the start position, and
-     * is forward to the start position.
-     */
-    private boolean endChecks(Position start, Position end) {
-        Piece endPiece = getPieceAtPosition(end);
-        return (endPiece != null || !end.isDiagonalTo(start) ||
-                end.isAbove(start));
-    }
     
     /**
      * Takes in the position of a piece and returns all locations that it cn make a valid jump move.
@@ -367,8 +341,6 @@ public class Board {
      * @return a list of the possible valid jump moves this piece can make.
      */
     public List<Position> getJumpLocations(Position start) {
-        Piece movingPiece = this.getPieceAtPosition(start);
-
         List<Position> validJumpPositions = new ArrayList<>();
         
         List<Position> possibleJumpPositions = this.findPossibleJumpPositions(start);

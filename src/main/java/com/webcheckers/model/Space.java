@@ -6,15 +6,6 @@ package com.webcheckers.model;
  * @author Luis, Chris
  */
 public class Space {
-
-    /**
-     * KING_RED = Spaces where Red checkers become king pieces.
-     * KING_BLACK = Spaces where Black checkers become king pieces.
-     */
-    public enum SpaceType {
-        KING_RED, KING_BLACK, NON_KING
-    }
-
     /**
      * The color of the space, either black or white
      */
@@ -23,12 +14,10 @@ public class Space {
     /**
      * row - the row coordinate of this space.
      * column - the column coordinate of this space.
-     * spaceType - the type of space (whether a piece can be kinged or not).
      * spaceColor - the color associated with this space (black or white).
      */
     private int row;
     private int column;
-    private SpaceType spaceType;
     private SpaceColor spaceColor;
 
     //Space has no piece before setUpBoard() in Board
@@ -38,23 +27,8 @@ public class Space {
         this.row = row;
         this.column = column;
         this.piece = piece;
-        setSpaceType();
         setSpaceColor();
 
-    }
-
-    /**
-     * Sets the Space type based on row.
-     * Row 0 and 7 are king rows.
-     */
-    private void setSpaceType() {
-        if (row == 0) {
-            this.spaceType = SpaceType.KING_BLACK;
-        } else if (row == 7) {
-            this.spaceType = SpaceType.KING_RED;
-        } else {
-            this.spaceType = SpaceType.NON_KING;
-        }
     }
 
     /**

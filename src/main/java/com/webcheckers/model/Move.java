@@ -1,7 +1,5 @@
 package com.webcheckers.model;
 
-import com.webcheckers.model.Piece.Type;
-
 /**
  * Represents the movement of pieces.
  * @author Hersh Nagpal
