@@ -40,7 +40,7 @@ public class Move {
      * @return True if the move is facing the RED side of the board, false otherwise.
      */
     public boolean isFacingRed() {
-        return getStart().isAbove(getEnd());
+        return !getStart().isAbove(getEnd());
     }
 
     /**
