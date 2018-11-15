@@ -16,6 +16,12 @@ import java.util.List;
  * @author Matthew Bollinger
  */
 public class Game {
+
+    /**
+     * The game's unique ID
+     */
+    private String gameID;
+
     /**
      * Used to prevent player from making successive simple moves
      * and for enforcing the completion of jump moves.
@@ -85,6 +91,7 @@ public class Game {
             this.board = board;
         }
         activeColor = Color.RED;
+        gameID = String.valueOf(hashCode());
     }
 
     /**
@@ -107,10 +114,19 @@ public class Game {
             this.board = new Board();
         }
         activeColor = Color.RED;
+        gameID = String.valueOf(hashCode());
     }
 
     public boolean playerInGame(Player player) {
         return player == redPlayer || player == whitePlayer;
+    }
+
+    /**
+     * Get the unique game ID.
+     * @return The game ID
+     */
+    public String getGameID() {
+        return gameID;
     }
 
     /**
