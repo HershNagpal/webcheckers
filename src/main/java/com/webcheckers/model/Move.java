@@ -50,7 +50,7 @@ public class Move {
      * Should only be called on jump moves or will not work properly.
      * @return the piece in the middle of a jump move. Returns null if no piece.
      */
-    public Position getJumpedPiece() {
+    public Position getJumpedPosition() {
         Position jumpedPosition;
         
         if(this.isFacingRed()) {

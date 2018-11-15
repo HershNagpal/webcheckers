@@ -76,11 +76,15 @@ public class MoveManager {
      * @param move The Move object that the player is making.
      * @return true if the move is a valid jump move, false if it is invalid or not a jump move.
      */
-    public static boolean isJumpMove(Move move, Piece movingPiece) {
+    public static boolean isJumpMove(Move move, Board board) {
         Position startPosition = move.getStart();
         Position endPosition = move.getEnd();
 
+        Piece movingPiece = board.getPieceAtPosition(startPosition);
+        Piece centerPiece = board.getPieceAtPosition(move.getJumpedPosition());
+
         Color pieceColor = movingPiece.getColor();
+        
 
         //Positions must be within jump move distance
         if(!startPosition.isDiagonalJumpTo(endPosition)){
@@ -97,56 +101,12 @@ public class MoveManager {
             }
         }
 
-        return true;
-        /*
-        int row1 = move.getStart().getRow();
-        int col1 = move.getStart().getCell();
-
-        int row2 = move.getEnd().getRow();
-        int col2 = move.getEnd().getCell();
-        Piece middlePiece;
-
-        boolean isJumpMove = false;
-        // The piece must either be Red or a King to move towards the bottom of the board.
-        if(movingPiece.getColor() == Color.RED || movingPiece.getType() == Type.KING) {
-            // The move must be two down and two to the right or..
-            if(checkDistance(row2,row1,2) && checkDistance(col2,col1,2)) {
-                middlePiece = board.getPieceAtPosition(new Position(row1+1,col1+1));
-                // There must also be a piece of the opposite color in between the start and end.
-                if(middlePiece != null && middlePiece.getColor() != movingPiece.getColor()) {
-                    isJumpMove = true;
-                }
-            }
-            // The move must be two down and two to the left
-            else if(checkDistance(row2,row1,2) && checkDistance(col2,col1,-2)) {
-                middlePiece = board.getPieceAtPosition(new Position(row1+1,col1-1));
-                // There must also be a piece of the opposite color in between the start and end.
-                if(middlePiece != null && middlePiece.getColor() != movingPiece.getColor()) {
-                    isJumpMove = true;
-                }
-            }
+        // Must be a piece of opposite color in the middle of the start and end positions.
+        if(centerPiece == null || centerPiece.getColor() == movingPiece.getColor()) {
+            return false;
         }
-        // The piece must either be White or a King to move to the top of the board
-        if(movingPiece.getColor() == Color.WHITE || movingPiece.getType() == Type.KING) {
-            // The move must be two up and two to the left
-            if(checkDistance(row2,row1,-2) && checkDistance(col2,col1,2)) {
-                middlePiece = board.getPieceAtPosition(new Position(row1-1,col1+1));
-                // There must also be a piece of the opposite color in between the start and end.
-                if(middlePiece != null && middlePiece.getColor() != movingPiece.getColor()) {
-                    isJumpMove = true;
-                }
-            }
-            // The move must be two up and two to the left
-            else if(checkDistance(row2,row1,-2) && checkDistance(col2,col1,-2)) {
-                middlePiece = board.getPieceAtPosition(new Position(row1-1,col1-1));
-                // There must also be a piece of the opposite color in between the start and end.
-                if(middlePiece != null && middlePiece.getColor() != movingPiece.getColor()) {
-                    isJumpMove = true;
-                }
-            }
-        }
-        return isJumpMove;
-        */
+
+        return true;      
     }
 
 
