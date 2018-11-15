@@ -57,6 +57,10 @@ public class MoveManagerTest {
         Move invalidRedSingleMove01 = new Move(new Position(3,3), new Position(2,4));
         assertFalse(MoveManager.isSingleMove(invalidRedSingleMove01,RedP));
 
+        //Test white single moving piece, moving down and right (Invalid)
+        Move invalidWhiteSingleMove01 = new Move(new Position(3,3), new Position(4,4));
+        assertFalse(MoveManager.isSingleMove(invalidWhiteSingleMove01,WhtP));
+
         //Test red king moving piece, moving up and left (Valid)
         Move validRedKingMove01 = new Move(new Position(3,3), new Position(2,2));
         assertTrue(MoveManager.isSingleMove(validRedKingMove01,redKingPiece));
@@ -64,6 +68,10 @@ public class MoveManagerTest {
         //Test white king moving piece, moving down and right (Valid)
         Move validWhiteKingMove01 = new Move(new Position(3,3), new Position(4,4));
         assertTrue(MoveManager.isSingleMove(validWhiteKingMove01,whiteKingPiece));
+
+        //Test piece not moving diagonally
+        Move invalidDiagonalMove = new Move(new Position(3,3), new Position(4,3));
+        assertFalse(MoveManager.isSingleMove(invalidDiagonalMove,RedP));
     }
 
     /**
@@ -72,10 +80,11 @@ public class MoveManagerTest {
      */
     @Test
     public void testIsJumpMove() {
+
         //Test red single moving piece, moving down and right (Valid)
         Move validRedSingleMove01 = new Move(new Position(0,0), new Position(2,2));
 
-        //assertTrue(MoveManager.isJumpMove(validRedSingleMove01, RedP));
+        //assertTrue(MoveManager.isJumpMove(validRedSingleMove01, board));
     }
 
     /**
