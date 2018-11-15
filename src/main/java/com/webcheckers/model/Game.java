@@ -251,18 +251,6 @@ public class Game {
     }
 
     /**
-     * Checks if the given Move is a valid jump move
-     *
-     * @param move The Move object that the player is making.
-     * @return true if the move is a valid jump move, false if it is invalid or not a jump move.
-     */
-    public boolean isLastMoveJump(Move move) {
-        //Piece is now at the end position of the move
-        Piece movingPiece = board.getPieceAtPosition(move.getEnd());
-        return MoveManager.isLastMoveJump(move,movingPiece);
-    }
-
-    /**
      * Switches the active Color
      */
     public void switchActiveColor() {
@@ -281,7 +269,7 @@ public class Game {
     }
 
     /**
-     * TODO Create helper method in MoveManager containing move logic
+     * TODO Clean this up.
      * Updates the board to implement a move
      *
      * @param move starting position and ending position
