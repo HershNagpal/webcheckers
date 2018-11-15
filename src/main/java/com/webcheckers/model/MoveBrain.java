@@ -53,7 +53,7 @@ public class MoveBrain {
             //iterate over AIPieces
             for (Position position: AIPieces){
                 List<Position> validPositionList;
-                validPositionList = game.getBoard().getvalidNormalMovePositions(position);
+                validPositionList = game.getBoard().getValidNormalMovePositions(position);
                 for (Position end: validPositionList){
                     Move move = new Move(position, end);
                     AIMoves.add(move);
