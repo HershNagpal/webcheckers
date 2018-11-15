@@ -1,11 +1,7 @@
 package com.webcheckers.model;
 
-import com.sun.media.sound.AiffFileReader;
-import javafx.geometry.Pos;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * This class finds all valid moves
@@ -15,14 +11,11 @@ import java.util.Random;
  */
 public class MoveBrain {
 
-    private Piece[][] pieces;
-    private Color AIColor;
+
     private Game game;
 
-    public MoveBrain(Game game, Color AIColor){
+    public MoveBrain(Game game){
         this.game = game;
-        this.pieces = game.getBoard().getPieces();
-        this.AIColor = AIColor;
     }
 
     /**
@@ -35,7 +28,7 @@ public class MoveBrain {
     public Move generateAIMove(){
         List<Move> AIMoves = getAIMoves();
         int size = AIMoves.size();
-        int rand = getRandomIntegerBetweenRange(0, size-1);
+        int rand = getRandomInt(0, size-1);
         return AIMoves.get(rand);
     }
 
@@ -46,16 +39,16 @@ public class MoveBrain {
      *
      *@return a list of valid AIMoves.
      */
-    private List<Move> getAIMoves(){
+    public List<Move> getAIMoves(){
         List<Move> AIMoves = new ArrayList<>();
         List<Position> AIPieces = game.getMovablePieceLocations();
         Boolean jumpMoveFound = false;
 
         for(Position position: AIPieces) {
             //first check for jump positions
-            List<Position> pieceJumpPoistions = game.getJumpLocations(position);
-            if (pieceJumpPoistions.size() != 0){
-                for (Position jumpTargerPosition : pieceJumpPoistions) {
+            List<Position> pieceJumpPositions = game.getJumpLocations(position);
+            if (pieceJumpPositions.size() != 0){
+                for (Position jumpTargerPosition : pieceJumpPositions) {
                     Move move = new Move(position, jumpTargerPosition);
                     AIMoves.add(move);
                     jumpMoveFound = true;
@@ -84,7 +77,7 @@ public class MoveBrain {
      * @param max the max value in desired range
      * @return a random int from given range
      */
-    private int getRandomIntegerBetweenRange(double min, double max){
+    public int getRandomInt(double min, double max){
         int x = (int) ((Math.random()*((max-min)+1))+min);
         return x;
     }
