@@ -269,30 +269,15 @@ public class Game {
     }
 
     /**
-     * TODO Clean this up.
      * Updates the board to implement a move
      *
      * @param move starting position and ending position
      */
     public void makeMove(Move move) {
-
-        Position moveStart = move.getStart();
-        Position moveEnd = move.getEnd();
-
-        int rowStart = moveStart.getRow();
-        int colStart = moveStart.getCell();
-        int rowEnd = moveEnd.getRow();
-        int colEnd = moveEnd.getCell();
-
-        int rowDistance = rowEnd - rowStart;
-        rowDistance = abs(rowDistance);
-        int colDistance = colEnd - colStart;
-        colDistance = abs(colDistance);
-
-        if (rowDistance == 1 && colDistance == 1) {
+        if (move.getStart().isDiagonalTo(move.getEnd())) {
             board.makeNormalMove(move);
             checkIfKinged(move);
-        } else if (rowDistance == 2 && colDistance == 2) {
+        } else if (move.getStart().isDiagonalJumpTo(move.getEnd())) {
             if (move.isBackUpMove()) {
                 board.makeBackUpJumpMove(move, activeColor);
             } else {
@@ -314,17 +299,15 @@ public class Game {
             return false;
         }
 
-
+        // @TODO this may not actually work. 
+        Piece movingPiece = board.getPieceAtPosition(lastMove.getStart());
         //Enforce player ending a multiple jump move
         Position lastMoveEndPos = lastMove.getEnd();
         //Multiple jump move has not been completed
-
-        /* @TODO make this compatible so there are no errors.
-        if (isLastMoveJump(lastMove) && getJumpLocations(lastMoveEndPos).size() > 0) {
+        if (MoveManager.isLastMoveJump(lastMove, movingPiece) && getJumpLocations(lastMoveEndPos).size() > 0) {
             return false;
         }
-        */
-
+        
         //reset lastMoves and lastMove
         lastMoves.clear();
         lastMove = null;
@@ -397,13 +380,10 @@ public class Game {
         List<Position> movablePieceLocations = board.getMovablePieceLocations(getActiveColor());
         for (Position indexPosition : movablePieceLocations) {
             // Check if piece at indexPosition has a position to jump to
-            //System.out.println("JUMP LOCATIONS: "+getJumpLocations(indexPosition));
             if (getJumpLocations(indexPosition).size() > 0) {
-                //System.out.println("************************");
                 return true;
             }
         }
-        //System.out.println("************************");
         return false;
     }
 
