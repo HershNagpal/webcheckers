@@ -499,7 +499,11 @@ public class Game {
         //reset lastMoves and lastMove
         lastMoves.clear();
         lastMove = null;
-        switchActiveColor();
+        // Do not switch the turn if the game is over
+        // Otherwise invokes PostCheckTurn when not your turn when game is over
+        if (!isGameOver()) {
+            switchActiveColor();
+        }
 
         this.canContinueMoving = true;
 
