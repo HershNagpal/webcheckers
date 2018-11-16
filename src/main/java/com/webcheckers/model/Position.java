@@ -51,7 +51,7 @@ public class Position {
         } else if (this.row < 0 || this.row > Board.ROWS) {
             return false;
         }
-        return false;
+        return true;
     }
 
     /**

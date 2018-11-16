@@ -18,8 +18,10 @@ public class MoveManagerTest {
      */
     private Piece RedP;
     private Piece WhtP;
-    private Piece redKingPiece;
-    private Piece whiteKingPiece;
+    private Piece RedK;
+    private Piece WhtK;
+    private Piece[][] customPieces;
+    private Board board;
 
     /**
      * Initialize the objects to test
@@ -28,8 +30,19 @@ public class MoveManagerTest {
     public void setup(){
         RedP = new Piece(Color.RED, Piece.Type.SINGLE);
         WhtP = new Piece(Color.WHITE, Piece.Type.SINGLE);
-        redKingPiece = new Piece(Color.RED, Piece.Type.KING);
-        whiteKingPiece = new Piece(Color.WHITE, Piece.Type.KING);
+        RedK = new Piece(Color.RED, Piece.Type.KING);
+        WhtK = new Piece(Color.WHITE, Piece.Type.KING);
+        customPieces = 	new Piece[][] {
+            {null, null, null, null, null, RedP, null, RedP},
+            {null, null, RedK, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, WhtK, null, null, null, WhtP, null},
+            {null, RedP, null, null, null, RedK, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, RedP, null, WhtK, null, null},
+            {WhtP, null, WhtP, null, null, null, null, null}
+        };
+        board = new Board(customPieces);
     }
 
     /**
@@ -37,7 +50,25 @@ public class MoveManagerTest {
      */
     @Test
     public void testIsValidMove() {
-        
+        Move whiteValidMove1 = new Move(new Position(7,0), new Position(6,1));
+        Move whiteValidJump1 = new Move(new Position(7,2), new Position(5,4));
+        Move whiteValidKingMove1 = new Move(new Position(6,5), new Position(7,4));
+        Move whiteValidKingJump1 = new Move(new Position(3,2), new Position(5,0));
+
+        Move whiteInvalidMove1 = new Move(new Position(7,0), new Position(7,-1));
+        Move whiteInvalidMove2 = new Move(new Position(7,2), new Position(6,3));
+        Move whiteInvalidMove3 = new Move(new Position(7,0), new Position(6,7));
+        Move nullInvalidMove1 = new Move(new Position(5,0), new Position(7,0));
+
+        assertTrue(MoveManager.isValidMove(whiteValidMove1, board));
+        assertTrue(MoveManager.isValidMove(whiteValidJump1, board));
+        assertTrue(MoveManager.isValidMove(whiteValidKingMove1, board));
+        assertTrue(MoveManager.isValidMove(whiteValidKingJump1, board));
+
+        assertFalse(MoveManager.isValidMove(whiteInvalidMove1, board));
+        assertFalse(MoveManager.isValidMove(whiteInvalidMove2, board));
+        assertFalse(MoveManager.isValidMove(whiteInvalidMove3, board));
+        assertFalse(MoveManager.isValidMove(nullInvalidMove1, board));
     }
 
     /**
@@ -71,11 +102,11 @@ public class MoveManagerTest {
 
         //Test red king moving piece, moving up and left (Valid)
         Move validRedKingMove01 = new Move(new Position(3,3), new Position(2,2));
-        assertTrue(MoveManager.isSingleMove(validRedKingMove01,redKingPiece));
+        assertTrue(MoveManager.isSingleMove(validRedKingMove01,RedK));
 
         //Test white king moving piece, moving down and right (Valid)
         Move validWhiteKingMove01 = new Move(new Position(3,3), new Position(4,4));
-        assertTrue(MoveManager.isSingleMove(validWhiteKingMove01,whiteKingPiece));
+        assertTrue(MoveManager.isSingleMove(validWhiteKingMove01,WhtK));
 
         //Test piece not moving diagonally
         Move invalidDiagonalMove = new Move(new Position(3,3), new Position(4,3));
@@ -161,13 +192,13 @@ public class MoveManagerTest {
         Move normalWhiteMove1 = new Move(new Position(1,6), new Position(0,7));
         Move normalRedMove1 = new Move(new Position(5,1), new Position(6,0));
 
-        assertTrue(MoveManager.isKingMove(whiteKingMove1, whiteKingPiece));
-        assertTrue(MoveManager.isKingMove(whiteKingMove2, whiteKingPiece));
-        assertTrue(MoveManager.isKingMove(redKingMove1, redKingPiece));
-        assertTrue(MoveManager.isKingMove(redKingMove2, redKingPiece));
+        assertTrue(MoveManager.isKingMove(whiteKingMove1, WhtK));
+        assertTrue(MoveManager.isKingMove(whiteKingMove2, WhtK));
+        assertTrue(MoveManager.isKingMove(redKingMove1, RedK));
+        assertTrue(MoveManager.isKingMove(redKingMove2, RedK));
 
         assertFalse(MoveManager.isKingMove(redKingMove2, RedP));
-        assertFalse(MoveManager.isKingMove(normalWhiteMove1, whiteKingPiece));
-        assertFalse(MoveManager.isKingMove(normalRedMove1, redKingPiece));
+        assertFalse(MoveManager.isKingMove(normalWhiteMove1, RedK));
+        assertFalse(MoveManager.isKingMove(normalRedMove1, RedK));
     }
 }

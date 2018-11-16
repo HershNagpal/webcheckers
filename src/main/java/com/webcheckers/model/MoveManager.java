@@ -13,6 +13,11 @@ public class MoveManager {
      * @return True if the given move is valid, false otherwise.
      */
     public static boolean isValidMove(Move move, Board board) {
+        // The positions must be on the Board.
+        if(!move.getStart().isOnBoard() || !move.getEnd().isOnBoard()) {
+            return false;
+        }
+
         Piece movingPiece = board.getPieceAtPosition(move.getStart());
 
         // If there is no piece being moved, return false.
