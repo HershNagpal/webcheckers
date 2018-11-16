@@ -58,7 +58,7 @@ public class GameCenter {
      * @return If there are games in the map
      */
     public boolean gamesOngoing() {
-        return games.size() > 0;
+        return !games.values().isEmpty();
     }
 
     /**
