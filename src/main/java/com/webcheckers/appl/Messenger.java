@@ -51,6 +51,17 @@ public class Messenger {
             "You lost the game!", MessageType.info);
 
     /**
+     * Format messages using String.format
+     * @param text Text with %s to fill in
+     * @param addToText Text to replace %s with
+     * @param type Type of message to return
+     * @return New message with the formatted parameters
+     */
+    private Message formatStringMessage(String text, String addToText, MessageType type) {
+        return new Message(String.format(text, addToText), type);
+    }
+
+    /**
      * Get the message from the game's response about how the player
      * did in the game.
      *
@@ -77,12 +88,12 @@ public class Messenger {
         Player winner = game.getWinner();
         if (winner != null) {
             String name = winner.getName();
-            if (game.didPlayerResign()) {
-                return new Message(String.format("%s won the game" +
-                        " by resignation.", name), MessageType.info);
-            }
-            return new Message(String.format("%s won the game by an" +
-                    " end-game condition.", name), MessageType.info);
+            // Message depending on how game ended
+            return game.didPlayerResign() ? formatStringMessage(
+                    "%s won the game by resignation",
+                    name, MessageType.info) :
+                    formatStringMessage("%s won the game by " +
+                            "an end-game condition.", name, MessageType.info);
         }
         return null;
     }
