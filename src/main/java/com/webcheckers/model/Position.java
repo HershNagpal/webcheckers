@@ -1,8 +1,5 @@
 package com.webcheckers.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Represents a position on the board.
  *
