@@ -131,40 +131,6 @@ public class Position {
     }
 
     /**
-     * Returns a list of positions to be jumped to on the board from the given position.
-     * @return a list of the possible locations to be jumped to from this position.
-     */
-    public List<Position> findJumpedPositions(List<Position> possibleJumpPositions) {
-        List<Position> jumpedPositions = new ArrayList<>();
-        int row = this.getRow();
-        int col = this.getCell();
-
-        for (Position currentPosition : possibleJumpPositions) {
-
-            // Upper 
-            if(currentPosition.isAbove(this)) {
-                if(currentPosition.isRightOf(this)) {
-                    // Right
-                    possibleJumpPositions.add((new Position(row - 1, col + 1)));
-                } else {
-                    // Left
-                    possibleJumpPositions.add((new Position(row - 1, col - 1)));
-                }
-            } else {
-                if(currentPosition.isRightOf(this)) {
-                    // Right
-                    possibleJumpPositions.add((new Position(row + 1, col + 1)));
-                } else {
-                    // Left
-                    possibleJumpPositions.add((new Position(row + 1, col - 1)));
-                }
-            }
-        }
-
-        return jumpedPositions;
-    }
-
-    /**
      * Display position's row and cell. Used for testing.
      * @return string representation of Position
      */

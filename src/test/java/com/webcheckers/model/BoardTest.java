@@ -296,9 +296,7 @@ public class BoardTest {
    */
   @Test
   public void testBoardView(){
-
     assertEquals(expectedBoardView,CuT.getBoardView());
-
   }
 
   /**

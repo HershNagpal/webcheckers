@@ -356,7 +356,6 @@ public class Board {
     }
 
     /**
-     * TODO: check and write tests
      * Helper method for checking no more valid moves. The end position
      * must have not have a piece, is diagonal to the start position, and
      * is forward to the start position.
@@ -368,6 +367,7 @@ public class Board {
     }
     
     /**
+     * TODO: check and write tests
      * Takes in the position of a piece and returns all locations that it cn make a valid jump move.
      * Must be a piece at given location.
      * @param position the position of a piece.
@@ -387,6 +387,40 @@ public class Board {
         }
 
         return validJumpPositions;
+    }
+
+    /**
+     * Returns a list of positions to be jumped to on the board from the given position.
+     * @return a list of the possible locations to be jumped to from this position.
+     */
+    public List<Position> findJumpedPositions(Position start, List<Position> possibleJumpPositions) {
+        List<Position> jumpedPositions = new ArrayList<>();
+        int row = start.getRow();
+        int col = start.getCell();
+
+        for (Position currentPosition : possibleJumpPositions) {
+
+            // Upper 
+            if(currentPosition.isAbove(start)) {
+                if(currentPosition.isRightOf(start)) {
+                    // Right
+                    possibleJumpPositions.add((new Position(row - 1, col + 1)));
+                } else {
+                    // Left
+                    possibleJumpPositions.add((new Position(row - 1, col - 1)));
+                }
+            } else {
+                if(currentPosition.isRightOf(start)) {
+                    // Right
+                    possibleJumpPositions.add((new Position(row + 1, col + 1)));
+                } else {
+                    // Left
+                    possibleJumpPositions.add((new Position(row + 1, col - 1)));
+                }
+            }
+        }
+
+        return jumpedPositions;
     }
 
     /**
