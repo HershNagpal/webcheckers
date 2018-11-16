@@ -139,15 +139,23 @@ public class GameCenter {
      */
     public boolean isGameOver(Game game) {
         if (game.isGameOver()) {
-            Player red = game.getRedPlayer();
-            Player white = game.getWhitePlayer();
-            games.remove(red);
-            games.remove(white);
-            endedGames.put(red, game);
-            endedGames.put(white, game);
             return true;
         }
         return false;
+    }
+
+    /**
+     * Update the state of the game center to remove the game
+     * @param game
+     */
+    public void updateGames(Game game) {
+        Player red = game.getRedPlayer();
+        Player white = game.getWhitePlayer();
+        games.remove(red);
+        games.remove(white);
+        endedGames.put(red, game);
+        endedGames.put(white, game);
+        gameIDMap.remove(game.getGameID());
     }
 
     /**
