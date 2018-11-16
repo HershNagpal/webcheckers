@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Unit test suite for Board class.
  *
  * @author Luis Gutierrez
+ * @author Matthew Bollinger
  */
 @Tag("Model-tier")
 public class BoardTest {
@@ -347,4 +349,21 @@ public class BoardTest {
       assertEquals(CuTNoWhite.checkAllPiecesEliminated(), Color.WHITE);
   }
 
+  /**
+   * Test that getValidNormalMovePositions returns
+   * a list of valid normal move positions
+   */
+  @Test
+  public void testGetValidNormalMovePositions(){
+      List<Position> testPositions;
+      Position centerPiece = new Position(0,2);
+      testPositions = CuT2.getValidNormalMovePositions(centerPiece);
+      assert(testPositions.size() == 1);
+
+      centerPiece = new Position(1, 1);
+      testPositions = CuT2.getValidNormalMovePositions(centerPiece);
+      assert(testPositions.size() == 1);
+
+
+  }
 }

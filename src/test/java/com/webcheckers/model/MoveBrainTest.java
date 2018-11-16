@@ -73,7 +73,7 @@ public class MoveBrainTest {
     public void testGetRandomInt(){
         int max = 10;
         int min = 0;
-        //run test 5 times
+        //run test 10 times
         for(int i=0; i<10; i++) {
             int test = CuT.getRandomInt(min, max);
             assert (test >= min && test <= max);
