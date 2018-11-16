@@ -9,12 +9,19 @@ import java.util.List;
  *
  * @author Matthew Bollinger
  */
-public class MoveBrain {
+public class MoveBrain extends Player {
 
 
     private Game game;
 
-    public MoveBrain(Game game){
+    public MoveBrain(){
+        super("AI Player");
+    }
+
+    /**
+     *
+     */
+    public void addGame(Game game){
         this.game = game;
     }
 
