@@ -18,6 +18,11 @@ public class MoveTest {
    */
   private Move CuT;
   private Move CuT2;
+  private Move CuTUL;
+  private Move CuTUR;
+  private Move CuTLL;
+  private Move CuTLR;
+  
 
   /**
    * Friendly Objects
@@ -27,6 +32,13 @@ public class MoveTest {
 
   private Position position3;
   private Position position4;
+
+  private Position position5;
+
+  private Position position6;
+  private Position position7;
+  private Position position8;
+  private Position position9;
 
   /**
    * Setting up objects before each test
@@ -40,6 +52,20 @@ public class MoveTest {
       position3 = new Position(3,2);
       position4 = new Position(2,1);
       CuT2 = new Move(position3, position4);
+
+      // These will be jump moves
+      position5 = new Position(3,3);
+
+      position6 = new Position(1,1);
+      position7 = new Position(1,5);
+      position8 = new Position(5,1);
+      position9 = new Position(5,5);
+
+      // UL, UR, LL, LR
+      CuTUL = new Move(position5, position6);
+      CuTUR = new Move(position5, position7);
+      CuTLL = new Move(position5, position8);
+      CuTLR = new Move(position5, position9);
   }
 
     /**
@@ -120,6 +146,14 @@ public class MoveTest {
      */
     @Test
     public void testGetJumpedPosition() {
-    
+        Position expectedUL = new Position(2,2);
+        Position expectedUR = new Position(2,4);
+        Position expectedLL = new Position(4,2);
+        Position expectedLR = new Position(4,4);
+
+        assertEquals(expectedUL, CuTUL.getJumpedPosition());
+        assertEquals(expectedLL, CuTLL.getJumpedPosition());
+        assertEquals(expectedLR, CuTLR.getJumpedPosition());
+        assertEquals(expectedUR, CuTUR.getJumpedPosition());
     }
 }
