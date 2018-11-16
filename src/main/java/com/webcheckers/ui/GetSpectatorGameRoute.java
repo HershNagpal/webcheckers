@@ -1,6 +1,5 @@
 package com.webcheckers.ui;
 
-import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.*;
@@ -9,7 +8,6 @@ import spark.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.logging.Logger;
 
 /**
  * The UI Controller to GET the Game page in spectator mode
@@ -74,13 +72,6 @@ public class GetSpectatorGameRoute implements Route {
     static final String TITLE = "Spectating Game";
 
     /**
-     * Message to display when trying to start a game with
-     * a player that is already in a game.
-     */
-    static final Message SPECTATE_INFO = new Message(
-            "You are now spectating.", MessageType.info);
-
-    /**
      * The game center that holds games and handles actions
      */
     private final GameCenter gameCenter;
@@ -96,31 +87,28 @@ public class GetSpectatorGameRoute implements Route {
     private final TemplateEngine templateEngine;
 
     /**
-     * Interprets and converts json
+     * Create the Spark Route (UI controller) for the
+     * {@code GET /spectator/game} HTTP request.
+     * @param gameCenter the controller that holds all the games
+     * @param playerLobby the controller that holds the players for access and storage
+     * @param templateEngine the HTML template rendering engine
      */
-    private final Gson gson;
-
-    /**
-     *
-     * @param gameCenter
-     * @param playerLobby
-     * @param templateEngine
-     */
-    public GetSpectatorGameRoute(GameCenter gameCenter, PlayerLobby playerLobby, TemplateEngine templateEngine, Gson gson) {
+    public GetSpectatorGameRoute(GameCenter gameCenter, PlayerLobby playerLobby, TemplateEngine templateEngine) {
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
         Objects.requireNonNull(playerLobby, "playerLobby must not be null");
 
         this.gameCenter = gameCenter;
         this.playerLobby = playerLobby;
         this.templateEngine = templateEngine;
-        this.gson = gson;
     }
 
     /**
+     * Render the WebCheckers Game page in spectator mode
      *
-     * @param request
-     * @param response
-     * @return
+     * @param request the HTTP request
+     * @param response the HTTP response
+     *
+     * @return the rendered HTML for the Game page in spectator mode
      */
     @Override
     public Object handle(Request request, Response response) {

@@ -15,23 +15,27 @@ import spark.Session;
 public class GetSpectatorStopRoute implements Route {
 
     /**
-     *
+     * The player lobby
      */
     private PlayerLobby playerLobby;
 
     /**
+     * Create the Spark Route (UI controller) for the
+     * {@code GET /} HTTP request from the spectator page.
      *
      * @param playerLobby
+     *   the controller that holds the players for access and storage
      */
     public GetSpectatorStopRoute(PlayerLobby playerLobby) {
         this.playerLobby = playerLobby;
     }
 
     /**
+     * Render the WebCheckers home page upon a player exiting spectator mode.
      *
-     * @param request
-     * @param response
-     * @return
+     * @param request the HTTP request
+     * @param response the HTTP response
+     * @return the rendered HTML for the home page
      */
     @Override
     public Object handle(Request request, Response response) {

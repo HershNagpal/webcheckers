@@ -244,7 +244,7 @@ public class WebServer {
         post(RESIGN_URL, new PostResignGameRoute(gameCenter, gson));
 
         // Gets the Checkers game Game page that the player is spectating
-        get(SPECTATE_GAME_URL, new GetSpectatorGameRoute(gameCenter, playerLobby, templateEngine, gson));
+        get(SPECTATE_GAME_URL, new GetSpectatorGameRoute(gameCenter, playerLobby, templateEngine));
 
         // Gets the user's request to stop watching the spectated game
         get(STOP_WATCHING_URL, new GetSpectatorStopRoute(playerLobby));

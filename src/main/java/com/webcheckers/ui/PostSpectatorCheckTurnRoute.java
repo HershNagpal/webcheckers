@@ -2,7 +2,6 @@ package com.webcheckers.ui;
 
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
-import com.webcheckers.model.Game;
 import com.webcheckers.model.Message;
 import spark.Request;
 import spark.Response;
@@ -27,9 +26,11 @@ public class PostSpectatorCheckTurnRoute implements Route {
     private Gson gson;
 
     /**
+     * The constructor for the {@code POST /game} route handler to check
+     * whose turn it is in spectator mode.
      *
-     * @param gameCenter
-     * @param gson
+     * @param gameCenter holds the ongoing games
+     * @param gson used to interpret and convert json
      */
     public PostSpectatorCheckTurnRoute(GameCenter gameCenter, Gson gson) {
         this.gameCenter = gameCenter;
@@ -37,10 +38,11 @@ public class PostSpectatorCheckTurnRoute implements Route {
     }
 
     /**
+     * This action checks to see if players have submitted their turn.
      *
-     * @param request
-     * @param response
-     * @return
+     * @param request The HTTP request
+     * @param response The HTTP response
+     * @return Info Message, true if a player submits the turn, false otherwise.
      */
     @Override
     public Object handle(Request request, Response response) {
