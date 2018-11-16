@@ -128,7 +128,7 @@ public class GameCenterTest {
         // Case where game ended and therefore removed from list of games
         game.resignGame(player);
         CuT.resignGame(player);
-        CuT.isGameOver(game);
+        CuT.updateGames(game);
         assertNull(CuT.checkTurn(player));
     }
 
