@@ -31,7 +31,7 @@
         <#if currentPlayer??>
           <#if playerList??>
             <#list playerList as p>
-              <li><a href="/game?gameID=${p}+${currentPlayer.name}">${p}</a></li>
+              <li><a href="/game?gameID=${currentPlayer.name}+${p}">${p}</a></li>
             </#list>
           <#else>
             No other players online.

@@ -119,7 +119,7 @@ public class Game {
             this.board = new Board();
         }
         activeColor = Color.RED;
-        gameID = whitePlayer.getName() + "+" + redPlayer.getName();
+        gameID = redPlayer.getName() + "+" + whitePlayer.getName();
         this.gameNum = gameNum;
     }
 

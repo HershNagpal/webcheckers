@@ -148,7 +148,7 @@ public class GetGameRoute implements Route{
             game = gameCenter.getGame(player);
         } else {
             String gameID = request.queryParams(ID_PARAM);
-            Player opponent = playerLobby.getPlayer(gameID.split(" ")[0]);
+            Player opponent = playerLobby.getPlayer(gameID.split(" ")[1]);
             // Is other player in game
             if (gameCenter.playerInGame(opponent)) {
                 session.attribute(MESSAGE_ATTR, IN_GAME_ERROR);
