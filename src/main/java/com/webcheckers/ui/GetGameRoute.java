@@ -44,9 +44,9 @@ public class GetGameRoute implements Route{
     static final String ACTIVE_COLOR_ATTR = "activeColor";
 
     /**
-     * Attribute for the player's ID denoted by their name
+     * Attribute for the game's ID denoted by the two player names
      */
-    static final String ID_PARAM = "pid";
+    static final String ID_PARAM = "gameID";
 
     /**
      * Attribute for the board
@@ -79,6 +79,13 @@ public class GetGameRoute implements Route{
      */
     static final Message IN_GAME_ERROR = new Message(
             "That player is already in game!", MessageType.error);
+
+    /**
+     * Message to display when trying to start a game with
+     * a player that is spectating a game.
+     */
+    static final Message SPECTATOR_ERROR = new Message(
+            "That player is currently spectating a game!", MessageType.error);
 
     private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());
 
@@ -140,10 +147,17 @@ public class GetGameRoute implements Route{
         if (gameCenter.playerInGame(player)) {
             game = gameCenter.getGame(player);
         } else {
-            Player opponent = playerLobby.getPlayer(request.queryParams(ID_PARAM));
+            String gameID = request.queryParams(ID_PARAM);
+            Player opponent = playerLobby.getPlayer(gameID.split(" ")[0]);
             // Is other player in game
             if (gameCenter.playerInGame(opponent)) {
                 session.attribute(MESSAGE_ATTR, IN_GAME_ERROR);
+                response.redirect(WebServer.HOME_URL);
+                return null;
+            }
+            // Is other player spectating
+            else if (playerLobby.isSpectating(player)) {
+                session.attribute(MESSAGE_ATTR, SPECTATOR_ERROR);
                 response.redirect(WebServer.HOME_URL);
                 return null;
             }
