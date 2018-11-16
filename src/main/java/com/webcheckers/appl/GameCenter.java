@@ -138,15 +138,12 @@ public class GameCenter {
      * @return If this game been resigned
      */
     public boolean isGameOver(Game game) {
-        if (game.isGameOver()) {
-            return true;
-        }
-        return false;
+        return game.isGameOver();
     }
 
     /**
      * Update the state of the game center to remove the game
-     * @param game
+     * @param game Game to update
      */
     public void updateGames(Game game) {
         Player red = game.getRedPlayer();
