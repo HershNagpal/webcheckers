@@ -151,7 +151,7 @@ public class GameCenter {
     }
 
     /**
-     * Get the message from the messenger about the winner and how they won.
+     * Get the message from the messenger about how the player did in the game.
      * @param game Game to check
      * @param player Player to check
      * @return Message with correct type
@@ -159,6 +159,16 @@ public class GameCenter {
     public Message isWinner(Game game, Player player) {
         return messenger.isWinner(game, player);
     }
+
+    /**
+     * Get the message from the messenger about who won the game.
+     * @param game Game to check
+     * @return Message about who won
+     */
+    public Message whoWon(Game game) {
+        return messenger.whoWon(game);
+    }
+
 
     /**
      * Get the message from the messenger about whose turn it is.

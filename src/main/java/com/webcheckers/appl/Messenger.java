@@ -51,11 +51,8 @@ public class Messenger {
             "You lost the game!", MessageType.info);
 
     /**
-     * Message to display when
-     */
-
-    /**
-     * Get the message from the game's response about the winner and how they won.
+     * Get the message from the game's response about how the player
+     * did in the game.
      *
      * @return Message
      */
@@ -68,6 +65,25 @@ public class Messenger {
             return game.isWinner(player) ? PLAYER_WIN : PLAYER_LOSE;
         }
         // null: no message will be displayed from freemarker template
+        return null;
+    }
+
+    /**
+     * Get the message from the game's response about who won and how.
+     *
+     * @return Message
+     */
+    public Message whoWon(Game game) {
+        Player winner = game.getWinner();
+        if (winner != null) {
+            String name = winner.getName();
+            if (game.didPlayerResign()) {
+                return new Message(String.format("%s won the game" +
+                        " by resignation.", name), MessageType.info);
+            }
+            return new Message(String.format("%s won the game by an" +
+                    " end-game condition.", name), MessageType.info);
+        }
         return null;
     }
 
