@@ -44,8 +44,8 @@ public class PostSpectatorCheckTurnRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) {
-        String stringJSON = request.body();
-        String gameID = gson.fromJson(stringJSON, String.class);
+        String gameID = request.body();
+        gameID = String.join("+", gameID.split(" "));
         Message message = gameCenter.checkTurn(gameID);
         return gson.toJson(message);
     }

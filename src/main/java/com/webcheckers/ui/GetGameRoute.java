@@ -156,7 +156,7 @@ public class GetGameRoute implements Route{
                 return null;
             }
             // Is other player spectating
-            else if (playerLobby.isSpectating(player)) {
+            else if (playerLobby.isSpectating(opponent)) {
                 session.attribute(MESSAGE_ATTR, SPECTATOR_ERROR);
                 response.redirect(WebServer.HOME_URL);
                 return null;
@@ -172,6 +172,7 @@ public class GetGameRoute implements Route{
         vm.put(WHITE_PLAYER_ATTR, game.getWhitePlayer());
         vm.put(ACTIVE_COLOR_ATTR, game.getActiveColor());
         if (gameCenter.isGameOver(game)) {
+            gameCenter.updateGames(game);
             Message message = gameCenter.isWinner(game, player);
             vm.put(MESSAGE_ATTR, message);
         }

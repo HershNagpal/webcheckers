@@ -46,7 +46,7 @@ public class GetSpectatorGameRoute implements Route {
     /**
      * Attribute for the player's ID denoted by their name
      */
-    static final String ID_PARAM = "pid";
+    static final String ID_PARAM = "gameID";
 
     /**
      * Attribute for the board
@@ -128,10 +128,12 @@ public class GetSpectatorGameRoute implements Route {
         Map<String, Object> vm = new HashMap<>();
         vm.put(TITLE_ATTR, TITLE);
         String gameID = request.queryParams(ID_PARAM);
+        gameID = String.join("+", gameID.split(" "));
+        Player currentPlayer = session.attribute(CURRENT_PLAYER_ATTR);
+        playerLobby.startSpectating(currentPlayer);
         Game game = gameCenter.getGame(gameID);
-        vm.put(CURRENT_PLAYER_ATTR, request.attribute(CURRENT_PLAYER_ATTR));
+        vm.put(CURRENT_PLAYER_ATTR, currentPlayer);
         vm.put(VIEW_MODE_ATTR, ViewMode.SPECTATOR);
-
         Player red = game.getRedPlayer();
         Player white = game.getWhitePlayer();
         if (game.isActivePlayer(red)) {
@@ -148,7 +150,9 @@ public class GetSpectatorGameRoute implements Route {
         if (gameCenter.isGameOver(game)) {
             Message message = gameCenter.whoWon(game);
             session.attribute(MESSAGE_ATTR, message);
+            playerLobby.stopSpectating(currentPlayer);
             response.redirect(WebServer.HOME_URL);
+            return null;
         }
 
         return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
