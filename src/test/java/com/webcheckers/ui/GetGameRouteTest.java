@@ -92,7 +92,6 @@ public class GetGameRouteTest {
         CuT.handle(request, response);
         // Verify that user is sent back to home
         verify(response).redirect(WebServer.HOME_URL);
-
     }
 
     /**
@@ -111,7 +110,6 @@ public class GetGameRouteTest {
         CuT.handle(request, response);
         // Verify that user is sent back to home
         verify(response).redirect(WebServer.HOME_URL);
-
     }
 
 
