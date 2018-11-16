@@ -132,4 +132,16 @@ public class PlayerLobbyTest {
         assertEquals(names, CuT.getPlayerLobbyNames(player));
     }
 
+    /**
+     * Test that the list of spectators is updated correctly.
+     */
+    @Test
+    public void testSpectating() {
+        Player spectator = new Player("spec");
+        CuT.startSpectating(spectator);
+        assertTrue(CuT.isSpectating(spectator));
+        CuT.stopSpectating(spectator);
+        assertFalse(CuT.isSpectating(spectator));
+    }
+
 }
