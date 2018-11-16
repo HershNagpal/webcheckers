@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Combines the board and players in order to play the game
+ * Combines the board and players in order to play the game. Deals with game logic that combines many
+ * different classes to calculate something.
  * @author Luis Gutierrez
  * @author Christopher Daukshus
  * @author Hersh Nagpal
