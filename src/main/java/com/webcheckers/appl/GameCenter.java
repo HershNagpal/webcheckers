@@ -5,10 +5,7 @@ import com.webcheckers.model.Message;
 import com.webcheckers.model.Move;
 import com.webcheckers.model.Player;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Holds all games that are occurring on the application.
@@ -35,12 +32,27 @@ public class GameCenter {
     private Messenger messenger;
 
     /**
+     * Count the number of games created
+     */
+    private int gameCounter;
+
+    /**
      * Initialize the list of games.
      */
     public GameCenter(Messenger messenger) {
         games = new HashMap<>();
         endedGames = new HashMap<>();
         this.messenger = messenger;
+        gameCounter = 0;
+    }
+
+    /**
+     * Are there games ongoing?
+     *
+     * @return If there are games in the map
+     */
+    public boolean gamesOngoing() {
+        return games.size() > 0;
     }
 
     /**
@@ -48,7 +60,7 @@ public class GameCenter {
      * @param player Player to check
      * @return If the player is in a game
      */
-    public Boolean playerInGame(Player player) {
+    public boolean playerInGame(Player player) {
         Game game = games.get(player);
         return game != null;
     }
@@ -58,7 +70,7 @@ public class GameCenter {
      * @param player Player to check
      * @return If the player was challenged
      */
-    public Boolean wasChallenged(Player player) {
+    public boolean wasChallenged(Player player) {
         if (!playerInGame(player)) {
             return false;
         }
@@ -76,13 +88,29 @@ public class GameCenter {
     }
 
     /**
+     * Get all unique games from the map
+     * @return All unique games
+     */
+    public Set<Game> getGames() {
+        return new HashSet<>(games.values());
+    }
+
+    /**
+     * Get the size of the set of games.
+     * @return The size of the set of games.
+     */
+    public int size() {
+        return getGames().size();
+    }
+
+    /**
      * Create a new game for the two players.
      * @param player The player that started the game
      * @param opponent The player that was selected to be an opponent
      * @return The created game
      */
     public Game createGame(Player player, Player opponent) {
-        Game game = new Game(player, opponent);
+        Game game = new Game(player, opponent, gameCounter++);
         games.put(player, game);
         games.put(opponent, game);
         return game;
