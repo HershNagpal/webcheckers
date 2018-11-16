@@ -169,9 +169,18 @@ public class GameCenter {
         return messenger.whoWon(game);
     }
 
+    /**
+     * Get the message from the messenger about if the turn has changed.
+     * Used by spectator mode.
+     */
+    public Message checkTurn(String gameID) {
+        Game game = getGame(gameID);
+        return messenger.checkTurn(game);
+    }
 
     /**
      * Get the message from the messenger about whose turn it is.
+     * Used by play mode.
      *
      * @return Message with correct type
      */

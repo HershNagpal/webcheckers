@@ -88,6 +88,19 @@ public class Messenger {
     }
 
     /**
+     * Get the message from the game's response about if the game has
+     * changed at all since last checked. If a game is over the message
+     * acts as those the game did change turns.
+     * @return
+     */
+    public Message checkTurn(Game game) {
+        if (game.isGameOver()) {
+            return TURN_TRUE;
+        }
+        return game.hasGameChanged() ? TURN_TRUE : TURN_FALSE;
+    }
+
+    /**
      * Get the message from the game's response about whose turn it is.
      *
      * @return Message

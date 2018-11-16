@@ -64,6 +64,11 @@ public class Game {
     private Color activeColor;
 
     /**
+     * Has a move been made since last checked.
+     */
+    private boolean gameChanged;
+
+    /**
      * Last move made before a move is submitted.
      * lastMove is the move at the end of lastMoves.
      */
@@ -224,6 +229,19 @@ public class Game {
             return board.getFlippedBoardView();
         }
         return board.getBoardView();
+    }
+
+    /**
+     * If the game has changed since last checked.
+     *
+     * @return If the game has changed (a move has been submitted).
+     */
+    public boolean hasGameChanged() {
+        if (gameChanged) {
+            gameChanged = false;
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -552,7 +570,7 @@ public class Game {
         if (!isGameOver()) {
             switchActiveColor();
         }
-
+        gameChanged = true;
         this.canContinueMoving = true;
 
         return true;
