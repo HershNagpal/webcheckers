@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Unit test suite for the MoveManager class.
  *
  * @author Luis Gutierrez
+ * @author Hersh Nagpal
  */
 public class MoveManagerTest {
 
@@ -145,7 +146,7 @@ public class MoveManagerTest {
     @Test
     public void testIsKingMove() {
         Move whiteKingMove1 = new Move(new Position(1,6), new Position(2,5));
-        Move whiteKingMove2 = new Move(new Position(1,2), new Position(1,3));
+        Move whiteKingMove2 = new Move(new Position(1,2), new Position(2,3));
         Move redKingMove1 = new Move(new Position(5,2), new Position(3,0));
         Move redKingMove2 = new Move(new Position(6,3), new Position(4,5));
 
