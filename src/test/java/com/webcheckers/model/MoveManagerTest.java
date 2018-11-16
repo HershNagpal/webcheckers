@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Unit test suite for the MoveManager class.
  *
  * @author Luis Gutierrez
+ * @author Hersh Nagpal
  */
 public class MoveManagerTest {
 
