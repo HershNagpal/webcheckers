@@ -187,6 +187,15 @@ public class Game {
     }
 
     /**
+     * Get the winner if any yet.
+     *
+     * @return The winner or null
+     */
+    public Player getWinner() {
+        return winner;
+    }
+
+    /**
      * Get the color of the player whose turn it is.
      *
      * @return The color of the current player
