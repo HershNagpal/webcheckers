@@ -233,11 +233,6 @@ public class Game {
         Piece movingPiece = board.getPieceAtPosition(move.getStart());
         Color pieceColor = movingPiece.getColor();
 
-        // Destination must be empty
-        if(board.getPieceAtPosition(move.getEnd()) != null) {
-            return false;
-        }
-
         return pieceColor == getActiveColor() && MoveManager.isValidMove(move, board);
     }
 

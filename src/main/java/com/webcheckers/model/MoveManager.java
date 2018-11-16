@@ -19,6 +19,10 @@ public class MoveManager {
         if(movingPiece == null) {
             return false;
         }
+        // Destination must be empty
+        if(board.getPieceAtPosition(move.getEnd()) != null) {
+            return false;
+        }
 
         return isSingleMove(move, movingPiece) || isJumpMove(move, board);
     }
