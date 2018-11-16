@@ -241,7 +241,7 @@ public class Game {
         Color pieceColor = movingPiece.getColor();
 
         // Destination must be empty
-        if(board.getPieceAtPosition(move.getEnd()) == null) {
+        if(board.getPieceAtPosition(move.getEnd()) != null) {
             return false;
         }
 
