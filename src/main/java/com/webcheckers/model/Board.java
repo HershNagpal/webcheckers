@@ -394,41 +394,6 @@ public class Board {
      * @param position the position of the piece to be checked for possible jump locations.
      * @return a list of the possible locations to be jumped to from this position.
      */
-    public List<Position> findJumpedPositions(Position start, List<Position> possibleJumpPositions) {
-        List<Position> jumpedPositions = new ArrayList<>();
-        int row = start.getRow();
-        int col = start.getCell();
-
-        for (Position currentPosition : possibleJumpPositions) {
-
-            // Upper 
-            if(currentPosition.isAbove(start)) {
-                if(currentPosition.isRightOf(start)) {
-                    // Right
-                    possibleJumpPositions.add((new Position(row - 1, col + 1)));
-                } else {
-                    // Left
-                    possibleJumpPositions.add((new Position(row - 1, col - 1)));
-                }
-            } else {
-                if(currentPosition.isRightOf(start)) {
-                    // Right
-                    possibleJumpPositions.add((new Position(row + 1, col + 1)));
-                } else {
-                    // Left
-                    possibleJumpPositions.add((new Position(row + 1, col - 1)));
-                }
-            }
-        }
-
-        return jumpedPositions;
-    }
-
-    /**
-     * Returns a list of positions to be jumped to on the board from a given position.
-     * @param position the position of the piece to be checked for possible jump locations.
-     * @return a list of the possible locations to be jumped to from this position.
-     */
     public List<Position> findPossibleJumpPositions(Position position) {
         List<Position> possibleJumpPositions = new ArrayList<>();
         int row = position.getRow();

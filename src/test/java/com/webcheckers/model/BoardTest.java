@@ -336,9 +336,8 @@ public class BoardTest {
    */
   @Test
   public void testJumpMove(){
-
     CuT2.makeJumpMove(validRedMove1);
-  //  assertEquals(CuT2.getPieces(), customPiecesRedMove1);
+    // assertEquals(CuT2.getPieces(), customPiecesRedMove1);
     Piece[][] pieces = CuT2.getPieces();
     for (int row = 0; row < 8; row++) {
         for (int col = 0; col < 8; col++) {
