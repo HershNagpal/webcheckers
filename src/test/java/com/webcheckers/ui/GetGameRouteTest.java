@@ -96,6 +96,26 @@ public class GetGameRouteTest {
     }
 
     /**
+     * Test that if you attempt to start a game with a player who is spectating
+     * a game then you should be redirected to home with a message.
+     */
+    @Test
+    public void testPlayerSpectating() {
+        // Player one is not in a game, player two is in a game
+        when(gameCenter.playerInGame(p1)).thenReturn(false);
+        when(gameCenter.playerInGame(p2)).thenReturn(false);
+        when(playerLobby.isSpectating(p2)).thenReturn(true);
+        final TemplateEngineTester tester = new TemplateEngineTester();
+        when(engine.render(any(ModelAndView.class))).thenAnswer(tester.makeAnswer());
+        // Invoke test
+        CuT.handle(request, response);
+        // Verify that user is sent back to home
+        verify(response).redirect(WebServer.HOME_URL);
+
+    }
+
+
+    /**
      * Test if a new game is created automatically when both players
      * are not in game.
      */
