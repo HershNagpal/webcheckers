@@ -40,10 +40,20 @@ public class PositionTest {
      * Test to check if one position is forward another position.
      */
     @Test
-    public void testIsForwardTo() {
+    public void testIsAbove() {
         Position other = new Position(1, 2);
         assertFalse(other.isAbove(CuT));
         assertTrue(CuT.isAbove(other));
+    }
+
+    /**
+     * Test for the isRightOf method.
+     */
+    @Test
+    public void testIsRightOf() {
+        Position other = new Position(1, 2);
+        assertFalse(CuT.isRightOf(other));
+        assertTrue(other.isRightOf(CuT));
     }
 
     /**
