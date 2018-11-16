@@ -57,6 +57,8 @@ public class GameCenterTest {
     @Test
     public void testGamesOngoing() {
         assertTrue(CuT.gamesOngoing());
+        CuT.updateGames(game);
+        assertFalse(CuT.gamesOngoing());
     }
 
     /**
@@ -75,6 +77,7 @@ public class GameCenterTest {
     public void testWasChallenged() {
         assertTrue(CuT.wasChallenged(opponent));
         assertFalse(CuT.wasChallenged(dummy));
+        assertFalse(CuT.wasChallenged(player));
         game.resignGame(player);
         assertFalse(CuT.wasChallenged(opponent));
     }
