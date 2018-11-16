@@ -134,14 +134,13 @@ public class GetSpectatorGameRoute implements Route {
 
         Player red = game.getRedPlayer();
         Player white = game.getWhitePlayer();
-        Color color = game.getActiveColor();
-        vm.put(ACTIVE_COLOR_ATTR, color);
-        if (color == Color.RED) {
+        if (game.isActivePlayer(red)) {
             vm.put(BOARD_ATTR, game.getBoardView(red));
         }
         else {
             vm.put(BOARD_ATTR, game.getBoardView(white));
         }
+        vm.put(ACTIVE_COLOR_ATTR, game.getActiveColor());
         vm.put(RED_PLAYER_ATTR, red);
         vm.put(WHITE_PLAYER_ATTR, white);
 
