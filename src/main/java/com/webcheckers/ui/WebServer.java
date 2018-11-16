@@ -228,12 +228,6 @@ public class WebServer {
         // Gets the Checkers game Game page that the player is in
         get(GAME_URL, new GetGameRoute(gameCenter, playerLobby, templateEngine));
 
-        // Gets the Checkers game Game page that the player is spectating
-        get(SPECTATE_GAME_URL, new GetSpectatorGameRoute(gameCenter, playerLobby, templateEngine, gson));
-
-        // Gets the user's request to stop watching the spectated game
-        get(STOP_WATCHING_URL, new GetSpectatorStopRoute(playerLobby));
-
         // Checks the turn for a given player and posts
         post(CHECK_TURN_URL, new PostCheckTurnRoute(gameCenter, gson));
 
@@ -248,6 +242,15 @@ public class WebServer {
 
         // Resign the game for a player and posts
         post(RESIGN_URL, new PostResignGameRoute(gameCenter, gson));
+
+        // Gets the Checkers game Game page that the player is spectating
+        get(SPECTATE_GAME_URL, new GetSpectatorGameRoute(gameCenter, playerLobby, templateEngine, gson));
+
+        // Gets the user's request to stop watching the spectated game
+        get(STOP_WATCHING_URL, new GetSpectatorStopRoute(playerLobby));
+
+        // Checks the turn of a spectated game
+        post(SPECTATE_CHECK_TURN_URL, new PostSpectatorCheckTurnRoute(gameCenter, gson));
 
         LOG.config("WebServer is initialized.");
     }
