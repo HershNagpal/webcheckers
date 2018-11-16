@@ -31,13 +31,26 @@
         <#if currentPlayer??>
           <#if playerList??>
             <#list playerList as p>
-              <li><a href="/game?pid=${p}">${p}</a></li>
+              <li><a href="/game?gameID=${p}+${currentPlayer.name}">${p}</a></li>
             </#list>
           <#else>
             No other players online.
           </#if>
         <#else>
           ${numPlayers} players online
+        </#if>
+      </p>
+      <p>Ongoing Games:
+        <#if currentPlayer??>
+          <#if gamesList??>
+            <#list gamesList as g>
+              <li><a href="/spectator/game?gameID=${g.gameID}">${g.gameName}</a></li>
+            </#list>
+          <#else>
+            No ongoing games.
+          </#if>
+        <#else>
+          ${numGames} games being played.
         </#if>
       </p>
     </div>
