@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.Game;
+import com.webcheckers.model.Message;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -31,6 +32,7 @@ public class PostSpectatorCheckTurnRoute implements Route {
      * @param gson
      */
     public PostSpectatorCheckTurnRoute(GameCenter gameCenter, Gson gson) {
+        this.gameCenter = gameCenter;
         this.gson = gson;
     }
 
@@ -44,7 +46,7 @@ public class PostSpectatorCheckTurnRoute implements Route {
     public Object handle(Request request, Response response) {
         String stringJSON = request.body();
         String gameID = gson.fromJson(stringJSON, String.class);
-
-        return null;
+        Message message = gameCenter.checkTurn(gameID);
+        return gson.toJson(message);
     }
 }
