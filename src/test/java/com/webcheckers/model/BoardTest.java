@@ -3,9 +3,7 @@ package com.webcheckers.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
 import java.util.Arrays;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -40,7 +38,6 @@ public class BoardTest {
   private Piece[][] customPieces;
   private Piece[][] customPiecesRedMove1;
   private Piece[][] customPiecesRedMove2;
-  private Piece[][] customPiecesWhiteMove1;
   private Piece[][] customPiecesWhiteMove2;
   private Piece[][] cpNoRed;
   private Piece[][] cpNoWhite;
@@ -135,17 +132,6 @@ public class BoardTest {
             {null, null, null, null, null, null, null, null},
             {null, null, redPiece, null, null, null, null, null},
             {null, null, null, whitePiece, null, null, null, null}
-    };
-
-    customPiecesWhiteMove1 = new Piece[][]{
-            {null, null, redPiece, null, null, null, null, null},
-            {null, whitePiece, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {null, whitePiece, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null}
     };
 
     customPiecesWhiteMove2 = new Piece[][]{

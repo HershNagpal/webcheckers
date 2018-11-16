@@ -2,7 +2,6 @@ package com.webcheckers.model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -121,7 +120,7 @@ public class PositionTest {
         assert(!CuT.isDiagonalAdjacentTo(invalid2)); 
         assert(!CuT.isDiagonalAdjacentTo(invalid3)); 
         assert(!CuT.isDiagonalAdjacentTo(invalid4));
-        assert(!CuT.isDiagonalAdjacentTo(invalid4));
+        assert(!CuT.isDiagonalAdjacentTo(invalid5));
     }
 
     /**
