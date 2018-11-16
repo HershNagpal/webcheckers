@@ -71,14 +71,7 @@ public class Game {
     public Game(Player redPlayer, Player whitePlayer, Board board) {
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
-        if(redPlayer.getName().equals("debug") && whitePlayer.getName().equals("test")) {
-            this.board = new Board(Board.DEBUG_PIECES);
-        } else if (redPlayer.getName().equals("test") && whitePlayer.getName().equals("debug")) {
-            this.board = new Board(Board.DEBUG_PIECES);
-
-        } else {
-            this.board = board;
-        }
+        this.board = board;
         activeColor = Color.RED;
     }
 
