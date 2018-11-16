@@ -33,6 +33,14 @@ public class MoveManagerTest {
     }
 
     /**
+     * Test for the isValidMove method.
+     */
+    @Test
+    public void testIsValidMove() {
+        
+    }
+
+    /**
      * Test for isNormalMove.
      */
     @Test
