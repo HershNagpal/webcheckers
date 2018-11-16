@@ -41,6 +41,20 @@ public class Position {
     }
 
     /**
+     * Returns true if the Position is on the Board.
+     * 
+     * @return true if the Position is on the Board, false if it is not.
+     */
+    public boolean isOnBoard() {
+        if(this.cell < 0 || this.cell > Board.COLUMNS) {
+            return false;
+        } else if (this.row < 0 || this.row > Board.ROWS) {
+            return false;
+        }
+        return false;
+    }
+
+    /**
      * Is this position on a lower row number than the other?
      * @param other End position
      * @return true if this position higher on the board than this position.
