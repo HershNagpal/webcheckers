@@ -18,6 +18,11 @@ import java.util.List;
 public class Game {
 
     /**
+     * The game number relative to other games created
+     */
+    private int gameNum;
+
+    /**
      * The game's unique ID
      */
     private String gameID;
@@ -91,7 +96,7 @@ public class Game {
             this.board = board;
         }
         activeColor = Color.RED;
-        gameID = String.valueOf(hashCode());
+        gameID = whitePlayer.getName() + "+" + redPlayer.getName();
     }
 
     /**
@@ -100,7 +105,7 @@ public class Game {
      * @param redPlayer   The red player
      * @param whitePlayer The white player
      */
-    public Game(Player redPlayer, Player whitePlayer) {
+    public Game(Player redPlayer, Player whitePlayer, int gameNum) {
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
         if(redPlayer.getName().equals("debug") && whitePlayer.getName().equals("test")) {
@@ -114,7 +119,8 @@ public class Game {
             this.board = new Board();
         }
         activeColor = Color.RED;
-        gameID = String.valueOf(hashCode());
+        gameID = whitePlayer.getName() + "+" + redPlayer.getName();
+        this.gameNum = gameNum;
     }
 
     public boolean playerInGame(Player player) {
@@ -127,6 +133,18 @@ public class Game {
      */
     public String getGameID() {
         return gameID;
+    }
+
+    /**
+     * Get the game name, a form of the game ID, but reader-friendly.
+     * Used by the home.ftl through reflection.
+     *
+     * @return The game name
+     */
+    public String getGameName() {
+        String[] parts = gameID.split("\\+");
+        return "Game " + String.valueOf(gameNum) + ": "
+                + parts[0] + " vs. " + parts[1];
     }
 
     /**
