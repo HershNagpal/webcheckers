@@ -66,7 +66,7 @@ public class GameTest {
         /*
         Used to test red valid jump move and white single move
          */
-        customPiecesTestValidateMove = new Piece[][]{
+        /*customPiecesTestValidateMove = new Piece[][]{
                 {null, null, RedP, null, null, null, null, RedP},
                 {null, WhtP, null, null, null, null, WhtP, null},
                 {null, null, null, null, null, WhtP, null, null},
@@ -75,7 +75,7 @@ public class GameTest {
                 {null, null, null, WhtP, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null}
-        };
+        };*/
 
         /*
         Used to test RedP valid jump move and WhtP valid jump move,
@@ -217,6 +217,17 @@ public class GameTest {
      */
     @Test
     public void testValidateMove(){
+        Piece[][] customPiecesTestValidateMove = new Piece[][]{
+                {null, RedP, null, null, null, null, null, null},
+                {null, null, RedP, null, null, null, RedP, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, WhtP, null, null, null, null, null, null},
+                {null, null, null, null, null, WhtP, null, null},
+                {null, WhtP, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
+        };
+
         //Setup test
         board = new Board(customPiecesTestValidateMove);
         CuT = new Game(redPlayer, whitePlayer, board);
@@ -226,34 +237,31 @@ public class GameTest {
             CuT.switchActiveColor();
         }
 
-        //Flip moves for red moves because moves are flipped in validateMove()
+        //Test red single moving piece, moving down and right and active color RED(Valid)
+        Move validRedMove = new Move(new Position(1,2), new Position(2,3));
+        assertTrue(CuT.validateMove(validRedMove.flipMove()));
 
-        //private Move validRedMove1 = new Move(redPosition1, emptyPosition1);
-        //private Move validRedMove2 = new Move(redPosition1, emptyPosition2);
-        Position redPosition1 = new Position(0, 2);
-        Position emptyPosition1 = new Position(2, 0);
+        //Test red single moving piece, moving up and right and active color RED(Invalid)
+        Move invalidRedMove01 = new Move(new Position(1, 6), new Position(0, 7));
+        assertFalse(CuT.validateMove(invalidRedMove01.flipMove()));
 
-        //Test invalid red single move due to a jump move being available
-        //Move validRedMove = new Move(new Position(0,2), new Position());
-        //assertFalse(CuT.validateMove(validRedMove.flipMove()));
-
-        //Test valid red jump move
-        //assertTrue(CuT.validateMove(validRedMove1.flipMove()));
-
-        //Test invalid move due to active color (piece moved is white, active color is red)
-        /*Move invalidMoveActiveColor = new Move(new Position(5,3),new Position(4,2)).flipMove();
-        assertFalse(CuT.validateMove(invalidMoveActiveColor));
-
-        //Test invalid move due to space moving into not being empty
-        Move invalidMoveSpaceNotEmpty = new Move(new Position(0, 7), new Position(2, 5)).flipMove();
-        assertFalse(CuT.validateMove(invalidMoveSpaceNotEmpty));
-
-        //Change active color to white
+        //Test red single moving piece, moving down and right and active color White(Invalid)
         CuT.switchActiveColor();
+        Move invalidRedMove02 = new Move(new Position(0, 1), new Position(1, 0));
+        assertFalse(CuT.validateMove(invalidRedMove02));
 
-        //Test valid white single move
-        Move validWhiteSingleMove = new Move(new Position(5,3), new Position(4,4));
-        assertTrue(CuT.validateMove(validWhiteSingleMove));*/
+        //Test white single moving piece, moving up and right and active color WHITE(Valid)
+        Move validWhiteMove = new Move(new Position(4,1), new Position(3,2));
+        assertTrue(CuT.validateMove(validWhiteMove));
+
+        //Test white single moving piece, moving down and left and active color WHITE(Invalid)
+        Move invalidWhiteMove01 = new Move(new Position(6, 1), new Position(7, 0));
+        assertFalse(CuT.validateMove(invalidWhiteMove01));
+
+        //Test white single moving piece, moving up and right and active color RED(Invalid)
+        CuT.switchActiveColor();
+        Move invalidWhiteMove02 = new Move(new Position(5, 5), new Position(4, 6));
+        assertFalse(CuT.validateMove(invalidWhiteMove02.flipMove()));
     }
 
     /**
