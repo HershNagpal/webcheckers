@@ -41,9 +41,7 @@ public class GetSpectatorStopRoute implements Route {
     public Object handle(Request request, Response response) {
         Session session = request.session();
         Player player = session.attribute(GetHomeRoute.PLAYER_ATTR);
-        if (player != null) {
-            playerLobby.stopSpectating(player);
-        }
+        playerLobby.stopSpectating(player);
         response.redirect(WebServer.HOME_URL);
         return null;
     }
