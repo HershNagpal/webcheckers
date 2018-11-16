@@ -27,6 +27,11 @@ public class GameCenter {
     private Map<Player, Game> endedGames;
 
     /**
+     * Access games through the game's ID
+     */
+    private Map<String, Game> gameIDMap;
+
+    /**
      * Manages messages
      */
     private Messenger messenger;
@@ -42,6 +47,7 @@ public class GameCenter {
     public GameCenter(Messenger messenger) {
         games = new HashMap<>();
         endedGames = new HashMap<>();
+        gameIDMap = new HashMap<>();
         this.messenger = messenger;
         gameCounter = 0;
     }
@@ -81,10 +87,19 @@ public class GameCenter {
     /**
      * Get the game a player is in.
      * @param player The player to get a game from
-     * @return The game or null
+     * @return The game or null if it does not exist
      */
     public Game getGame(Player player) {
         return games.get(player);
+    }
+
+    /**
+     * Get the game from a gameID.
+     * @param gameID The unique game ID
+     * @return The game or null if it does not exist
+     */
+    public Game getGame(String gameID) {
+        return gameIDMap.get(gameID);
     }
 
     /**
@@ -110,9 +125,10 @@ public class GameCenter {
      * @return The created game
      */
     public Game createGame(Player player, Player opponent) {
-        Game game = new Game(player, opponent, gameCounter++);
+        Game game = new Game(player, opponent, ++gameCounter);
         games.put(player, game);
         games.put(opponent, game);
+        gameIDMap.put(game.getGameID(), game);
         return game;
     }
 

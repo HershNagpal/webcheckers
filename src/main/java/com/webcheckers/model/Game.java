@@ -96,7 +96,7 @@ public class Game {
             this.board = board;
         }
         activeColor = Color.RED;
-        gameID = whitePlayer.getName() + "+" + redPlayer.getName();
+        //gameID = redPlayer.getName() + "+" + whitePlayer.getName() + "+" + String.valueOf(hashCode());
     }
 
     /**
@@ -119,7 +119,8 @@ public class Game {
             this.board = new Board();
         }
         activeColor = Color.RED;
-        gameID = redPlayer.getName() + "+" + whitePlayer.getName();
+        // Unique ID
+        gameID = redPlayer.getName() + "+" + whitePlayer.getName() + "+" + gameNum;
         this.gameNum = gameNum;
     }
 
