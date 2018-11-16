@@ -1,14 +1,13 @@
 package com.webcheckers.ui;
 
+import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.model.Message;
-import com.webcheckers.model.MessageType;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.TemplateEngine;
+import com.webcheckers.model.*;
+import spark.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -72,7 +71,7 @@ public class GetSpectatorGameRoute implements Route {
     /**
      * The actual title of the page
      */
-    static final String TITLE = "Game Board";
+    static final String TITLE = "Spectating Game";
 
     /**
      * Message to display when trying to start a game with
@@ -97,18 +96,24 @@ public class GetSpectatorGameRoute implements Route {
     private final TemplateEngine templateEngine;
 
     /**
+     * Interprets and converts json
+     */
+    private final Gson gson;
+
+    /**
      *
      * @param gameCenter
      * @param playerLobby
      * @param templateEngine
      */
-    public GetSpectatorGameRoute(GameCenter gameCenter, PlayerLobby playerLobby, TemplateEngine templateEngine) {
+    public GetSpectatorGameRoute(GameCenter gameCenter, PlayerLobby playerLobby, TemplateEngine templateEngine, Gson gson) {
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
         Objects.requireNonNull(playerLobby, "playerLobby must not be null");
 
         this.gameCenter = gameCenter;
         this.playerLobby = playerLobby;
         this.templateEngine = templateEngine;
+        this.gson = gson;
     }
 
     /**
@@ -119,9 +124,34 @@ public class GetSpectatorGameRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) {
+        Session session = request.session();
+        Map<String, Object> vm = new HashMap<>();
+        vm.put(TITLE_ATTR, TITLE);
+        String gameID = request.queryParams(ID_PARAM);
+        Game game = gameCenter.getGame(gameID);
+        vm.put(CURRENT_PLAYER_ATTR, request.attribute(CURRENT_PLAYER_ATTR));
+        vm.put(VIEW_MODE_ATTR, ViewMode.SPECTATOR);
 
+        Player red = game.getRedPlayer();
+        Player white = game.getWhitePlayer();
+        Color color = game.getActiveColor();
+        vm.put(ACTIVE_COLOR_ATTR, color);
+        if (color == Color.RED) {
+            vm.put(BOARD_ATTR, game.getBoardView(red));
+        }
+        else {
+            vm.put(BOARD_ATTR, game.getBoardView(white));
+        }
+        vm.put(RED_PLAYER_ATTR, red);
+        vm.put(WHITE_PLAYER_ATTR, white);
 
+        // Redirect if game ended
+        if (gameCenter.isGameOver(game)) {
+            Message message = gameCenter.whoWon(game);
+            session.attribute(MESSAGE_ATTR, message);
+            response.redirect(WebServer.HOME_URL);
+        }
 
-        return null;
+        return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
     }
 }
