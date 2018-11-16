@@ -140,15 +140,20 @@ public class GetGameRoute implements Route{
         if (gameCenter.playerInGame(player)) {
             game = gameCenter.getGame(player);
         } else {
-            Player opponent = playerLobby.getPlayer(request.queryParams(ID_PARAM));
-            // Is other player in game
-            if (gameCenter.playerInGame(opponent)) {
-                session.attribute(MESSAGE_ATTR, IN_GAME_ERROR);
-                response.redirect(WebServer.HOME_URL);
-                return null;
+            if(request.queryParams(ID_PARAM) == "AI Player"){
+                game = gameCenter.createAIGame(player);
             }
-            // Create a new game
-            game = gameCenter.createGame(player, opponent);
+            else {
+                Player opponent = playerLobby.getPlayer(request.queryParams(ID_PARAM));
+                // Is other player in game
+                if (gameCenter.playerInGame(opponent)) {
+                    session.attribute(MESSAGE_ATTR, IN_GAME_ERROR);
+                    response.redirect(WebServer.HOME_URL);
+                    return null;
+                }
+                // Create a new game
+                game = gameCenter.createGame(player, opponent);
+            }
         }
 
         if (gameCenter.isGameOver(game)) {
