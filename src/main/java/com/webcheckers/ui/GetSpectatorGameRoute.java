@@ -72,6 +72,13 @@ public class GetSpectatorGameRoute implements Route {
     static final String TITLE = "Spectating Game";
 
     /**
+     * Message to display when leaving the spectator game page
+     * without exiting.
+     */
+    static final Message SPECTATE_INFO = new Message(
+            "You are spectating still. Return to the game and exit.", MessageType.info);
+
+    /**
      * The game center that holds games and handles actions
      */
     private final GameCenter gameCenter;
@@ -113,6 +120,7 @@ public class GetSpectatorGameRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
         Session session = request.session();
+        session.attribute(MESSAGE_ATTR, SPECTATE_INFO);
         Map<String, Object> vm = new HashMap<>();
         vm.put(TITLE_ATTR, TITLE);
         String gameID = request.queryParams(ID_PARAM);

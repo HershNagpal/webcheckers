@@ -41,6 +41,8 @@ public class GetSpectatorStopRoute implements Route {
     public Object handle(Request request, Response response) {
         Session session = request.session();
         Player player = session.attribute(GetHomeRoute.PLAYER_ATTR);
+        // Reset messages on home page
+        session.removeAttribute(GetSpectatorGameRoute.MESSAGE_ATTR);
         playerLobby.stopSpectating(player);
         response.redirect(WebServer.HOME_URL);
         return null;
