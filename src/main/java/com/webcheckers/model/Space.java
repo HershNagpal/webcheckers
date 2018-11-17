@@ -115,6 +115,14 @@ public class Space {
 
         Space space2 = (Space)obj;
 
-        return this.row == space2.row && this.column == space2.column;
+        if(this.piece == null || space2.piece == null){
+            return this.row == space2.row && this.column == space2.column
+                    && this.spaceColor.equals(space2.spaceColor)
+                    && this.piece==(space2.piece);
+        }
+
+        return this.row == space2.row && this.column == space2.column
+                && this.spaceColor.equals(space2.spaceColor)
+                && this.piece.equals(space2.piece);
     }
 }

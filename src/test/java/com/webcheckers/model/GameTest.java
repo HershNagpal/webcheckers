@@ -372,17 +372,50 @@ public class GameTest {
         assertTrue(CuT.submitTurn());
     }
 
+    /**
+     * Test for getBoardView
+     */
     @Test
     public void testGetBoardView(){
-        //Setup test
-        board = new Board(customPiecesTestValidateMove);
+        //Expected pieces contained in white BoardView
+        Piece[][] piecesWhiteGameStart = new Piece[][]{
+                {null, RedP, null, RedP, null, RedP, null, RedP},
+                {RedP, null, RedP, null, RedP, null, RedP, null},
+                {null, RedP, null, RedP, null, RedP, null, RedP},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {WhtP, null, WhtP, null, WhtP, null, WhtP, null},
+                {null, WhtP, null, WhtP, null, WhtP, null, WhtP},
+                {WhtP, null, WhtP, null, WhtP, null, WhtP, null}
+        };
+
+        //Expected pieces contained in red BoardView
+        Piece[][] piecesRedGameStart = new Piece[][]{
+                {null, WhtP, null, WhtP, null, WhtP, null, WhtP},
+                {WhtP, null, WhtP, null, WhtP, null, WhtP, null},
+                {null, WhtP, null, WhtP, null, WhtP, null, WhtP},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {RedP, null, RedP, null, RedP, null, RedP, null},
+                {null, RedP, null, RedP, null, RedP, null, RedP},
+                {RedP, null, RedP, null, RedP, null, RedP, null}
+        };
+
+        //Setup test for white Board View
+        board = new Board(piecesWhiteGameStart);
         CuT = new Game(redPlayer, whitePlayer, board);
 
-        //Create expected boardView
-        BoardView expectedBoardView = board.getBoardView();
+        //Create expected white boardView
+        BoardView expectedWhiteBoardView = board.getBoardView();
+        //Test that expected board view is the same as actual white board view
+        assertEquals(expectedWhiteBoardView,CuT.getBoardView(whitePlayer));
 
-        //Test that expected board view is the same as actual board view
-        assertEquals(expectedBoardView,CuT.getBoardView(whitePlayer));
+        //Update board for red Board View
+        board = new Board(piecesRedGameStart);
+        //Create expected red boardView
+        BoardView expectedRedBoardView = board.getBoardView();
+        //Test that expected board view is the same as actual red board view
+        assertEquals(expectedRedBoardView, CuT.getBoardView(redPlayer));
     }
 
     /**
