@@ -143,40 +143,42 @@ public class MoveManagerTest {
     @Test
     public void testIsLastMoveJump(){
         //test lastMoveJump true when white piece jumps "up/left" -2 col, -2 rows
-        Position positionStart = new Position(4, 2);
-        Position positionEnd = new Position(2, 4);
-        Move move = new Move(positionStart, positionEnd);
+        Move move = new Move(new Position(4, 2), new Position(2, 4));
         assertTrue(MoveManager.isLastMoveJump(move, WhtP));
 
         //test last move valid when white piece jumps "up/right" +2 col, +2 rows
-        positionStart = new Position(4, 6);
-        positionEnd = new Position(2, 4);
-        move = new Move(positionStart, positionEnd);
+        move = new Move(new Position(4, 6), new Position(2, 4));
         assertTrue(MoveManager.isLastMoveJump(move, WhtP));
 
         //test last move valid when red piece jumps "down/left" -2 col, +2 rows
-        positionStart = new Position(3, 4);
-        positionEnd = new Position(5, 2);
-        move = new Move(positionStart, positionEnd);
+        move = new Move(new Position(3, 4), new Position(5, 2));
         assertTrue(MoveManager.isLastMoveJump(move, RedP));
 
         //test last move valid when red piece jumps "down/right" +2 col, +2 rows
-        positionStart = new Position(3, 0);
-        positionEnd = new Position(5, 2);
-        move = new Move(positionStart, positionEnd);
+        move = new Move(new Position(3, 0), new Position(5, 2));
         assertTrue(MoveManager.isLastMoveJump(move, RedP));
 
         //test lastMoveJump false when white piece makes a non jump move
-        positionStart = new Position(3, 3);
-        positionEnd = new Position(2, 4);
-        move = new Move(positionStart, positionEnd);
+        move = new Move(new Position(3, 3), new Position(2, 4));
         assertFalse(MoveManager.isLastMoveJump(move, WhtP));
 
         //test lastMoveJump false when red piece makes a non jump move
-        positionStart = new Position(4, 1);
-        positionEnd = new Position(5, 2);
-        move = new Move(positionStart, positionEnd);
+        move = new Move(new Position(4, 1), new Position(5, 2));
         assertFalse(MoveManager.isLastMoveJump(move, WhtP));
+
+        //test lastMoveJump false when red piece moves up
+        move = new Move(new Position(4, 6), new Position(2, 4));
+        assertFalse(MoveManager.isLastMoveJump(move, RedP));
+
+        //test lastMoveJump false when white piece moves down
+        move = new Move(new Position(3, 4), new Position(5, 2));
+        assertFalse(MoveManager.isLastMoveJump(move, WhtP));
+
+        //test king moves
+        move = new Move(new Position(5, 5), new Position(7, 7));
+        assertTrue(MoveManager.isLastMoveJump(move, WhtK));
+        move = new Move(new Position(7, 7), new Position(5, 5));
+        assertTrue(MoveManager.isLastMoveJump(move, RedK));
     }
 
     /**
@@ -192,13 +194,20 @@ public class MoveManagerTest {
         Move normalWhiteMove1 = new Move(new Position(1,6), new Position(0,7));
         Move normalRedMove1 = new Move(new Position(5,1), new Position(6,0));
 
+        //Test White King Piece moving down (True)
         assertTrue(MoveManager.isKingMove(whiteKingMove1, WhtK));
         assertTrue(MoveManager.isKingMove(whiteKingMove2, WhtK));
+
+        //Test Red King Piece moving up (True)
         assertTrue(MoveManager.isKingMove(redKingMove1, RedK));
         assertTrue(MoveManager.isKingMove(redKingMove2, RedK));
 
+        //Test Single Piece Type (False)
         assertFalse(MoveManager.isKingMove(redKingMove2, RedP));
-        assertFalse(MoveManager.isKingMove(normalWhiteMove1, RedK));
+
+        //Test White King Piece moving up (False)
+        assertFalse(MoveManager.isKingMove(normalWhiteMove1, WhtK));
+        //Test Red King Piece moving down (False)
         assertFalse(MoveManager.isKingMove(normalRedMove1, RedK));
     }
 }

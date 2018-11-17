@@ -269,15 +269,27 @@ public class GameTest {
      */
     @Test
     public void testBackUpMove(){
+        Piece[][] customPieces = new Piece[][]{
+                {null, null, RedP, null, null, null, null, RedP},
+                {null, WhtP, null, null, null, null, WhtP, null},
+                {null, null, null, null, null, WhtP, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, WhtP, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
+        };
+
         //Setup test
-        board = new Board(customPiecesTestValidateMove);
+        board = new Board(customPieces);
         CuT = new Game(redPlayer, whitePlayer, board);
 
         //Test invalid backup move due to empty list of last moves
         assertFalse(CuT.backUpMove());
 
         //Perform red jump move
-        //CuT.validateMove(validRedMove1.flipMove());
+        Move validRedMove = new Move(new Position(0, 2), new Position(2, 0));
+        CuT.validateMove(validRedMove.flipMove());
 
         //BackUp red jump move
         assertTrue(CuT.backUpMove());

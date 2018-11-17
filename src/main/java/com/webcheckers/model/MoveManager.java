@@ -42,9 +42,11 @@ public class MoveManager {
 
         if(type != Piece.Type.KING) return false;
 
+        //Red Piece and move is going up
         if(color == Color.RED && move.isFacingRed()) {
             return true;
-        } 
+        }
+        //White Piece and move is going down
         else if (color == Color.WHITE && !move.isFacingRed()) {
             return true;
         }

@@ -1,7 +1,6 @@
 package com.webcheckers.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Combines the board and players in order to play the game. Deals with game logic that combines many
@@ -56,10 +55,11 @@ public class Game {
     private Move lastMove;
 
     /**
-     * List of moves made before a move is submitted.
+     * Stack of moves made before a move is submitted.
      * Used for backing up a move.
      */
-    private List<Move> lastMoves = new ArrayList<>();
+    //private List<Move> lastMoves = new ArrayList<>();
+    private Stack<Move> lastMoves = new Stack<>();
 
     /**
      * Start a game with a given board state.
