@@ -49,12 +49,6 @@ public class Game {
     private Color activeColor;
 
     /**
-     * Last move made before a move is submitted.
-     * lastMove is the move at the end of lastMoves.
-     */
-    private Move lastMove;
-
-    /**
      * Stack of moves made before a move is submitted.
      * Used for backing up a move.
      */
@@ -231,9 +225,35 @@ public class Game {
 
         //Get piece from start position
         Piece movingPiece = board.getPieceAtPosition(move.getStart());
-        Color pieceColor = movingPiece.getColor();
 
-        return pieceColor == getActiveColor() && MoveManager.isValidMove(move, board);
+        if (!getActiveColor().equals(movingPiece.getColor())) {
+            return false;
+        }
+
+        if (MoveManager.isValidMove(move, board) && canContinueMoving) {
+            if (MoveManager.isSingleMove(move, movingPiece)) {
+                //Force Jump Move
+                if (jumpMoveExists()) {
+                    return false;
+                }
+                canContinueMoving = false;
+            }
+            else if (MoveManager.isJumpMove(move, board)){
+
+            }
+            lastMoves.push(move);
+            makeMove(move);
+
+            //Prevent player from performing a single jump after jump move is finished
+            if(board.getJumpLocations(move.getEnd()).size() > 0){
+                canContinueMoving = false;
+            }
+
+            return true;
+
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -281,12 +301,12 @@ public class Game {
      * @return True or false depending on if the move was made
      */
     public boolean submitTurn() {
-        if (lastMove == null) {
+        if (lastMoves.empty()) {
             return false;
         }
 
-        // @TODO this may not actually work. 
-        Piece movingPiece = board.getPieceAtPosition(lastMove.getStart());
+        Move lastMove = lastMoves.peek();
+        Piece movingPiece = board.getPieceAtPosition(lastMove.getEnd());
         //Enforce player ending a multiple jump move
         Position lastMoveEndPos = lastMove.getEnd();
         //Multiple jump move has not been completed
@@ -294,12 +314,13 @@ public class Game {
             return false;
         }
         
-        //reset lastMoves and lastMove
+        //reset lastMoves
         lastMoves.clear();
-        lastMove = null;
-        switchActiveColor();
-
         this.canContinueMoving = true;
+
+        if (!isGameOver()) {
+            switchActiveColor();
+        }
 
         return true;
     }
@@ -311,23 +332,15 @@ public class Game {
      * @return True or false depending on if the back up action was made
      */
     public boolean backUpMove() {
-        if (lastMove == null || lastMoves.isEmpty()) {
+        if (lastMoves.isEmpty()) {
             return false;
         }
 
-        //Undo last move
-        Move backUpMove = lastMove.createBackUpMove();
-        makeMove(backUpMove);
-
         //Remove lastMove from list of previous moves
-        lastMoves.remove(lastMove);
-
-        //Update lastMove
-        if (!lastMoves.isEmpty()) {
-            lastMove = lastMoves.get(lastMoves.size() - 1);
-        } else {
-            lastMove = null;
-        }
+        Move lastMove = lastMoves.pop();
+        Move backUpMove = lastMove.createBackUpMove();
+        //Undo last move
+        makeMove(backUpMove);
 
         canContinueMoving = true;
         return true;
