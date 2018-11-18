@@ -187,14 +187,21 @@ MessageType, and ViewMode are examples of types that describe other objects or s
 can be in. The main hierarchy of the board is contained in the Board class.
 
 ### Design Improvements
-Currently, the Game class contains over 660 lines of code. Many of these lines are used for the
+Previously, the Game class contained over 660 lines of code. Many of these lines were used for the
 implementation of the piece movement feature. As a team, we have discussed creating a separate class
 dedicated to piece movement in order to clean up the look of the class. This would increase cohesion,
-but a new class would have to be made. The benefit of this class being made would have to outweigh
+but a new class would have to be made. The benefit of this class being made would have had to outweigh
 the hassle of documentation, lack of readability, and length of the Game class. Another solution is
 to delegate piece movement to a class that already exists but is much shorter. The Move class is an
 example of this type of class. However, Move is a class that specifically creates an object with values.
 To put logic in this class would lower is cohesiveness.
+The team made the decision to delegate much of the validation of moves into a fabricated class called
+MoveManager, which reduced the number of lines of code in the Game class substantially. It is now a
+more cohesive class and despite having more dependencies and higher coupling, the benefits of having a
+more readable and singularly purposed Game class far outweighs the new dependency and the effort put in.
+Many of the methods in the Game class were also found to be a better fit within other classes, such as
+a method that returns all of the pieces that can make moves on the Board. Methods such as these were
+moved out of the Game class and into more appropriate classes.
 
 ## Testing
 Tests were performed mainly by running the game server and manually creating situations in which the

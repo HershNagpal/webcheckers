@@ -7,7 +7,8 @@ import java.util.List;
 /**
  * represents the board broken down visually into rows. This class is the physical structure of the board
  * and holds all of the subunits (rows, spaces, and pieces).
- * @author Luis Gutierrez, Christopher Daukshus
+ * @author Luis Gutierrez 
+ * @author Christopher Daukshus
  */
 public class BoardView {
 

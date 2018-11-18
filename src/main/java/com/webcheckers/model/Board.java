@@ -10,7 +10,7 @@ import com.webcheckers.model.Piece.Type;
  * pieces for the game to function.
  * @author Christopher Daukshus
  * @author Matthew Bollinger
- *
+ * @author Hersh Nagpal
  */
 public class Board {
 
