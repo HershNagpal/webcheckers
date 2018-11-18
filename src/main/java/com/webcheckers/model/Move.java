@@ -3,6 +3,7 @@ package com.webcheckers.model;
 /**
  * Represents the movement of pieces.
  * @author Hersh Nagpal
+ * @author Luis Gutierrez
  */
 public class Move {
 

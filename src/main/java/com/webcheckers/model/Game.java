@@ -78,14 +78,15 @@ public class Game {
     public Game(Player redPlayer, Player whitePlayer) {
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
-        /*
+
         if(redPlayer.getName().equals("debug") && whitePlayer.getName().equals("test")) {
             this.board = new Board(Board.DEBUG_PIECES);
         } else if (redPlayer.getName().equals("test") && whitePlayer.getName().equals("debug")) {
             this.board = new Board(Board.DEBUG_PIECES);
-        } else {*/
+        } else {
             this.board = new Board();
-        //}
+        }
+
         activeColor = Color.RED;
     }
 
@@ -171,6 +172,8 @@ public class Game {
             return true;
         }
         // TODO: make sure activeColor is always the right color needed
+        System.out.println(board.checkNoMoreValidMoves(activeColor));
+        System.out.println(board.checkAllPiecesEliminated(activeColor));
         if (board.checkNoMoreValidMoves(activeColor) ||
                 board.checkAllPiecesEliminated(activeColor)) {
             winner = activeColor == Color.RED ? whitePlayer : redPlayer;
@@ -245,7 +248,7 @@ public class Game {
             makeMove(move);
 
             //Prevent player from performing a single jump after jump move is finished
-            if(board.getJumpLocations(move.getEnd()).size() > 0){
+            if(board.getJumpLocations(move.getEnd()).size() == 0){
                 canContinueMoving = false;
             }
 
