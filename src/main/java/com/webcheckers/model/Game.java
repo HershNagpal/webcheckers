@@ -283,13 +283,16 @@ public class Game {
      * @param move starting position and ending position
      */
     public void makeMove(Move move) {
-        if (move.getStart().isDiagonalTo(move.getEnd())) {
+        if (move.getStart().isDiagonalAdjacentTo(move.getEnd())) {
+            System.out.println("Making normal move");
             board.makeNormalMove(move);
             checkIfKinged(move);
         } else if (move.getStart().isDiagonalJumpTo(move.getEnd())) {
             if (move.isBackUpMove()) {
+                System.out.println("Making back up move");
                 board.makeBackUpJumpMove(move, activeColor);
             } else {
+                System.out.println("Making jump move");
                 board.makeJumpMove(move);
                 checkIfKinged(move);
             }
