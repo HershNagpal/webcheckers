@@ -185,46 +185,18 @@ public class Board {
      * @param move Jump move to be performed on board.
      */
     public void makeJumpMove(Move move){
-        Position startingPosition = move.getStart();
-        Position endingPosition = move.getEnd();
-
-        int rowStart = startingPosition.getRow();
-        int colStart = startingPosition.getCell();
-        int rowEnd = endingPosition.getRow();
-        int colEnd = endingPosition.getCell();
+        int rowStart = move.getStart().getRow();
+        int colStart = move.getStart().getCell();
+        int rowEnd = move.getEnd().getRow();
+        int colEnd = move.getEnd().getCell();
 
         Piece startingPiece = pieces[rowStart][colStart];
         pieces[rowStart][colStart] = null;
         pieces[rowEnd][colEnd] = startingPiece;
 
-        int rowDistance = rowEnd - rowStart;
-        int colDistance = colEnd - colStart;
+        Position jumpedPosition = move.getJumpedPosition();
 
-        //If row or column distance is 2, then the jump is going up/right, so the piece in between is one above the start.
-        //Otherwise, the jump is going down/left, so the piece is one below the start.
-        int jumpedRow;
-        int jumpedCol;
-
-        //jumpMove up
-        if(rowDistance == 2){
-            jumpedRow = rowStart + 1;
-        }
-        //jumpMove down
-        else{
-            jumpedRow = rowStart - 1;
-        }
-
-        //jumpMove right
-        if(colDistance == 2){
-            jumpedCol = colStart + 1;
-        }
-        //jumpMove left
-        else{
-            jumpedCol = colStart - 1;
-        }
-
-        pieces[jumpedRow][jumpedCol] = null;
-
+        this.pieces[jumpedPosition.getRow()][jumpedPosition.getCell()] = null;
     }
 
     /**
