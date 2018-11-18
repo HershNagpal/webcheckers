@@ -65,7 +65,7 @@ public class Messenger {
      * Get the message from the game's response about how the player
      * did in the game.
      *
-     * @return Message
+     * @return Message indicating how the player did in the game
      */
     public Message isWinner(Game game, Player player) {
         if (game.didPlayerResign()) {
@@ -82,7 +82,7 @@ public class Messenger {
     /**
      * Get the message from the game's response about who won and how.
      *
-     * @return Message
+     * @return Message telling who won the game and how
      */
     public Message whoWon(Game game) {
         Player winner = game.getWinner();
@@ -102,7 +102,7 @@ public class Messenger {
      * Get the message from the game's response about if the game has
      * changed at all since last checked. If a game is over the message
      * acts as those the game did change turns.
-     * @return
+     * @return Message indicating if game has changed or is over
      */
     public Message checkTurn(Game game) {
         if (game.isGameOver()) {
@@ -114,7 +114,7 @@ public class Messenger {
     /**
      * Get the message from the game's response about whose turn it is.
      *
-     * @return Message
+     * @return Message indicating if it is now the player's turn
      */
     public Message checkTurn(Game game, Player player) {
         // A player resigned
@@ -127,7 +127,7 @@ public class Messenger {
     /**
      * Get the message from the game's response about a valid move.
      *
-     * @return Message
+     * @return Message informing player if the move was valid
      */
     public Message validateMove(Game game, Move move) {
         return game.validateMove(move) ? MOVE_TRUE : MOVE_FALSE;
@@ -136,7 +136,7 @@ public class Messenger {
     /**
      * Get the message from the game's response about submitting a turn.
      *
-     * @return Message
+     * @return Message informing the player if the turn was submitted
      */
     public Message submitTurn(Game game) {
         return game.submitTurn() ? SUBMIT_TRUE : SUBMIT_FALSE;
@@ -145,7 +145,7 @@ public class Messenger {
     /**
      * Get the message from the game's response about backing up a move.
      *
-     * @return Message
+     * @return Message informing the player if the move was backed up
      */
     public Message backupMove(Game game) {
         return game.backUpMove() ? BACKUP_TRUE : BACKUP_FALSE;
@@ -154,7 +154,7 @@ public class Messenger {
     /**
      * Get the message from the game's response about the player resigning.
      *
-     * @return Message
+     * @return Message informing the player if they successfully resigned
      */
     public Message resignGame(Game game, Player player) {
         return game.resignGame(player) ? RESIGN_TRUE : RESIGN_FALSE;
