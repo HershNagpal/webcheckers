@@ -172,8 +172,6 @@ public class Game {
             return true;
         }
         // TODO: make sure activeColor is always the right color needed
-        System.out.println(board.checkNoMoreValidMoves(activeColor));
-        System.out.println(board.checkAllPiecesEliminated(activeColor));
         if (board.checkNoMoreValidMoves(activeColor) ||
                 board.checkAllPiecesEliminated(activeColor)) {
             winner = activeColor == Color.RED ? whitePlayer : redPlayer;
@@ -284,15 +282,12 @@ public class Game {
      */
     public void makeMove(Move move) {
         if (move.getStart().isDiagonalAdjacentTo(move.getEnd())) {
-            System.out.println("Making normal move");
             board.makeNormalMove(move);
             checkIfKinged(move);
         } else if (move.getStart().isDiagonalJumpTo(move.getEnd())) {
             if (move.isBackUpMove()) {
-                System.out.println("Making back up move");
                 board.makeBackUpJumpMove(move, activeColor);
             } else {
-                System.out.println("Making jump move");
                 board.makeJumpMove(move);
                 checkIfKinged(move);
             }

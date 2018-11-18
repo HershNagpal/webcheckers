@@ -99,8 +99,6 @@ public class MoveTest {
 
         assertEquals(move, expectedFlippedMove.flipMove());
         assertEquals(expectedFlippedMove, move.flipMove());
-        System.out.println(expectedFlippedMove);
-        System.out.println(move.flipMove());
         assertTrue(expectedFlippedMove.equals(move.flipMove()));
     }
 
