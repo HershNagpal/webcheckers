@@ -101,7 +101,6 @@ public class Game {
             this.board = board;
         }
         activeColor = Color.RED;
-        //gameID = redPlayer.getName() + "+" + whitePlayer.getName() + "+" + String.valueOf(hashCode());
     }
 
     /**
