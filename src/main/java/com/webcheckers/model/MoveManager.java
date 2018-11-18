@@ -93,7 +93,6 @@ public class MoveManager {
         Position endPosition = move.getEnd();
 
         Piece movingPiece = board.getPieceAtPosition(startPosition);
-        Piece centerPiece = board.getPieceAtPosition(move.getJumpedPosition());
 
         Color pieceColor = movingPiece.getColor();
         
@@ -111,7 +110,7 @@ public class MoveManager {
                 return false;
             }
         }
-
+        Piece centerPiece = board.getPieceAtPosition(move.getJumpedPosition());
         // Must be a piece of opposite color in the middle of the start and end positions.
         if(centerPiece == null || centerPiece.getColor() == movingPiece.getColor()) {
             return false;
