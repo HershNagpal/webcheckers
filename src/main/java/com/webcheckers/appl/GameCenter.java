@@ -1,9 +1,6 @@
 package com.webcheckers.appl;
 
-import com.webcheckers.model.Game;
-import com.webcheckers.model.Message;
-import com.webcheckers.model.Move;
-import com.webcheckers.model.Player;
+import com.webcheckers.model.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -85,6 +82,19 @@ public class GameCenter {
         Game game = new Game(player, opponent);
         games.put(player, game);
         games.put(opponent, game);
+        return game;
+    }
+
+    /**
+     * Creates a new AI game for one player, includes creating the MoveBrain AI
+     * @param player The player that started the game
+     * @return The created game
+     */
+    public Game createAIGame(Player player){
+        MoveBrain aiPlayer = new MoveBrain();
+        Game game = new Game(player, aiPlayer);
+        games.put(player, game);
+        aiPlayer.addGame(game);
         return game;
     }
 
