@@ -146,7 +146,7 @@ public class GetGameRoute implements Route{
         } else {
             String gameID = request.queryParams(ID_PARAM);
             String opp = gameID.split(" ")[1];
-            if(opp.equals("AI Player")){
+            if(opp.equals("AI")){
                 game = gameCenter.createAIGame(player);
             }
             Player opponent = playerLobby.getPlayer(gameID.split(" ")[1]);

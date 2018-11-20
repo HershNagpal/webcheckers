@@ -27,6 +27,13 @@
           <div id="message" class="info" style="display:none"></div>
         </#if>
       </p>
+      <p>AI Challenge:
+        <#if currentPlayer??>
+          <a href="/game?gameID=${currentPlayer.name}+AI">AI Player</a>
+        <#else>
+          Sign in to challenge an AI Player
+        </#if>
+     </p>
       <p>Online Players:
         <#if currentPlayer??>
           <#if playerList??>
@@ -40,13 +47,7 @@
           ${numPlayers} players online
         </#if>
       </p>
-      <p>AI Challenge:
-        <#if currentPlayer??>
-          <a href="/game?pid=AI Player">AI Player</a>
-        <#else>
-          <p>Sign in to challenge an AI Player
-        </#if>
-      </p>
+
       <p>Ongoing Games:
         <#if currentPlayer??>
           <#if gamesList??>
