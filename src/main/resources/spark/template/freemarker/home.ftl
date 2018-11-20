@@ -31,7 +31,7 @@
         <#if currentPlayer??>
           <#if playerList??>
             <#list playerList as p>
-              <li><a href="/game?pid=${p}">${p}</a></li>
+              <li><a href="/game?gameID=${currentPlayer.name}+${p}">${p}</a></li>
             </#list>
           <#else>
             No other players online.
@@ -47,6 +47,18 @@
           <p>Sign in to challenge an AI Player
         </#if>
       </p>
+      <p>Ongoing Games:
+        <#if currentPlayer??>
+          <#if gamesList??>
+            <#list gamesList as g>
+              <li><a href="/spectator/game?gameID=${g.gameID}">${g.gameName}</a></li>
+            </#list>
+          <#else>
+            No ongoing games.
+          </#if>
+        <#else>
+          ${numGames} games being played.
+        </#if>
     </div>
     
   </div>
