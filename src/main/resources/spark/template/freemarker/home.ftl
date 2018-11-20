@@ -40,6 +40,13 @@
           ${numPlayers} players online
         </#if>
       </p>
+      <p>AI Challenge:
+        <#if currentPlayer??>
+          <a href="/game?pid=AI Player">AI Player</a>
+        <#else>
+          <p>Sign in to challenge an AI Player
+        </#if>
+      </p>
       <p>Ongoing Games:
         <#if currentPlayer??>
           <#if gamesList??>
@@ -52,7 +59,6 @@
         <#else>
           ${numGames} games being played.
         </#if>
-      </p>
     </div>
     
   </div>
