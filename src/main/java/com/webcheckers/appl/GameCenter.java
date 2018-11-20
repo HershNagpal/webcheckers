@@ -115,6 +115,11 @@ public class GameCenter {
         return getGames().size();
     }
 
+    public Game determineGame(Player player, Player opponent) {
+        return opponent == null ? createAIGame(player)
+                : createGame(player, opponent);
+    }
+
     /**
      * Create a new game for the two players.
      * @param player The player that started the game

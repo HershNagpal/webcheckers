@@ -140,15 +140,10 @@ public class GetGameRoute implements Route{
         session.removeAttribute(MESSAGE_ATTR);
         Game game;
         Player player = session.attribute(CURRENT_PLAYER_ATTR);
-        // Is this player in game
         if (gameCenter.playerInGame(player)) {
             game = gameCenter.getGame(player);
         } else {
             String gameID = request.queryParams(ID_PARAM);
-            String opp = gameID.split(" ")[1];
-            if(opp.equals("AI")){
-                game = gameCenter.createAIGame(player);
-            }
             Player opponent = playerLobby.getPlayer(gameID.split(" ")[1]);
             // Is other player in game
             if (gameCenter.playerInGame(opponent)) {
@@ -163,7 +158,7 @@ public class GetGameRoute implements Route{
                 return null;
             }
             // Create a new game
-            game = gameCenter.createGame(player, opponent);
+            game = gameCenter.determineGame(player, opponent);
         }
 
         vm.put(BOARD_ATTR, game.getBoardView(player));
