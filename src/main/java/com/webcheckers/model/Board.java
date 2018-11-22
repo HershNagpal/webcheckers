@@ -315,7 +315,7 @@ public class Board {
      * TODO: check and write tests
      * Takes in the position of a piece and returns all locations that it cn make a valid jump move.
      * Must be a piece at given location.
-     * @param position the position of a piece.
+     * @param start the position of a piece.
      * @return a list of the possible valid jump moves this piece can make.
      */
     public List<Position> getJumpLocations(Position start) {

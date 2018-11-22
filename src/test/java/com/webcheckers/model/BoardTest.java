@@ -25,8 +25,8 @@ public class BoardTest {
   /**
    * Friendly Objects
    */
-  private Piece redPiece;
-  private Piece whitePiece;
+  private Piece RedP;
+  private Piece WhtP;
   private BoardView expectedBoardView;
 
   // Boards to test flipping the board
@@ -73,96 +73,96 @@ public class BoardTest {
    */
   @BeforeEach
   public void setup(){
-    redPiece = new Piece(Color.RED, Piece.Type.SINGLE);
-    whitePiece = new Piece(Color.WHITE,Piece.Type.SINGLE);
+    RedP = new Piece(Color.RED, Piece.Type.SINGLE);
+    WhtP = new Piece(Color.WHITE,Piece.Type.SINGLE);
 
     customFlippedPieces = new Piece[][]{
-            {redPiece, null, whitePiece},
-            {redPiece, null, null},
-            {null, null, whitePiece}
+            {RedP, null, WhtP},
+            {RedP, null, null},
+            {null, null, WhtP}
     };
 
     customPiecesFlip01 = new Piece[][]{
-            {whitePiece, null, null},
-            {null, null, redPiece},
-            {whitePiece, null, redPiece}
+            {WhtP, null, null},
+            {null, null, RedP},
+            {WhtP, null, RedP}
     };
 
     expectedPieces = new Piece[][]{
-      {null, redPiece, null, redPiece, null, redPiece, null, redPiece},
-      {redPiece, null, redPiece, null, redPiece, null, redPiece, null},
-      {null, redPiece, null, redPiece, null, redPiece, null, redPiece},
+      {null, RedP, null, RedP, null, RedP, null, RedP},
+      {RedP, null, RedP, null, RedP, null, RedP, null},
+      {null, RedP, null, RedP, null, RedP, null, RedP},
       {null, null, null, null, null, null, null, null},
       {null, null, null, null, null, null, null, null},
-      {whitePiece, null, whitePiece, null, whitePiece, null, whitePiece, null},
-      {null, whitePiece, null, whitePiece, null, whitePiece, null, whitePiece},
-      {whitePiece, null, whitePiece, null, whitePiece, null, whitePiece, null},
+      {WhtP, null, WhtP, null, WhtP, null, WhtP, null},
+      {null, WhtP, null, WhtP, null, WhtP, null, WhtP},
+      {WhtP, null, WhtP, null, WhtP, null, WhtP, null},
       };
 
     expectedBoardView = new BoardView(expectedPieces);
 
     customPieces = 	new Piece[][]{
-            {null, null, redPiece, null, null, null, null, null},
-            {null, whitePiece, null, null, null, null, null, null},
+            {null, null, RedP, null, null, null, null, null},
+            {null, WhtP, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},
-            {null, null, redPiece, null, null, null, null, null},
-            {null, null, null, whitePiece, null, null, null, null}
+            {null, null, RedP, null, null, null, null, null},
+            {null, null, null, WhtP, null, null, null, null}
     };
 
     customPiecesRedMove2 = 	new Piece[][]{
             {null, null, null, null, null, null, null, null},
-            {null, whitePiece, null, redPiece, null, null, null, null},
+            {null, WhtP, null, RedP, null, null, null, null},
             {null, null, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},
-            {null, null, redPiece, null, null, null, null, null},
-            {null, null, null, whitePiece, null, null, null, null}
+            {null, null, RedP, null, null, null, null, null},
+            {null, null, null, WhtP, null, null, null, null}
     };
 
     customPiecesRedMove1 = new Piece[][]{
             {null, null, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},
-            {redPiece, null, null, null, null, null, null, null},
+            {RedP, null, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},
-            {null, null, redPiece, null, null, null, null, null},
-            {null, null, null, whitePiece, null, null, null, null}
+            {null, null, RedP, null, null, null, null, null},
+            {null, null, null, WhtP, null, null, null, null}
     };
 
     customPiecesWhiteMove2 = new Piece[][]{
-            {null, null, redPiece, null, null, null, null, null},
-            {null, whitePiece, null, null, null, null, null, null},
+            {null, null, RedP, null, null, null, null, null},
+            {null, WhtP, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},
-            {null, null, redPiece, null, whitePiece, null, null, null},
+            {null, null, RedP, null, WhtP, null, null, null},
             {null, null, null, null, null, null, null, null}
     };
 
     cpNoRed = new Piece[][]{
             {null, null, null, null, null, null, null, null},
-            {null, whitePiece, null, null, null, null, null, null},
+            {null, WhtP, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},
-            {null, null, whitePiece, null, null, null, null, null},
+            {null, null, WhtP, null, null, null, null, null},
             {null, null, null, null, null, null, null, null}
     };
 
     cpNoWhite = new Piece[][]{
             {null, null, null, null, null, null, null, null},
-            {null, null, redPiece, null, null, null, null, null},
+            {null, null, RedP, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, redPiece, null, null},
+            {null, null, null, null, null, RedP, null, null},
             {null, null, null, null, null, null, null, null},
-            {null, redPiece, null, null, null, null, null, null},
+            {null, RedP, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null}
     };
@@ -187,7 +187,7 @@ public class BoardTest {
     for (int row = 0; row < 8; row++) {
       for (int col = 0; col < 8; col++) {
           if (actualPieces[row][col] != null) {
-              assertEquals(actualPieces[row][col].getColor(), (expectedPieces[row][col].getColor()));
+              assertEquals(actualPieces[row][col], (expectedPieces[row][col]));
           }
       }
     }
@@ -201,9 +201,9 @@ public class BoardTest {
 
     CuT.makeJumpMove(validRedMove1);
     assertNull(CuT.getPieceAtPosition(whitePosition1));
-    assertNotEquals(redPiece, CuT.getPieceAtPosition(emptyPosition1));
+    assertNotEquals(RedP, CuT.getPieceAtPosition(emptyPosition1));
     CuT.makeBackUpJumpMove(validRedMove1, Color.RED);
-    //assertEquals(whitePiece, CuT.getPieceAtPosition(whitePosition1));
+    //assertEquals(WhtP, CuT.getPieceAtPosition(whitePosition1));
 
   }
 
@@ -214,13 +214,13 @@ public class BoardTest {
   public void testGetPieceAtFlippedPosition(){
     /*
     From CuT(expectedPieces)
-    Original position at (7,4) contains whitePiece
-    Flipped position at (0,3) contains redPiece
+    Original position at (7,4) contains WhtP
+    Flipped position at (0,3) contains RedP
     */
 
     Position originalPosition = new Position(7,4);
-    //expected = redPiece, actual = CuT.getPieceAtFlippedPosition(7,4)
-    assertEquals(redPiece,CuT.getPieceAtFlippedPosition(originalPosition));
+    //expected = RedP, actual = CuT.getPieceAtFlippedPosition(7,4)
+    assertEquals(RedP,CuT.getPieceAtFlippedPosition(originalPosition));
 
   }
 
@@ -236,14 +236,14 @@ public class BoardTest {
 
 
     Piece[][] expectedPiecesFlipped = new Piece[][]{
-            {null, whitePiece, null, whitePiece, null, whitePiece, null, whitePiece},
-            {whitePiece, null, whitePiece, null, whitePiece, null, whitePiece, null},
-            {null, whitePiece, null, whitePiece, null, whitePiece, null, whitePiece},
+            {null, WhtP, null, WhtP, null, WhtP, null, WhtP},
+            {WhtP, null, WhtP, null, WhtP, null, WhtP, null},
+            {null, WhtP, null, WhtP, null, WhtP, null, WhtP},
             {null, null, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},
-            {redPiece, null, redPiece, null, redPiece, null, redPiece, null},
-            {null, redPiece, null, redPiece, null, redPiece, null, redPiece},
-            {redPiece, null, redPiece, null, redPiece, null, redPiece, null},
+            {RedP, null, RedP, null, RedP, null, RedP, null},
+            {null, RedP, null, RedP, null, RedP, null, RedP},
+            {RedP, null, RedP, null, RedP, null, RedP, null},
     };
     BoardView expectedFlippedBoardView = new BoardView(CuT.getFlippedPieces());
 
@@ -269,7 +269,7 @@ public class BoardTest {
     assertTrue(b1.equals(b1));
 
     //Board compared to other object
-    assertFalse(b1.equals(redPiece));
+    assertFalse(b1.equals(RedP));
 
     //Boards are not equal
     //TODO add constructor for diff. board setup
@@ -290,6 +290,7 @@ public class BoardTest {
    */
   @Test
   public void testMakeNormalMove(){
+
     CuT2.makeNormalMove(validRedMove2);
     Piece[][] pieces = CuT2.getPieces();
 
@@ -302,17 +303,32 @@ public class BoardTest {
       }
     }
 
+    /*customPiecesWhiteMove2 = new Piece[][]{
+            {null, null, RedP, null, null, null, null, null},
+            {null, WhtP, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, RedP, null, WhtP, null, null, null},
+            {null, null, null, null, null, null, null, null}
+    };*/
     CuT2 = new Board(customPieces);
+    Position whitePosition2 = new Position(7, 3);
+    Position emptyPosition5 = new Position(6, 4);
+    Move validWhiteMove2 = new Move(whitePosition2, emptyPosition5);
+    //Move validWhiteMove = new Move(new Position(6, 4), new Position(5, 3));
     CuT2.makeNormalMove(validWhiteMove2);
+    assertEquals(CuT2.getPieceAtPosition(emptyPosition5),WhtP);
     pieces = CuT2.getPieces();
-    for (int row = 0; row < 8; row++) {
+    /*for (int row = 0; row < 8; row++) {
       for (int col = 0; col < 8; col++) {
         if (pieces[row][col] != null) {
-          assertEquals(pieces[row][col].getColor(), customPiecesWhiteMove2[row][col].getColor());
-          assertEquals(pieces[row][col].getType(), customPiecesWhiteMove2[row][col].getType());
+          //assertEquals(pieces[row][col].getColor(), customPiecesWhiteMove2[row][col].getColor());
+          //assertEquals(pieces[row][col].getType(), customPiecesWhiteMove2[row][col].getType());
         }
       }
-    }
+    }*/
   }
 
   /**
@@ -352,9 +368,9 @@ public class BoardTest {
     Piece[][] pieces = new Piece[][]{
             {null, null, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},
-            {null, redPiece, null, null, null, redPiece, null, null},
-            {null, null, redPiece, null, redPiece, null, null, null},
-            {null, null, null, whitePiece, null, null, null, null},
+            {null, RedP, null, null, null, RedP, null, null},
+            {null, null, RedP, null, RedP, null, null, null},
+            {null, null, null, WhtP, null, null, null, null},
             {null, null, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},
