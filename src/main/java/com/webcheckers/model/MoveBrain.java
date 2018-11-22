@@ -9,20 +9,11 @@ import java.util.List;
  *
  * @author Matthew Bollinger
  */
-public class MoveBrain extends Player {
+public class MoveBrain extends Game {
 
 
-    private Game game;
-
-    public MoveBrain(){
-        super("AI Player");
-    }
-
-    /**
-     *
-     */
-    public void addGame(Game game){
-        this.game = game;
+    public MoveBrain(Player redPlayer, Player whitePlayer) {
+        super(redPlayer, whitePlayer);
     }
 
     /**
@@ -48,12 +39,12 @@ public class MoveBrain extends Player {
      */
     public List<Move> getAIMoves(){
         List<Move> AIMoves = new ArrayList<>();
-        List<Position> AIPieces = game.getMovablePieceLocations();
+        List<Position> AIPieces = this.getMovablePieceLocations();
         Boolean jumpMoveFound = false;
 
         for(Position position: AIPieces) {
             //first check for jump positions
-            List<Position> pieceJumpPositions = game.getJumpLocations(position);
+            List<Position> pieceJumpPositions = this.getJumpLocations(position);
             if (pieceJumpPositions.size() != 0){
                 for (Position jumpTargetPosition : pieceJumpPositions) {
                     Move move = new Move(position, jumpTargetPosition);
@@ -67,7 +58,7 @@ public class MoveBrain extends Player {
             //iterate over AIPieces
             for (Position position: AIPieces){
                 List<Position> validPositionList;
-                validPositionList = game.getBoard().getValidNormalMovePositions(position);
+                validPositionList = this.getBoard().getValidNormalMovePositions(position);
                 for (Position end: validPositionList){
                     Move move = new Move(position, end);
                     AIMoves.add(move);

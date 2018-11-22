@@ -47,7 +47,7 @@ public class MoveBrainTest {
         AI = mock(Player.class);
         board = new Board(pieces);
         game = new Game(player, AI, board);
-        CuT = new MoveBrain(game);
+        //CuT = new MoveBrain(game);
     }
 
     /**
