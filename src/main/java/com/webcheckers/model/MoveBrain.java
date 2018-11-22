@@ -12,8 +12,8 @@ import java.util.List;
 public class MoveBrain extends Game {
 
 
-    public MoveBrain(Player redPlayer, Player whitePlayer) {
-        super(redPlayer, whitePlayer);
+    public MoveBrain(Player redPlayer, Player whitePlayer, int gameNum) {
+        super(redPlayer, whitePlayer, gameNum);
     }
 
     /**
