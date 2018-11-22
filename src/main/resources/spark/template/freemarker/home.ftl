@@ -27,11 +27,18 @@
           <div id="message" class="info" style="display:none"></div>
         </#if>
       </p>
+      <p>AI Challenge:
+        <#if currentPlayer??>
+          <a href="/game?gameID=${currentPlayer.name}+AI">AI Player</a>
+        <#else>
+          Sign in to challenge an AI Player
+        </#if>
+     </p>
       <p>Online Players:
         <#if currentPlayer??>
           <#if playerList??>
             <#list playerList as p>
-              <li><a href="/game?pid=${p}">${p}</a></li>
+              <li><a href="/game?gameID=${currentPlayer.name}+${p}">${p}</a></li>
             </#list>
           <#else>
             No other players online.
@@ -40,13 +47,19 @@
           ${numPlayers} players online
         </#if>
       </p>
-      <p>AI Challenge:
+
+      <p>Ongoing Games:
         <#if currentPlayer??>
-          <a href="/game?pid=AI Player">AI Player</a>
+          <#if gamesList??>
+            <#list gamesList as g>
+              <li><a href="/spectator/game?gameID=${g.gameID}">${g.gameName}</a></li>
+            </#list>
+          <#else>
+            No ongoing games.
+          </#if>
         <#else>
-          <p>Sign in to challenge an AI Player
+          ${numGames} games being played.
         </#if>
-      </p>
     </div>
     
   </div>

@@ -314,7 +314,7 @@ public class GameTest {
      */
     @Test
     public void testNoBoardConstructor(){
-        CuT = new Game(red, white);
+        CuT = new Game(red, white, 0);
         //assertSame();
     }
 

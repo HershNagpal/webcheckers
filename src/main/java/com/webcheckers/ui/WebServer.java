@@ -96,6 +96,21 @@ public class WebServer {
      */
     public static final String RESIGN_URL = "/resignGame";
 
+    /**
+     * The URL pattern to request the spectator game page.
+     */
+    public static final String SPECTATE_GAME_URL = "/spectator/game";
+
+    /**
+     * The URL pattern to request the stop watching action.
+     */
+    public static final String STOP_WATCHING_URL = "/spectator/stopWatching";
+
+    /**
+     * The URL pattern to request a check turn action in spectator mode.
+     */
+    public static final String SPECTATE_CHECK_TURN_URL = "/spectator/checkTurn";
+
     //
     // Attributes
     //
@@ -227,6 +242,15 @@ public class WebServer {
 
         // Resign the game for a player and posts
         post(RESIGN_URL, new PostResignGameRoute(gameCenter, gson));
+
+        // Gets the Checkers game Game page that the player is spectating
+        get(SPECTATE_GAME_URL, new GetSpectatorGameRoute(gameCenter, playerLobby, templateEngine));
+
+        // Gets the user's request to stop watching the spectated game
+        get(STOP_WATCHING_URL, new GetSpectatorStopRoute(playerLobby));
+
+        // Checks the turn of a spectated game
+        post(SPECTATE_CHECK_TURN_URL, new PostSpectatorCheckTurnRoute(gameCenter, gson));
 
         LOG.config("WebServer is initialized.");
     }

@@ -44,9 +44,9 @@ public class GetGameRoute implements Route{
     static final String ACTIVE_COLOR_ATTR = "activeColor";
 
     /**
-     * Attribute for the player's ID denoted by their name
+     * Attribute for the game's ID denoted by the two player names
      */
-    static final String ID_PARAM = "pid";
+    static final String ID_PARAM = "gameID";
 
     /**
      * Attribute for the board
@@ -80,6 +80,13 @@ public class GetGameRoute implements Route{
     static final Message IN_GAME_ERROR = new Message(
             "That player is already in game!", MessageType.error);
 
+    /**
+     * Message to display when trying to start a game with
+     * a player that is spectating a game.
+     */
+    static final Message SPECTATOR_ERROR = new Message(
+            "That player is currently spectating a game!", MessageType.error);
+
     private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());
 
     /**
@@ -99,10 +106,10 @@ public class GetGameRoute implements Route{
 
     /**
      * Create the Spark Route (UI controller) for the
-     * {@code GET /} HTTP request.
-     *
-     * @param templateEngine
-     * the HTML template rendering engine
+     * {@code GET /game} HTTP request.
+     * @param gameCenter the controller that holds all the games
+     * @param playerLobby the controller that holds the players for access and storage
+     * @param templateEngine the HTML template rendering engine
      */
     public GetGameRoute (final GameCenter gameCenter, final PlayerLobby playerLobby, final TemplateEngine templateEngine){
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
@@ -116,15 +123,12 @@ public class GetGameRoute implements Route{
     }
 
     /**
-     * Render the WebCheckers Game page.
+     * Render the WebCheckers Game page
      *
-     * @param request
-     *  the HTTP request
-     * @param response
-     *  the HTTP response
+     * @param request the HTTP request
+     * @param response the HTTP response
      *
-     * @return
-     *  the rendered HTML for the Home page
+     * @return the rendered HTML for the Game page
      */
     @Override
     public Object handle(Request request, Response response){
@@ -136,31 +140,25 @@ public class GetGameRoute implements Route{
         session.removeAttribute(MESSAGE_ATTR);
         Game game;
         Player player = session.attribute(CURRENT_PLAYER_ATTR);
-        // Is this player in game
         if (gameCenter.playerInGame(player)) {
             game = gameCenter.getGame(player);
         } else {
-            if(request.queryParams(ID_PARAM) == "AI Player"){
-                game = gameCenter.createAIGame(player);
+            String gameID = request.queryParams(ID_PARAM);
+            Player opponent = playerLobby.getPlayer(gameID.split(" ")[1]);
+            // Is other player in game
+            if (gameCenter.playerInGame(opponent)) {
+                session.attribute(MESSAGE_ATTR, IN_GAME_ERROR);
+                response.redirect(WebServer.HOME_URL);
+                return null;
             }
-            else {
-                Player opponent = playerLobby.getPlayer(request.queryParams(ID_PARAM));
-                // Is other player in game
-                if (gameCenter.playerInGame(opponent)) {
-                    session.attribute(MESSAGE_ATTR, IN_GAME_ERROR);
-                    response.redirect(WebServer.HOME_URL);
-                    return null;
-                }
-                // Create a new game
-                game = gameCenter.createGame(player, opponent);
+            // Is other player spectating
+            else if (playerLobby.isSpectating(opponent)) {
+                session.attribute(MESSAGE_ATTR, SPECTATOR_ERROR);
+                response.redirect(WebServer.HOME_URL);
+                return null;
             }
-        }
-
-        if (gameCenter.isGameOver(game)) {
-            Message message = gameCenter.isWinner(game, player);
-            session.attribute(MESSAGE_ATTR, message);
-            response.redirect(WebServer.HOME_URL);
-            return null;
+            // Create a new game
+            game = gameCenter.determineGame(player, opponent);
         }
 
         vm.put(BOARD_ATTR, game.getBoardView(player));
@@ -169,6 +167,11 @@ public class GetGameRoute implements Route{
         vm.put(RED_PLAYER_ATTR, game.getRedPlayer());
         vm.put(WHITE_PLAYER_ATTR, game.getWhitePlayer());
         vm.put(ACTIVE_COLOR_ATTR, game.getActiveColor());
+        if (gameCenter.isGameOver(game)) {
+            gameCenter.updateGames(game);
+            Message message = gameCenter.isWinner(game, player);
+            vm.put(MESSAGE_ATTR, message);
+        }
 
         return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
     }

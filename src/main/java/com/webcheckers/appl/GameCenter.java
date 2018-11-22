@@ -92,12 +92,14 @@ public class GameCenter {
      */
     public Game createAIGame(Player player){
         // MoveBrain aiPlayer = new MoveBrain();
-       // Game game = new Game(player, aiPlayer);
+       // Game game = new Game(player, aiPlayer, ++gameCounter);
        // games.put(player, game);
        // aiPlayer.addGame(game);
        // return game;
         Player aiPlayer = new Player("AI");
         MoveBrain aiGame = new MoveBrain(player, aiPlayer);
+        games.put(player, aiGame);
+        games.put(aiPlayer, aiGame);
         return aiGame;
     }
 

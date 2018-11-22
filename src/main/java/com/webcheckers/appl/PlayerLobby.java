@@ -20,10 +20,16 @@ public class PlayerLobby {
     private Set<Player> players;
 
     /**
+     * All players that are spectating games
+     */
+    private Set<Player> spectators;
+
+    /**
      * Initialize the set of players
      */
     public PlayerLobby(){
         players = new HashSet<>();
+        spectators = new HashSet<>();
     }
 
     /**
@@ -113,6 +119,33 @@ public class PlayerLobby {
      */
     public int size() {
         return players.size();
+    }
+
+    /**
+     * Add the player to the set of spectators.
+     *
+     * @param player The player that is starting to spectate
+     */
+    public void startSpectating(Player player) {
+        spectators.add(player);
+    }
+
+    /**
+     * Remove the player from the set of spectators
+     *
+     * @param player The player who wants to stop spectating
+     */
+    public void stopSpectating(Player player) {
+        spectators.remove(player);
+    }
+
+    /**
+     * Is the player spectating a game?
+     * @param player Player to check
+     * @return If the player is spectating
+     */
+    public boolean isSpectating(Player player) {
+        return spectators.contains(player);
     }
 
 }
