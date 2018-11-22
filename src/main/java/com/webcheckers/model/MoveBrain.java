@@ -16,6 +16,12 @@ public class MoveBrain extends Game {
         super(redPlayer, whitePlayer, gameNum);
     }
 
+    /**
+     * Submit the red player's last made move. Once the submitted turn is
+     * successful, the AI's turn is simulated and the red player begins
+     * their turn again.
+     * @return True or false depending on if the move was made
+     */
     @Override
     public boolean submitTurn() {
         if (lastMove == null) {
@@ -39,6 +45,7 @@ public class MoveBrain extends Game {
         }
         gameChanged = true;
         this.canContinueMoving = true;
+        // Simulate AI turn
         if (isActivePlayer(getWhitePlayer())) {
             simulateTurn();
             switchActiveColor();
@@ -47,7 +54,7 @@ public class MoveBrain extends Game {
     }
 
     /**
-     * Simulate the AI for the entire game.
+     * Simulate the AI's turn.
      */
     public void simulateTurn() {
         Move move = generateAIMove();
