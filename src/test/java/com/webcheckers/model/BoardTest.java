@@ -35,6 +35,7 @@ public class BoardTest {
 
   // Boards that result from making a move
   private Piece[][] expectedPieces;
+  private Piece[][] emptyBoardPieces;
   private Piece[][] customPieces;
   private Piece[][] customPiecesRedMove1;
   private Piece[][] customPiecesRedMove2;
@@ -66,15 +67,13 @@ public class BoardTest {
   Move invalidWhiteMove2 = new Move(whitePosition2, emptyPosition6);
 
 
-
-
   /**
    * Setting up objects before each test
    */
   @BeforeEach
-  public void setup(){
+  public void setup() {
     RedP = new Piece(Color.RED, Piece.Type.SINGLE);
-    WhtP = new Piece(Color.WHITE,Piece.Type.SINGLE);
+    WhtP = new Piece(Color.WHITE, Piece.Type.SINGLE);
 
     customFlippedPieces = new Piece[][]{
             {RedP, null, WhtP},
@@ -89,19 +88,30 @@ public class BoardTest {
     };
 
     expectedPieces = new Piece[][]{
-      {null, RedP, null, RedP, null, RedP, null, RedP},
-      {RedP, null, RedP, null, RedP, null, RedP, null},
-      {null, RedP, null, RedP, null, RedP, null, RedP},
-      {null, null, null, null, null, null, null, null},
-      {null, null, null, null, null, null, null, null},
-      {WhtP, null, WhtP, null, WhtP, null, WhtP, null},
-      {null, WhtP, null, WhtP, null, WhtP, null, WhtP},
-      {WhtP, null, WhtP, null, WhtP, null, WhtP, null},
-      };
+            {null, RedP, null, RedP, null, RedP, null, RedP},
+            {RedP, null, RedP, null, RedP, null, RedP, null},
+            {null, RedP, null, RedP, null, RedP, null, RedP},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {WhtP, null, WhtP, null, WhtP, null, WhtP, null},
+            {null, WhtP, null, WhtP, null, WhtP, null, WhtP},
+            {WhtP, null, WhtP, null, WhtP, null, WhtP, null},
+    };
 
     expectedBoardView = new BoardView(expectedPieces);
 
-    customPieces = 	new Piece[][]{
+    emptyBoardPieces = new Piece[][]{
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null}
+    };
+
+    customPieces = new Piece[][]{
             {null, null, RedP, null, null, null, null, null},
             {null, WhtP, null, null, null, null, null, null},
             {null, null, null, null, null, null, null, null},
@@ -112,7 +122,7 @@ public class BoardTest {
             {null, null, null, WhtP, null, null, null, null}
     };
 
-    customPiecesRedMove2 = 	new Piece[][]{
+    customPiecesRedMove2 = new Piece[][]{
             {null, null, null, null, null, null, null, null},
             {null, WhtP, null, RedP, null, null, null, null},
             {null, null, null, null, null, null, null, null},
@@ -167,9 +177,9 @@ public class BoardTest {
             {null, null, null, null, null, null, null, null}
     };
 
-
-
+    //Default Start Game Board
     CuT = new Board();
+
     CuT2 = new Board(customPieces);
     CuTNoRed = new Board(cpNoRed);
     CuTNoWhite = new Board(cpNoWhite);
@@ -180,24 +190,40 @@ public class BoardTest {
    * Test for setUpBoard()
    */
   @Test
-  public void testBoardSetUp(){
+  public void testBoardSetUp() {
+    //Creating a new Board calls setUpBoard.
+    Board actualBoard = new Board();
+    Board expectedBoard = new Board(expectedPieces);
 
-    Piece[][] actualPieces = CuT.getPieces();
+    assertEquals(expectedBoard,actualBoard);
+  }
 
-    for (int row = 0; row < 8; row++) {
-      for (int col = 0; col < 8; col++) {
-          if (actualPieces[row][col] != null) {
-              assertEquals(actualPieces[row][col], (expectedPieces[row][col]));
-          }
-      }
-    }
+  /**
+   * Test for getFlippedPieces()
+   */
+  @Test
+  public void testGetFlippedPieces() {
+    Piece[][] pieces = CuT.getPieces();
+    Piece[][] actualPieces = CuT.getFlippedPieces();
+    Piece[][] expectedFlippedPieces = new Piece[][]{
+            {null, WhtP, null, WhtP, null, WhtP, null, WhtP},
+            {WhtP, null, WhtP, null, WhtP, null, WhtP, null},
+            {null, WhtP, null, WhtP, null, WhtP, null, WhtP},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {RedP, null, RedP, null, RedP, null, RedP, null},
+            {null, RedP, null, RedP, null, RedP, null, RedP},
+            {RedP, null, RedP, null, RedP, null, RedP, null},
+    };
+
+
   }
 
   /**
    * Test for makeBackUpJumpMove
    */
   @Test
-  public void testMakeBackUpJumpMove(){
+  public void testMakeBackUpJumpMove() {
 
     CuT.makeJumpMove(validRedMove1);
     assertNull(CuT.getPieceAtPosition(whitePosition1));
@@ -211,16 +237,16 @@ public class BoardTest {
    * Test for getPieceAtFlippedPosition
    */
   @Test
-  public void testGetPieceAtFlippedPosition(){
+  public void testGetPieceAtFlippedPosition() {
     /*
     From CuT(expectedPieces)
     Original position at (7,4) contains WhtP
     Flipped position at (0,3) contains RedP
     */
 
-    Position originalPosition = new Position(7,4);
+    Position originalPosition = new Position(7, 4);
     //expected = RedP, actual = CuT.getPieceAtFlippedPosition(7,4)
-    assertEquals(RedP,CuT.getPieceAtFlippedPosition(originalPosition));
+    assertEquals(RedP, CuT.getPieceAtFlippedPosition(originalPosition));
 
   }
 
@@ -228,7 +254,7 @@ public class BoardTest {
    * Test for getFlippedBoardView()
    */
   @Test
-  public void testFlippedBoard(){
+  public void testFlippedBoard() {
 
 
     Piece[][] actualPiecesFlipped = CuT.getFlippedPieces();
@@ -247,8 +273,8 @@ public class BoardTest {
     };
     BoardView expectedFlippedBoardView = new BoardView(CuT.getFlippedPieces());
 
-    for(int row = 0; row < expectedPiecesFlipped.length; row++){
-      assertTrue(Arrays.deepEquals(expectedPiecesFlipped[row],actualPiecesFlipped[row]));
+    for (int row = 0; row < expectedPiecesFlipped.length; row++) {
+      assertTrue(Arrays.deepEquals(expectedPiecesFlipped[row], actualPiecesFlipped[row]));
     }
     assertTrue(actualFlippedBoardView.equals(expectedFlippedBoardView));
 
@@ -258,7 +284,7 @@ public class BoardTest {
    * Test for equals method.
    */
   @Test
-  public void testEquals(){
+  public void testEquals() {
     //Boards are equal
 
     Board b1 = new Board();
@@ -281,15 +307,15 @@ public class BoardTest {
    * Test for Board's board View
    */
   @Test
-  public void testBoardView(){
-    assertEquals(expectedBoardView,CuT.getBoardView());
+  public void testBoardView() {
+    assertEquals(expectedBoardView, CuT.getBoardView());
   }
 
   /**
    * Test if a normal move changes the board in the proper way.
    */
   @Test
-  public void testMakeNormalMove(){
+  public void testMakeNormalMove() {
 
     CuT2.makeNormalMove(validRedMove2);
     Piece[][] pieces = CuT2.getPieces();
@@ -319,7 +345,7 @@ public class BoardTest {
     Move validWhiteMove2 = new Move(whitePosition2, emptyPosition5);
     //Move validWhiteMove = new Move(new Position(6, 4), new Position(5, 3));
     CuT2.makeNormalMove(validWhiteMove2);
-    assertEquals(CuT2.getPieceAtPosition(emptyPosition5),WhtP);
+    assertEquals(CuT2.getPieceAtPosition(emptyPosition5), WhtP);
     pieces = CuT2.getPieces();
     /*for (int row = 0; row < 8; row++) {
       for (int col = 0; col < 8; col++) {
@@ -335,17 +361,17 @@ public class BoardTest {
    * Test if a jump move changes the board in the proper way
    */
   @Test
-  public void testJumpMove(){
+  public void testJumpMove() {
     CuT2.makeJumpMove(validRedMove1);
     // assertEquals(CuT2.getPieces(), customPiecesRedMove1);
     Piece[][] pieces = CuT2.getPieces();
     for (int row = 0; row < 8; row++) {
-        for (int col = 0; col < 8; col++) {
-            if (pieces[row][col] != null) {
-                assertEquals(pieces[row][col].getColor(), customPiecesRedMove1[row][col].getColor());
-                assertEquals(pieces[row][col].getType(), customPiecesRedMove1[row][col].getType());
-            }
+      for (int col = 0; col < 8; col++) {
+        if (pieces[row][col] != null) {
+          assertEquals(pieces[row][col].getColor(), customPiecesRedMove1[row][col].getColor());
+          assertEquals(pieces[row][col].getType(), customPiecesRedMove1[row][col].getType());
         }
+      }
     }
   }
 
@@ -353,11 +379,11 @@ public class BoardTest {
    * Test if the check for all pieces of a color being eliminated is correct
    */
   @Test
-  public void testCheckAllPiecesEliminated(){
-      assertFalse(CuT.checkAllPiecesEliminated(Color.RED));
-      assertFalse(CuT2.checkAllPiecesEliminated(Color.WHITE));
-      assertTrue(CuTNoRed.checkAllPiecesEliminated(Color.RED));
-      assertTrue(CuTNoWhite.checkAllPiecesEliminated(Color.WHITE));
+  public void testCheckAllPiecesEliminated() {
+    assertFalse(CuT.checkAllPiecesEliminated(Color.RED));
+    assertFalse(CuT2.checkAllPiecesEliminated(Color.WHITE));
+    assertTrue(CuTNoRed.checkAllPiecesEliminated(Color.RED));
+    assertTrue(CuTNoWhite.checkAllPiecesEliminated(Color.WHITE));
   }
 
   /**
