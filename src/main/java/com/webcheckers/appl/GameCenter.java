@@ -139,7 +139,7 @@ public class GameCenter {
      * @param player The player that started the game
      * @return The created game
      */
-   public Game createAIGame(Player player){
+    public Game createAIGame(Player player){
        Player aiPlayer = new Player("AI");
        Game game = new MoveBrain(player, aiPlayer, ++gameCounter);
        games.put(player, game);
@@ -246,7 +246,13 @@ public class GameCenter {
      */
     public Message resignGame(Player player) {
         Game game = getGame(player);
-        return messenger.resignGame(game, player);
+        Message message = messenger.resignGame(game, player);
+        // Update the games early if playing an AI game
+        if (message.getType().equals(MessageType.info) &&
+                game.getWhitePlayer().getName().equals("AI")) {
+            updateGames(game);
+        }
+        return message;
     }
 
 }
