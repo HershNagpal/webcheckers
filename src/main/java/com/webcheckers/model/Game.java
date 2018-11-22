@@ -31,7 +31,7 @@ public class Game {
      * Used to prevent player from making successive simple moves
      * and for enforcing the completion of jump moves.
      */
-    private boolean canContinueMoving = true;
+    boolean canContinueMoving = true;
 
     /**
      * The resign state of the game.
@@ -66,19 +66,19 @@ public class Game {
     /**
      * Has a move been made since last checked.
      */
-    private boolean gameChanged;
+    boolean gameChanged;
 
     /**
      * Last move made before a move is submitted.
      * lastMove is the move at the end of lastMoves.
      */
-    private Move lastMove;
+    Move lastMove;
 
     /**
      * List of moves made before a move is submitted.
      * Used for backing up a move.
      */
-    private List<Move> lastMoves = new ArrayList<>();
+    List<Move> lastMoves = new ArrayList<>();
 
     /**
      * Start a game with a given board state.

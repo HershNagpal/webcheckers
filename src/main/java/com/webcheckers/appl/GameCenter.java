@@ -143,7 +143,6 @@ public class GameCenter {
        Player aiPlayer = new Player("AI");
        Game game = new MoveBrain(player, aiPlayer, ++gameCounter);
        games.put(player, game);
-       games.put(aiPlayer, game);
        return game;
     }
 
