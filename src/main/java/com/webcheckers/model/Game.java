@@ -281,13 +281,11 @@ public class Game {
     public void makeMove(Move move) {
         if (move.getStart().isDiagonalAdjacentTo(move.getEnd())) {
             board.makeNormalMove(move);
-            checkIfKinged(move);
         } else if (move.getStart().isDiagonalJumpTo(move.getEnd())) {
             if (move.isBackUpMove()) {
                 board.makeBackUpJumpMove(move, activeColor);
             } else {
                 board.makeJumpMove(move);
-                checkIfKinged(move);
             }
         }
     }
@@ -314,7 +312,10 @@ public class Game {
         if (MoveManager.isLastMoveJump(lastMove, movingPiece) && board.getJumpLocations(lastMoveEndPos).size() > 0) {
             return false;
         }
-        
+
+        //Potentially King moving piece
+        checkIfKinged(lastMove);
+
         //reset lastMoves
         lastMoves.clear();
         this.canContinueMoving = true;
