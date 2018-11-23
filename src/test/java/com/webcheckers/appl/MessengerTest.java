@@ -90,6 +90,52 @@ public class MessengerTest {
     }
 
     /**
+     * Test that that the message about who won displays correctly.
+     */
+    @Test
+    public void testWhoWon() {
+        // No winner yet
+        when(game.getWinner()).thenReturn(null);
+        Message message = CuT.whoWon(game);
+        assertNull(message);
+        when(game.getWinner()).thenReturn(player);
+        when(player.getName()).thenReturn("test name");
+        when(game.didPlayerResign()).thenReturn(true);
+        message = CuT.whoWon(game);
+        assertEquals(message.getText(),
+                "test name won the game by resignation");
+        assertEquals(message.getType(), MessageType.info);
+        when(game.didPlayerResign()).thenReturn(false);
+        message = CuT.whoWon(game);
+        assertEquals(message.getText(),
+                "test name won the game by an end-game condition.");
+        assertEquals(message.getType(), MessageType.info);
+    }
+
+    /**
+     * Test that the message is returned by checking the turn
+     * itself changing.
+     */
+    @Test
+    public void testCheckTurnOfGame() {
+        // Game has changed
+        when(game.hasGameChanged()).thenReturn(true);
+        Message message = CuT.checkTurn(game);
+        assertEquals(message.getType(), TURN_TRUE.getType());
+        assertEquals(message.getText(), TURN_TRUE.getText());
+        // Game has not changed
+        when(game.hasGameChanged()).thenReturn(false);
+        message = CuT.checkTurn(game);
+        assertEquals(message.getType(), TURN_FALSE.getType());
+        assertEquals(message.getText(), TURN_FALSE.getText());
+        // Game has ended
+        when(game.isGameOver()).thenReturn(true);
+        message = CuT.checkTurn(game);
+        assertEquals(message.getType(), TURN_TRUE.getType());
+        assertEquals(message.getText(), TURN_TRUE.getText());
+    }
+
+    /**
      * Test that the true message is returned by checking the turn.
      */
     @Test
