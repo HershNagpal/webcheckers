@@ -231,14 +231,16 @@ public class Game {
 
         if (MoveManager.isValidMove(move, board) && canContinueMoving) {
             if (MoveManager.isSingleMove(move, movingPiece)) {
+                System.out.println("Single Move");
                 //Force Jump Move
+                //System.out.println("Jump Move Exists (Validate Move): "+jumpMoveExists());
                 if (jumpMoveExists()) {
                     return false;
                 }
                 canContinueMoving = false;
             }
             else if (MoveManager.isJumpMove(move, board)){
-
+                System.out.println("Jump Move");
             }
             lastMoves.push(move);
             makeMove(move);
@@ -378,8 +380,11 @@ public class Game {
      * @return whether or not the current player can make a jump move.
      */
     public boolean jumpMoveExists() {
+        System.out.println("Active Color: "+getActiveColor());
         List<Position> movablePieceLocations = board.getMovablePieceLocations(getActiveColor());
+        System.out.println("MovablePieceLocations size: "+movablePieceLocations.size());
         for (Position indexPosition : movablePieceLocations) {
+            System.out.println("JumpLocations for Pos size: "+board.getJumpLocations(indexPosition).size());
             // Check if piece at indexPosition has a position to jump to
             if (board.getJumpLocations(indexPosition).size() > 0) {
                 return true;

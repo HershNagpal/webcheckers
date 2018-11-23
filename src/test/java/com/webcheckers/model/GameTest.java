@@ -125,8 +125,6 @@ public class GameTest {
                 {null, null, null, null, null, null, null, null}
         };
 
-
-
         board = new Board(customPieces);
         CuT = new Game(redPlayer, whitePlayer, board);
     }
@@ -438,8 +436,25 @@ public class GameTest {
         //assertTrue(CuT.jumpMoveExists());
         board = new Board(multipleJumpMove1);
         CuT = new Game(redPlayer, whitePlayer, board);
+        assertFalse(CuT.jumpMoveExists());
+        //Switch active color to RED
         CuT.switchActiveColor();
         assertTrue(CuT.jumpMoveExists());
+
+        Piece[][] pieces = new Piece[][]{
+                {null, RedP, null, RedP, null, null, null, null},
+                {null, null, null, null, RedP, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, RedP, null, null, null},
+                {null, null, null, null, null, RedP, null, null},
+                {null, null, RedP, null, null, null, null, null},
+                {null, WhtP, null, null, null, WhtP, null, WhtP},
+                {null, null, null, null, null, null, WhtP, null},
+        };
+        board = new Board(pieces);
+        CuT = new Game(redPlayer, whitePlayer, board);
+        assertTrue(CuT.jumpMoveExists());
+
     }
 
 

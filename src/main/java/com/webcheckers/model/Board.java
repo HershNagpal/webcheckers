@@ -379,8 +379,8 @@ public class Board {
         int col = position.getCell();
 
         // Upper
-        if(row - 2 > 0) {
-            if (col - 2 > 0) {
+        if(row - 2 >= 0) {
+            if (col - 2 >= 0) {
                 // Left
                 possibleJumpPositions.add((new Position(row - 2, col - 2))); 
             }
@@ -391,7 +391,7 @@ public class Board {
         }
         // Lower
         if(row + 2 < Board.ROWS) {
-            if (col - 2 > 0) {
+            if (col - 2 >= 0) {
                 // Left
                 possibleJumpPositions.add((new Position(row + 2, col - 2))); 
             }
