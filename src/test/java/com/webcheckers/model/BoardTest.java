@@ -271,6 +271,17 @@ public class BoardTest {
     assertEquals(RedP, CuT.getPieceAtPosition(startPosition));
     assertEquals(WhtP, CuT.getPieceAtPosition(jumpedPosition));
 
+    startPosition = new Position(3, 3);
+    endPosition = new Position(1, 1);
+    jumpedPosition = new Position(2, 2);
+    Move whiteJumpMove = new Move(startPosition, endPosition);
+    Move whiteBackUpJumpMove = whiteJumpMove.createBackUpMove();
+
+    CuT.makeJumpMove(whiteJumpMove);
+    CuT.makeBackUpJumpMove(whiteBackUpJumpMove, Color.WHITE);
+    assertNull(CuT.getPieceAtPosition(endPosition));
+    assertEquals(WhtP, CuT.getPieceAtPosition(startPosition));
+    assertEquals(RedP, CuT.getPieceAtPosition(jumpedPosition));
   }
 
   /**
