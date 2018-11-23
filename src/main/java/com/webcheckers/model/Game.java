@@ -171,7 +171,6 @@ public class Game {
         if (resigned) {
             return true;
         }
-        // TODO: make sure activeColor is always the right color needed
         if (board.checkNoMoreValidMoves(activeColor) ||
                 board.checkAllPiecesEliminated(activeColor)) {
             winner = activeColor == Color.RED ? whitePlayer : redPlayer;
@@ -216,7 +215,6 @@ public class Game {
      * Checks if the move being made by a player is valid or not.  
      * @param move The Move object that the player is making
      * @return True if the move is valid, false if it is invalid.
-     * @TODO debug jumpMoveExists and integrate it here.
      */
     public boolean validateMove(Move move) {
         // If it is red turn, move is flipped
@@ -311,6 +309,8 @@ public class Game {
         //Enforce player ending a multiple jump move
         Position lastMoveEndPos = lastMove.getEnd();
         //Multiple jump move has not been completed
+        System.out.println("LastMoveJump: " + MoveManager.isLastMoveJump(lastMove, movingPiece));
+        System.out.println("JumpLocation Exists: " + (board.getJumpLocations(lastMoveEndPos).size() > 0));
         if (MoveManager.isLastMoveJump(lastMove, movingPiece) && board.getJumpLocations(lastMoveEndPos).size() > 0) {
             return false;
         }

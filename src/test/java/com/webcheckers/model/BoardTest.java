@@ -3,6 +3,8 @@ package com.webcheckers.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -342,41 +344,18 @@ public class BoardTest {
     CuT2.makeNormalMove(validRedMove2);
     Piece[][] pieces = CuT2.getPieces();
 
-    for (int row = 0; row < 8; row++) {
-      for (int col = 0; col < 8; col++) {
-        if (pieces[row][col] != null) {
-          assertEquals(pieces[row][col].getColor(), customPiecesRedMove2[row][col].getColor());
-          assertEquals(pieces[row][col].getType(), customPiecesRedMove2[row][col].getType());
-        }
-      }
+    for (int row = 0; row < pieces.length; row++) {
+      assertTrue(Arrays.deepEquals(pieces[row], customPiecesRedMove2[row]));
     }
 
-    /*customPiecesWhiteMove2 = new Piece[][]{
-            {null, null, RedP, null, null, null, null, null},
-            {null, WhtP, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {null, null, null, null, null, null, null, null},
-            {null, null, RedP, null, WhtP, null, null, null},
-            {null, null, null, null, null, null, null, null}
-    };*/
     CuT2 = new Board(customPieces);
     Position whitePosition2 = new Position(7, 3);
     Position emptyPosition5 = new Position(6, 4);
     Move validWhiteMove2 = new Move(whitePosition2, emptyPosition5);
     //Move validWhiteMove = new Move(new Position(6, 4), new Position(5, 3));
     CuT2.makeNormalMove(validWhiteMove2);
+    assertNull(CuT2.getPieceAtPosition(whitePosition2));
     assertEquals(CuT2.getPieceAtPosition(emptyPosition5), WhtP);
-    pieces = CuT2.getPieces();
-    /*for (int row = 0; row < 8; row++) {
-      for (int col = 0; col < 8; col++) {
-        if (pieces[row][col] != null) {
-          //assertEquals(pieces[row][col].getColor(), customPiecesWhiteMove2[row][col].getColor());
-          //assertEquals(pieces[row][col].getType(), customPiecesWhiteMove2[row][col].getType());
-        }
-      }
-    }*/
   }
 
   /**
@@ -406,6 +385,29 @@ public class BoardTest {
     assertFalse(CuT2.checkAllPiecesEliminated(Color.WHITE));
     assertTrue(CuTNoRed.checkAllPiecesEliminated(Color.RED));
     assertTrue(CuTNoWhite.checkAllPiecesEliminated(Color.WHITE));
+  }
+
+  /**
+   * Test findPossibleJumpPositions
+   */
+  @Test
+  public void testFindPossibleJumpPositions(){
+    Piece[][] customPieces = new Piece[][]{
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, RedP, null, null, null, null, null},
+            {null, WhtP, null, WhtP, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null},
+            {null, null, null, null, null, null, null, null}
+    };
+    Board CuT = new Board(customPieces);
+    Position expectedJumpPos01 = new Position(0, 4);
+    Position expectedJumpPos02 = new Position(4, 4);
+    ArrayList<Position> expectedJumpedPositions = new ArrayList<>(Arrays.asList(expectedJumpPos01,expectedJumpPos02));
+    assertEquals(expectedJumpedPositions,CuT.findPossibleJumpPositions(new Position(2,2)));
+
   }
 
   /**
