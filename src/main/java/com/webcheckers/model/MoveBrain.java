@@ -42,14 +42,14 @@ public class MoveBrain extends Game {
         // Otherwise invokes PostCheckTurn when not your turn when game is over
         if (!isGameOver()) {
             switchActiveColor();
+            // Simulate AI turn
+            if (isActivePlayer(getWhitePlayer())) {
+                simulateTurn();
+                switchActiveColor();
+            }
         }
         gameChanged = true;
         this.canContinueMoving = true;
-        // Simulate AI turn
-        if (isActivePlayer(getWhitePlayer())) {
-            simulateTurn();
-            switchActiveColor();
-        }
         return true;
     }
 
