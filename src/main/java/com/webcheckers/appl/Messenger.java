@@ -30,25 +30,25 @@ public class Messenger {
      * Message to display when the opponent player has resigned.
      */
     static final Message OPP_RESIGN = new Message(
-            "Your opponent resigned. You win!", MessageType.info);
+            "Your opponent resigned. You win!", MessageType.gameover);
 
     /**
      * Message to display when the player resigns.
      */
     static final Message PLAYER_RESIGN = new Message(
-            "You resigned. You lose!", MessageType.info);
+            "You resigned. You lose!", MessageType.gameover);
 
     /**
      * Message to display when the player wins.
      */
     static final Message PLAYER_WIN = new Message(
-            "You won the game!", MessageType.info);
+            "You won the game!", MessageType.gameover);
 
     /**
      * Message to display when the player loses.
      */
     static final Message PLAYER_LOSE = new Message(
-            "You lost the game!", MessageType.info);
+            "You lost the game!", MessageType.gameover);
 
     /**
      * Format messages using String.format

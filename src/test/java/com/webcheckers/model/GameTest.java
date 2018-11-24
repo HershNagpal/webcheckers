@@ -3,15 +3,9 @@ package com.webcheckers.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import com.webcheckers.model.Piece.Type;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Unit test suite for the Game class.
@@ -31,18 +25,14 @@ public class GameTest {
     /**
      * Friendly Objects
      */
-    private Player white;
-    private Player red;
+    private Player whitePlayer;
+    private Player redPlayer;
     private Board board;
-    private Color color;
-    private Piece redPiece;
-    private Piece whitePiece;
+    private Piece RedP;
+    private Piece WhtP;
 
     private Piece[][] customPieces;
-    private Piece[][] customPiecesTestMovable;
-    private Piece[][] customPiecesTestLastMoveJump;
     private Piece[][] customPiecesTestValidateMove;
-    private Piece[][] customPiecesTestSubmitMove01;
 
     /**
      * Boards to test isGameOver
@@ -51,214 +41,92 @@ public class GameTest {
     private Piece[][] cpNoWhite;
 
     // Boards that result from making a move
-    private Piece[][] customPiecesRedMove1;
-    private Piece[][] customPiecesRedMove2;
-    private Piece[][] customPiecesWhiteMove1;
-    private Piece[][] customPiecesWhiteMove2;
-    private Piece[][] customPiecesWhiteMove3;
     private Piece[][] multipleJumpMove1;
-    private Piece[][] multipleJumpMove2;
 
     // Positions on the mock board that can be called.
-    private Position redPosition1 = new Position(0, 2);
-    private Position redPosition2 = new Position(6, 2);
-    private Position whitePosition1 = new Position(1, 1);
-    private Position whitePosition2 = new Position(7, 3);
+    //private Position redPosition1 = new Position(0, 2);
     // The 3 positions the Red piece in position 1 will try to jump to
-    private Position emptyPosition1 = new Position(2, 0);
+    //private Position emptyPosition1 = new Position(2, 0);
     private Position emptyPosition2 = new Position(1, 3);
-    private Position emptyPosition3 = new Position(2, 4);
-    // The 3 positions the White piece in position 1 will try to jump to
-    private Position emptyPosition4 = new Position(5, 1);
-    private Position emptyPosition5 = new Position(6, 4);
-    private Position emptyPosition6 = new Position(5, 5);
+
     // Create moves to be tested in validateMove
-    private Move validRedMove1 = new Move(redPosition1, emptyPosition1);
-    private Move validRedMove2 = new Move(redPosition1, emptyPosition2);
-    private Move invalidRedMove1 = new Move(redPosition1, whitePosition1);
-    private Move invalidRedMove2 = new Move(redPosition1, emptyPosition3);
-    private Move validWhiteMove1 = new Move(whitePosition2, emptyPosition4);
-    private Move validWhiteMove2 = new Move(whitePosition2, emptyPosition5);
-    private Move invalidWhiteMove1 = new Move(whitePosition2, redPosition2);
-    private Move invalidWhiteMove2 = new Move(whitePosition2, emptyPosition6);
+    //private Move validRedMove1 = new Move(redPosition1, emptyPosition1);
+    //private Move validRedMove2 = new Move(redPosition1, emptyPosition2);
 
     /**
      * Initialize the objects to test
      */
     @BeforeEach
     public void setup(){
-        white = mock(Player.class);
-        red = mock(Player.class);
-        whitePiece = new Piece(Color.WHITE, Type.SINGLE);
-        redPiece = new Piece(Color.RED, Type.SINGLE);
-
-        customPiecesTestMovable = new Piece[][]{
-                {null, null, null, null, null, null, null, null},
-                {null, redPiece, null, null, null, null, null, null},
-                {null, null, whitePiece, null, null, null, null, null},
-                {null, redPiece, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
-        };
-
-        customPiecesTestLastMoveJump = 	new Piece[][]{
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, whitePiece, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, redPiece, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
-        };
+        whitePlayer = mock(Player.class);
+        redPlayer = mock(Player.class);
+        WhtP = new Piece(Color.WHITE, Type.SINGLE);
+        RedP = new Piece(Color.RED, Type.SINGLE);
 
         /*
         Used to test red valid jump move and white single move
          */
-        customPiecesTestValidateMove = new Piece[][]{
-                {null, null, redPiece, null, null, null, null, redPiece},
-                {null, whitePiece, null, null, null, null, whitePiece, null},
-                {null, null, null, null, null, whitePiece, null, null},
+        /*customPiecesTestValidateMove = new Piece[][]{
+                {null, null, RedP, null, null, null, null, RedP},
+                {null, WhtP, null, null, null, null, WhtP, null},
+                {null, null, null, null, null, WhtP, null, null},
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
-                {null, null, null, whitePiece, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
-        };
-
-        customPiecesTestSubmitMove01 = new Piece[][]{
-                {null, null, null, null, null, null, null, redPiece},
-                {null, whitePiece, null, null, null, null, whitePiece, null},
-                {redPiece, null, null, null, null, whitePiece, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, whitePiece, null, null, null, null},
+                {null, null, null, WhtP, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null}
-        };
+        };*/
 
         /*
-        Used to test redPiece valid jump move and whitePiece valid jump move,
+        Used to test RedP valid jump move and WhtP valid jump move,
         invalid single moves given that there exists a jump move.
          */
         customPieces = 	new Piece[][]{
-                {null, null, redPiece, null, null, null, null, null},
-                {null, whitePiece, null, null, null, null, null, null},
+                {null, null, RedP, null, null, null, null, null},
+                {null, WhtP, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
-                {null, null, redPiece, null, null, null, null, null},
-                {null, null, null, whitePiece, null, null, null, null}
+                {null, null, RedP, null, null, null, null, null},
+                {null, null, null, WhtP, null, null, null, null}
         };
 
-        customPiecesRedMove2 = 	new Piece[][]{
-                {null, null, null, null, null, null, null, null},
-                {null, whitePiece, redPiece, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, redPiece, null, null, null, null, null},
-                {null, null, null, whitePiece, null, null, null, null}
-        };
-
-        customPiecesRedMove1 = new Piece[][]{
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {redPiece, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, redPiece, null, null, null, null, null},
-                {null, null, null, whitePiece, null, null, null, null}
-        };
-
-        //using this to test jump move
-        customPiecesWhiteMove1 = new Piece[][]{
-                {null, null, redPiece, null, null, null, null, null},
-                {null, whitePiece, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, whitePiece, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
-        };
-
-        //using this to test jump move
-        customPiecesWhiteMove2 = new Piece[][]{
-                {null, null, redPiece, null, null, null, null, null},
-                {null, whitePiece, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, redPiece, null, null, null, null, null},
-                {null, null, null, whitePiece, null, null, null, null}
-        };
-        //using this to test jump move
-        customPiecesWhiteMove3 = new Piece[][]{
-                {null, null, null, null, null, null, null, null},
-                {null, whitePiece, null, null, null, null, null, null},
-                {null, null, redPiece, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, redPiece, null, null, null, null, null},
-                {null, null, null, whitePiece, null, null, null, null}
-        };
         multipleJumpMove1 = new Piece[][]{
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, redPiece, null, null},
+                {null, null, null, null, null, RedP, null, null},
                 {null, null, null, null, null, null, null, null},
-                {null, null, null, redPiece, null, null, null, null},
-                {null, null, whitePiece, null, null, null, null, null}
-        };
-        //this is a case where the white player can
-        //either choose to take a double or single jump
-        multipleJumpMove2 = new Piece[][]{
-                {null, null, null, null, null, null, null, null},
-                {null, null, whitePiece, null, null, null, null, null},
-                {null, redPiece, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, redPiece, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, redPiece, null, null, null, null, null, null},
-                {whitePiece, null, null, null, null, null, null, null}
+                {null, null, null, RedP, null, null, null, null},
+                {null, null, WhtP, null, null, null, null, null}
         };
 
         cpNoRed = new Piece[][]{
                 {null, null, null, null, null, null, null, null},
-                {null, whitePiece, null, null, null, null, null, null},
+                {null, WhtP, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
-                {null, null, whitePiece, null, null, null, null, null},
+                {null, null, WhtP, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null}
         };
 
         cpNoWhite = new Piece[][]{
                 {null, null, null, null, null, null, null, null},
-                {null, null, redPiece, null, null, null, null, null},
+                {null, null, RedP, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, redPiece, null, null},
+                {null, null, null, null, null, RedP, null, null},
                 {null, null, null, null, null, null, null, null},
-                {null, redPiece, null, null, null, null, null, null},
+                {null, RedP, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null}
         };
 
-
-
         board = new Board(customPieces);
-        CuT = new Game(red, white, board);
+        CuT = new Game(redPlayer, whitePlayer, board);
     }
 
     /**
@@ -267,9 +135,9 @@ public class GameTest {
     @Test
     public void testIsRedPlayer() {
 
-        assertFalse(CuT.isRedPlayer(white), "" +
+        assertFalse(CuT.isRedPlayer(whitePlayer), "" +
                 "When passing in white player, this should return false!");
-        assertTrue(CuT.isRedPlayer(red));
+        assertTrue(CuT.isRedPlayer(redPlayer));
     }
 
     /**
@@ -277,7 +145,7 @@ public class GameTest {
      */
     @Test
     public void testGetRedPlayer() {
-        assertEquals(red, CuT.getRedPlayer(), "" +
+        assertEquals(redPlayer, CuT.getRedPlayer(), "" +
                 "getRedPlayer does not return the correct object!");
     }
 
@@ -286,7 +154,7 @@ public class GameTest {
      */
     @Test
     public void testGetWhitePlayer() {
-        assertEquals(white, CuT.getWhitePlayer(), "" +
+        assertEquals(whitePlayer, CuT.getWhitePlayer(), "" +
                 "getWhitePlayer does not return correct object!");
     }
 
@@ -335,11 +203,11 @@ public class GameTest {
      */
     @Test
     public void testIsActivePlayer() {
-        assertTrue(CuT.isActivePlayer(red));
-        assertFalse(CuT.isActivePlayer(white));
+        assertTrue(CuT.isActivePlayer(redPlayer));
+        assertFalse(CuT.isActivePlayer(whitePlayer));
         CuT.switchActiveColor();
-        assertTrue(CuT.isActivePlayer(white));
-        assertFalse(CuT.isActivePlayer(red));
+        assertTrue(CuT.isActivePlayer(whitePlayer));
+        assertFalse(CuT.isActivePlayer(redPlayer));
     }
 
     /**
@@ -347,37 +215,56 @@ public class GameTest {
      */
     @Test
     public void testValidateMove(){
+        Piece[][] customPiecesTestValidateMove = new Piece[][]{
+                {null, RedP, null, null, null, null, null, null},
+                {null, null, RedP, null, null, null, RedP, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, WhtP, null, null, null, null, null, null},
+                {null, null, null, null, null, WhtP, null, null},
+                {null, WhtP, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
+        };
+
         //Setup test
         board = new Board(customPiecesTestValidateMove);
-        CuT = new Game(red, white, board);
+        CuT = new Game(redPlayer, whitePlayer, board);
 
         //Make red player active
         if(CuT.getActiveColor() == Color.WHITE) {
             CuT.switchActiveColor();
         }
 
-        //Flip moves for red moves because moves are flipped in validateMove()
+        //Test red single moving piece, moving down and right and active color RED(Valid)
+        Move validRedMove = new Move(new Position(1,2), new Position(2,3));
+        assertTrue(CuT.validateMove(validRedMove.flipMove()));
 
-        //Test invalid red single move due to a jump move being available
-        assertFalse(CuT.validateMove(validRedMove2.flipMove()));
+        //Test red single moving piece, moving up and right and active color RED(Invalid)
+        CuT = new Game(redPlayer, whitePlayer, board);
+        Move invalidRedMove01 = new Move(new Position(1, 6), new Position(0, 7));
+        assertFalse(CuT.validateMove(invalidRedMove01.flipMove()));
 
-        //Test valid red jump move
-        assertTrue(CuT.validateMove(validRedMove1.flipMove()));
-
-        //Test invalid move due to active color (piece moved is white, active color is red)
-        Move invalidMoveActiveColor = new Move(new Position(5,3),new Position(4,2)).flipMove();
-        assertFalse(CuT.validateMove(invalidMoveActiveColor));
-
-        //Test invalid move due to space moving into not being empty
-        Move invalidMoveSpaceNotEmpty = new Move(new Position(0, 7), new Position(2, 5)).flipMove();
-        assertFalse(CuT.validateMove(invalidMoveSpaceNotEmpty));
-
-        //Change active color to white
+        //Test red single moving piece, moving down and right and active color White(Invalid)
         CuT.switchActiveColor();
+        Move invalidRedMove02 = new Move(new Position(0, 1), new Position(1, 0));
+        assertFalse(CuT.validateMove(invalidRedMove02));
 
-        //Test valid white single move
-        Move validWhiteSingleMove = new Move(new Position(5,3), new Position(4,4));
-        assertTrue(CuT.validateMove(validWhiteSingleMove));
+        //Test white single moving piece, moving up and right and active color WHITE(Valid)
+        CuT = new Game(redPlayer, whitePlayer, board);
+        CuT.switchActiveColor();
+        Move validWhiteMove = new Move(new Position(4,1), new Position(3,2));
+        assertTrue(CuT.validateMove(validWhiteMove));
+
+        //Test white single moving piece, moving down and left and active color WHITE(Invalid)
+        CuT = new Game(redPlayer, whitePlayer, board);
+        CuT.switchActiveColor();
+        Move invalidWhiteMove01 = new Move(new Position(6, 1), new Position(7, 0));
+        assertFalse(CuT.validateMove(invalidWhiteMove01));
+
+        //Test white single moving piece, moving up and right and active color RED(Invalid)
+        CuT.switchActiveColor();
+        Move invalidWhiteMove02 = new Move(new Position(5, 5), new Position(4, 6));
+        assertFalse(CuT.validateMove(invalidWhiteMove02.flipMove()));
     }
 
     /**
@@ -385,15 +272,27 @@ public class GameTest {
      */
     @Test
     public void testBackUpMove(){
+        Piece[][] customPieces = new Piece[][]{
+                {null, null, RedP, null, null, null, null, RedP},
+                {null, WhtP, null, null, null, null, WhtP, null},
+                {null, null, null, null, null, WhtP, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, WhtP, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
+        };
+
         //Setup test
-        board = new Board(customPiecesTestValidateMove);
-        CuT = new Game(red, white, board);
+        board = new Board(customPieces);
+        CuT = new Game(redPlayer, whitePlayer, board);
 
         //Test invalid backup move due to empty list of last moves
         assertFalse(CuT.backUpMove());
 
         //Perform red jump move
-        CuT.validateMove(validRedMove1.flipMove());
+        Move validRedMove = new Move(new Position(0, 2), new Position(2, 0));
+        CuT.validateMove(validRedMove.flipMove());
 
         //BackUp red jump move
         assertTrue(CuT.backUpMove());
@@ -407,9 +306,9 @@ public class GameTest {
      */
     @Test
     public void testIsWinner() {
-        assertFalse(CuT.isWinner(white));
-        CuT.resignGame(red);
-        assertTrue(CuT.isWinner(white));
+        assertFalse(CuT.isWinner(whitePlayer));
+        CuT.resignGame(redPlayer);
+        assertTrue(CuT.isWinner(whitePlayer));
     }
 
     /**
@@ -419,16 +318,13 @@ public class GameTest {
     public void testResignGame(){
         //Setup test
         board = new Board(customPiecesTestValidateMove);
-        CuT = new Game(red, white, board);
+        CuT = new Game(redPlayer, whitePlayer, board);
 
         //Red Player resigns
-        CuT.resignGame(red);
+        CuT.resignGame(redPlayer);
 
         //Winner should be white player
-        /*assertEquals(white,CuT.getWinner());
-
-        assertTrue(CuT.getGameOver());
-        assertTrue(CuT.getResigned());*/
+        assertTrue(CuT.isWinner(whitePlayer));
     }
 
     /**
@@ -437,25 +333,27 @@ public class GameTest {
     @Test
     public void testIsGameOver(){
         //Setup test
-        board = new Board(customPiecesTestValidateMove);
-        CuT = new Game(red, white, board);
+        board = new Board(customPieces);
+        CuT = new Game(redPlayer, whitePlayer, board);
 
         //Test game is not over
         assertFalse(CuT.isGameOver());
 
         //Test game is over by resignation
         //Red player resigns
-        CuT.resignGame(red);
+        CuT.resignGame(redPlayer);
         assertTrue(CuT.isGameOver());
 
         //Test game is over by all pieces eliminated
         //Red has no more pieces
         board = new Board(cpNoRed);
-        CuT = new Game(red, white, board);
+        CuT = new Game(redPlayer, whitePlayer, board);
         assertTrue(CuT.isGameOver());
         //White has no more pieces
         board = new Board(cpNoWhite);
-        CuT = new Game(red, white, board);
+        CuT = new Game(redPlayer, whitePlayer, board);
+        //White to move
+        CuT.switchActiveColor();
         assertTrue(CuT.isGameOver());
     }
 
@@ -465,7 +363,7 @@ public class GameTest {
     @Test
     public void testDidPlayerResign(){
         assertFalse(CuT.didPlayerResign());
-        CuT.resignGame(white);
+        CuT.resignGame(whitePlayer);
         assertTrue(CuT.didPlayerResign());
     }
 
@@ -475,54 +373,106 @@ public class GameTest {
     @Test
     public void testSubmitTurn(){
         //Setup test
-        board = new Board(customPiecesTestValidateMove);
-        CuT = new Game(red, white, board);
+        board = new Board(customPieces);
+        CuT = new Game(redPlayer, whitePlayer, board);
 
         //Test invalid submit turn when no move is made
         assertFalse(CuT.submitTurn());
 
         //Perform red jump move
-        CuT.validateMove(validRedMove1.flipMove());
+        CuT.validateMove(new Move(new Position(0, 2), new Position(2, 0)).flipMove());
 
         //Test submit red jump move
         assertTrue(CuT.submitTurn());
-    }
 
-    @Test
-    public void testGetBoardView(){
-        //Setup test
-        board = new Board(customPiecesTestValidateMove);
-        CuT = new Game(red, white, board);
+        // Setup scenario where piece gets kinged when turn is submitted
+        Piece[][] pieces =
+                {   {null, RedP, null, null, null, null, null, null},
+                    {null, null, null, null, RedP, null, null, null},
+                    {null, WhtP, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null}
+                };
+        board = new Board(pieces);
+        CuT = new Game(redPlayer, whitePlayer, board);
+        CuT.validateMove(new Move(new Position(0, 1), new Position(1, 2)).flipMove());
+        CuT.submitTurn();
 
-        //Create expected boardView
-        BoardView expectedBoardView = board.getBoardView();
+        CuT.validateMove(new Move(new Position(2, 1), new Position(0, 3)));
+        // Test that the king piece is not enforced to perform a multiple jump
+        assertTrue(CuT.submitTurn());
 
-        //Test that expected board view is the same as actual board view
-        assertEquals(expectedBoardView,CuT.getBoardView(white));
+        // Setup scenario where piece jumps once and has more jumps to perform
+        pieces =
+                new Piece[][]{{null, RedP, null, null, null, null, null, null},
+                        {null, null, WhtP, null, null, null, null, null},
+                        {null, null, null, null, null, null, null, null},
+                        {null, null, null, null, WhtP, null, null, null},
+                        {null, null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null, null}
+                };
+        board = new Board(pieces);
+        CuT = new Game(redPlayer, whitePlayer, board);
+        CuT.validateMove(new Move(new Position(0, 1), new Position(2, 3)).flipMove());
+        // Test that multiple jump moves is enforced
+        assertFalse(CuT.submitTurn());
+
+        // Setup scenario where game is over and turn should not be switched
+        CuT.backUpMove();
+        CuT.validateMove(new Move(new Position(0, 1), new Position(2, 3)).flipMove());
+        CuT.validateMove(new Move(new Position(2, 3), new Position(4, 5)).flipMove());
+        assertTrue(CuT.submitTurn());
     }
 
     /**
-     * If there is a valid jump move to be made
-     * then this method should return true
+     * Test for getBoardView
      */
     @Test
-    public void testIsJumpMove(){
-        //valid jump move
-        Position positionStart = new Position(7, 3);
-        Position positionEnd = new Position(5, 1);
-        Move move = new Move(positionStart, positionEnd);
+    public void testGetBoardView(){
+        //Expected pieces contained in white BoardView
+        Piece[][] piecesWhiteGameStart = new Piece[][]{
+                {null, RedP, null, RedP, null, RedP, null, RedP},
+                {RedP, null, RedP, null, RedP, null, RedP, null},
+                {null, RedP, null, RedP, null, RedP, null, RedP},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {WhtP, null, WhtP, null, WhtP, null, WhtP, null},
+                {null, WhtP, null, WhtP, null, WhtP, null, WhtP},
+                {WhtP, null, WhtP, null, WhtP, null, WhtP, null}
+        };
 
-        assertTrue(CuT.isJumpMove(move));
+        //Expected pieces contained in red BoardView
+        Piece[][] piecesRedGameStart = new Piece[][]{
+                {null, WhtP, null, WhtP, null, WhtP, null, WhtP},
+                {WhtP, null, WhtP, null, WhtP, null, WhtP, null},
+                {null, WhtP, null, WhtP, null, WhtP, null, WhtP},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {RedP, null, RedP, null, RedP, null, RedP, null},
+                {null, RedP, null, RedP, null, RedP, null, RedP},
+                {RedP, null, RedP, null, RedP, null, RedP, null}
+        };
 
-        //invalid move: trying to move a
-        //non red or kinged piece down
-        positionStart = new Position(1, 1);
-        positionEnd = new Position(2, 3);
-        move = new Move(positionStart, positionEnd);
-        board = new Board(customPiecesWhiteMove3);
-        CuT = new Game(red, white, board);
+        //Setup test for white Board View
+        board = new Board(piecesWhiteGameStart);
+        CuT = new Game(redPlayer, whitePlayer, board);
 
-        assertFalse(CuT.isJumpMove(move));
+        //Create expected white boardView
+        BoardView expectedWhiteBoardView = board.getBoardView();
+        //Test that expected board view is the same as actual white board view
+        assertEquals(expectedWhiteBoardView,CuT.getBoardView(whitePlayer));
+
+        //Update board for red Board View
+        board = new Board(piecesRedGameStart);
+        //Create expected red boardView
+        BoardView expectedRedBoardView = board.getBoardView();
+        //Test that expected board view is the same as actual red board view
+        assertEquals(expectedRedBoardView, CuT.getBoardView(redPlayer));
     }
 
     /**
@@ -530,115 +480,29 @@ public class GameTest {
      */
     @Test
     public void testJumpMoveExists() {
-        assertTrue(CuT.jumpMoveExists());
+        //assertTrue(CuT.jumpMoveExists());
         board = new Board(multipleJumpMove1);
-        CuT = new Game(red, white, board);
+        CuT = new Game(redPlayer, whitePlayer, board);
+        assertFalse(CuT.jumpMoveExists());
+        //Switch active color to RED
         CuT.switchActiveColor();
         assertTrue(CuT.jumpMoveExists());
+
+        Piece[][] pieces = new Piece[][]{
+                {null, RedP, null, RedP, null, null, null, null},
+                {null, null, null, null, RedP, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, RedP, null, null, null},
+                {null, null, null, null, null, RedP, null, null},
+                {null, null, RedP, null, null, null, null, null},
+                {null, WhtP, null, null, null, WhtP, null, WhtP},
+                {null, null, null, null, null, null, WhtP, null},
+        };
+        board = new Board(pieces);
+        CuT = new Game(redPlayer, whitePlayer, board);
+        assertTrue(CuT.jumpMoveExists());
+
     }
 
-    /**
-     * Test getMovablePieceLocations
-     */
-    @Test
-    public void testGetMovablePieceLocations(){
-        board = new Board(customPiecesTestMovable);
-        CuT = new Game(red, white, board);
-
-        //set red player as active
-        if(!CuT.isActivePlayer(red)){
-            CuT.switchActiveColor();
-        }
-
-        //Test red player movablePieceLocations
-        List<Position> expectedMovablePieceLocations = new ArrayList<>();
-        expectedMovablePieceLocations.add(new Position(1,1));
-        expectedMovablePieceLocations.add(new Position(3, 1));
-
-        List<Position> actualMovablePieceLocations = CuT.getMovablePieceLocations();
-
-        assertEquals(expectedMovablePieceLocations,actualMovablePieceLocations);
-    }
-
-    /**
-     * Test jumpPositionExists
-     */
-    @Test
-    public void testGetJumpLocations() {
-        board = new Board(customPiecesTestMovable);
-        CuT = new Game(red, white, board);
-
-        //set red player as active
-        if(!CuT.isActivePlayer(red)){
-            CuT.switchActiveColor();
-        }
-
-        //Test jumpPositions for red piece on row 1, col 1
-        List<Position> expectedJumpPositions = new ArrayList<>();
-        expectedJumpPositions.add(new Position(3,3));
-
-        List<Position> actualJumpPositions = CuT.getJumpLocations(new Position(1,1));
-        System.out.println("Expected: "+expectedJumpPositions);
-        System.out.println("Actual: "+actualJumpPositions);
-
-        assertEquals(expectedJumpPositions,actualJumpPositions);
-
-        //set white player as active
-        CuT.switchActiveColor();
-
-        //Test jumpPositions for white piece on row 2, col 2
-        expectedJumpPositions.clear();
-        expectedJumpPositions.add(new Position(0, 0));
-
-        actualJumpPositions = CuT.getJumpLocations(new Position(2,2));
-        System.out.println("Expected: "+expectedJumpPositions);
-        System.out.println("Actual: "+actualJumpPositions);
-
-        assertEquals(expectedJumpPositions,actualJumpPositions);
-    }
-
-    @Test
-    public void testIsLastMoveJump(){
-
-        //Setup Test
-        board = new Board(customPiecesTestLastMoveJump);
-        CuT = new Game(red, white, board);
-
-        //test lastMoveJump true when white piece jumps "up/left" -2 col, -2 rows
-        Position positionStart = new Position(4, 2);
-        Position positionEnd = new Position(2, 4);
-        Move move = new Move(positionStart, positionEnd);
-        assertTrue(CuT.isLastMoveJump(move));
-
-        //test last move valid when white piece jumps "up/right" +2 col, +2 rows
-        positionStart = new Position(4, 6);
-        positionEnd = new Position(2, 4);
-        move = new Move(positionStart, positionEnd);
-        assertTrue(CuT.isLastMoveJump(move));
-
-        //test last move valid when red piece jumps "down/left" -2 col, +2 rows
-        positionStart = new Position(3, 4);
-        positionEnd = new Position(5, 2);
-        move = new Move(positionStart, positionEnd);
-        assertTrue(CuT.isLastMoveJump(move));
-
-        //test last move valid when red piece jumps "down/right" +2 col, +2 rows
-        positionStart = new Position(3, 0);
-        positionEnd = new Position(5, 2);
-        move = new Move(positionStart, positionEnd);
-        assertTrue(CuT.isLastMoveJump(move));
-
-        //test lastMoveJump false when white piece makes a non jump move
-        positionStart = new Position(3, 3);
-        positionEnd = new Position(2, 4);
-        move = new Move(positionStart, positionEnd);
-        assertFalse(CuT.isLastMoveJump(move));
-
-        //test lastMoveJump false when red piece makes a non jump move
-        positionStart = new Position(4, 1);
-        positionEnd = new Position(5, 2);
-        move = new Move(positionStart, positionEnd);
-        assertFalse(CuT.isLastMoveJump(move));
-    }
 
 }

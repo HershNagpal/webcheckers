@@ -43,8 +43,6 @@ public class PostValidateMoveRouteTest {
     private Session session;
     private Player player;
     private Player opponent;
-    private Move move_Success;
-    private Move move_Fail;
 
     /**
      * Setup the objects for each test.

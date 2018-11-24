@@ -3,10 +3,8 @@ package com.webcheckers.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
-
 import com.webcheckers.model.Piece.Type;
 
 /**
@@ -28,16 +26,18 @@ class SpaceTest {
 	private Space whiteKingSpaceWithoutPiece;
 	private Space blackKingSpaceWithoutPiece;
 
+	private Piece piece;
 
 	/**
 	* Initialize the objects to test
 	*/
 	@BeforeEach
 	public void setup() {
-		blackSpaceWithPiece = new Space(1, 2, mock(Piece.class));
+		piece = mock(Piece.class);
+		blackSpaceWithPiece = new Space(1, 2, piece);
 		blackSpaceWithoutPiece = new Space(3, 4, null);
 
-		whiteSpaceWithPiece = new Space(6, 6, mock(Piece.class));
+		whiteSpaceWithPiece = new Space(6, 6, piece);
 		whiteSpaceWithoutPiece = new Space(2, 4, null);
 
 		whiteKingSpaceWithoutPiece = new Space(1, 7, null);
@@ -48,10 +48,11 @@ class SpaceTest {
 	 * Tests the overridden Equals method
 	 */
 	@Test
-	public void testEquals() { 
+	public void testEquals() {
+		assertTrue(blackSpaceWithPiece.equals(blackSpaceWithPiece));
 		assertTrue(blackKingSpaceWithoutPiece.equals(new Space(0, 0, null)));
-		assertTrue(blackSpaceWithPiece.equals(new Space(1, 2, mock(Piece.class))));
-		assertTrue(whiteSpaceWithPiece.equals(new Space(6, 6, mock(Piece.class))));
+		assertTrue(blackSpaceWithPiece.equals(new Space(1, 2, piece)));
+		assertTrue(whiteSpaceWithPiece.equals(new Space(6, 6, piece)));
 
 		assertFalse(whiteKingSpaceWithoutPiece.equals(7));
 		assertFalse(blackSpaceWithPiece.equals(new Message("", MessageType.info)));
@@ -124,22 +125,4 @@ class SpaceTest {
 		assertNotEquals(new Piece(Color.WHITE, Type.KING), blackSpaceWithoutPiece.getPiece());
 		assertNotEquals(new Piece(Color.RED, Type.KING), blackSpaceWithoutPiece.getPiece());
 	}
-
-//	/**
-//	 * Test the equals method
-//	 */
-//	@Test
-//	public void testEquals() {
-//		Space hardCopy = new Space(3, 4, null);
-//		Space a = new Space(3, 5, null);
-//		Space b = new Space(4, 4, null);
-//		Space copy = blackSpaceWithoutPiece;
-//		String fake = "fake";
-//		assertEquals(blackSpaceWithoutPiece, hardCopy);
-//		assertEquals(copy, blackSpaceWithoutPiece);
-//		assertNotEquals(blackSpaceWithoutPiece, fake);
-//		assertNotEquals(blackSpaceWithoutPiece, a);
-//		assertNotEquals(blackSpaceWithoutPiece, b);
-//	}
-
 }

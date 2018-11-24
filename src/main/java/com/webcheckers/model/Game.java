@@ -1,14 +1,10 @@
 package com.webcheckers.model;
 
-import static java.lang.Math.abs;
-
-import com.webcheckers.model.Piece.Type;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
- * Combines the board and players in order to play the game
+ * Combines the board and players in order to play the game. Deals with game logic that combines many
+ * different classes to calculate something.
  * @author Luis Gutierrez
  * @author Christopher Daukshus
  * @author Hersh Nagpal
@@ -64,21 +60,11 @@ public class Game {
     private Color activeColor;
 
     /**
-     * Has a move been made since last checked.
-     */
-    private boolean gameChanged;
-
-    /**
-     * Last move made before a move is submitted.
-     * lastMove is the move at the end of lastMoves.
-     */
-    private Move lastMove;
-
-    /**
-     * List of moves made before a move is submitted.
+     * Stack of moves made before a move is submitted.
      * Used for backing up a move.
      */
-    private List<Move> lastMoves = new ArrayList<>();
+    //private List<Move> lastMoves = new ArrayList<>();
+    private Stack<Move> lastMoves = new Stack<>();
 
     /**
      * Start a game with a given board state.
@@ -90,16 +76,7 @@ public class Game {
     public Game(Player redPlayer, Player whitePlayer, Board board) {
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
-        if(redPlayer.getName().equals("debug") && whitePlayer.getName().equals("test")) {
-            this.board = new Board(Board.DEBUG_PIECES);
-            System.out.println("Custom Board initialized");
-        } else if (redPlayer.getName().equals("test") && whitePlayer.getName().equals("debug")) {
-            System.out.println("Custom Board initialized");
-            this.board = new Board(Board.DEBUG_PIECES);
-        } else {
-            System.out.println("Normal Board initialized");
-            this.board = board;
-        }
+        this.board = board;
         activeColor = Color.RED;
         //gameID = redPlayer.getName() + "+" + whitePlayer.getName() + "+" + String.valueOf(hashCode());
     }
@@ -113,16 +90,15 @@ public class Game {
     public Game(Player redPlayer, Player whitePlayer, int gameNum) {
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
+
         if(redPlayer.getName().equals("debug") && whitePlayer.getName().equals("test")) {
-            this.board = new Board(Board.DEBUG_PIECES);
-            System.out.println("Custom Board initialized");
+            this.board = new Board(Board.END_GAME);
         } else if (redPlayer.getName().equals("test") && whitePlayer.getName().equals("debug")) {
-            System.out.println("Custom Board initialized");
-            this.board = new Board(Board.DEBUG_PIECES);
+            this.board = new Board(Board.END_GAME);
         } else {
-            System.out.println("Normal Board initialized");
             this.board = new Board();
         }
+
         activeColor = Color.RED;
         // Unique ID
         gameID = redPlayer.getName() + "+" + whitePlayer.getName() + "+" + gameNum;
@@ -252,15 +228,30 @@ public class Game {
         if (resigned) {
             return true;
         }
-        Color color = board.checkAllPiecesEliminated();
-        if (color != null) {
-            winner = color == Color.RED ? whitePlayer : redPlayer;
+        Color allPiecesEliminated = board.checkAllPiecesEliminated();
+        if (allPiecesEliminated == activeColor) {
+            winner = allPiecesEliminated == Color.RED ? whitePlayer : redPlayer;
             return true;
         }
-        // if no moves left in board.checkValidMoves()
-        // declare winner
-        // return true
+        Color noMoreValidMoves = board.checkNoMoreValidMoves();
+        if (noMoreValidMoves == activeColor) {
+            winner = noMoreValidMoves == Color.RED ? whitePlayer : redPlayer;
+            return true;
+        }
         return false;
+        /*
+        if (resigned) {
+            return true;
+        }
+        //Color otherColor = activeColor == Color.RED ? Color.WHITE : Color.RED;
+        if (board.checkNoMoreValidMoves(activeColor) ||
+                board.checkAllPiecesEliminated(activeColor)) {
+            winner = activeColor == Color.RED ? whitePlayer : redPlayer;
+            return true;
+        }
+
+        return false;
+        */
     }
 
     /**
@@ -300,196 +291,49 @@ public class Game {
     }
 
     /**
-     * Checks if the move being made by a player is valid or not.
-     * First ensures that it is the correct player's turn and that there is no
-     * piece at the destination.
-     * Checks if the move is a normal diagonal movement.
-     * If not, then checks if the move is a jump move over an opponent's piece.
-     *
+     * Checks if the move being made by a player is valid or not.  
      * @param move The Move object that the player is making
      * @return True if the move is valid, false if it is invalid.
-     * @TODO debug jumpMoveExists and integrate it here.
      */
     public boolean validateMove(Move move) {
         // If it is red turn, move is flipped
-        if (activeColor.equals(Color.RED)) {
+        if (getActiveColor().equals(Color.RED)) {
             move = move.flipMove();
         }
-        Color movedPieceColor = board.getPieceAtPosition(move.getStart()).getColor();
-        // Check valid move conditions
-        if (!getActiveColor().equals(movedPieceColor)) {
-            return false;
-        }
-        // Check space piece is moving into is empty
-        if (board.getPieceAtPosition(move.getEnd()) != null) {
+
+        //Get piece from start position
+        Piece movingPiece = board.getPieceAtPosition(move.getStart());
+
+        if (!getActiveColor().equals(movingPiece.getColor())) {
             return false;
         }
 
-        if (isNormalMove(move) && canContinueMoving) {
-            // Forcing jump move
-            if (jumpMoveExists()) {
-                System.out.println("JUMP MOVE EXISTS");
-                return false;
+        if (MoveManager.isValidMove(move, board) && canContinueMoving) {
+            if (MoveManager.isSingleMove(move, movingPiece)) {
+                System.out.println("Single Move");
+                //Force Jump Move
+                //System.out.println("Jump Move Exists (Validate Move): "+jumpMoveExists());
+                if (jumpMoveExists()) {
+                    return false;
+                }
+                canContinueMoving = false;
             }
-            lastMoves.add(move);
-            lastMove = move;
-            canContinueMoving = false;
+            else if (MoveManager.isJumpMove(move, board)){
+                System.out.println("Jump Move");
+            }
+            lastMoves.push(move);
             makeMove(move);
+
+            //Prevent player from performing a single jump after jump move is finished
+            if(board.getJumpLocations(move.getEnd()).size() == 0){
+                canContinueMoving = false;
+            }
+
             return true;
-        } else if (isJumpMove(move) && canContinueMoving) {
-            lastMoves.add(move);
-            lastMove = move;
-            makeMove(move);
-            return true;
+
         } else {
             return false;
         }
-    }
-
-    /**
-     * Checks if the given Move is a valid normal, non-jump move.
-     *
-     * @param move The Move object that the player is making
-     * @return true if the move is a valid normal, non-jump move, false if it is invalid or not a normal move.
-     */
-    private boolean isNormalMove(Move move) {
-        int row1 = move.getStart().getRow();
-        int col1 = move.getStart().getCell();
-
-        int row2 = move.getEnd().getRow();
-        int col2 = move.getEnd().getCell();
-
-        Piece movingPiece = board.getPieceAtPosition(move.getStart());
-
-        boolean isSingleMove = false;
-        // Red pieces move to higher rows, White pieces move to lower rows. Kings can do both.
-        if (movingPiece.getColor() == Color.RED || movingPiece.getType() == Type.KING) {
-            if (checkDistance(row2, row1, 1) && checkDistance(col2, col1, 1)) {
-                isSingleMove = true;
-            } else if (checkDistance(row2, row1, 1) && checkDistance(col2, col1, -1)) {
-                isSingleMove = true;
-            }
-        }
-        if (movingPiece.getColor() == Color.WHITE || movingPiece.getType() == Type.KING) {
-            if (checkDistance(row2, row1, -1) && checkDistance(col2, col1, 1)) {
-                isSingleMove = true;
-            } else if (checkDistance(row2, row1, -1) && checkDistance(col2, col1, -1)) {
-                isSingleMove = true;
-            }
-        }
-
-        return isSingleMove;
-    }
-
-    /**
-     * Checks if the given Move is a valid jump move
-     *
-     * @param move The Move object that the player is making.
-     * @return true if the move is a valid jump move, false if it is invalid or not a jump move.
-     */
-    public boolean isLastMoveJump(Move move) {
-        int row1 = move.getStart().getRow();
-        int col1 = move.getStart().getCell();
-
-        int row2 = move.getEnd().getRow();
-        int col2 = move.getEnd().getCell();
-
-        //Piece is now at the end position of the move
-        Piece movingPiece = board.getPieceAtPosition(move.getEnd());
-
-        boolean isJumpMove = false;
-
-        // The piece must either be Red or a King to move towards the bottom of the board.
-        if (movingPiece.getColor() == Color.RED || movingPiece.getType() == Type.KING) {
-            // The move must be two down and two to the right or..
-            if (checkDistance(row2, row1, 2) && checkDistance(col2, col1, 2)) {
-                isJumpMove = true;
-            }
-            // The move must be two down and two to the left
-            else if (checkDistance(row2, row1, 2) && checkDistance(col2, col1, -2)) {
-                isJumpMove = true;
-            }
-        }
-        // The piece must either be White or a King to move to the top of the board
-        if (movingPiece.getColor() == Color.WHITE || movingPiece.getType() == Type.KING) {
-            // The move must be two up and two to the left
-            if (checkDistance(row2, row1, -2) && checkDistance(col2, col1, 2)) {
-                isJumpMove = true;
-            }
-            // The move must be two up and two to the left
-            else if (checkDistance(row2, row1, -2) && checkDistance(col2, col1, -2)) {
-                isJumpMove = true;
-            }
-        }
-        return isJumpMove;
-    }
-
-    /**
-     * Checks if the given Move is a valid jump move
-     *
-     * @param move The Move object that the player is making.
-     * @return true if the move is a valid jump move, false if it is invalid or not a jump move.
-     */
-    public boolean isJumpMove(Move move) {
-        int row1 = move.getStart().getRow();
-        int col1 = move.getStart().getCell();
-
-        int row2 = move.getEnd().getRow();
-        int col2 = move.getEnd().getCell();
-
-        Piece movingPiece = board.getPieceAtPosition(move.getStart());
-        Piece middlePiece;
-
-        boolean isJumpMove = false;
-        // The piece must either be Red or a King to move towards the bottom of the board.
-        if (movingPiece.getColor() == Color.RED || movingPiece.getType() == Type.KING) {
-            // The move must be two down and two to the right or..
-            if (checkDistance(row2, row1, 2) && checkDistance(col2, col1, 2)) {
-                middlePiece = board.getPieceAtPosition(new Position(row1 + 1, col1 + 1));
-                // There must also be a piece of the opposite color in between the start and end.
-                if (middlePiece != null && middlePiece.getColor() != movingPiece.getColor()) {
-                    isJumpMove = true;
-                }
-            }
-            // The move must be two down and two to the left
-            else if (checkDistance(row2, row1, 2) && checkDistance(col2, col1, -2)) {
-                middlePiece = board.getPieceAtPosition(new Position(row1 + 1, col1 - 1));
-                // There must also be a piece of the opposite color in between the start and end.
-                if (middlePiece != null && middlePiece.getColor() != movingPiece.getColor()) {
-                    isJumpMove = true;
-                }
-            }
-        }
-        // The piece must either be White or a King to move to the top of the board
-        if (movingPiece.getColor() == Color.WHITE || movingPiece.getType() == Type.KING) {
-            // The move must be two up and two to the left
-            if (checkDistance(row2, row1, -2) && checkDistance(col2, col1, 2)) {
-                middlePiece = board.getPieceAtPosition(new Position(row1 - 1, col1 + 1));
-                // There must also be a piece of the opposite color in between the start and end.
-                if (middlePiece != null && middlePiece.getColor() != movingPiece.getColor()) {
-                    isJumpMove = true;
-                }
-            }
-            // The move must be two up and two to the left
-            else if (checkDistance(row2, row1, -2) && checkDistance(col2, col1, -2)) {
-                middlePiece = board.getPieceAtPosition(new Position(row1 - 1, col1 - 1));
-                // There must also be a piece of the opposite color in between the start and end.
-                if (middlePiece != null && middlePiece.getColor() != movingPiece.getColor()) {
-                    isJumpMove = true;
-                }
-            }
-        }
-        return isJumpMove;
-    }
-
-    /**
-     * @param val1     col or row value to check distance with another value
-     * @param val2     col or row value to check distance with another value.
-     * @param expected expected difference between val2 and val1.
-     * @return true if the distance between p1 and p2 is equal to the expected value
-     */
-    public boolean checkDistance(int val2, int val1, int expected) {
-        return (val2 - val1) == expected;
     }
 
     /**
@@ -516,29 +360,13 @@ public class Game {
      * @param move starting position and ending position
      */
     public void makeMove(Move move) {
-
-        Position moveStart = move.getStart();
-        Position moveEnd = move.getEnd();
-
-        int rowStart = moveStart.getRow();
-        int colStart = moveStart.getCell();
-        int rowEnd = moveEnd.getRow();
-        int colEnd = moveEnd.getCell();
-
-        int rowDistance = rowEnd - rowStart;
-        rowDistance = abs(rowDistance);
-        int colDistance = colEnd - colStart;
-        colDistance = abs(colDistance);
-
-        if (rowDistance == 1 && colDistance == 1) {
+        if (move.getStart().isDiagonalAdjacentTo(move.getEnd())) {
             board.makeNormalMove(move);
-            checkIfKinged(move);
-        } else if (rowDistance == 2 && colDistance == 2) {
+        } else if (move.getStart().isDiagonalJumpTo(move.getEnd())) {
             if (move.isBackUpMove()) {
                 board.makeBackUpJumpMove(move, activeColor);
             } else {
                 board.makeJumpMove(move);
-                checkIfKinged(move);
             }
         }
     }
@@ -551,27 +379,34 @@ public class Game {
      * @return True or false depending on if the move was made
      */
     public boolean submitTurn() {
-        if (lastMove == null) {
+        if (lastMoves.empty()) {
             return false;
         }
 
+        Move lastMove = lastMoves.peek();
+        Piece movingPiece = board.getPieceAtPosition(lastMove.getEnd());
         //Enforce player ending a multiple jump move
         Position lastMoveEndPos = lastMove.getEnd();
         //Multiple jump move has not been completed
-        if (isLastMoveJump(lastMove) && getJumpLocations(lastMoveEndPos).size() > 0) {
-            return false;
+        System.out.println("LastMoveJump: " + MoveManager.isLastMoveJump(lastMove, movingPiece));
+        System.out.println("JumpLocation Exists: " + (board.getJumpLocations(lastMoveEndPos).size() > 0));
+        boolean kinged = checkIfKinged(lastMove);
+        if (MoveManager.isLastMoveJump(lastMove, movingPiece)) {
+            if (!kinged && board.getJumpLocations(lastMoveEndPos).size() > 0) {
+                return false;
+            }
         }
 
-        //reset lastMoves and lastMove
+        //Potentially King moving piece
+     //   checkIfKinged(lastMove);
+
+        //reset lastMoves
         lastMoves.clear();
-        lastMove = null;
-        // Do not switch the turn if the game is over
-        // Otherwise invokes PostCheckTurn when not your turn when game is over
+        this.canContinueMoving = true;
+
         if (!isGameOver()) {
             switchActiveColor();
         }
-        gameChanged = true;
-        this.canContinueMoving = true;
 
         return true;
     }
@@ -583,23 +418,15 @@ public class Game {
      * @return True or false depending on if the back up action was made
      */
     public boolean backUpMove() {
-        if (lastMove == null || lastMoves.isEmpty()) {
+        if (lastMoves.isEmpty()) {
             return false;
         }
 
-        //Undo last move
-        Move backUpMove = lastMove.createBackUpMove();
-        makeMove(backUpMove);
-
         //Remove lastMove from list of previous moves
-        lastMoves.remove(lastMove);
-
-        //Update lastMove
-        if (!lastMoves.isEmpty()) {
-            lastMove = lastMoves.get(lastMoves.size() - 1);
-        } else {
-            lastMove = null;
-        }
+        Move lastMove = lastMoves.pop();
+        Move backUpMove = lastMove.createBackUpMove();
+        //Undo last move
+        makeMove(backUpMove);
 
         canContinueMoving = true;
         return true;
@@ -618,11 +445,15 @@ public class Game {
         int endRow = move.getEnd().getRow();
         Piece currentPiece = board.getPieceAtPosition(move.getEnd());
         Color pieceColor = currentPiece.getColor();
-
+        if (currentPiece.isKing()) {
+            return false;
+        }
         if (endRow == 7 && pieceColor == Color.RED) {
-            return currentPiece.kingPiece();
-        } else if (endRow == 7 && pieceColor == Color.WHITE) {
-            return currentPiece.kingPiece();
+            currentPiece.becomeKing();
+            return true;
+        } else if (endRow == 0 && pieceColor == Color.WHITE) {
+            currentPiece.becomeKing();
+            return true;
         }
         return false;
     }
@@ -635,122 +466,16 @@ public class Game {
      * @return whether or not the current player can make a jump move.
      */
     public boolean jumpMoveExists() {
-        List<Position> movablePieceLocations = getMovablePieceLocations();
+        System.out.println("Active Color: "+getActiveColor());
+        List<Position> movablePieceLocations = board.getMovablePieceLocations(getActiveColor());
+        System.out.println("MovablePieceLocations size: "+movablePieceLocations.size());
         for (Position indexPosition : movablePieceLocations) {
+            System.out.println("JumpLocations for Pos size: "+board.getJumpLocations(indexPosition).size());
             // Check if piece at indexPosition has a position to jump to
-            //System.out.println("JUMP LOCATIONS: "+getJumpLocations(indexPosition));
-            if (getJumpLocations(indexPosition).size() > 0) {
-                //System.out.println("************************");
+            if (board.getJumpLocations(indexPosition).size() > 0) {
                 return true;
             }
         }
-        //System.out.println("************************");
         return false;
     }
-
-    /**
-     * This method will get the location of a piece and check the jump locations of that piece.
-     *
-     * @param position location of an active player's piece
-     * @return true if piece at position has a position to jump to
-     * @TODO make this so that it only checks kinged jump moves if the piece is a king.
-     */
-    public List<Position> getJumpLocations(Position position) {
-        Piece movingPiece = board.getPieceAtPosition(position);
-
-        int row = position.getRow();
-        int col = position.getCell();
-        List<Position> possibleJumpPos = new ArrayList<>();
-        Position upperLeft, upperRight, lowerLeft, lowerRight;
-
-        upperLeft = new Position(row - 2, col - 2);
-        upperRight = new Position(row - 2, col + 2);
-        lowerLeft = new Position(row + 2, col - 2);
-        lowerRight = new Position(row + 2, col + 2);
-
-        possibleJumpPos.add(upperLeft);
-        possibleJumpPos.add(upperRight);
-        possibleJumpPos.add(lowerLeft);
-        possibleJumpPos.add(lowerRight);
-
-        List<Position> jumpedPositions = new ArrayList<>();
-        jumpedPositions.add(new Position(row - 1, col - 1));
-        jumpedPositions.add(new Position(row - 1, col + 1));
-        jumpedPositions.add(new Position(row + 1, col - 1));
-        jumpedPositions.add(new Position(row + 1, col + 1));
-
-        List<Position> validJumpPositions = new ArrayList<>();
-
-        for (int i = 0; i < possibleJumpPos.size(); i++) {
-            Position pos = possibleJumpPos.get(i);
-
-            //make sure positions are on the board
-            if (pos.getRow() < 0 || pos.getCell() < 0 || pos.getRow() >= Board.ROWS || pos.getCell() >= Board.COLUMNS) {
-                //continue
-            }
-
-            // Check if position jumping into is not empty
-            else if (board.getPieceAtPosition(pos) == null) {
-                // Check if there is a piece being jumped
-                Position positionJumped = new Position(pos.getRow(), pos.getCell());
-
-                // Checking if its equal to null because you cannot call .equals on null
-                if (board.getPieceAtPosition(jumpedPositions.get(i)) == null) {
-                    //continue
-                } else {
-                    Piece jumpedPiece = board.getPieceAtPosition(jumpedPositions.get(i));
-                    //Valid jump if the piece jumped is the opposite color of the active color.
-                    if (!jumpedPiece.getColor().equals(activeColor)) {
-                        System.out.println(jumpedPiece);
-                        //Invalid jump if the piece is type SINGLE and going in the wrong direction
-                        if (!movingPiece.getType().equals(Type.KING)) {
-                            //SINGLE red piece cant jump up
-                            if (activeColor.equals(Color.RED)) {
-                                if (i != 0 && i != 1) {
-                                    validJumpPositions.add(pos);
-                                }
-                            }
-                            //SINGLE white piece cant jump down
-                            else {
-                                if (i != 2 && i != 3) {
-                                    validJumpPositions.add(pos);
-                                }
-                            }
-                        } else {
-                            validJumpPositions.add(pos);
-                        }
-                    }
-                }
-            }
-        }
-
-        return validJumpPositions;
-    }
-
-    /**
-     * Helper method that returns all of the locations of pieces that can make moves.
-     *
-     * @return a list of positions that have pieces that can move.
-     */
-    public List<Position> getMovablePieceLocations() {
-        List<Position> movablePieceLocations = new ArrayList<>();
-        Position indexPosition;
-        Piece indexPiece;
-
-        // Iterate through all pieces to see which ones are valid to move this turn.
-        for (int row = 0; row < Board.ROWS; row++) {
-            for (int col = 0; col < Board.COLUMNS; col++) {
-                indexPosition = new Position(row, col);
-                if (board.getPieceAtPosition(indexPosition) != null) {
-                    indexPiece = board.getPieceAtPosition(indexPosition);
-                    // Add the possible positions of pieces that are the active color to the array.
-                    if (indexPiece.getColor() == getActiveColor()) {
-                        movablePieceLocations.add(indexPosition);
-                    }
-                }
-            }
-        }
-        return movablePieceLocations;
-    }
-
 }

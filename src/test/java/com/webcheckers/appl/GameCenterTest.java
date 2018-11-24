@@ -44,6 +44,9 @@ public class GameCenterTest {
         messenger = mock(Messenger.class);
         player = mock(Player.class);
         opponent = mock(Player.class);
+        //Added to avoid nullPointer in Game constructor
+        when(player.getName()).thenReturn("Player1");
+        when(opponent.getName()).thenReturn("Player2");
         dummy = mock(Player.class);
         move = mock(Move.class);
 

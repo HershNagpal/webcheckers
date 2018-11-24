@@ -161,19 +161,18 @@ public class GetGameRoute implements Route{
             // Create a new game
             game = gameCenter.createGame(player, opponent);
         }
-
+        if (gameCenter.isGameOver(game)) {
+            Message message = gameCenter.isWinner(game, player);
+            session.attribute(MESSAGE_ATTR, message);
+            response.redirect(WebServer.HOME_URL);
+            return null;
+        }
         vm.put(BOARD_ATTR, game.getBoardView(player));
         vm.put(CURRENT_PLAYER_ATTR, player);
         vm.put(VIEW_MODE_ATTR, ViewMode.PLAY);
         vm.put(RED_PLAYER_ATTR, game.getRedPlayer());
         vm.put(WHITE_PLAYER_ATTR, game.getWhitePlayer());
         vm.put(ACTIVE_COLOR_ATTR, game.getActiveColor());
-        if (gameCenter.isGameOver(game)) {
-            gameCenter.updateGames(game);
-            Message message = gameCenter.isWinner(game, player);
-            vm.put(MESSAGE_ATTR, message);
-        }
-
         return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
     }
 }
