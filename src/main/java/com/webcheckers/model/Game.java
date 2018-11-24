@@ -311,12 +311,15 @@ public class Game {
         //Multiple jump move has not been completed
         System.out.println("LastMoveJump: " + MoveManager.isLastMoveJump(lastMove, movingPiece));
         System.out.println("JumpLocation Exists: " + (board.getJumpLocations(lastMoveEndPos).size() > 0));
-        if (MoveManager.isLastMoveJump(lastMove, movingPiece) && board.getJumpLocations(lastMoveEndPos).size() > 0) {
-            return false;
+        boolean kinged = checkIfKinged(lastMove);
+        if (MoveManager.isLastMoveJump(lastMove, movingPiece)) {
+            if (!kinged && board.getJumpLocations(lastMoveEndPos).size() > 0) {
+                return false;
+            }
         }
 
         //Potentially King moving piece
-        checkIfKinged(lastMove);
+     //   checkIfKinged(lastMove);
 
         //reset lastMoves
         lastMoves.clear();
@@ -363,11 +366,15 @@ public class Game {
         int endRow = move.getEnd().getRow();
         Piece currentPiece = board.getPieceAtPosition(move.getEnd());
         Color pieceColor = currentPiece.getColor();
-
+        if (currentPiece.isKing()) {
+            return false;
+        }
         if (endRow == 7 && pieceColor == Color.RED) {
-            return currentPiece.kingPiece();
-        } else if (endRow == 7 && pieceColor == Color.WHITE) {
-            return currentPiece.kingPiece();
+            currentPiece.becomeKing();
+            return true;
+        } else if (endRow == 0 && pieceColor == Color.WHITE) {
+            currentPiece.becomeKing();
+            return true;
         }
         return false;
     }

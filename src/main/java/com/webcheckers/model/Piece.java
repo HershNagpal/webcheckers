@@ -61,6 +61,21 @@ public class Piece {
     }
 
     /**
+     * Is the current piece a king?
+     * @return true if piece is a king
+     */
+    public boolean isKing() {
+        return type == Type.KING;
+    }
+
+    /**
+     * Change the piece to a king piece.
+     */
+    public void becomeKing() {
+        type = Type.KING;
+    }
+
+    /**
      * Display piece's color and type. Used for testing.
      * @return string representation of Piece.
      */
