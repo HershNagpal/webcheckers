@@ -26,16 +26,18 @@ class SpaceTest {
 	private Space whiteKingSpaceWithoutPiece;
 	private Space blackKingSpaceWithoutPiece;
 
+	private Piece piece;
 
 	/**
 	* Initialize the objects to test
 	*/
 	@BeforeEach
 	public void setup() {
-		blackSpaceWithPiece = new Space(1, 2, mock(Piece.class));
+		piece = mock(Piece.class);
+		blackSpaceWithPiece = new Space(1, 2, piece);
 		blackSpaceWithoutPiece = new Space(3, 4, null);
 
-		whiteSpaceWithPiece = new Space(6, 6, mock(Piece.class));
+		whiteSpaceWithPiece = new Space(6, 6, piece);
 		whiteSpaceWithoutPiece = new Space(2, 4, null);
 
 		whiteKingSpaceWithoutPiece = new Space(1, 7, null);
@@ -48,8 +50,8 @@ class SpaceTest {
 	@Test
 	public void testEquals() { 
 		assertTrue(blackKingSpaceWithoutPiece.equals(new Space(0, 0, null)));
-		assertTrue(blackSpaceWithPiece.equals(new Space(1, 2, mock(Piece.class))));
-		assertTrue(whiteSpaceWithPiece.equals(new Space(6, 6, mock(Piece.class))));
+		assertTrue(blackSpaceWithPiece.equals(new Space(1, 2, piece)));
+		assertTrue(whiteSpaceWithPiece.equals(new Space(6, 6, piece)));
 
 		assertFalse(whiteKingSpaceWithoutPiece.equals(7));
 		assertFalse(blackSpaceWithPiece.equals(new Message("", MessageType.info)));
