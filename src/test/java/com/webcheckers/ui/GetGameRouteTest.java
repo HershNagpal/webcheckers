@@ -193,4 +193,16 @@ public class GetGameRouteTest {
         verify(response).redirect(WebServer.HOME_URL);
     }
 
+    @Test
+    public void testUpdateGames() {
+        // Create scenario: session has a message
+        Message message = new Message("", MessageType.info);
+        when(session.attribute(GetGameRoute.MESSAGE_ATTR)).thenReturn(message);
+
+        // Invoke the test
+        CuT.handle(request, response);
+
+        verify(session).removeAttribute(GetGameRoute.MESSAGE_ATTR);
+    }
+
 }
