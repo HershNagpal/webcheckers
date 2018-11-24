@@ -136,10 +136,13 @@ public class GetGameRoute implements Route{
         Map<String, Object> vm = new HashMap<>();
         vm.put(TITLE_ATTR, TITLE);
         Session session = request.session();
-        // Reset game messages
-        session.removeAttribute(MESSAGE_ATTR);
         Game game;
         Player player = session.attribute(CURRENT_PLAYER_ATTR);
+        // Reset end game messages and if there are any, update game center
+        if (session.attribute(MESSAGE_ATTR) != null) {
+            session.removeAttribute(MESSAGE_ATTR);
+            gameCenter.updateGames(player);
+        }
         // Is this player in game
         if (gameCenter.playerInGame(player)) {
             game = gameCenter.getGame(player);

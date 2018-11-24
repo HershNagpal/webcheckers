@@ -132,9 +132,6 @@ public class GetHomeRoute implements Route {
             Message message = session.attribute(MESSAGE_ATTR);
             if (message != null) {
                 vm.put(MESSAGE_ATTR, message);
-                if (message.getType() == MessageType.gameover) {
-                    //gameCenter.updateGames();
-                }
             }
             if (gameCenter.gamesOngoing()) {
                 vm.put(GAMES_LIST_ATTR, gameCenter.getGames());

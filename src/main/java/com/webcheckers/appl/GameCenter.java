@@ -142,17 +142,20 @@ public class GameCenter {
     }
 
     /**
-     * Update the state of the game center to remove the game
-     * @param game Game to update
+     * Update the state of the game center to remove the game a player is in
+     * @param player Player to remove from games
      */
-    public void updateGames(Game game) {
-        Player red = game.getRedPlayer();
-        Player white = game.getWhitePlayer();
-        games.remove(red);
-        games.remove(white);
-        endedGames.put(red, game);
-        endedGames.put(white, game);
-        gameIDMap.remove(game.getGameID());
+    public void updateGames(Player player) {
+        Game game = getGame(player);
+        if (game != null && game.isGameOver()) {
+            Player opponent = game.getRedPlayer() == player ?
+                    game.getWhitePlayer() : game.getWhitePlayer();
+            games.remove(player);
+            games.remove(opponent);
+            endedGames.put(player, game);
+            endedGames.put(opponent, game);
+            gameIDMap.remove(game.getGameID());
+        }
     }
 
     /**
