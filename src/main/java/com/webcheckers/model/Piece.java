@@ -50,17 +50,6 @@ public class Piece {
     public Type getType() { return type; }
 
     /**
-     * Changes a piece to the king type and returns true if the piece was successfully kinged.
-     * @return true if the piece was changed from the SINGLE type to KING type and false otherwise.
-     */
-    public boolean kingPiece() {
-        if(this.type == Type.SINGLE) {
-            this.type = Type.KING;
-            return true;
-        } else return false;
-    }
-
-    /**
      * Is the current piece a king?
      * @return true if piece is a king
      */

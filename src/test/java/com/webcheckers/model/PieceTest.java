@@ -59,12 +59,12 @@ public class PieceTest {
 	}
 
 	/**
-	 * Tests the kingPiece method
+	 * Tests the becomeKing and isKing method
 	 */
 	@Test
-	public void testKingPiece() {
-		assertEquals(Type.SINGLE, redSingleToKing.getType());
-		assertTrue(redSingleToKing.kingPiece());
-		assertEquals(Type.KING, redSingleToKing.getType());
+	public void testBecomeKingAndIsKing() {
+		assertFalse(redSingleToKing.isKing());
+		redSingleToKing.becomeKing();
+		assertTrue(redSingleToKing.isKing());
 	}
 }
