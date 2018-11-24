@@ -175,4 +175,20 @@ public class GetHomeRouteTest {
         verify(response).redirect(WebServer.GAME_URL);
     }
 
+    @Test
+    public void testGamesOngoing() {
+        // Arrange test scenario: games are ongoing and player is logged in
+        when(session.attribute(GetHomeRoute.PLAYER_ATTR)).thenReturn(player);
+        when(gameCenter.gamesOngoing()).thenReturn(true);
+        Set<Game> games = new HashSet<>();
+        when(gameCenter.getGames()).thenReturn(games);
+        // Mock up the view model
+        final TemplateEngineTester testHelper = new TemplateEngineTester();
+        when(templateEngine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
+        // Invoke the test
+        CuT.handle(request, response);
+        // Check that the attribute exists and has the value
+        testHelper.assertViewModelAttribute(GetHomeRoute.GAMES_LIST_ATTR, games);
+    }
+
 }

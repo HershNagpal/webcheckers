@@ -1,9 +1,6 @@
 package com.webcheckers.ui;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.logging.Logger;
 
 import com.webcheckers.appl.GameCenter;
@@ -39,6 +36,16 @@ public class GetHomeRoute implements Route {
      * Attribute for the list of players
      */
     static final String PLAYER_LIST_ATTR = "playerList";
+
+    /**
+     * Attribute for the number of ongoing games
+     */
+    static final String NUM_GAMES_ATTR = "numGames";
+
+    /**
+     * Attribute for the list of games
+     */
+    static final String GAMES_LIST_ATTR = "gamesList";
 
     /**
      * Attribute for the current player
@@ -129,9 +136,13 @@ public class GetHomeRoute implements Route {
                     //gameCenter.updateGames();
                 }
             }
+            if (gameCenter.gamesOngoing()) {
+                vm.put(GAMES_LIST_ATTR, gameCenter.getGames());
+            }
         }
         else {
             vm.put(NUM_PLAYERS_ATTR, playerLobby.size());
+            vm.put(NUM_GAMES_ATTR, gameCenter.size());
         }
 
         return templateEngine.render(new ModelAndView(vm , VIEW_NAME));
