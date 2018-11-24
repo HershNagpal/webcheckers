@@ -171,12 +171,30 @@ public class Game {
         if (resigned) {
             return true;
         }
+        Color allPiecesEliminated = board.checkAllPiecesEliminated();
+        if (allPiecesEliminated == activeColor) {
+            winner = allPiecesEliminated == Color.RED ? whitePlayer : redPlayer;
+            return true;
+        }
+        Color noMoreValidMoves = board.checkNoMoreValidMoves();
+        if (noMoreValidMoves == activeColor) {
+            winner = noMoreValidMoves == Color.RED ? whitePlayer : redPlayer;
+            return true;
+        }
+        return false;
+        /*
+        if (resigned) {
+            return true;
+        }
+        //Color otherColor = activeColor == Color.RED ? Color.WHITE : Color.RED;
         if (board.checkNoMoreValidMoves(activeColor) ||
                 board.checkAllPiecesEliminated(activeColor)) {
             winner = activeColor == Color.RED ? whitePlayer : redPlayer;
             return true;
         }
+
         return false;
+        */
     }
 
     /**
