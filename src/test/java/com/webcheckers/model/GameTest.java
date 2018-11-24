@@ -384,6 +384,49 @@ public class GameTest {
 
         //Test submit red jump move
         assertTrue(CuT.submitTurn());
+
+        // Setup scenario where piece gets kinged when turn is submitted
+        Piece[][] pieces =
+                {   {null, RedP, null, null, null, null, null, null},
+                    {null, null, null, null, RedP, null, null, null},
+                    {null, WhtP, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null}
+                };
+        board = new Board(pieces);
+        CuT = new Game(redPlayer, whitePlayer, board);
+        CuT.validateMove(new Move(new Position(0, 1), new Position(1, 2)).flipMove());
+        CuT.submitTurn();
+
+        CuT.validateMove(new Move(new Position(2, 1), new Position(0, 3)));
+        // Test that the king piece is not enforced to perform a multiple jump
+        assertTrue(CuT.submitTurn());
+
+        // Setup scenario where piece jumps once and has more jumps to perform
+        pieces =
+                new Piece[][]{{null, RedP, null, null, null, null, null, null},
+                        {null, null, WhtP, null, null, null, null, null},
+                        {null, null, null, null, null, null, null, null},
+                        {null, null, null, null, WhtP, null, null, null},
+                        {null, null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null, null},
+                        {null, null, null, null, null, null, null, null}
+                };
+        board = new Board(pieces);
+        CuT = new Game(redPlayer, whitePlayer, board);
+        CuT.validateMove(new Move(new Position(0, 1), new Position(2, 3)).flipMove());
+        // Test that multiple jump moves is enforced
+        assertFalse(CuT.submitTurn());
+
+        // Setup scenario where game is over and turn should not be switched
+        CuT.backUpMove();
+        CuT.validateMove(new Move(new Position(0, 1), new Position(2, 3)).flipMove());
+        CuT.validateMove(new Move(new Position(2, 3), new Position(4, 5)).flipMove());
+        assertTrue(CuT.submitTurn());
     }
 
     /**

@@ -48,7 +48,8 @@ class SpaceTest {
 	 * Tests the overridden Equals method
 	 */
 	@Test
-	public void testEquals() { 
+	public void testEquals() {
+		assertTrue(blackSpaceWithPiece.equals(blackSpaceWithPiece));
 		assertTrue(blackKingSpaceWithoutPiece.equals(new Space(0, 0, null)));
 		assertTrue(blackSpaceWithPiece.equals(new Space(1, 2, piece)));
 		assertTrue(whiteSpaceWithPiece.equals(new Space(6, 6, piece)));
