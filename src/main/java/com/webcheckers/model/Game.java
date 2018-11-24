@@ -80,9 +80,9 @@ public class Game {
         this.whitePlayer = whitePlayer;
 
         if(redPlayer.getName().equals("debug") && whitePlayer.getName().equals("test")) {
-            this.board = new Board(Board.DEBUG_PIECES);
+            this.board = new Board(Board.END_GAME);
         } else if (redPlayer.getName().equals("test") && whitePlayer.getName().equals("debug")) {
-            this.board = new Board(Board.DEBUG_PIECES);
+            this.board = new Board(Board.END_GAME);
         } else {
             this.board = new Board();
         }

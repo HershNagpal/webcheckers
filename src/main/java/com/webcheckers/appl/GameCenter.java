@@ -63,7 +63,8 @@ public class GameCenter {
     public Boolean wasChallenged(Player player) {
         for (Game game : games) {
             // White player is the challenged player
-            if (game.isWhitePlayer(player) && !game.didPlayerResign()) {
+            if (game.isWhitePlayer(player) && !game.didPlayerResign()
+                    && !game.isGameOver()) {
                 return true;
             }
         }
@@ -115,7 +116,7 @@ public class GameCenter {
             endedGames.add(game);
             return true;
         }
-        return false;
+        return endedGames.contains(game);
     }
 
     /**

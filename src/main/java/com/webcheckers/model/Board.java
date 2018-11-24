@@ -36,6 +36,29 @@ public class Board {
                 {new Piece(Color.WHITE, Type.SINGLE), null, null, null, null, null, new Piece(Color.WHITE, Type.SINGLE), null},
             };
 
+    public static Piece red = new Piece(Color.RED, Type.SINGLE);
+    public static Piece white = new Piece(Color.WHITE, Type.SINGLE);
+    public final static Piece[][] KINGED_NO_JUMP =
+            {   {null, red, null, null, null, null, null, null},
+                    {null, null, null, null, red, null, null, null},
+                    {null, white, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null}
+            };
+    public final static Piece[][] END_GAME =
+            {   {null, red, null, null, null, null, null, null},
+                    {null, null, white, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null}
+            };
+
     /**
      * Board constructor that initializes and sets up the 2d Piece array.
      * Creates a BoardView object using the pieces 2d array.

@@ -8,6 +8,8 @@ import java.util.logging.Logger;
 
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Message;
+import com.webcheckers.model.MessageType;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -120,8 +122,12 @@ public class GetHomeRoute implements Route {
             if (players.size() != 0) {
                 vm.put(PLAYER_LIST_ATTR, players);
             }
-            if (session.attribute(MESSAGE_ATTR) != null) {
-                vm.put(MESSAGE_ATTR, session.attribute(MESSAGE_ATTR));
+            Message message = session.attribute(MESSAGE_ATTR);
+            if (message != null) {
+                vm.put(MESSAGE_ATTR, message);
+                if (message.getType() == MessageType.gameover) {
+                    //gameCenter.updateGames();
+                }
             }
         }
         else {
