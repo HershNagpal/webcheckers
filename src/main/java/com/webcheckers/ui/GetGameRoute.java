@@ -141,7 +141,7 @@ public class GetGameRoute implements Route{
         // Reset end game messages and if there are any, update game center
         if (session.attribute(MESSAGE_ATTR) != null) {
             session.removeAttribute(MESSAGE_ATTR);
-            gameCenter.updateGames(player);
+            gameCenter.updateGames(gameCenter.getGame(player));
         }
         // Is this player in game
         if (gameCenter.playerInGame(player)) {

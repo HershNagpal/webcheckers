@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -60,6 +62,7 @@ public class GameCenterTest {
     @Test
     public void testGamesOngoing() {
         assertTrue(CuT.gamesOngoing());
+        game.resignGame(player);
         CuT.updateGames(game);
         assertFalse(CuT.gamesOngoing());
     }
@@ -131,6 +134,22 @@ public class GameCenterTest {
         when(messenger.resignGame(game, player)).thenReturn(message);
         game.resignGame(player);
         assertTrue(CuT.isGameOver(game));
+    }
+
+    @Test
+    public void testUpdateGames() {
+        Game test = null;
+        // Defensive check test
+        Set<Game> temp = CuT.getGames();
+        CuT.updateGames(test);
+        assertEquals(temp, CuT.getGames());
+        // Game not over test
+        CuT.updateGames(game);
+        assertEquals(temp, CuT.getGames());
+        // Game is over test
+        game.resignGame(player);
+        CuT.updateGames(game);
+        assertNotEquals(temp, CuT.getGames());
     }
 
     /**

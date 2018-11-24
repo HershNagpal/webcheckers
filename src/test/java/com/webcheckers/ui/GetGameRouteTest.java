@@ -171,21 +171,10 @@ public class GetGameRouteTest {
         when(gameCenter.getGame(p1)).thenReturn(game);
         when(gameCenter.isGameOver(game)).thenReturn(true);
 
-        final TemplateEngineTester tester = new TemplateEngineTester();
-        when(engine.render(any(ModelAndView.class))).thenAnswer(tester.makeAnswer());
         // Invoke the test
         CuT.handle(request, response);
-        // Make sure engine is setup
-        tester.assertViewModelExists();
-        tester.assertViewModelIsaMap();
-        // Make sure view model is populated correctly
-        tester.assertViewModelAttributeIsPresent(GetGameRoute.BOARD_ATTR);
-        tester.assertViewModelAttributeIsPresent(GetGameRoute.VIEW_MODE_ATTR);
-        tester.assertViewModelAttributeIsPresent(GetGameRoute.CURRENT_PLAYER_ATTR);
-        tester.assertViewModelAttributeIsPresent(GetGameRoute.RED_PLAYER_ATTR);
-        tester.assertViewModelAttributeIsPresent(GetGameRoute.WHITE_PLAYER_ATTR);
-        tester.assertViewModelAttributeIsPresent(GetGameRoute.ACTIVE_COLOR_ATTR);
-        tester.assertViewModelAttributeIsPresent(GetGameRoute.MESSAGE_ATTR);
+
+        verify(response).redirect(WebServer.HOME_URL);
     }
 
     /**
@@ -193,26 +182,15 @@ public class GetGameRouteTest {
      */
     @Test
     public void testGameOverLoser() {
-        // Create scenario: player one in a game where the game is over
-        when(gameCenter.playerInGame(p1)).thenReturn(true);
-        when(gameCenter.getGame(p1)).thenReturn(game);
+        // Create scenario: player two in a game where the game is over
+        when(gameCenter.playerInGame(p2)).thenReturn(true);
+        when(gameCenter.getGame(p2)).thenReturn(game);
         when(gameCenter.isGameOver(game)).thenReturn(true);
 
-        final TemplateEngineTester tester = new TemplateEngineTester();
-        when(engine.render(any(ModelAndView.class))).thenAnswer(tester.makeAnswer());
         // Invoke the test
         CuT.handle(request, response);
-        // Make sure engine is setup
-        tester.assertViewModelExists();
-        tester.assertViewModelIsaMap();
-        // Make sure view model is populated correctly
-        tester.assertViewModelAttributeIsPresent(GetGameRoute.BOARD_ATTR);
-        tester.assertViewModelAttributeIsPresent(GetGameRoute.VIEW_MODE_ATTR);
-        tester.assertViewModelAttributeIsPresent(GetGameRoute.CURRENT_PLAYER_ATTR);
-        tester.assertViewModelAttributeIsPresent(GetGameRoute.RED_PLAYER_ATTR);
-        tester.assertViewModelAttributeIsPresent(GetGameRoute.WHITE_PLAYER_ATTR);
-        tester.assertViewModelAttributeIsPresent(GetGameRoute.ACTIVE_COLOR_ATTR);
-        tester.assertViewModelAttributeIsPresent(GetGameRoute.MESSAGE_ATTR);
+
+        verify(response).redirect(WebServer.HOME_URL);
     }
 
 }
