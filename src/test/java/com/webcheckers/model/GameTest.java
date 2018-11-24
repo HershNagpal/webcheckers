@@ -182,8 +182,9 @@ public class GameTest {
      */
     @Test
     public void testNoBoardConstructor(){
-        CuT = new Game(redPlayer, whitePlayer);
-        //assertSame();
+        CuT = new Game(redPlayer, whitePlayer, 0);
+        assertEquals(CuT.getRedPlayer(), redPlayer);
+        assertEquals(CuT.getWhitePlayer(), whitePlayer);
     }
 
     /**

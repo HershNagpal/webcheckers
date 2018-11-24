@@ -22,9 +22,9 @@ public class Messenger {
     static final Message SUBMIT_TRUE = new Message("", MessageType.info);
     static final Message SUBMIT_FALSE = new Message("Invalid move. Cannot submit turn.", MessageType.error);
     static final Message BACKUP_TRUE = new Message("", MessageType.info);
-    static final Message BACKUP_FALSE = new Message("Cannot Backup, there are no moves to undo.", MessageType.error);
+    static final Message BACKUP_FALSE = new Message("Cannot backup, there are no moves to undo.", MessageType.error);
     static final Message RESIGN_TRUE = new Message("", MessageType.info);
-    static final Message RESIGN_FALSE = new Message("", MessageType.error);
+    static final Message RESIGN_FALSE = new Message("Could not resign. Your opponent already resigned.", MessageType.error);
 
     /**
      * Message to display when the opponent player has resigned.
@@ -51,11 +51,19 @@ public class Messenger {
             "You lost the game!", MessageType.info);
 
     /**
-     * Message to display when
+     * Format messages using String.format
+     * @param text Text with %s to fill in
+     * @param addToText Text to replace %s with
+     * @param type Type of message to return
+     * @return New message with the formatted parameters
      */
+    private Message formatStringMessage(String text, String addToText, MessageType type) {
+        return new Message(String.format(text, addToText), type);
+    }
 
     /**
-     * Get the message from the game's response about the winner and how they won.
+     * Get the message from the game's response about how the player
+     * did in the game.
      *
      * @return Message
      */
@@ -69,6 +77,38 @@ public class Messenger {
         }
         // null: no message will be displayed from freemarker template
         return null;
+    }
+
+    /**
+     * Get the message from the game's response about who won and how.
+     *
+     * @return Message
+     */
+    public Message whoWon(Game game) {
+        Player winner = game.getWinner();
+        if (winner != null) {
+            String name = winner.getName();
+            // Message depending on how game ended
+            return game.didPlayerResign() ? formatStringMessage(
+                    "%s won the game by resignation",
+                    name, MessageType.info) :
+                    formatStringMessage("%s won the game by " +
+                            "an end-game condition.", name, MessageType.info);
+        }
+        return null;
+    }
+
+    /**
+     * Get the message from the game's response about if the game has
+     * changed at all since last checked. If a game is over the message
+     * acts as those the game did change turns.
+     * @return
+     */
+    public Message checkTurn(Game game) {
+        if (game.isGameOver()) {
+            return TURN_TRUE;
+        }
+        return game.hasGameChanged() ? TURN_TRUE : TURN_FALSE;
     }
 
     /**

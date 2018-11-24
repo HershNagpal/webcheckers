@@ -5,8 +5,7 @@ import com.webcheckers.model.Message;
 import com.webcheckers.model.Move;
 import com.webcheckers.model.Player;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Holds all games that are occurring on the application.
@@ -19,13 +18,18 @@ public class GameCenter {
     /**
      * All ongoing games
      */
-    private List<Game> games;
+    private Map<Player, Game> games;
 
     /**
      * TODO: remove later if not needed for replays
      * All games that have ended
      */
-    private List<Game> endedGames;
+    private Map<Player, Game> endedGames;
+
+    /**
+     * Access games through the game's ID
+     */
+    private Map<String, Game> gameIDMap;
 
     /**
      * Manages messages
@@ -33,12 +37,28 @@ public class GameCenter {
     private Messenger messenger;
 
     /**
+     * Count the number of games created
+     */
+    private int gameCounter;
+
+    /**
      * Initialize the list of games.
      */
     public GameCenter(Messenger messenger) {
-        games = new ArrayList<>();
-        endedGames = new ArrayList<>();
+        games = new HashMap<>();
+        endedGames = new HashMap<>();
+        gameIDMap = new HashMap<>();
         this.messenger = messenger;
+        gameCounter = 0;
+    }
+
+    /**
+     * Are there games ongoing?
+     *
+     * @return If there are games in the map
+     */
+    public boolean gamesOngoing() {
+        return !getGames().isEmpty();
     }
 
     /**
@@ -46,13 +66,9 @@ public class GameCenter {
      * @param player Player to check
      * @return If the player is in a game
      */
-    public Boolean playerInGame(Player player) {
-        for (Game game : games) {
-            if (game.playerInGame(player)) {
-                return true;
-            }
-        }
-        return false;
+    public boolean playerInGame(Player player) {
+        Game game = games.get(player);
+        return game != null;
     }
 
     /**
@@ -60,28 +76,46 @@ public class GameCenter {
      * @param player Player to check
      * @return If the player was challenged
      */
-    public Boolean wasChallenged(Player player) {
-        for (Game game : games) {
-            // White player is the challenged player
-            if (game.isWhitePlayer(player) && !game.didPlayerResign()) {
-                return true;
-            }
+    public boolean wasChallenged(Player player) {
+        if (!playerInGame(player)) {
+            return false;
         }
-        return false;
+        Game game = games.get(player);
+        return (game.isWhitePlayer(player) && !game.isGameOver());
     }
 
     /**
      * Get the game a player is in.
      * @param player The player to get a game from
-     * @return The game or null
+     * @return The game or null if it does not exist
      */
     public Game getGame(Player player) {
-        for (Game game : games) {
-            if (game.playerInGame(player)) {
-                return game;
-            }
-        }
-        return null;
+        return games.get(player);
+    }
+
+    /**
+     * Get the game from a gameID.
+     * @param gameID The unique game ID
+     * @return The game or null if it does not exist
+     */
+    public Game getGame(String gameID) {
+        return gameIDMap.get(gameID);
+    }
+
+    /**
+     * Get all unique games from the map
+     * @return All unique games
+     */
+    public Set<Game> getGames() {
+        return new HashSet<>(games.values());
+    }
+
+    /**
+     * Get the size of the set of games.
+     * @return The size of the set of games.
+     */
+    public int size() {
+        return getGames().size();
     }
 
     /**
@@ -91,17 +125,11 @@ public class GameCenter {
      * @return The created game
      */
     public Game createGame(Player player, Player opponent) {
-        Game game = new Game(player, opponent);
-        games.add(game);
+        Game game = new Game(player, opponent, ++gameCounter);
+        games.put(player, game);
+        games.put(opponent, game);
+        gameIDMap.put(game.getGameID(), game);
         return game;
-    }
-
-    /**
-     * Used to remove games that ended.
-     * @param game Game that ended
-     */
-    public void removeGame(Game game) {
-        games.remove(game);
     }
 
     /**
@@ -110,16 +138,27 @@ public class GameCenter {
      * @return If this game been resigned
      */
     public boolean isGameOver(Game game) {
-        if (game.isGameOver()) {
-            games.remove(game);
-            endedGames.add(game);
-            return true;
-        }
-        return false;
+        return game.isGameOver();
     }
 
     /**
-     * Get the message from the messenger about the winner and how they won.
+     * Update the state of the game center to remove the game a player is in
+     * @param player Player to remove from games
+     */
+    public void updateGames(Game game) {
+        if (game != null && game.isGameOver()) {
+            Player red = game.getRedPlayer();
+            Player white = game.getWhitePlayer();
+            games.remove(red);
+            games.remove(white);
+            endedGames.put(red, game);
+            endedGames.put(white, game);
+            gameIDMap.remove(game.getGameID());
+        }
+    }
+
+    /**
+     * Get the message from the messenger about how the player did in the game.
      * @param game Game to check
      * @param player Player to check
      * @return Message with correct type
@@ -129,15 +168,31 @@ public class GameCenter {
     }
 
     /**
+     * Get the message from the messenger about who won the game.
+     * @param game Game to check
+     * @return Message about who won
+     */
+    public Message whoWon(Game game) {
+        return messenger.whoWon(game);
+    }
+
+    /**
+     * Get the message from the messenger about if the turn has changed.
+     * Used by spectator mode.
+     */
+    public Message checkTurn(String gameID) {
+        Game game = getGame(gameID);
+        return messenger.checkTurn(game);
+    }
+
+    /**
      * Get the message from the messenger about whose turn it is.
+     * Used by play mode.
      *
      * @return Message with correct type
      */
     public Message checkTurn(Player player) {
         Game game = getGame(player);
-        if (game == null) {
-            return null;
-        }
         return messenger.checkTurn(game, player);
     }
 

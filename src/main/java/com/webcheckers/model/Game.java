@@ -12,6 +12,17 @@ import java.util.*;
  * @author Matthew Bollinger
  */
 public class Game {
+
+    /**
+     * The game number relative to other games created
+     */
+    private int gameNum;
+
+    /**
+     * The game's unique ID
+     */
+    private String gameID;
+
     /**
      * Used to prevent player from making successive simple moves
      * and for enforcing the completion of jump moves.
@@ -49,6 +60,11 @@ public class Game {
     private Color activeColor;
 
     /**
+     * Has a move been made since last checked.
+     */
+    private boolean gameChanged;
+
+    /**
      * Stack of moves made before a move is submitted.
      * Used for backing up a move.
      */
@@ -67,6 +83,7 @@ public class Game {
         this.whitePlayer = whitePlayer;
         this.board = board;
         activeColor = Color.RED;
+        //gameID = redPlayer.getName() + "+" + whitePlayer.getName() + "+" + String.valueOf(hashCode());
     }
 
     /**
@@ -75,23 +92,46 @@ public class Game {
      * @param redPlayer   The red player
      * @param whitePlayer The white player
      */
-    public Game(Player redPlayer, Player whitePlayer) {
+    public Game(Player redPlayer, Player whitePlayer, int gameNum) {
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
 
         if(redPlayer.getName().equals("debug") && whitePlayer.getName().equals("test")) {
-            this.board = new Board(Board.DEBUG_PIECES);
+            this.board = new Board(Board.END_GAME);
         } else if (redPlayer.getName().equals("test") && whitePlayer.getName().equals("debug")) {
-            this.board = new Board(Board.DEBUG_PIECES);
+            this.board = new Board(Board.END_GAME);
         } else {
             this.board = new Board();
         }
 
         activeColor = Color.RED;
+        // Unique ID
+        gameID = redPlayer.getName() + "+" + whitePlayer.getName() + "+" + gameNum;
+        this.gameNum = gameNum;
     }
 
     public boolean playerInGame(Player player) {
         return player == redPlayer || player == whitePlayer;
+    }
+
+    /**
+     * Get the unique game ID.
+     * @return The game ID
+     */
+    public String getGameID() {
+        return gameID;
+    }
+
+    /**
+     * Get the game name, a form of the game ID, but reader-friendly.
+     * Used by the home.ftl through reflection.
+     *
+     * @return The game name
+     */
+    public String getGameName() {
+        String[] parts = gameID.split("\\+");
+        return "Game " + String.valueOf(gameNum) + ": "
+                + parts[0] + " vs. " + parts[1];
     }
 
     /**
@@ -133,6 +173,15 @@ public class Game {
     }
 
     /**
+     * Get the winner if any yet.
+     *
+     * @return The winner or null
+     */
+    public Player getWinner() {
+        return winner;
+    }
+
+    /**
      * Get the color of the player whose turn it is.
      *
      * @return The color of the current player
@@ -161,6 +210,19 @@ public class Game {
             return board.getFlippedBoardView();
         }
         return board.getBoardView();
+    }
+
+    /**
+     * If the game has changed since last checked.
+     *
+     * @return If the game has changed (a move has been submitted).
+     */
+    public boolean hasGameChanged() {
+        if (gameChanged) {
+            gameChanged = false;
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -212,7 +274,11 @@ public class Game {
      * @return True if successful
      */
     public boolean resignGame(Player player) {
-        // game over
+        // Resign already occurred
+        if (resigned) {
+            return false;
+        }
+        // Game over update state
         winner = player == redPlayer ? whitePlayer : redPlayer;
         if (isActivePlayer(player)) {
             switchActiveColor();

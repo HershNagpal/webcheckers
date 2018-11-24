@@ -1,13 +1,12 @@
 package com.webcheckers.ui;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.logging.Logger;
 
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Message;
+import com.webcheckers.model.MessageType;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -37,6 +36,16 @@ public class GetHomeRoute implements Route {
      * Attribute for the list of players
      */
     static final String PLAYER_LIST_ATTR = "playerList";
+
+    /**
+     * Attribute for the number of ongoing games
+     */
+    static final String NUM_GAMES_ATTR = "numGames";
+
+    /**
+     * Attribute for the list of games
+     */
+    static final String GAMES_LIST_ATTR = "gamesList";
 
     /**
      * Attribute for the current player
@@ -120,12 +129,17 @@ public class GetHomeRoute implements Route {
             if (players.size() != 0) {
                 vm.put(PLAYER_LIST_ATTR, players);
             }
-            if (session.attribute(MESSAGE_ATTR) != null) {
-                vm.put(MESSAGE_ATTR, session.attribute(MESSAGE_ATTR));
+            Message message = session.attribute(MESSAGE_ATTR);
+            if (message != null) {
+                vm.put(MESSAGE_ATTR, message);
+            }
+            if (gameCenter.gamesOngoing()) {
+                vm.put(GAMES_LIST_ATTR, gameCenter.getGames());
             }
         }
         else {
             vm.put(NUM_PLAYERS_ATTR, playerLobby.size());
+            vm.put(NUM_GAMES_ATTR, gameCenter.size());
         }
 
         return templateEngine.render(new ModelAndView(vm , VIEW_NAME));

@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -55,6 +57,17 @@ public class GameCenterTest {
     }
 
     /**
+     * Test to check if there are ongoing games
+     */
+    @Test
+    public void testGamesOngoing() {
+        assertTrue(CuT.gamesOngoing());
+        game.resignGame(player);
+        CuT.updateGames(game);
+        assertFalse(CuT.gamesOngoing());
+    }
+
+    /**
      * Test that the given player is already in a game or not.
      */
     @Test
@@ -70,6 +83,7 @@ public class GameCenterTest {
     public void testWasChallenged() {
         assertTrue(CuT.wasChallenged(opponent));
         assertFalse(CuT.wasChallenged(dummy));
+        assertFalse(CuT.wasChallenged(player));
         game.resignGame(player);
         assertFalse(CuT.wasChallenged(opponent));
     }
@@ -84,6 +98,22 @@ public class GameCenterTest {
     }
 
     /**
+     * Test that the set of games is retrieved.
+     */
+    @Test
+    public void testGetGames() {
+        assertNotNull(CuT.getGames());
+    }
+
+    /**
+     * Test that the size of the set of games is correct
+     */
+    @Test
+    public void testSize() {
+        assertEquals(1, CuT.size());
+    }
+
+    /**
      * Test that a game can be created with two players.
      */
     @Test
@@ -92,16 +122,6 @@ public class GameCenterTest {
         assertSame(game.getRedPlayer(), player);
         assertSame(game.getWhitePlayer(), opponent);
         assertTrue(game.isActivePlayer(player));
-    }
-
-    /**
-     * Test that a game can be removed from the game center.
-     */
-    @Test
-    public void testRemoveGame() {
-        CuT.removeGame(game);
-        assertNull(CuT.getGame(player));
-        assertNull(CuT.getGame(opponent));
     }
 
     /**
@@ -114,6 +134,22 @@ public class GameCenterTest {
         when(messenger.resignGame(game, player)).thenReturn(message);
         game.resignGame(player);
         assertTrue(CuT.isGameOver(game));
+    }
+
+    @Test
+    public void testUpdateGames() {
+        Game test = null;
+        // Defensive check test
+        Set<Game> temp = CuT.getGames();
+        CuT.updateGames(test);
+        assertEquals(temp, CuT.getGames());
+        // Game not over test
+        CuT.updateGames(game);
+        assertEquals(temp, CuT.getGames());
+        // Game is over test
+        game.resignGame(player);
+        CuT.updateGames(game);
+        assertNotEquals(temp, CuT.getGames());
     }
 
     /**
@@ -129,10 +165,35 @@ public class GameCenterTest {
     }
 
     /**
-     * Test that the turn status of a player can be checked.
+     * Test that to check who won the game
      */
     @Test
-    public void testCheckTurn() {
+    public void testWhoWon() {
+        Message message = new Message("", MessageType.info);
+        when(messenger.whoWon(game)).thenReturn(message);
+        Message centerMessage = CuT.whoWon(game);
+        assertEquals(centerMessage.getType(), messenger.whoWon(game).getType());
+        assertEquals(centerMessage.getText(), messenger.whoWon(game).getText());
+    }
+
+    /**
+     * Test that the turn status of a game has changed
+     */
+    @Test
+    public void testCheckTurnGameID() {
+        Message message = new Message("true", MessageType.info);
+        Game game = CuT.createGame(new Player("1"), new Player("2"));
+        when(messenger.checkTurn(game)).thenReturn(message);
+        Message centerMessage = CuT.checkTurn("1+2+2");
+        assertEquals(centerMessage.getType(), messenger.checkTurn(game).getType());
+        assertEquals(centerMessage.getText(), messenger.checkTurn(game).getText());
+    }
+
+    /**
+     * Test that the turn status of a player can be checked using a game and a player.
+     */
+    @Test
+    public void testCheckTurnPlayer() {
         Message message = new Message("true", MessageType.info);
         when(messenger.checkTurn(game, player)).thenReturn(message);
         Message centerMessage = CuT.checkTurn(player);
@@ -141,7 +202,7 @@ public class GameCenterTest {
         // Case where game ended and therefore removed from list of games
         game.resignGame(player);
         CuT.resignGame(player);
-        CuT.isGameOver(game);
+        CuT.updateGames(game);
         assertNull(CuT.checkTurn(player));
     }
 
