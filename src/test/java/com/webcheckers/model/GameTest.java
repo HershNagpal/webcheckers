@@ -319,10 +319,7 @@ public class GameTest {
         CuT.resignGame(redPlayer);
 
         //Winner should be white player
-        /*assertEquals(white,CuT.getWinner());
-
-        assertTrue(CuT.getGameOver());
-        assertTrue(CuT.getResigned());*/
+        assertTrue(CuT.isWinner(whitePlayer));
     }
 
     /**
@@ -331,7 +328,7 @@ public class GameTest {
     @Test
     public void testIsGameOver(){
         //Setup test
-        board = new Board(customPiecesTestValidateMove);
+        board = new Board(customPieces);
         CuT = new Game(redPlayer, whitePlayer, board);
 
         //Test game is not over
@@ -350,6 +347,8 @@ public class GameTest {
         //White has no more pieces
         board = new Board(cpNoWhite);
         CuT = new Game(redPlayer, whitePlayer, board);
+        //White to move
+        CuT.switchActiveColor();
         assertTrue(CuT.isGameOver());
     }
 
