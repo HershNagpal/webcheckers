@@ -240,6 +240,7 @@ public class GameTest {
         assertTrue(CuT.validateMove(validRedMove.flipMove()));
 
         //Test red single moving piece, moving up and right and active color RED(Invalid)
+        CuT = new Game(redPlayer, whitePlayer, board);
         Move invalidRedMove01 = new Move(new Position(1, 6), new Position(0, 7));
         assertFalse(CuT.validateMove(invalidRedMove01.flipMove()));
 
@@ -249,10 +250,14 @@ public class GameTest {
         assertFalse(CuT.validateMove(invalidRedMove02));
 
         //Test white single moving piece, moving up and right and active color WHITE(Valid)
+        CuT = new Game(redPlayer, whitePlayer, board);
+        CuT.switchActiveColor();
         Move validWhiteMove = new Move(new Position(4,1), new Position(3,2));
         assertTrue(CuT.validateMove(validWhiteMove));
 
         //Test white single moving piece, moving down and left and active color WHITE(Invalid)
+        CuT = new Game(redPlayer, whitePlayer, board);
+        CuT.switchActiveColor();
         Move invalidWhiteMove01 = new Move(new Position(6, 1), new Position(7, 0));
         assertFalse(CuT.validateMove(invalidWhiteMove01));
 
@@ -368,14 +373,14 @@ public class GameTest {
     @Test
     public void testSubmitTurn(){
         //Setup test
-        board = new Board(customPiecesTestValidateMove);
+        board = new Board(customPieces);
         CuT = new Game(redPlayer, whitePlayer, board);
 
         //Test invalid submit turn when no move is made
         assertFalse(CuT.submitTurn());
 
         //Perform red jump move
-        //CuT.validateMove(validRedMove1.flipMove());
+        CuT.validateMove(new Move(new Position(0, 2), new Position(2, 0)).flipMove());
 
         //Test submit red jump move
         assertTrue(CuT.submitTurn());
