@@ -60,6 +60,11 @@ public class Game {
     private Color activeColor;
 
     /**
+     * Has a move been made since last checked.
+     */
+    private boolean gameChanged;
+
+    /**
      * Stack of moves made before a move is submitted.
      * Used for backing up a move.
      */

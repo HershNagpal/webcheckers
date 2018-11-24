@@ -79,6 +79,7 @@ public class GameCenter {
     public boolean wasChallenged(Player player) {
         if (!playerInGame(player)) {
             return false;
+        }
         Game game = games.get(player);
         return (game.isWhitePlayer(player) && !game.didPlayerResign() && !game.isGameOver());
     }
