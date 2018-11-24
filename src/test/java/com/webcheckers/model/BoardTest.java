@@ -403,9 +403,11 @@ public class BoardTest {
             {null, null, null, null, null, null, null, null}
     };
     Board CuT = new Board(customPieces);
-    Position expectedJumpPos01 = new Position(0, 4);
-    Position expectedJumpPos02 = new Position(4, 4);
-    ArrayList<Position> expectedJumpedPositions = new ArrayList<>(Arrays.asList(expectedJumpPos01,expectedJumpPos02));
+    Position expectedJumpPos01 = new Position(0, 0);
+    Position expectedJumpPos02 = new Position(0, 4);
+    Position expectedJumpPos03 = new Position(4, 0);
+    Position expectedJumpPos04 = new Position(4, 4);
+    ArrayList<Position> expectedJumpedPositions = new ArrayList<>(Arrays.asList(expectedJumpPos01,expectedJumpPos02,expectedJumpPos03,expectedJumpPos04));
     assertEquals(expectedJumpedPositions,CuT.findPossibleJumpPositions(new Position(2,2)));
 
   }
