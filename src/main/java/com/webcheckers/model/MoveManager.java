@@ -95,6 +95,11 @@ public class MoveManager {
         Piece movingPiece = board.getPieceAtPosition(startPosition);
 
         Color pieceColor = movingPiece.getColor();
+
+        // Destination must be empty
+        if(board.getPieceAtPosition(move.getEnd()) != null) {
+            return false;
+        }
         
         //Positions must be within jump move distance
         if(!startPosition.isDiagonalJumpTo(endPosition)){
