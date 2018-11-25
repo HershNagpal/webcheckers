@@ -351,7 +351,7 @@ public class Game {
      * @param move The Move object that the player is making
      * @return true if the move is a valid normal, non-jump move, false if it is invalid or not a normal move.
      */
-    private boolean isNormalMove(Move move) {
+    public boolean isNormalMove(Move move) {
         int row1 = move.getStart().getRow();
         int col1 = move.getStart().getCell();
 

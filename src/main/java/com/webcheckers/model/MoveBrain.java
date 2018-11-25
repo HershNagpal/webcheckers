@@ -87,32 +87,38 @@ public class MoveBrain extends Game {
         List<Move> AIMoves = new ArrayList<>();
         List<Position> AIPieces = this.getMovablePieceLocations();
         Boolean jumpMoveFound = false;
-
         for(Position position: AIPieces) {
-            //first check for jump positions
-            List<Position> pieceJumpPositions = this.getJumpLocations(position);
-            if (pieceJumpPositions.size() != 0){
-                for (Position jumpTargetPosition : pieceJumpPositions) {
-                    Move move = new Move(position, jumpTargetPosition);
-                    AIMoves.add(move);
-                    jumpMoveFound = true;
+            Piece piece = this.getBoard().getPieceAtPosition(position);
+                //first check for jump positions
+                List<Position> pieceJumpPositions = this.getJumpLocations(position);
+                if (pieceJumpPositions.size() != 0) {
+                    for (Position jumpTargetPosition : pieceJumpPositions) {
+                        Move move = new Move(position, jumpTargetPosition);
+                        if (isJumpMove(move)) {
+                            AIMoves.add(move);
+                            jumpMoveFound = true;
+                        }
+                    }
                 }
-            }
         }
         //if there are no jump moves found then make a list of simple moves
         if(!(jumpMoveFound)){
             //iterate over AIPieces
-            for (Position position: AIPieces){
-                List<Position> validPositionList;
-                validPositionList = this.getBoard().getValidNormalMovePositions(position);
-                for (Position end: validPositionList){
-                    Move move = new Move(position, end);
-                    AIMoves.add(move);
-                }
+            for (Position position: AIPieces) {
+                Piece piece = this.getBoard().getPieceAtPosition(position);
+                    List<Position> validPositionList;
+                    validPositionList = this.getBoard().getValidNormalMovePositions(position);
+                    for (Position end : validPositionList) {
+                        Move move = new Move(position, end);;
+                        if (isNormalMove(move)) {
+                            AIMoves.add(move);
+                        }
+                    }
             }
         }
         return AIMoves;
     }
+
 
     /**
      * this method will generate a random int from a given range
