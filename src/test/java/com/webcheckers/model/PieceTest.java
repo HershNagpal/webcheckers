@@ -67,4 +67,22 @@ public class PieceTest {
 		redSingleToKing.becomeKing();
 		assertTrue(redSingleToKing.isKing());
 	}
+
+	/**
+	 * Tests the toString method
+	 */
+	@Test
+	public void testToString(){
+		String expected = "Color: RED, Type: SINGLE";
+		assertEquals(expected, redSingle.toString());
+	}
+
+	/**
+	 * Tests the equals method
+	 */
+	@Test
+	public void testEquals(){
+		String pieceStr = "Red Piece";
+		assertFalse(redSingle.equals(pieceStr));
+	}
 }
