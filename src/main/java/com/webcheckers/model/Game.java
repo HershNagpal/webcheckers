@@ -111,10 +111,6 @@ public class Game {
         this.gameNum = gameNum;
     }
 
-    public boolean playerInGame(Player player) {
-        return player == redPlayer || player == whitePlayer;
-    }
-
     /**
      * Get the unique game ID.
      * @return The game ID
@@ -231,25 +227,25 @@ public class Game {
      * @return Is the game over or still going
      */
     public boolean isGameOver() {
+        // TODO delete if not needed
+        //if (resigned) {
+        //    return true;
+        //}
+        //Color allPiecesEliminated = board.checkAllPiecesEliminated();
+        //if (allPiecesEliminated == activeColor) {
+        //    winner = allPiecesEliminated == Color.RED ? whitePlayer : redPlayer;
+        //    return true;
+        //}
+        //Color noMoreValidMoves = board.checkNoMoreValidMoves();
+        //if (noMoreValidMoves == activeColor) {
+        //    winner = noMoreValidMoves == Color.RED ? whitePlayer : redPlayer;
+        //    return true;
+        //}
+        //return false;
+
         if (resigned) {
             return true;
         }
-        Color allPiecesEliminated = board.checkAllPiecesEliminated();
-        if (allPiecesEliminated == activeColor) {
-            winner = allPiecesEliminated == Color.RED ? whitePlayer : redPlayer;
-            return true;
-        }
-        Color noMoreValidMoves = board.checkNoMoreValidMoves();
-        if (noMoreValidMoves == activeColor) {
-            winner = noMoreValidMoves == Color.RED ? whitePlayer : redPlayer;
-            return true;
-        }
-        return false;
-        /*
-        if (resigned) {
-            return true;
-        }
-        //Color otherColor = activeColor == Color.RED ? Color.WHITE : Color.RED;
         if (board.checkNoMoreValidMoves(activeColor) ||
                 board.checkAllPiecesEliminated(activeColor)) {
             winner = activeColor == Color.RED ? whitePlayer : redPlayer;
@@ -257,7 +253,6 @@ public class Game {
         }
 
         return false;
-        */
     }
 
     /**
@@ -399,7 +394,7 @@ public class Game {
         //reset lastMoves
         lastMoves.clear();
         this.canContinueMoving = true;
-
+        gameChanged = true;
         if (!isGameOver()) {
             switchActiveColor();
         }
