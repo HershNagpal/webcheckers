@@ -69,6 +69,17 @@ public class GameCenterTest {
     }
 
     /**
+     * Test to check if there are finished games
+     */
+    @Test
+    public void testGamesFinished() {
+        assertFalse(CuT.gamesFinished());
+        game.resignGame(player);
+        CuT.updateGames(game);
+        assertTrue(CuT.gamesFinished());
+    }
+
+    /**
      * Test that the given player is already in a game or not.
      */
     @Test
@@ -104,6 +115,16 @@ public class GameCenterTest {
     @Test
     public void testGetGames() {
         assertNotNull(CuT.getGames());
+    }
+
+    /**
+     * Test that the set of finished games is retrived.
+     */
+    @Test
+    public void testGetFinishedGames() {
+        game.resignGame(player);
+        CuT.updateGames(game);
+        assertNotNull(CuT.getFinishedGames());
     }
 
     /**

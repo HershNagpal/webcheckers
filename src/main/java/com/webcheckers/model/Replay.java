@@ -32,6 +32,9 @@ public class Replay extends Game {
      */
     public boolean nextTurn() {
         lastMoves = allMoves.get(replayIndex);
+        if (lastMoves == null || lastMoves.isEmpty()) {
+            return false;
+        }
         for (Move move : lastMoves) {
             makeMove(move);
         }
@@ -52,6 +55,9 @@ public class Replay extends Game {
         switchActiveColor();
         replayIndex--;
         lastMoves = allMoves.get(replayIndex);
+        if (lastMoves == null || lastMoves.isEmpty()) {
+            return false;
+        }
         for (Move move : lastMoves) {
             backUpMove(move);
         }

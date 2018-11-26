@@ -144,4 +144,16 @@ public class PlayerLobbyTest {
         assertFalse(CuT.isSpectating(spectator));
     }
 
+    /**
+     * Test that the list of players replaying is updated correctly.
+     */
+    @Test
+    public void testReplaying() {
+        Player replayer = new Player("replay");
+        CuT.startReplaying(replayer);
+        assertTrue(CuT.isReplaying(replayer));
+        CuT.stopReplaying(replayer);
+        assertFalse(CuT.isReplaying(replayer));
+    }
+
 }
