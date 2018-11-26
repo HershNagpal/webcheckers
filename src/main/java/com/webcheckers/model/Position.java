@@ -9,13 +9,17 @@ package com.webcheckers.model;
 public class Position {
 
     /**
-     * Coordinates on the board
+     * A row coordinate
      */
     private int row;
+
+    /**
+     * A cell coordinate
+     */
     private int cell;
 
     /**
-     * Create a position on the board.
+     * Create a Position object representing a space on the board.
      * @param row Row location
      * @param cell Cell location
      */
@@ -90,7 +94,6 @@ public class Position {
     public boolean isDiagonalAdjacentTo(Position other) {
         int x1 = this.getCell();
         int y1 = this.getRow();
-
         int x2 = other.getCell();
         int y2 = other.getRow();
 
@@ -114,7 +117,6 @@ public class Position {
     public boolean isDiagonalJumpTo(Position other) {
         int x1 = this.getCell();
         int y1 = this.getRow();
-
         int x2 = other.getCell();
         int y2 = other.getRow();
 
@@ -164,7 +166,6 @@ public class Position {
         else if(!(obj instanceof Position)){
             return false;
         }
-
         Position p2 = (Position)obj;
 
         return this.row == p2.row && this.cell == p2.cell;
