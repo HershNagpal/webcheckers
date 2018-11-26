@@ -48,6 +48,16 @@ public class GetHomeRoute implements Route {
     static final String GAMES_LIST_ATTR = "gamesList";
 
     /**
+     * Attribute for the number of finished games
+     */
+    static final String NUM_FINISHED_GAMES_ATTR = "numFinished";
+
+    /**
+     * Attribute for the list of finished games
+     */
+    static final String FINISHED_GAMES_ATTR = "finishedList";
+
+    /**
      * Attribute for the current player
      */
     static final String PLAYER_ATTR = "currentPlayer";
@@ -136,10 +146,14 @@ public class GetHomeRoute implements Route {
             if (gameCenter.gamesOngoing()) {
                 vm.put(GAMES_LIST_ATTR, gameCenter.getGames());
             }
+            if (gameCenter.gamesFinished()) {
+                vm.put(FINISHED_GAMES_ATTR, gameCenter.getFinishedGames());
+            }
         }
         else {
             vm.put(NUM_PLAYERS_ATTR, playerLobby.size());
             vm.put(NUM_GAMES_ATTR, gameCenter.size());
+            vm.put(NUM_FINISHED_GAMES_ATTR, gameCenter.getFinishedGames().size());
         }
 
         return templateEngine.render(new ModelAndView(vm , VIEW_NAME));

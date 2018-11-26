@@ -14,6 +14,8 @@ import spark.Request;
 import spark.Response;
 import spark.Session;
 
+import java.util.HashMap;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -62,11 +64,11 @@ public class PostBackupMoveRouteTest {
 
         //Setup for BackUp success
         messengerSuccess = mock(Messenger.class);
-        gameCenterSuccess = new GameCenter(messengerSuccess);
+        gameCenterSuccess = new GameCenter(messengerSuccess, new HashMap<>());
 
         //Setup for BackUp fail
         messengerFail = mock(Messenger.class);
-        gameCenterFail = new GameCenter(messengerFail);
+        gameCenterFail = new GameCenter(messengerFail, new HashMap<>());
 
     }
 

@@ -87,6 +87,9 @@ public class GetGameRoute implements Route{
     static final Message SPECTATOR_ERROR = new Message(
             "That player is currently spectating a game!", MessageType.error);
 
+    static final Message IN_REPLAY_ERROR = new Message(
+            "That player is currently replaying a game!", MessageType.error);
+
     private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());
 
     /**
@@ -158,6 +161,12 @@ public class GetGameRoute implements Route{
             // Is other player spectating
             else if (playerLobby.isSpectating(opponent)) {
                 session.attribute(MESSAGE_ATTR, SPECTATOR_ERROR);
+                response.redirect(WebServer.HOME_URL);
+                return null;
+            }
+            // Is other player replaying
+            else if (playerLobby.isReplaying(opponent)) {
+                session.attribute(MESSAGE_ATTR, IN_REPLAY_ERROR);
                 response.redirect(WebServer.HOME_URL);
                 return null;
             }

@@ -25,11 +25,17 @@ public class PlayerLobby {
     private Set<Player> spectators;
 
     /**
+     * All players that are replaying games
+     */
+    private Set<Player> replayers;
+
+    /**
      * Initialize the set of players
      */
     public PlayerLobby(){
         players = new HashSet<>();
         spectators = new HashSet<>();
+        replayers = new HashSet<>();
     }
 
     /**
@@ -146,6 +152,33 @@ public class PlayerLobby {
      */
     public boolean isSpectating(Player player) {
         return spectators.contains(player);
+    }
+
+    /**
+     * Add the player to the set of replayers.
+     *
+     * @param player The player that is starting to replay
+     */
+    public void startReplaying(Player player) {
+        replayers.add(player);
+    }
+
+    /**
+     * Remove the player from the set of replayers
+     *
+     * @param player The player who wants to stop replaying
+     */
+    public void stopReplaying(Player player) {
+        replayers.remove(player);
+    }
+
+    /**
+     * Is the player replaying a game?
+     * @param player Player to check
+     * @return If the player is replaying
+     */
+    public boolean isReplaying(Player player) {
+        return replayers.contains(player);
     }
 
 }

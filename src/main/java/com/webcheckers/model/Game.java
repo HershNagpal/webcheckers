@@ -68,8 +68,18 @@ public class Game {
      * Stack of moves made before a move is submitted.
      * Used for backing up a move.
      */
-    //private List<Move> lastMoves = new ArrayList<>();
-    private Stack<Move> lastMoves = new Stack<>();
+    List<Move> lastMoves;
+
+    /**
+     * Stack of all moves submitted in the game for each turn.
+     * Used for replaying the game.
+     */
+    Map<Integer, List<Move>> allMoves;
+
+    /**
+     * Current turn number being played
+     */
+    private int turnIndex;
 
     /**
      * Start a game with a given board state.
@@ -83,7 +93,9 @@ public class Game {
         this.whitePlayer = whitePlayer;
         this.board = board;
         activeColor = Color.RED;
-        //gameID = redPlayer.getName() + "+" + whitePlayer.getName() + "+" + String.valueOf(hashCode());
+        lastMoves = new ArrayList<>();
+        allMoves = new HashMap<>();
+        turnIndex = 0;
     }
 
     /**
@@ -99,16 +111,34 @@ public class Game {
         if(redPlayer.getName().equals("debug") && whitePlayer.getName().equals("test")) {
             this.board = new Board(Board.NO_MOVES_RED);
         } else if (redPlayer.getName().equals("test") && whitePlayer.getName().equals("debug")) {
-            this.board = new Board(Board.NO_MOVES_RED);
+            this.board = new Board(Board.END_GAME);
         } else {
             this.board = new Board();
         }
-        //this.board = new Board();
-
+        lastMoves = new ArrayList<>();
+        allMoves = new HashMap<>();
+        turnIndex = 0;
         activeColor = Color.RED;
         // Unique ID
         gameID = redPlayer.getName() + "+" + whitePlayer.getName() + "+" + gameNum;
         this.gameNum = gameNum;
+    }
+
+    /**
+     * Copy constructor.
+     * Copy the finished game for a replay game.
+     *
+     * @param game Game to copy
+     */
+    public Game(Game game) {
+        this.redPlayer = game.redPlayer;
+        this.whitePlayer = game.whitePlayer;
+        // reset board to starting state
+        this.board = new Board();
+        activeColor = Color.RED;
+        this.allMoves = new HashMap<>(game.allMoves);
+        this.gameID = game.gameID;
+        this.gameNum = game.gameNum;
     }
 
     /**
@@ -317,7 +347,7 @@ public class Game {
                 }
                 canContinueMoving = false;
             }
-            lastMoves.push(move);
+            lastMoves.add(move);
             makeMove(move);
 
             //Prevent player from performing a single jump after jump move is finished
@@ -375,11 +405,11 @@ public class Game {
      * @return True or false depending on if the move was made
      */
     public boolean submitTurn() {
-        if (lastMoves.empty()) {
+        if (lastMoves.isEmpty()) {
             return false;
         }
 
-        Move lastMove = lastMoves.peek();
+        Move lastMove = lastMoves.get(lastMoves.size()-1);
         Piece movingPiece = board.getPieceAtPosition(lastMove.getEnd());
         //Enforce player ending a multiple jump move
         Position lastMoveEndPos = lastMove.getEnd();
@@ -390,6 +420,10 @@ public class Game {
                 return false;
             }
         }
+
+        // Keep track of moves that happened each turn
+        List<Move> copy = new ArrayList<>(lastMoves);
+        allMoves.put(turnIndex++, copy);
 
         //reset lastMoves
         lastMoves.clear();
@@ -414,7 +448,7 @@ public class Game {
         }
 
         //Remove lastMove from list of previous moves
-        Move lastMove = lastMoves.pop();
+        Move lastMove = lastMoves.remove(lastMoves.size()-1);
         Move backUpMove = lastMove.createBackUpMove();
         //Undo last move
         makeMove(backUpMove);

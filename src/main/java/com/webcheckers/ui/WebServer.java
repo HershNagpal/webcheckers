@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.appl.ReplayController;
 import spark.TemplateEngine;
 
 
@@ -102,14 +103,34 @@ public class WebServer {
     public static final String SPECTATE_GAME_URL = "/spectator/game";
 
     /**
-     * The URL pattern to request the stop watching action.
+     * The URL pattern to request the stop spectating action.
      */
-    public static final String STOP_WATCHING_URL = "/spectator/stopWatching";
+    public static final String SPECTATE_STOP_URL = "/spectator/stopWatching";
 
     /**
      * The URL pattern to request a check turn action in spectator mode.
      */
     public static final String SPECTATE_CHECK_TURN_URL = "/spectator/checkTurn";
+
+    /**
+     * The URL pattern to request the replay game page.
+     */
+    public static final String REPLAY_GAME_URL = "/replay/game";
+
+    /**
+     * The URL pattern to request the stop watching replay action.
+     */
+    public static final String REPLAY_STOP_URL = "/replay/stopWatching";
+
+    /**
+     * The URL pattern to request the replay to go to the next turn.
+     */
+    public static final String REPLAY_NEXT_TURN_URL = "/replay/nextTurn";
+
+    /**
+     * The URL pattern to request the replay to go to the previous turn.
+     */
+    public static final String REPLAY_PREV_TURN_URL = "/replay/previousTurn";
 
     //
     // Attributes
@@ -124,6 +145,11 @@ public class WebServer {
      * The player lobby holding all signed-in players
      */
     private final PlayerLobby playerLobby;
+
+    /**
+     * The replay controller holding finished games and players replaying
+     */
+    private final ReplayController replayController;
 
     /**
      * The template engine used to render the page
@@ -150,7 +176,8 @@ public class WebServer {
      * @throws NullPointerException
      *    If any of the parameters are {@code null}.
      */
-    public WebServer(final GameCenter gameCenter, final PlayerLobby playerLobby, final TemplateEngine templateEngine, final Gson gson) {
+    public WebServer(final GameCenter gameCenter, final PlayerLobby playerLobby,
+                     final ReplayController replayController, final TemplateEngine templateEngine, final Gson gson) {
         // validation
         Objects.requireNonNull(playerLobby, "playerLobby must not be null");
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
@@ -158,6 +185,7 @@ public class WebServer {
 
         this.gameCenter = gameCenter;
         this.playerLobby = playerLobby;
+        this.replayController = replayController;
         this.templateEngine = templateEngine;
         this.gson = gson;
     }
@@ -247,10 +275,22 @@ public class WebServer {
         get(SPECTATE_GAME_URL, new GetSpectatorGameRoute(gameCenter, playerLobby, templateEngine));
 
         // Gets the user's request to stop watching the spectated game
-        get(STOP_WATCHING_URL, new GetSpectatorStopRoute(playerLobby));
+        get(SPECTATE_STOP_URL, new GetSpectatorStopRoute(playerLobby));
 
         // Checks the turn of a spectated game
         post(SPECTATE_CHECK_TURN_URL, new PostSpectatorCheckTurnRoute(gameCenter, gson));
+
+        // Gets the Checkers game Game page that the player is replaying
+        get(REPLAY_GAME_URL, new GetReplayGameRoute(replayController, playerLobby, templateEngine, gson));
+
+        // Gets the user's request to stop watching the game replay
+        get(REPLAY_STOP_URL, new GetReplayStopRoute(playerLobby, replayController));
+
+        // Moves the replayed game's state to the next turn
+        post(REPLAY_NEXT_TURN_URL, new PostReplayNextRoute(replayController, gson));
+
+        // Moves the replayed game's state to the previous turn
+        post(REPLAY_PREV_TURN_URL, new PostReplayPrevRoute(replayController, gson));
 
         LOG.config("WebServer is initialized.");
     }

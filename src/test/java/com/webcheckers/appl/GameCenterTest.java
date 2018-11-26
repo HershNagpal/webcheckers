@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -52,7 +53,7 @@ public class GameCenterTest {
         dummy = mock(Player.class);
         move = mock(Move.class);
 
-        CuT = new GameCenter(messenger);
+        CuT = new GameCenter(messenger, new HashMap<>());
         game = CuT.createGame(player, opponent);
     }
 
@@ -65,6 +66,17 @@ public class GameCenterTest {
         game.resignGame(player);
         CuT.updateGames(game);
         assertFalse(CuT.gamesOngoing());
+    }
+
+    /**
+     * Test to check if there are finished games
+     */
+    @Test
+    public void testGamesFinished() {
+        assertFalse(CuT.gamesFinished());
+        game.resignGame(player);
+        CuT.updateGames(game);
+        assertTrue(CuT.gamesFinished());
     }
 
     /**
@@ -103,6 +115,16 @@ public class GameCenterTest {
     @Test
     public void testGetGames() {
         assertNotNull(CuT.getGames());
+    }
+
+    /**
+     * Test that the set of finished games is retrived.
+     */
+    @Test
+    public void testGetFinishedGames() {
+        game.resignGame(player);
+        CuT.updateGames(game);
+        assertNotNull(CuT.getFinishedGames());
     }
 
     /**
