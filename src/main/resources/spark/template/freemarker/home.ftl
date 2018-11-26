@@ -53,6 +53,19 @@
           ${numGames} games being played.
         </#if>
       </p>
+      <p>Finished Games:
+        <#if currentPlayer??>
+          <#if finishedList??>
+            <#list finishedList as g>
+              <li><a href="/replay/game?gameID=${g.gameID}">${g.gameName}</a></li>
+            </#list>
+          <#else>
+            No finished games.
+          </#if>
+        <#else>
+          ${numFinished} games have finished.
+        </#if>
+      </p>
     </div>
     
   </div>

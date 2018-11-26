@@ -11,6 +11,9 @@ import spark.Request;
 import spark.Response;
 import spark.Session;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -43,8 +46,7 @@ public class PostValidateMoveRouteTest {
     private Session session;
     private Player player;
     private Player opponent;
-    private Move move_Success;
-    private Move move_Fail;
+    private Map<String, Game> finishedGames;
 
     /**
      * Setup the objects for each test.
@@ -61,7 +63,8 @@ public class PostValidateMoveRouteTest {
 
         move = mock(Move.class);
 
-        gameCenter = new GameCenter(messenger);
+        finishedGames = new HashMap<>();
+        gameCenter = new GameCenter(messenger, finishedGames);
         game = gameCenter.createGame(player, opponent);
         Gson gson = new Gson();
 

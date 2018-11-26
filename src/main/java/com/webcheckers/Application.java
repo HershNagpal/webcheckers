@@ -1,6 +1,8 @@
 package com.webcheckers;
 
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
@@ -10,6 +12,8 @@ import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.Messenger;
 import com.webcheckers.appl.PlayerLobby;
 
+import com.webcheckers.appl.ReplayController;
+import com.webcheckers.model.Game;
 import com.webcheckers.ui.WebServer;
 import spark.TemplateEngine;
 import spark.template.freemarker.FreeMarkerEngine;
@@ -48,10 +52,13 @@ public final class Application {
       e.printStackTrace();
       System.err.println("Could not initialize log manager because: " + e.getMessage());
     }
+    final Map<String, Game> finishedGames = new HashMap<>();
 
-    final GameCenter gameCenter = new GameCenter(new Messenger());
+    final GameCenter gameCenter = new GameCenter(new Messenger(), finishedGames);
 
     final PlayerLobby playerLobby = new PlayerLobby();
+
+    final ReplayController replayController = new ReplayController(finishedGames);
 
     // The application uses FreeMarker templates to generate the HTML
     // responses sent back to the client. This will be the engine processing
@@ -64,7 +71,7 @@ public final class Application {
     final Gson gson = new Gson();
 
     // inject the game center and freemarker engine into web server
-    final WebServer webServer = new WebServer(gameCenter, playerLobby, templateEngine, gson);
+    final WebServer webServer = new WebServer(gameCenter, playerLobby, replayController, templateEngine, gson);
 
     // inject web server into application
     final Application app = new Application(webServer);

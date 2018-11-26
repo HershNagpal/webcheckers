@@ -1,9 +1,6 @@
 package com.webcheckers.appl;
 
-import com.webcheckers.model.Game;
-import com.webcheckers.model.Message;
-import com.webcheckers.model.Move;
-import com.webcheckers.model.Player;
+import com.webcheckers.model.*;
 
 import java.util.*;
 
@@ -21,10 +18,9 @@ public class GameCenter {
     private Map<Player, Game> games;
 
     /**
-     * TODO: remove later if not needed for replays
-     * All games that have ended
+     * All games that have finished
      */
-    private Map<Player, Game> endedGames;
+    private Map<String, Game> finishedGames;
 
     /**
      * Access games through the game's ID
@@ -44,9 +40,9 @@ public class GameCenter {
     /**
      * Initialize the list of games.
      */
-    public GameCenter(Messenger messenger) {
+    public GameCenter(Messenger messenger, Map<String, Game> finishedGames) {
         games = new HashMap<>();
-        endedGames = new HashMap<>();
+        this.finishedGames = finishedGames;
         gameIDMap = new HashMap<>();
         this.messenger = messenger;
         gameCounter = 0;
@@ -59,6 +55,15 @@ public class GameCenter {
      */
     public boolean gamesOngoing() {
         return !getGames().isEmpty();
+    }
+
+    /**
+     * Are there games finished?
+     *
+     * @return If there are games finished
+     */
+    public boolean gamesFinished() {
+        return !finishedGames.isEmpty();
     }
 
     /**
@@ -81,7 +86,7 @@ public class GameCenter {
             return false;
         }
         Game game = games.get(player);
-        return (game.isWhitePlayer(player) && !game.didPlayerResign());
+        return (game.isWhitePlayer(player) && !game.isGameOver());
     }
 
     /**
@@ -108,6 +113,14 @@ public class GameCenter {
      */
     public Set<Game> getGames() {
         return new HashSet<>(games.values());
+    }
+
+    /**
+     * Get all games that are finished
+     * @return All finished games
+     */
+    public Set<Game> getFinishedGames() {
+        return new HashSet<>(finishedGames.values());
     }
 
     /**
@@ -142,17 +155,19 @@ public class GameCenter {
     }
 
     /**
-     * Update the state of the game center to remove the game
+     * Update the state of the game center to remove the game a player is in
      * @param game Game to update
      */
     public void updateGames(Game game) {
-        Player red = game.getRedPlayer();
-        Player white = game.getWhitePlayer();
-        games.remove(red);
-        games.remove(white);
-        endedGames.put(red, game);
-        endedGames.put(white, game);
-        gameIDMap.remove(game.getGameID());
+        if (game != null && game.isGameOver()) {
+            String gameID = game.getGameID();
+            Player red = game.getRedPlayer();
+            Player white = game.getWhitePlayer();
+            games.remove(red);
+            games.remove(white);
+            finishedGames.put(gameID, game);
+            gameIDMap.remove(gameID);
+        }
     }
 
     /**

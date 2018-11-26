@@ -80,6 +80,9 @@ public class GetHomeRouteTest {
         // Check view model has the necessary data
         testHelper.assertViewModelAttribute(GetHomeRoute.TITLE_ATTR, GetHomeRoute.TITLE);
         testHelper.assertViewModelAttribute(GetHomeRoute.NUM_PLAYERS_ATTR, playerLobby.size());
+        testHelper.assertViewModelAttribute(GetHomeRoute.NUM_GAMES_ATTR, gameCenter.size());
+        testHelper.assertViewModelAttribute(GetHomeRoute.NUM_FINISHED_GAMES_ATTR,
+                gameCenter.getFinishedGames().size());
         // Check view model does not have certain data
         testHelper.assertViewModelAttributeIsAbsent(GetHomeRoute.PLAYER_ATTR);
         testHelper.assertViewModelAttributeIsAbsent(GetHomeRoute.PLAYER_LIST_ATTR);
@@ -180,6 +183,9 @@ public class GetHomeRouteTest {
         verify(response).redirect(WebServer.GAME_URL);
     }
 
+    /**
+     * Test when a player goes to the home page they are able to see ongoing games.
+     */
     @Test
     public void testGamesOngoing() {
         // Arrange test scenario: games are ongoing and player is logged in
@@ -194,6 +200,25 @@ public class GetHomeRouteTest {
         CuT.handle(request, response);
         // Check that the attribute exists and has the value
         testHelper.assertViewModelAttribute(GetHomeRoute.GAMES_LIST_ATTR, games);
+    }
+
+    /**
+     * Test when a player goes to the home page they are able to see finished games.
+     */
+    @Test
+    public void testGamesFinished() {
+        // Arrange test scenario: games are finished and player is logged in
+        when(session.attribute(GetHomeRoute.PLAYER_ATTR)).thenReturn(player);
+        when(gameCenter.gamesFinished()).thenReturn(true);
+        Set<Game> games = new HashSet<>();
+        when(gameCenter.getFinishedGames()).thenReturn(games);
+        // Mock up the view model
+        final TemplateEngineTester testHelper = new TemplateEngineTester();
+        when(templateEngine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
+        // Invoke the test
+        CuT.handle(request, response);
+        // Check that the attribute exists and has the value
+        testHelper.assertViewModelAttribute(GetHomeRoute.FINISHED_GAMES_ATTR, games);
     }
 
 }

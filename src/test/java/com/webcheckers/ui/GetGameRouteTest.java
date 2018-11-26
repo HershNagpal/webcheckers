@@ -3,13 +3,10 @@ package com.webcheckers.ui;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.*;
-import freemarker.template.Template;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import spark.*;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -112,6 +109,24 @@ public class GetGameRouteTest {
         verify(response).redirect(WebServer.HOME_URL);
     }
 
+    /**
+     * Test that if you attempt to start a game with a player who is replaying
+     * a game then you should be redirected to home with a message.
+     */
+    @Test
+    public void testPlayerReplaying() {
+        // Player one is not in a game, player two is in a game
+        when(gameCenter.playerInGame(p1)).thenReturn(false);
+        when(gameCenter.playerInGame(p2)).thenReturn(false);
+        when(playerLobby.isSpectating(p2)).thenReturn(false);
+        when(playerLobby.isReplaying(p2)).thenReturn(true);
+        final TemplateEngineTester tester = new TemplateEngineTester();
+        when(engine.render(any(ModelAndView.class))).thenAnswer(tester.makeAnswer());
+        // Invoke test
+        CuT.handle(request, response);
+        // Verify that user is sent back to home
+        verify(response).redirect(WebServer.HOME_URL);
+    }
 
     /**
      * Test if a new game is created automatically when both players
@@ -174,21 +189,10 @@ public class GetGameRouteTest {
         when(gameCenter.getGame(p1)).thenReturn(game);
         when(gameCenter.isGameOver(game)).thenReturn(true);
 
-        final TemplateEngineTester tester = new TemplateEngineTester();
-        when(engine.render(any(ModelAndView.class))).thenAnswer(tester.makeAnswer());
         // Invoke the test
         CuT.handle(request, response);
-        // Make sure engine is setup
-        tester.assertViewModelExists();
-        tester.assertViewModelIsaMap();
-        // Make sure view model is populated correctly
-        tester.assertViewModelAttributeIsPresent(GetGameRoute.BOARD_ATTR);
-        tester.assertViewModelAttributeIsPresent(GetGameRoute.VIEW_MODE_ATTR);
-        tester.assertViewModelAttributeIsPresent(GetGameRoute.CURRENT_PLAYER_ATTR);
-        tester.assertViewModelAttributeIsPresent(GetGameRoute.RED_PLAYER_ATTR);
-        tester.assertViewModelAttributeIsPresent(GetGameRoute.WHITE_PLAYER_ATTR);
-        tester.assertViewModelAttributeIsPresent(GetGameRoute.ACTIVE_COLOR_ATTR);
-        tester.assertViewModelAttributeIsPresent(GetGameRoute.MESSAGE_ATTR);
+
+        verify(response).redirect(WebServer.HOME_URL);
     }
 
     /**
@@ -196,26 +200,27 @@ public class GetGameRouteTest {
      */
     @Test
     public void testGameOverLoser() {
-        // Create scenario: player one in a game where the game is over
-        when(gameCenter.playerInGame(p1)).thenReturn(true);
-        when(gameCenter.getGame(p1)).thenReturn(game);
+        // Create scenario: player two in a game where the game is over
+        when(gameCenter.playerInGame(p2)).thenReturn(true);
+        when(gameCenter.getGame(p2)).thenReturn(game);
         when(gameCenter.isGameOver(game)).thenReturn(true);
 
-        final TemplateEngineTester tester = new TemplateEngineTester();
-        when(engine.render(any(ModelAndView.class))).thenAnswer(tester.makeAnswer());
         // Invoke the test
         CuT.handle(request, response);
-        // Make sure engine is setup
-        tester.assertViewModelExists();
-        tester.assertViewModelIsaMap();
-        // Make sure view model is populated correctly
-        tester.assertViewModelAttributeIsPresent(GetGameRoute.BOARD_ATTR);
-        tester.assertViewModelAttributeIsPresent(GetGameRoute.VIEW_MODE_ATTR);
-        tester.assertViewModelAttributeIsPresent(GetGameRoute.CURRENT_PLAYER_ATTR);
-        tester.assertViewModelAttributeIsPresent(GetGameRoute.RED_PLAYER_ATTR);
-        tester.assertViewModelAttributeIsPresent(GetGameRoute.WHITE_PLAYER_ATTR);
-        tester.assertViewModelAttributeIsPresent(GetGameRoute.ACTIVE_COLOR_ATTR);
-        tester.assertViewModelAttributeIsPresent(GetGameRoute.MESSAGE_ATTR);
+
+        verify(response).redirect(WebServer.HOME_URL);
+    }
+
+    @Test
+    public void testUpdateGames() {
+        // Create scenario: session has a message
+        Message message = new Message("", MessageType.info);
+        when(session.attribute(GetGameRoute.MESSAGE_ATTR)).thenReturn(message);
+
+        // Invoke the test
+        CuT.handle(request, response);
+
+        verify(session).removeAttribute(GetGameRoute.MESSAGE_ATTR);
     }
 
 }

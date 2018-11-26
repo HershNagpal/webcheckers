@@ -3,9 +3,7 @@ package com.webcheckers.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
-
 import com.webcheckers.model.Piece.Type;
 
 /**
@@ -61,12 +59,30 @@ public class PieceTest {
 	}
 
 	/**
-	 * Tests the kingPiece method
+	 * Tests the becomeKing and isKing method
 	 */
 	@Test
-	public void testKingPiece() {
-		assertEquals(Type.SINGLE, redSingleToKing.getType());
-		assertTrue(redSingleToKing.kingPiece());
-		assertEquals(Type.KING, redSingleToKing.getType());
+	public void testBecomeKingAndIsKing() {
+		assertFalse(redSingleToKing.isKing());
+		redSingleToKing.becomeKing();
+		assertTrue(redSingleToKing.isKing());
+	}
+
+	/**
+	 * Tests the toString method
+	 */
+	@Test
+	public void testToString(){
+		String expected = "Color: RED, Type: SINGLE";
+		assertEquals(expected, redSingle.toString());
+	}
+
+	/**
+	 * Tests the equals method
+	 */
+	@Test
+	public void testEquals(){
+		String pieceStr = "Red Piece";
+		assertFalse(redSingle.equals(pieceStr));
 	}
 }

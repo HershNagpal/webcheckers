@@ -14,6 +14,9 @@ import spark.Request;
 import spark.Response;
 import spark.Session;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -36,6 +39,7 @@ public class PostSubmitTurnRouteTest {
      */
     private Game game;
     private GameCenter gameCenter;
+    private Map<String, Game> finishedGames;
 
     /**
      * mock objects
@@ -44,6 +48,7 @@ public class PostSubmitTurnRouteTest {
     private Response response;
     private Session session;
     private Player player;
+    private Player opponent;
     private Messenger messenger;
 
     /**
@@ -56,10 +61,11 @@ public class PostSubmitTurnRouteTest {
         session = mock(Session.class);
         when(request.session()).thenReturn(session);
         player = mock(Player.class);
-        Player opponent = mock(Player.class);
+        opponent = mock(Player.class);
         messenger = mock(Messenger.class);
 
-        gameCenter = new GameCenter(messenger);
+        finishedGames = new HashMap<>();
+        gameCenter = new GameCenter(messenger, finishedGames);
         game = gameCenter.createGame(player, opponent);
         Gson gson = new Gson();
 

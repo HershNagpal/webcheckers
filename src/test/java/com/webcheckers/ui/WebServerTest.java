@@ -4,6 +4,7 @@ package com.webcheckers.ui;
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.appl.ReplayController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -35,7 +36,7 @@ public class WebServerTest {
     private TemplateEngine templateEngine;
     private PlayerLobby playerLobby;
     private GameCenter gameCenter;
-
+    private ReplayController replayController;
 
     /**
      * Setup the objects for testing.
@@ -45,9 +46,10 @@ public class WebServerTest {
         templateEngine = mock(TemplateEngine.class);
         playerLobby = mock(PlayerLobby.class);
         gameCenter = mock(GameCenter.class);
+        replayController = mock(ReplayController.class);
         gson = new Gson();
 
-        CuT = new WebServer(gameCenter, playerLobby, templateEngine, gson);
+        CuT = new WebServer(gameCenter, playerLobby, replayController, templateEngine, gson);
     }
 
     /**

@@ -87,6 +87,9 @@ public class GetGameRoute implements Route{
     static final Message SPECTATOR_ERROR = new Message(
             "That player is currently spectating a game!", MessageType.error);
 
+    static final Message IN_REPLAY_ERROR = new Message(
+            "That player is currently replaying a game!", MessageType.error);
+
     private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());
 
     /**
@@ -136,10 +139,13 @@ public class GetGameRoute implements Route{
         Map<String, Object> vm = new HashMap<>();
         vm.put(TITLE_ATTR, TITLE);
         Session session = request.session();
-        // Reset game messages
-        session.removeAttribute(MESSAGE_ATTR);
         Game game;
         Player player = session.attribute(CURRENT_PLAYER_ATTR);
+        // Reset end game messages and if there are any, update game center
+        if (session.attribute(MESSAGE_ATTR) != null) {
+            session.removeAttribute(MESSAGE_ATTR);
+            gameCenter.updateGames(gameCenter.getGame(player));
+        }
         // Is this player in game
         if (gameCenter.playerInGame(player)) {
             game = gameCenter.getGame(player);
@@ -158,22 +164,27 @@ public class GetGameRoute implements Route{
                 response.redirect(WebServer.HOME_URL);
                 return null;
             }
+            // Is other player replaying
+            else if (playerLobby.isReplaying(opponent)) {
+                session.attribute(MESSAGE_ATTR, IN_REPLAY_ERROR);
+                response.redirect(WebServer.HOME_URL);
+                return null;
+            }
             // Create a new game
             game = gameCenter.createGame(player, opponent);
         }
-
+        if (gameCenter.isGameOver(game)) {
+            Message message = gameCenter.isWinner(game, player);
+            session.attribute(MESSAGE_ATTR, message);
+            response.redirect(WebServer.HOME_URL);
+            return null;
+        }
         vm.put(BOARD_ATTR, game.getBoardView(player));
         vm.put(CURRENT_PLAYER_ATTR, player);
         vm.put(VIEW_MODE_ATTR, ViewMode.PLAY);
         vm.put(RED_PLAYER_ATTR, game.getRedPlayer());
         vm.put(WHITE_PLAYER_ATTR, game.getWhitePlayer());
         vm.put(ACTIVE_COLOR_ATTR, game.getActiveColor());
-        if (gameCenter.isGameOver(game)) {
-            gameCenter.updateGames(game);
-            Message message = gameCenter.isWinner(game, player);
-            vm.put(MESSAGE_ATTR, message);
-        }
-
         return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
     }
 }

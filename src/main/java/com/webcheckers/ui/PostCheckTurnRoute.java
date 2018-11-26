@@ -2,9 +2,7 @@ package com.webcheckers.ui;
 
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
-import com.webcheckers.model.Game;
 import com.webcheckers.model.Message;
-import com.webcheckers.model.MessageType;
 import com.webcheckers.model.Player;
 import spark.*;
 

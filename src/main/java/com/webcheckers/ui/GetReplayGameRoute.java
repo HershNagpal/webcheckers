@@ -1,7 +1,8 @@
 package com.webcheckers.ui;
 
-import com.webcheckers.appl.GameCenter;
+import com.google.gson.Gson;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.appl.ReplayController;
 import com.webcheckers.model.*;
 import spark.*;
 
@@ -10,11 +11,11 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * The UI Controller to GET the Game page in spectator mode
+ * The UI Controller to GET the Game page in replay mode
  *
  * @author Michael Kha
  */
-public class GetSpectatorGameRoute implements Route {
+public class GetReplayGameRoute implements Route {
 
     /**
      * Attribute for the current player
@@ -52,6 +53,11 @@ public class GetSpectatorGameRoute implements Route {
     static final String BOARD_ATTR = "board";
 
     /**
+     * Attribute for the mode options map
+     */
+    static final String MODE_OPTIONS_ATTR = "modeOptionsAsJSON";
+
+    /**
      * Attribute for all messages
      */
     static final String MESSAGE_ATTR = "message";
@@ -69,19 +75,19 @@ public class GetSpectatorGameRoute implements Route {
     /**
      * The actual title of the page
      */
-    static final String TITLE = "Spectating Game";
+    static final String TITLE = "Replaying Game";
 
     /**
      * Message to display when leaving the spectator game page
      * without exiting.
      */
-    static final Message SPECTATE_INFO = new Message(
-            "You are spectating still. Return to the game and exit.", MessageType.info);
+    static final Message REPLAY_INFO = new Message(
+            "You are replaying still. Return to the game and exit.", MessageType.info);
 
     /**
-     * The game center that holds games and handles actions
+     * The replay controller holding finished games and players replaying
      */
-    private final GameCenter gameCenter;
+    private final ReplayController replayController;
 
     /**
      * The player lobby holding all signed-in players
@@ -94,43 +100,51 @@ public class GetSpectatorGameRoute implements Route {
     private final TemplateEngine templateEngine;
 
     /**
+     * Interprets and converts json
+     */
+    private Gson gson;
+
+    /**
      * Create the Spark Route (UI controller) for the
      * {@code GET /spectator/game} HTTP request.
-     * @param gameCenter the controller that holds all the games
+     * @param replayController the controller that holds finished games
      * @param playerLobby the controller that holds the players for access and storage
      * @param templateEngine the HTML template rendering engine
+     * @param gson used to interpret and convert json
      */
-    public GetSpectatorGameRoute(GameCenter gameCenter, PlayerLobby playerLobby, TemplateEngine templateEngine) {
+    public GetReplayGameRoute(ReplayController replayController, PlayerLobby playerLobby, TemplateEngine templateEngine, Gson gson) {
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
         Objects.requireNonNull(playerLobby, "playerLobby must not be null");
-        Objects.requireNonNull(gameCenter, "gameCenter must not be null");
+        Objects.requireNonNull(replayController, "replayController must not be null");
 
-        this.gameCenter = gameCenter;
+        this.replayController = replayController;
         this.playerLobby = playerLobby;
         this.templateEngine = templateEngine;
+        this.gson = gson;
+
     }
 
     /**
-     * Render the WebCheckers Game page in spectator mode
+     * Render the WebCheckers Game page in replay mode
      *
      * @param request the HTTP request
      * @param response the HTTP response
      *
-     * @return the rendered HTML for the Game page in spectator mode
+     * @return the rendered HTML for the Game page in replay mode
      */
     @Override
     public Object handle(Request request, Response response) {
         Session session = request.session();
-        session.attribute(MESSAGE_ATTR, SPECTATE_INFO);
+        session.attribute(MESSAGE_ATTR, REPLAY_INFO);
         Map<String, Object> vm = new HashMap<>();
         vm.put(TITLE_ATTR, TITLE);
         String gameID = request.queryParams(ID_PARAM);
         gameID = String.join("+", gameID.split(" "));
         Player currentPlayer = session.attribute(CURRENT_PLAYER_ATTR);
-        playerLobby.startSpectating(currentPlayer);
-        Game game = gameCenter.getGame(gameID);
+        playerLobby.startReplaying(currentPlayer);
+        Replay game = replayController.getReplayGame(currentPlayer, gameID);
         vm.put(CURRENT_PLAYER_ATTR, currentPlayer);
-        vm.put(VIEW_MODE_ATTR, ViewMode.SPECTATOR);
+        vm.put(VIEW_MODE_ATTR, ViewMode.REPLAY);
         Player red = game.getRedPlayer();
         Player white = game.getWhitePlayer();
         if (game.isActivePlayer(red)) {
@@ -142,16 +156,9 @@ public class GetSpectatorGameRoute implements Route {
         vm.put(ACTIVE_COLOR_ATTR, game.getActiveColor());
         vm.put(RED_PLAYER_ATTR, red);
         vm.put(WHITE_PLAYER_ATTR, white);
-
-        // Redirect if game ended
-        if (gameCenter.isGameOver(game)) {
-            Message message = gameCenter.whoWon(game);
-            session.attribute(MESSAGE_ATTR, message);
-            playerLobby.stopSpectating(currentPlayer);
-            response.redirect(WebServer.HOME_URL);
-            return null;
-        }
+        vm.put(MODE_OPTIONS_ATTR, gson.toJson(game.getModeOptions()));
 
         return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
     }
+
 }

@@ -1,5 +1,8 @@
 package com.webcheckers.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.webcheckers.model.Piece.Type;
 
 /**
@@ -7,7 +10,7 @@ import com.webcheckers.model.Piece.Type;
  * pieces for the game to function.
  * @author Christopher Daukshus
  * @author Matthew Bollinger
- *
+ * @author Hersh Nagpal
  */
 public class Board {
 
@@ -22,16 +25,50 @@ public class Board {
     public final static int ROWS = 8;
     public final static int COLUMNS = 8;
     private Piece[][] pieces;
+
+    public static Piece red = new Piece(Color.RED, Type.SINGLE);
+    public static Piece white = new Piece(Color.WHITE, Type.SINGLE);
     public final static Piece[][] DEBUG_PIECES =
-            {   {null, new Piece(Color.WHITE, Type.SINGLE), null, new Piece(Color.WHITE, Type.SINGLE), null, null, null, null},
-                {null, null, null, null, new Piece(Color.WHITE, Type.SINGLE), null, null, null},
-                {null, null, null, null, null, new Piece(Color.WHITE, Type.SINGLE), null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, new Piece(Color.WHITE, Type.SINGLE), null, null},
-                {null, null, new Piece(Color.WHITE, Type.SINGLE), null, null, null, null, null},
-                {null, null, null, null, null, new Piece(Color.RED, Type.SINGLE), null, new Piece(Color.RED, Type.SINGLE)},
-                {new Piece(Color.RED, Type.SINGLE), null, null, null, null, null, new Piece(Color.RED, Type.SINGLE), null},
+            {   {null, red, null, red, null, null, null, null},
+                    {null, null, null, null, red, null, null, null},
+                    {null, null, null, null, null, red, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, red, null, null},
+                    {null, null, red, null, null, null, null, null},
+                    {null, null, null, null, null, red, null, white},
+                    {white, null, null, null, null, null, white, null},
             };
+    public final static Piece[][] KINGED_NO_JUMP =
+            {   {null, red, null, null, null, null, null, null},
+                    {null, null, null, null, red, null, null, null},
+                    {null, white, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null}
+            };
+    public final static Piece[][] END_GAME =
+            {   {null, red, null, null, null, null, null, null},
+                    {null, null, white, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null}
+            };
+    public final static Piece[][] NO_MOVES_RED =
+            {   {null, red, null, null, null, null, null, null},
+                    {white, null, white, null, null, null, null, null},
+                    {null, null, null, white, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null}
+            };
+
 
     /**
      * Board constructor that initializes and sets up the 2d Piece array.
@@ -182,46 +219,18 @@ public class Board {
      * @param move Jump move to be performed on board.
      */
     public void makeJumpMove(Move move){
-        Position startingPosition = move.getStart();
-        Position endingPosition = move.getEnd();
-
-        int rowStart = startingPosition.getRow();
-        int colStart = startingPosition.getCell();
-        int rowEnd = endingPosition.getRow();
-        int colEnd = endingPosition.getCell();
+        int rowStart = move.getStart().getRow();
+        int colStart = move.getStart().getCell();
+        int rowEnd = move.getEnd().getRow();
+        int colEnd = move.getEnd().getCell();
 
         Piece startingPiece = pieces[rowStart][colStart];
         pieces[rowStart][colStart] = null;
         pieces[rowEnd][colEnd] = startingPiece;
 
-        int rowDistance = rowEnd - rowStart;
-        int colDistance = colEnd - colStart;
+        Position jumpedPosition = move.getJumpedPosition();
 
-        //If row or column distance is 2, then the jump is going up/right, so the piece in between is one above the start.
-        //Otherwise, the jump is going down/left, so the piece is one below the start.
-        int jumpedRow;
-        int jumpedCol;
-
-        //jumpMove up
-        if(rowDistance == 2){
-            jumpedRow = rowStart + 1;
-        }
-        //jumpMove down
-        else{
-            jumpedRow = rowStart - 1;
-        }
-
-        //jumpMove right
-        if(colDistance == 2){
-            jumpedCol = colStart + 1;
-        }
-        //jumpMove left
-        else{
-            jumpedCol = colStart - 1;
-        }
-
-        pieces[jumpedRow][jumpedCol] = null;
-
+        this.pieces[jumpedPosition.getRow()][jumpedPosition.getCell()] = null;
     }
 
     /**
@@ -279,33 +288,143 @@ public class Board {
     }
 
     /**
-     * Tests the board to check if all pieces of a certain color have been eliminated
-     *
-     * @return color of piece that has been entirely eliminated. null if both colors still have pieces
+     * Check the board to see if the pieces of the given color are
+     * eliminated.
+     * @param color The color of the pieces to check
+     * @return If there are no more pieces of the given color
      */
-    public Color checkAllPiecesEliminated(){
-        boolean hasRed = false;
-        boolean hasWhite = false;
+    public boolean checkAllPiecesEliminated(Color color) {
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
                 Piece currentPiece = pieces[row][col];
                 if(currentPiece != null) {
-                    if (currentPiece.getColor() == Color.RED) {
-                        hasRed = true;
-                    } else if (currentPiece.getColor() == Color.WHITE) {
-                        hasWhite = true;
+                    if (currentPiece.getColor() == color) {
+                        return false;
                     }
                 }
             }
         }
-        if(!hasRed){
-            return Color.RED;
+        // Could not find a piece of the given color
+        return true;
+    }
+
+    /**
+     * Check the board to see if the pieces of the given color can still
+     * move at any instance.
+     * @param color The color of the pieces to check
+     * @return If there is a case where there can be a valid move made
+     */
+    public boolean checkNoMoreValidMoves(Color color) {
+        // Get the start position
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                Position start = new Position(row, col);
+                // Is this a bad start position?
+                Piece startPiece = getPieceAtPosition(start);
+                if (startPiece == null || startPiece.getColor() != color) {
+                    continue;
+                }
+                // Get the end position
+                for (int r = 0; r < 8; r++) {
+                    for (int c = 0; c < 8; c++) {
+                        Position end = new Position(r, c);
+                        // Create the move through these positions
+                        Move move = new Move(start, end);
+                        // Check if move is valid
+                        if (MoveManager.isValidMove(move, this)) {
+                            // there is at least one valid move, stop checking
+                            return false;
+                        }
+
+                    }
+                }
+            }
         }
-        else if(!hasWhite){
-            return Color.WHITE;
+        return true;
+    }
+
+    /**
+     * Takes in the position of a piece and returns all locations that it cn make a valid jump move.
+     * Must be a piece at given location.
+     * @param start the position of a piece.
+     * @return a list of the possible valid jump moves this piece can make.
+     */
+    public List<Position> getJumpLocations(Position start) {
+        List<Position> validJumpPositions = new ArrayList<>();
+        
+        List<Position> possibleJumpPositions = this.findPossibleJumpPositions(start);
+        
+        Move possibleJumpMove;
+        for (Position currentEnd : possibleJumpPositions) {
+            possibleJumpMove = new Move(start, currentEnd);
+            if(MoveManager.isJumpMove(possibleJumpMove, this)) {
+                validJumpPositions.add(currentEnd);
+            }
         }
-        else{
-            return null;
+
+        return validJumpPositions;
+    }
+
+    /**
+     * Returns a list of positions to be jumped to on the board from a given position.
+     * @param position the position of the piece to be checked for possible jump locations.
+     * @return a list of the possible locations to be jumped to from this position.
+     */
+    public List<Position> findPossibleJumpPositions(Position position) {
+        List<Position> possibleJumpPositions = new ArrayList<>();
+        int row = position.getRow();
+        int col = position.getCell();
+
+        // Upper
+        if(row - 2 >= 0) {
+            if (col - 2 >= 0) {
+                // Left
+                possibleJumpPositions.add((new Position(row - 2, col - 2))); 
+            }
+            if (col + 2 < Board.COLUMNS) {
+                // Right
+                possibleJumpPositions.add((new Position(row - 2, col + 2)));
+            }
         }
+        // Lower
+        if(row + 2 < Board.ROWS) {
+            if (col - 2 >= 0) {
+                // Left
+                possibleJumpPositions.add((new Position(row + 2, col - 2))); 
+            }
+            if (col + 2 < Board.COLUMNS) {
+                // Right
+                possibleJumpPositions.add((new Position(row + 2, col + 2)));
+            }
+        }
+
+        return possibleJumpPositions;
+    }
+
+    /**
+     * Returns all of the locations of pieces that can make moves.
+     *
+     * @return a list of positions that have pieces that can move.
+     */
+    public List<Position> getMovablePieceLocations(Color activeColor) {
+        List<Position> movablePieceLocations = new ArrayList<>();
+        Position indexPosition;
+        Piece indexPiece;
+
+        // Iterate through all pieces to see which ones are valid to move this turn.
+        for (int row = 0; row < Board.ROWS; row++) {
+            for (int col = 0; col < Board.COLUMNS; col++) {
+                indexPosition = new Position(row, col);
+                if (this.getPieceAtPosition(indexPosition) != null) {
+                    indexPiece = this.getPieceAtPosition(indexPosition);
+                    // Add the possible positions of pieces that are the active color to the array.
+                    if (indexPiece.getColor() == activeColor) {
+                        movablePieceLocations.add(indexPosition);
+                    }
+                }
+            }
+        }
+        
+        return movablePieceLocations;
     }
 }

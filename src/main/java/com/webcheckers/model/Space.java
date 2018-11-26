@@ -3,18 +3,11 @@ package com.webcheckers.model;
 /**
  * Represents a space on a checkerboard. A space is located on a row
  * and column. A space may have a piece located on it.
- * @author Luis, Chris
+ * @author Luis Gutierrez
+ * @author Chris Daukshus
+ * @author Hersh Nagpal
  */
 public class Space {
-
-    /**
-     * KING_RED = Spaces where Red checkers become king pieces.
-     * KING_BLACK = Spaces where Black checkers become king pieces.
-     */
-    public enum SpaceType {
-        KING_RED, KING_BLACK, NON_KING
-    }
-
     /**
      * The color of the space, either black or white
      */
@@ -23,12 +16,10 @@ public class Space {
     /**
      * row - the row coordinate of this space.
      * column - the column coordinate of this space.
-     * spaceType - the type of space (whether a piece can be kinged or not).
      * spaceColor - the color associated with this space (black or white).
      */
     private int row;
     private int column;
-    private SpaceType spaceType;
     private SpaceColor spaceColor;
 
     //Space has no piece before setUpBoard() in Board
@@ -38,23 +29,8 @@ public class Space {
         this.row = row;
         this.column = column;
         this.piece = piece;
-        setSpaceType();
         setSpaceColor();
 
-    }
-
-    /**
-     * Sets the Space type based on row.
-     * Row 0 and 7 are king rows.
-     */
-    private void setSpaceType() {
-        if (row == 0) {
-            this.spaceType = SpaceType.KING_BLACK;
-        } else if (row == 7) {
-            this.spaceType = SpaceType.KING_RED;
-        } else {
-            this.spaceType = SpaceType.NON_KING;
-        }
     }
 
     /**
@@ -141,6 +117,14 @@ public class Space {
 
         Space space2 = (Space)obj;
 
-        return this.row == space2.row && this.column == space2.column;
+        if(this.piece == null || space2.piece == null){
+            return this.row == space2.row && this.column == space2.column
+                    && this.spaceColor.equals(space2.spaceColor)
+                    && this.piece==(space2.piece);
+        }
+
+        return this.row == space2.row && this.column == space2.column
+                && this.spaceColor.equals(space2.spaceColor)
+                && this.piece.equals(space2.piece);
     }
 }

@@ -2,6 +2,8 @@ package com.webcheckers.model;
 
 /**
  * Represents the movement of pieces.
+ * @author Hersh Nagpal
+ * @author Luis Gutierrez
  */
 public class Move {
 
@@ -30,6 +32,44 @@ public class Move {
 
         Move flippedMove = new Move(posStartFlipped,posEndFlipped);
         return flippedMove;
+    }
+
+    /**
+     * Returns whether or not the move is facing the RED side of the board.
+     * "Facing the red side of the board" means that the move goes up when
+     * seen from the white players perspective.
+     * @return True if the move is facing the RED side of the board, false otherwise.
+     */
+    public boolean isFacingRed() {
+        //True if start row > end row
+        return !getStart().isAbove(getEnd());
+    }
+
+    /**
+     * Returns the piece that is being jumped. Null if none.
+     * Should only be called on jump moves or will not work properly.
+     * @return the piece in the middle of a jump move. Returns null if no piece.
+     */
+    public Position getJumpedPosition() {
+        Position jumpedPosition;
+        
+        if(this.isFacingRed()) {
+            // Facing the left side of the board
+            if (this.getEnd().getCell() < this.getStart().getCell()) {
+                jumpedPosition = new Position(this.getStart().getRow()-1, this.getStart().getCell()-1);
+            } else {
+                jumpedPosition = new Position(this.getStart().getRow()-1, this.getStart().getCell()+1);
+            }
+        } 
+        else {
+            if (this.getEnd().getCell() < this.getStart().getCell()) {
+                jumpedPosition = new Position(this.getStart().getRow()+1, this.getStart().getCell()-1);
+            } else {
+                jumpedPosition = new Position(this.getStart().getRow()+1, this.getStart().getCell()+1);
+            }
+        }
+
+        return jumpedPosition;
     }
 
     /**

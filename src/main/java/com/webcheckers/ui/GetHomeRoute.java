@@ -5,7 +5,8 @@ import java.util.logging.Logger;
 
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.model.Game;
+import com.webcheckers.model.Message;
+import com.webcheckers.model.MessageType;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -45,6 +46,16 @@ public class GetHomeRoute implements Route {
      * Attribute for the list of games
      */
     static final String GAMES_LIST_ATTR = "gamesList";
+
+    /**
+     * Attribute for the number of finished games
+     */
+    static final String NUM_FINISHED_GAMES_ATTR = "numFinished";
+
+    /**
+     * Attribute for the list of finished games
+     */
+    static final String FINISHED_GAMES_ATTR = "finishedList";
 
     /**
      * Attribute for the current player
@@ -128,16 +139,21 @@ public class GetHomeRoute implements Route {
             if (players.size() != 0) {
                 vm.put(PLAYER_LIST_ATTR, players);
             }
-            if (session.attribute(MESSAGE_ATTR) != null) {
-                vm.put(MESSAGE_ATTR, session.attribute(MESSAGE_ATTR));
+            Message message = session.attribute(MESSAGE_ATTR);
+            if (message != null) {
+                vm.put(MESSAGE_ATTR, message);
             }
             if (gameCenter.gamesOngoing()) {
                 vm.put(GAMES_LIST_ATTR, gameCenter.getGames());
+            }
+            if (gameCenter.gamesFinished()) {
+                vm.put(FINISHED_GAMES_ATTR, gameCenter.getFinishedGames());
             }
         }
         else {
             vm.put(NUM_PLAYERS_ATTR, playerLobby.size());
             vm.put(NUM_GAMES_ATTR, gameCenter.size());
+            vm.put(NUM_FINISHED_GAMES_ATTR, gameCenter.getFinishedGames().size());
         }
 
         return templateEngine.render(new ModelAndView(vm , VIEW_NAME));

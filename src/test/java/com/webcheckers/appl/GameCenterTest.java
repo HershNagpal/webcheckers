@@ -5,6 +5,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -44,10 +47,13 @@ public class GameCenterTest {
         messenger = mock(Messenger.class);
         player = mock(Player.class);
         opponent = mock(Player.class);
+        //Added to avoid nullPointer in Game constructor
+        when(player.getName()).thenReturn("Player1");
+        when(opponent.getName()).thenReturn("Player2");
         dummy = mock(Player.class);
         move = mock(Move.class);
 
-        CuT = new GameCenter(messenger);
+        CuT = new GameCenter(messenger, new HashMap<>());
         game = CuT.createGame(player, opponent);
     }
 
@@ -57,8 +63,20 @@ public class GameCenterTest {
     @Test
     public void testGamesOngoing() {
         assertTrue(CuT.gamesOngoing());
+        game.resignGame(player);
         CuT.updateGames(game);
         assertFalse(CuT.gamesOngoing());
+    }
+
+    /**
+     * Test to check if there are finished games
+     */
+    @Test
+    public void testGamesFinished() {
+        assertFalse(CuT.gamesFinished());
+        game.resignGame(player);
+        CuT.updateGames(game);
+        assertTrue(CuT.gamesFinished());
     }
 
     /**
@@ -100,6 +118,16 @@ public class GameCenterTest {
     }
 
     /**
+     * Test that the set of finished games is retrived.
+     */
+    @Test
+    public void testGetFinishedGames() {
+        game.resignGame(player);
+        CuT.updateGames(game);
+        assertNotNull(CuT.getFinishedGames());
+    }
+
+    /**
      * Test that the size of the set of games is correct
      */
     @Test
@@ -128,6 +156,22 @@ public class GameCenterTest {
         when(messenger.resignGame(game, player)).thenReturn(message);
         game.resignGame(player);
         assertTrue(CuT.isGameOver(game));
+    }
+
+    @Test
+    public void testUpdateGames() {
+        Game test = null;
+        // Defensive check test
+        Set<Game> temp = CuT.getGames();
+        CuT.updateGames(test);
+        assertEquals(temp, CuT.getGames());
+        // Game not over test
+        CuT.updateGames(game);
+        assertEquals(temp, CuT.getGames());
+        // Game is over test
+        game.resignGame(player);
+        CuT.updateGames(game);
+        assertNotEquals(temp, CuT.getGames());
     }
 
     /**
