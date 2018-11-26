@@ -322,7 +322,8 @@ public class Board {
      */
     public List<Position> getValidNormalMovePositions(Position centerPiece){
         List<Position> movePositions = new ArrayList<>();
-        Color centerPieceColor = this.getPieceAtPosition(centerPiece).getColor();
+        Piece piece = this.getPieceAtPosition(centerPiece);
+        Color centerPieceColor = piece.getColor();
         Position upperL =
                 new Position(centerPiece.getRow()-1, centerPiece.getCell()-1);
         Position upperR =
@@ -336,25 +337,27 @@ public class Board {
         movePositions.add(lowerL);
         movePositions.add(lowerR);
         //remove invalid positions based on piece color and type
-        if (centerPieceColor.equals(Color.RED) && !(this.getPieceAtPosition(centerPiece).getType().equals(Piece.Type.KING))){
+        if (centerPieceColor.equals(Color.RED) && !(piece.getType().equals(Piece.Type.KING))){
             movePositions.remove(upperL);
             movePositions.remove(upperR);
         }
-        if (centerPieceColor.equals(Color.WHITE) && !(this.getPieceAtPosition(centerPiece).getType().equals(Piece.Type.KING))) {
+        if (centerPieceColor.equals(Color.WHITE) && !(piece.getType().equals(Piece.Type.KING))) {
             movePositions.remove(lowerL);
             movePositions.remove(lowerR);
         }
         //remove positions that are off the board or occupied
         List<Position> remove = new ArrayList<>();
-        for(int i = 0; i < movePositions.size(); i++){
+        for(int i = 0; i < movePositions.size(); i++) {
             Position position = movePositions.get(i);
             if (position.getRow() >= Board.ROWS || position.getRow() < 0 ||
-                    position.getCell() >= Board.COLUMNS || position.getCell() < 0){
+                    position.getCell() >= Board.COLUMNS || position.getCell() < 0) {
                 remove.add(position);
-            }
-            else{
-                if (!(this.getPieceAtPosition(position) == null)){
+            } else {
+                if (!(this.getPieceAtPosition(position) == null)) {
                     remove.add(position);
+                    if (!(piece == null)) {
+                        movePositions.remove(position);
+                    }
                 }
             }
         }
@@ -366,5 +369,4 @@ public class Board {
 
         return movePositions;
     }
-
 }
