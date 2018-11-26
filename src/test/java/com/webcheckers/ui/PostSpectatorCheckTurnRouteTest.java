@@ -2,8 +2,8 @@ package com.webcheckers.ui;
 
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameCenter;
-import com.webcheckers.model.Message;
-import com.webcheckers.model.MessageType;
+import com.webcheckers.appl.Message;
+import com.webcheckers.appl.MessageType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;

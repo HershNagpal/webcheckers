@@ -1,4 +1,4 @@
-package com.webcheckers.model;
+package com.webcheckers.appl;
 
 /**
  * Used to display a message from the server.

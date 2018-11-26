@@ -1,8 +1,8 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.model.Message;
-import com.webcheckers.model.MessageType;
+import com.webcheckers.appl.Message;
+import com.webcheckers.appl.MessageType;
 import com.webcheckers.model.Player;
 import spark.*;
 import java.util.HashMap;
