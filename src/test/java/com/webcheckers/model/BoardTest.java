@@ -356,10 +356,13 @@ public class BoardTest {
   @Test
   public void testGetValidNormalMovePositions(){
       List<Position> testPositions;
+
+      //test normal white piece
       Position centerPiece = new Position(0,2);
       testPositions = CuT2.getValidNormalMovePositions(centerPiece);
       assert(testPositions.size() == 1);
 
+      //test normal red piece
       centerPiece = new Position(1, 1);
       testPositions = CuT2.getValidNormalMovePositions(centerPiece);
       assert(testPositions.size() == 1);
