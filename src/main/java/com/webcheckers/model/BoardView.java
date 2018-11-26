@@ -7,19 +7,20 @@ import java.util.List;
 /**
  * represents the board broken down visually into rows. This class is the physical structure of the board
  * and holds all of the subunits (rows, spaces, and pieces).
+ * 
  * @author Luis Gutierrez 
  * @author Christopher Daukshus
  */
 public class BoardView {
 
     /**
-     * rows - The List containing each Row object that is part of the Board.
+     * The List containing each Row object that is part of the Board.
      */
     private List<Row> rows;
 
-    //
-    // Constructor
-    //
+    /**
+     * Construct a BoardView
+     */    
     public BoardView(Piece[][] pieces){
         rows = new ArrayList<>();
         int numOfRows = pieces.length;
@@ -30,6 +31,7 @@ public class BoardView {
 
     /**
      * Creates an iterable for the Rows on the Board for the freemarker template to work with.
+     * 
      * @return an iterable for all the Rows on the board.
      */
     public Iterator<Row> iterator(){
@@ -39,6 +41,7 @@ public class BoardView {
     /**
      * Overriding equals() for deep equality between BoardView Objects.
      * This method is used for testing.
+     * 
      * @param obj Object being compared to "this" Piece
      * @return true if "this" is equal to obj
      */
