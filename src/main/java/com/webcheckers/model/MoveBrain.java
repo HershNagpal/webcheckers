@@ -95,6 +95,8 @@ public class MoveBrain extends Game {
                     for (Position jumpTargetPosition : pieceJumpPositions) {
                         Move move = new Move(position, jumpTargetPosition);
                         if (isJumpMove(move)) {
+                            Piece endPiece = this.getBoard().getPieceAtPosition(move.getEnd());
+                            if (endPiece == null)
                             AIMoves.add(move);
                             jumpMoveFound = true;
                         }
@@ -109,8 +111,10 @@ public class MoveBrain extends Game {
                     List<Position> validPositionList;
                     validPositionList = this.getBoard().getValidNormalMovePositions(position);
                     for (Position end : validPositionList) {
-                        Move move = new Move(position, end);;
+                        Move move = new Move(position, end);
                         if (isNormalMove(move)) {
+                            Piece endPiece = this.getBoard().getPieceAtPosition(move.getEnd());
+                            if (endPiece == null)
                             AIMoves.add(move);
                         }
                     }

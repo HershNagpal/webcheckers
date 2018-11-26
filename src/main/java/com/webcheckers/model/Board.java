@@ -346,22 +346,26 @@ public class Board {
             movePositions.remove(lowerR);
         }
         //remove positions that are off the board or occupied
-        //for(Position position: movePositions){
-        for(int i = 0; i<movePositions.size(); i++){
+        List<Position> remove = new ArrayList<>();
+        for(int i = 0; i < movePositions.size(); i++){
             Position position = movePositions.get(i);
             if (position.getRow() >= Board.ROWS || position.getRow() < 0 ||
                     position.getCell() >= Board.COLUMNS || position.getCell() < 0){
-                movePositions.remove(position);
+                remove.add(position);
             }
             else{
                 if (!(this.getPieceAtPosition(position) == null)){
-                    movePositions.remove(position);
+                    remove.add(position);
                 }
             }
+        }
+        //now remove the positions
+        for (int i = 0; i < remove.size(); i++){
+            Position badPosition = remove.get(i);
+            movePositions.remove(badPosition);
         }
 
         return movePositions;
     }
-
 
 }
