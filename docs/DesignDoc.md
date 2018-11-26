@@ -154,7 +154,7 @@ alter, or display them, the UI first goes through the correct application tier m
 
 #### Services
 - GameCenter
-  * Each route located in the UI tier uses GameCenter to get information from game objects in the model package.
+* Each route located in the UI tier uses GameCenter to get information from game objects in the model package.
   GameCenter creates and manages games by storing them in a list of ongoing games and ended games. Given that
   the games are managed in this class, we adhere to both the information expert and single responsibility design
   principles as we contain the responsibility of getting the current player's game and calling the appropriate method
@@ -170,8 +170,10 @@ alter, or display them, the UI first goes through the correct application tier m
     GetGameRoute also uses the method getGame(player) to get the game object from a player already in a game in order
     to render the game. The route also uses the methods isGameOver and isWinner in gameCenter to display the
     appropriate message given that a player resigns.
-  * GameCenter uses messenger to get the appropriate message for routes on the UI tier that must return
-  a Json representation of the message to the .ftl files that render the pages.
+    4. PostValidateRoute goes through the same steps of acquiring the correct message (ValidMove or InvalidMove) by
+    by using GameCenter to return the correct message obtained by calling validateMove() in Messenger, which uses Game
+    to return true or false depending on whether the move follows the American Checkers rules.
+    ![PostValidateRoute Sequence Diagram](PostValidateRoute_SequenceDiagram.png)
 - Messenger
   * Many routes require appropriate messages to display depending on system events like valid/invalid move, opponent
   resignation, or player resignation. The class Messenger was created to hold all messages needed to be displayed for
