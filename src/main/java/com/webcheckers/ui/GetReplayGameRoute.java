@@ -75,7 +75,7 @@ public class GetReplayGameRoute implements Route {
     /**
      * The actual title of the page
      */
-    static final String TITLE = "Spectating Game";
+    static final String TITLE = "Replaying Game";
 
     /**
      * Message to display when leaving the spectator game page

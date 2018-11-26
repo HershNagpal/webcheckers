@@ -7,6 +7,7 @@ import com.webcheckers.model.Player;
 import spark.Request;
 import spark.Response;
 import spark.Route;
+import spark.Session;
 
 /**
  * The {@code POST /game} route handler for going to the next
@@ -47,7 +48,8 @@ public class PostReplayNextRoute implements Route {
      */
     @Override
     public Object handle(Request request, Response response) {
-        Player player = request.session().attribute(GetGameRoute.CURRENT_PLAYER_ATTR);
+        Session session = request.session();
+        Player player = session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR);
         Message message = replayController.nextTurn(player);
         return gson.toJson(message);
     }
