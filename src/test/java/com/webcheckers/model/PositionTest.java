@@ -112,6 +112,8 @@ public class PositionTest {
         Position invalid3 = new Position(9, 2);
         Position invalid4 = new Position(2, 1);
         Position invalid5 = new Position(-1, 0);
+        Position invalid6 = new Position(9, 10);
+        Position invalid7 = new Position(7, 8);
 
         assert(CuT.isDiagonalAdjacentTo(valid1)); 
         assert(CuT.isDiagonalAdjacentTo(valid2));
@@ -121,6 +123,8 @@ public class PositionTest {
         assert(!CuT.isDiagonalAdjacentTo(invalid3)); 
         assert(!CuT.isDiagonalAdjacentTo(invalid4));
         assert(!CuT.isDiagonalAdjacentTo(invalid5));
+        assert(!CuT.isDiagonalAdjacentTo(invalid6));
+        assert(!CuT.isDiagonalAdjacentTo(invalid7));
     }
 
     /**
