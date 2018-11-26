@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -52,7 +53,7 @@ public class GameCenterTest {
         dummy = mock(Player.class);
         move = mock(Move.class);
 
-        CuT = new GameCenter(messenger);
+        CuT = new GameCenter(messenger, new HashMap<>());
         game = CuT.createGame(player, opponent);
     }
 

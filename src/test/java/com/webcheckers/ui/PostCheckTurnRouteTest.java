@@ -14,6 +14,8 @@ import spark.Request;
 import spark.Response;
 import spark.Session;
 
+import java.util.HashMap;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -60,7 +62,7 @@ public class PostCheckTurnRouteTest {
         opponent = mock(Player.class);
         messenger = mock(Messenger.class);
 
-        gameCenter = new GameCenter(messenger);
+        gameCenter = new GameCenter(messenger, new HashMap<>());
         game = gameCenter.createGame(player, opponent);
         Gson gson = new Gson();
 
