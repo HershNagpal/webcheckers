@@ -17,8 +17,8 @@ public class Replay extends Game {
     private int replayIndex;
 
     /**
-     *
-     * @param game
+     * Replay version of the game.
+     * @param game Original finished game to copy
      */
     public Replay(Game game) {
         super(game);
@@ -80,11 +80,9 @@ public class Replay extends Game {
 
     /**
      * "Undo" last move made
-     *
      */
     public void backUpMove(Move move) {
         Move backUpMove = move.createBackUpMove();
-        //Undo last move
         makeMove(backUpMove);
     }
 
