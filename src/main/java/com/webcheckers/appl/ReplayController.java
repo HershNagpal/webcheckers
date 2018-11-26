@@ -4,7 +4,6 @@ import com.webcheckers.model.Game;
 import com.webcheckers.model.Message;
 import com.webcheckers.model.Player;
 import com.webcheckers.model.Replay;
-
 import java.util.HashMap;
 import java.util.Map;
 
