@@ -58,6 +58,17 @@ public class Board {
                     {null, null, null, null, null, null, null, null},
                     {null, null, null, null, null, null, null, null}
             };
+    public final static Piece[][] NO_MOVES_RED =
+            {   {null, red, null, null, null, null, null, null},
+                    {white, null, white, null, null, null, null, null},
+                    {null, null, null, white, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null}
+            };
+
 
     /**
      * Board constructor that initializes and sets up the 2d Piece array.
@@ -277,7 +288,6 @@ public class Board {
     }
 
     /**
-     * TODO: check and write tests
      * Check the board to see if the pieces of the given color are
      * eliminated.
      * @param color The color of the pieces to check
@@ -298,6 +308,8 @@ public class Board {
         return true;
     }
 
+    // TODO delete if not needed
+    /*
     public Color checkAllPiecesEliminated() {
         boolean redElim = true;
         boolean whiteElim = true;
@@ -321,11 +333,10 @@ public class Board {
             return Color.WHITE;
         }
         return null;
-    }
+    }*/
 
 
     /**
-     * TODO: check and write tests
      * Check the board to see if the pieces of the given color can still
      * move at any instance.
      * @param color The color of the pieces to check
@@ -360,6 +371,8 @@ public class Board {
         return true;
     }
 
+    // TODO delete if not needed
+    /*
     public Color checkNoMoreValidMoves() {
         boolean redNoValid = true;
         boolean whiteNoValid = true;
@@ -401,10 +414,9 @@ public class Board {
             return Color.WHITE;
         }
         return null;
-    }
+    }*/
 
     /**
-     * TODO: check and write tests
      * Takes in the position of a piece and returns all locations that it cn make a valid jump move.
      * Must be a piece at given location.
      * @param start the position of a piece.
