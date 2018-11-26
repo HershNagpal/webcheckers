@@ -96,14 +96,14 @@ public class Game {
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
 
-        /*if(redPlayer.getName().equals("debug") && whitePlayer.getName().equals("test")) {
-            this.board = new Board(Board.END_GAME);
+        if(redPlayer.getName().equals("debug") && whitePlayer.getName().equals("test")) {
+            this.board = new Board(Board.DEBUG_PIECES);
         } else if (redPlayer.getName().equals("test") && whitePlayer.getName().equals("debug")) {
-            this.board = new Board(Board.END_GAME);
+            this.board = new Board(Board.DEBUG_PIECES);
         } else {
             this.board = new Board();
-        }*/
-        this.board = new Board();
+        }
+        //this.board = new Board();
 
         activeColor = Color.RED;
         // Unique ID
@@ -316,16 +316,11 @@ public class Game {
 
         if (MoveManager.isValidMove(move, board) && canContinueMoving) {
             if (MoveManager.isSingleMove(move, movingPiece)) {
-                System.out.println("Single Move");
                 //Force Jump Move
-                //System.out.println("Jump Move Exists (Validate Move): "+jumpMoveExists());
                 if (jumpMoveExists()) {
                     return false;
                 }
                 canContinueMoving = false;
-            }
-            else if (MoveManager.isJumpMove(move, board)){
-                System.out.println("Jump Move");
             }
             lastMoves.push(move);
             makeMove(move);
@@ -394,17 +389,12 @@ public class Game {
         //Enforce player ending a multiple jump move
         Position lastMoveEndPos = lastMove.getEnd();
         //Multiple jump move has not been completed
-        System.out.println("LastMoveJump: " + MoveManager.isLastMoveJump(lastMove, movingPiece));
-        System.out.println("JumpLocation Exists: " + (board.getJumpLocations(lastMoveEndPos).size() > 0));
         boolean kinged = checkIfKinged(lastMove);
         if (MoveManager.isLastMoveJump(lastMove, movingPiece)) {
             if (!kinged && board.getJumpLocations(lastMoveEndPos).size() > 0) {
                 return false;
             }
         }
-
-        //Potentially King moving piece
-     //   checkIfKinged(lastMove);
 
         //reset lastMoves
         lastMoves.clear();
@@ -472,11 +462,8 @@ public class Game {
      * @return whether or not the current player can make a jump move.
      */
     public boolean jumpMoveExists() {
-        System.out.println("Active Color: "+getActiveColor());
         List<Position> movablePieceLocations = board.getMovablePieceLocations(getActiveColor());
-        System.out.println("MovablePieceLocations size: "+movablePieceLocations.size());
         for (Position indexPosition : movablePieceLocations) {
-            System.out.println("JumpLocations for Pos size: "+board.getJumpLocations(indexPosition).size());
             // Check if piece at indexPosition has a position to jump to
             if (board.getJumpLocations(indexPosition).size() > 0) {
                 return true;

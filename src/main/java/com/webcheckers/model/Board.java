@@ -25,19 +25,19 @@ public class Board {
     public final static int ROWS = 8;
     public final static int COLUMNS = 8;
     private Piece[][] pieces;
-    public final static Piece[][] DEBUG_PIECES =
-            {   {null, new Piece(Color.RED, Type.SINGLE), null, new Piece(Color.RED, Type.SINGLE), null, null, null, null},
-                {null, null, null, null, new Piece(Color.RED, Type.SINGLE), null, null, null},
-                {null, null, null, null, null, new Piece(Color.RED, Type.SINGLE), null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, new Piece(Color.RED, Type.SINGLE), null, null},
-                {null, null, new Piece(Color.RED, Type.SINGLE), null, null, null, null, null},
-                {null, null, null, null, null, new Piece(Color.WHITE, Type.SINGLE), null, new Piece(Color.WHITE, Type.SINGLE)},
-                {new Piece(Color.WHITE, Type.SINGLE), null, null, null, null, null, new Piece(Color.WHITE, Type.SINGLE), null},
-            };
 
     public static Piece red = new Piece(Color.RED, Type.SINGLE);
     public static Piece white = new Piece(Color.WHITE, Type.SINGLE);
+    public final static Piece[][] DEBUG_PIECES =
+            {   {null, red, null, red, null, null, null, null},
+                    {null, null, null, null, red, null, null, null},
+                    {null, null, null, null, null, red, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, red, null, null},
+                    {null, null, red, null, null, null, null, null},
+                    {null, null, null, null, null, red, null, white},
+                    {white, null, null, null, null, null, white, null},
+            };
     public final static Piece[][] KINGED_NO_JUMP =
             {   {null, red, null, null, null, null, null, null},
                     {null, null, null, null, red, null, null, null},

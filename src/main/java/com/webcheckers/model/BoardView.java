@@ -26,7 +26,6 @@ public class BoardView {
         for(int rowNum = 0; rowNum < numOfRows; rowNum++){
             rows.add(new Row(pieces[rowNum], rowNum));
         }
-        System.out.println(rows);
     }
 
     /**
