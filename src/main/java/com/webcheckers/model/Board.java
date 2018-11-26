@@ -75,11 +75,21 @@ public class Board {
                     {null, null, null, null, null, null, null, null},
                     {null, null, null, null, null, null, null, null}
             };
-    public final static Piece[][] NO_MOVES_RED =
+    public final static Piece[][] NO_MOVES_WHITE =
             {   {null, red, null, null, null, null, null, null},
-                    {white, null, white, null, null, null, null, null},
-                    {null, null, null, white, null, null, null, null},
                     {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, null, red, null, null, null, red},
+                    {null, null, null, null, red, null, red, null},
+                    {null, null, null, null, null, white, null, null}
+            };
+    public final static Piece[][] MULTIPLE_JUMP_RED =
+            {   {null, red, null, null, null, null, null, null},
+                    {null, null, white, null, null, null, null, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, white, null, white, null, null, null},
                     {null, null, null, null, null, null, null, null},
                     {null, null, null, null, null, null, null, null},
                     {null, null, null, null, null, null, null, null},

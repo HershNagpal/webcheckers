@@ -59,6 +59,7 @@ public class MoveManagerTest {
         Move whiteInvalidMove2 = new Move(new Position(7,2), new Position(6,3));
         Move whiteInvalidMove3 = new Move(new Position(7,0), new Position(6,7));
         Move nullInvalidMove1 = new Move(new Position(5,0), new Position(7,0));
+        Move nonBoardInvalidMove1 = new Move(new Position(10,9), new Position(7,0));
 
         assertTrue(MoveManager.isValidMove(whiteValidMove1, board));
         assertTrue(MoveManager.isValidMove(whiteValidJump1, board));
@@ -69,6 +70,7 @@ public class MoveManagerTest {
         assertFalse(MoveManager.isValidMove(whiteInvalidMove2, board));
         assertFalse(MoveManager.isValidMove(whiteInvalidMove3, board));
         assertFalse(MoveManager.isValidMove(nullInvalidMove1, board));
+        assertFalse(MoveManager.isValidMove(nonBoardInvalidMove1, board));
     }
 
     /**
