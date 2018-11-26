@@ -5,7 +5,6 @@ import com.webcheckers.appl.Message;
 import com.webcheckers.appl.MessageType;
 import com.webcheckers.model.Player;
 import spark.*;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;

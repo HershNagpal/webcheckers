@@ -143,30 +143,30 @@ public class GetGameRoute implements Route{
         Session session = request.session();
         Game game;
         Player player = session.attribute(CURRENT_PLAYER_ATTR);
-        // Reset end game messages and if there are any, update game center
+        // Reset end game messages and if there are any, update game center.
         if (session.attribute(MESSAGE_ATTR) != null) {
             session.removeAttribute(MESSAGE_ATTR);
             gameCenter.updateGames(gameCenter.getGame(player));
         }
-        // Is this player in game
+        // Is this player in game?
         if (gameCenter.playerInGame(player)) {
             game = gameCenter.getGame(player);
         } else {
             String gameID = request.queryParams(ID_PARAM);
             Player opponent = playerLobby.getPlayer(gameID.split(" ")[1]);
-            // Is other player in game
+            // Is other player in game?
             if (gameCenter.playerInGame(opponent)) {
                 session.attribute(MESSAGE_ATTR, IN_GAME_ERROR);
                 response.redirect(WebServer.HOME_URL);
                 return null;
             }
-            // Is other player spectating
+            // Is other player spectating?
             else if (playerLobby.isSpectating(opponent)) {
                 session.attribute(MESSAGE_ATTR, SPECTATOR_ERROR);
                 response.redirect(WebServer.HOME_URL);
                 return null;
             }
-            // Is other player replaying
+            // Is other player replaying?
             else if (playerLobby.isReplaying(opponent)) {
                 session.attribute(MESSAGE_ATTR, IN_REPLAY_ERROR);
                 response.redirect(WebServer.HOME_URL);

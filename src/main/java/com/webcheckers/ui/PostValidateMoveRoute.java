@@ -5,7 +5,6 @@ import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.Message;
 import com.webcheckers.model.*;
 import spark.*;
-
 import java.util.Objects;
 
 
