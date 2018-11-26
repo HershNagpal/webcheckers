@@ -85,6 +85,7 @@ public class MoveBrainTest {
         }
         System.out.println(total);
         assert(total == 0);
+
     }
 
     /**
