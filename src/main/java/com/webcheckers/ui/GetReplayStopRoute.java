@@ -50,7 +50,7 @@ public class GetReplayStopRoute implements Route {
         Session session = request.session();
         Player player = session.attribute(GetHomeRoute.PLAYER_ATTR);
         // Reset messages on home page
-        session.removeAttribute(GetSpectatorGameRoute.MESSAGE_ATTR);
+        session.removeAttribute(GetReplayGameRoute.MESSAGE_ATTR);
         playerLobby.stopReplaying(player);
         replayController.stopReplaying(player);
         response.redirect(WebServer.HOME_URL);

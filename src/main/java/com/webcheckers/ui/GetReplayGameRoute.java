@@ -142,7 +142,7 @@ public class GetReplayGameRoute implements Route {
         gameID = String.join("+", gameID.split(" "));
         Player currentPlayer = session.attribute(CURRENT_PLAYER_ATTR);
         playerLobby.startReplaying(currentPlayer);
-        Game game = replayController.getReplayGame(currentPlayer, gameID);
+        Replay game = replayController.getReplayGame(currentPlayer, gameID);
         vm.put(CURRENT_PLAYER_ATTR, currentPlayer);
         vm.put(VIEW_MODE_ATTR, ViewMode.REPLAY);
         Player red = game.getRedPlayer();
@@ -157,14 +157,6 @@ public class GetReplayGameRoute implements Route {
         vm.put(RED_PLAYER_ATTR, red);
         vm.put(WHITE_PLAYER_ATTR, white);
         vm.put(MODE_OPTIONS_ATTR, gson.toJson(game.getModeOptions()));
-    //    // Redirect if game ended
-    //    if (gameCenter.isGameOver(game)) {
-    //        Message message = gameCenter.whoWon(game);
-    //        session.attribute(MESSAGE_ATTR, message);
-    //        playerLobby.stopSpectating(currentPlayer);
-    //        response.redirect(WebServer.HOME_URL);
-    //        return null;
-    //    }
 
         return templateEngine.render(new ModelAndView(vm, VIEW_NAME));
     }

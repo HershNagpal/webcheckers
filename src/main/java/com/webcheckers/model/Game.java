@@ -68,25 +68,18 @@ public class Game {
      * Stack of moves made before a move is submitted.
      * Used for backing up a move.
      */
-    //private List<Move> lastMoves = new ArrayList<>();
-    private List<Move> lastMoves;
+    List<Move> lastMoves;
 
     /**
      * Stack of all moves submitted in the game for each turn.
      * Used for replaying the game.
      */
-    //private Stack<Move> allMoves;
-    private Map<Integer, List<Move>> allMoves;
+    Map<Integer, List<Move>> allMoves;
 
     /**
      * Current turn number being played
      */
     private int turnIndex;
-
-    /**
-     * Current turn being replayed
-     */
-    private int replayIndex;
 
     /**
      * Start a game with a given board state.
@@ -103,8 +96,6 @@ public class Game {
         lastMoves = new ArrayList<>();
         allMoves = new HashMap<>();
         turnIndex = 0;
-        replayIndex = 0;
-        //gameID = redPlayer.getName() + "+" + whitePlayer.getName() + "+" + String.valueOf(hashCode());
     }
 
     /**
@@ -127,7 +118,6 @@ public class Game {
         lastMoves = new ArrayList<>();
         allMoves = new HashMap<>();
         turnIndex = 0;
-        replayIndex = 0;
         activeColor = Color.RED;
         // Unique ID
         gameID = redPlayer.getName() + "+" + whitePlayer.getName() + "+" + gameNum;
@@ -146,15 +136,9 @@ public class Game {
         // reset board to starting state
         this.board = new Board();
         activeColor = Color.RED;
-        this.allMoves = game.allMoves;
+        this.allMoves = new HashMap<>(game.allMoves);
         this.gameID = game.gameID;
         this.gameNum = game.gameNum;
-        turnIndex = 0;
-        replayIndex = 0;
-    }
-
-    public boolean playerInGame(Player player) {
-        return player == redPlayer || player == whitePlayer;
     }
 
     /**
@@ -266,59 +250,6 @@ public class Game {
             return true;
         }
         return false;
-    }
-
-    /**
-     * Move the game to the next turn.
-     *
-     * @return If the game successfully went to the next turn
-     */
-    public boolean nextTurn() {
-        lastMoves = allMoves.get(replayIndex);
-        for (Move move : lastMoves) {
-            makeMove(move);
-        }
-        // Next color and index
-        switchActiveColor();
-        replayIndex++;
-        return true;
-
-    }
-
-    /**
-     * Move the game to the previous turn.
-     *
-     * @return If the game successfully went to the previous turn
-     */
-    public boolean previousTurn() {
-        // Previous color and index
-        switchActiveColor();
-        replayIndex--;
-        lastMoves = allMoves.get(replayIndex);
-        for (int i = 0; i<lastMoves.size(); i++) {
-            backUpMove();
-        }
-        return true;
-    }
-
-    /**
-     * Get the mode options component required by the view-model
-     *
-     * @return Map<String, Object> of the required keys and values.
-     */
-    public Map<String, Object> getModeOptions() {
-        Map<String, Object> modeOptions = new HashMap<>();
-        if (replayIndex == 0) {
-            modeOptions.put("hasPrevious", false);
-        } else {
-            modeOptions.put("hasPrevious", true);
-        }
-        if (replayIndex == allMoves.size()) {
-            modeOptions.put("hasNext", false);
-        } else {
-            modeOptions.put("hasNext", true);
-        }
-        return modeOptions;
     }
 
     /**
