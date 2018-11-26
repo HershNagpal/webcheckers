@@ -3,6 +3,7 @@ package com.webcheckers.model;
 /**
  * Represents a piece on a checkerboard. A piece is associated with
  * the color of its player. A piece may be a single or a king.
+ * 
  * @author Luis Gutierrez
  * @author Christopher Daukshus
  * @author Hersh Nagpal
@@ -18,15 +19,18 @@ public class Piece {
     }
 
     /**
-     * color - the color of the piece (red or white).
-     * type - the type of piece (kinged or normal).
+     * The color of this piece (Red or White).
      */
     private Color color;
+
+    /**
+     * This piece's type (Single or King).
+     */
     private Type type;
 
     /**
-     * Constructor for a Piece.
-     * Sets the color and type of the piece
+     * Construct a piece.
+     * 
      * @param color The piece color (Red or White)
      * @param type The piece type (Single or King)
      */
@@ -36,7 +40,8 @@ public class Piece {
     }
 
     /**
-     * Accessor method for the piece's color
+     * Get this piece's color.
+     * 
      * @return Piece color
      */
     public Color getColor() {
@@ -44,13 +49,15 @@ public class Piece {
     }
 
     /**
-     * Accessor method for the piece's type
+     * Get this piece's type.
+     * 
      * @return Piece type
      */
     public Type getType() { return type; }
 
     /**
      * Is the current piece a king?
+     * 
      * @return true if piece is a king
      */
     public boolean isKing() {
@@ -58,14 +65,15 @@ public class Piece {
     }
 
     /**
-     * Change the piece to a king piece.
+     * Change this piece to a king piece.
      */
     public void becomeKing() {
         type = Type.KING;
     }
 
     /**
-     * Display piece's color and type. Used for testing.
+     * Return piece's color and type as a String. Used for testing.
+     * 
      * @return string representation of Piece.
      */
     @Override
@@ -76,6 +84,7 @@ public class Piece {
     /**
      * Overriding equals() for deep equality between Piece Objects.
      * This method is used for testing.
+     * 
      * @param obj Object being compared to "this" Piece
      * @return true if "this" is equal to obj
      */
@@ -87,7 +96,6 @@ public class Piece {
         else if(!(obj instanceof Piece)){
             return false;
         }
-
         Piece p2 = (Piece)obj;
 
         return this.color.equals(p2.color) && this.type.equals(p2.type);
