@@ -2,11 +2,9 @@ package com.webcheckers.ui;
 
 import java.util.*;
 import java.util.logging.Logger;
-
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Message;
-import com.webcheckers.model.MessageType;
 import com.webcheckers.model.Player;
 import spark.*;
 
@@ -93,32 +91,26 @@ public class GetHomeRoute implements Route {
      * Create the Spark Route (UI controller) for the
      * {@code GET /} HTTP request.
      *
-     * @param templateEngine
-     *   the HTML template rendering engine
+     * @param templateEngine the HTML template rendering engine
      */
     public GetHomeRoute(final GameCenter gameCenter, final PlayerLobby playerLobby, final TemplateEngine templateEngine) {
-        // validation
         Objects.requireNonNull(gameCenter, "gameCenter must not be null");
         Objects.requireNonNull(playerLobby, "playerLobby must not be null");
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
-        //
+        
         this.gameCenter = gameCenter;
         this.playerLobby = playerLobby;
         this.templateEngine = templateEngine;
-        //
+        
         LOG.config("GetHomeRoute is initialized.");
     }
 
     /**
      * Render the WebCheckers Home page.
+     * @param request the HTTP request
+     * @param response the HTTP response
      *
-     * @param request
-     *   the HTTP request
-     * @param response
-     *   the HTTP response
-     *
-     * @return
-     *   the rendered HTML for the Home page
+     * @return the rendered HTML for the Home page
      */
     @Override
     public Object handle(Request request, Response response) {
