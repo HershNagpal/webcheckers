@@ -12,18 +12,19 @@ import java.util.List;
 public class Row {
 
     /**
-     * The column location
+     * The column location of this Row
      */
     private int index;
 
     /**
-     * The spaces in the row
+     * An list of spaces in this Row
      */
     private List<Space> spaces;
 
     /**
-     * Initialize the row with the array of pieces. The row is
-     * located at the index
+     * Initialize the row with the given array of pieces. The row is
+     * located at the given row index.
+     * 
      * @param pieces Array containing pieces and null
      * @param index Column location
      */
@@ -37,6 +38,7 @@ public class Row {
 
     /**
      * Returns the row index of this row.
+     * 
      * @return the row index of this row.
      */
     public int getIndex() {
@@ -45,6 +47,7 @@ public class Row {
 
     /**
      * Creates an iterable for the Spaces in this Row for the freemarker template to work with.
+     * 
      * @return an iterable for all the Spaces in this Row.
      */
     public Iterator<Space> iterator() {
@@ -54,6 +57,7 @@ public class Row {
     /**
      * Overriding equals() for deep equality between Row Objects.
      * This method is used for testing.
+     * 
      * @param obj Object being compared to "this" Piece
      * @return true if "this" is equal to obj
      */

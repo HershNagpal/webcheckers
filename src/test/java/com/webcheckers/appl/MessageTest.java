@@ -1,4 +1,4 @@
-package com.webcheckers.model;
+package com.webcheckers.appl;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;

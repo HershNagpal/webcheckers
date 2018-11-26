@@ -5,6 +5,7 @@ import java.util.*;
 /**
  * Combines the board and players in order to play the game. Deals with game logic that combines many
  * different classes to calculate something.
+ * 
  * @author Luis Gutierrez
  * @author Christopher Daukshus
  * @author Hersh Nagpal
@@ -84,9 +85,9 @@ public class Game {
     /**
      * Start a game with a given board state. Used only for testing.
      *
-     * @param redPlayer   The red player
+     * @param redPlayer The red player
      * @param whitePlayer The white player
-     * @param board       The state of the board
+     * @param board The state of the board
      */
     public Game(Player redPlayer, Player whitePlayer, Board board) {
         this.redPlayer = redPlayer;
@@ -143,6 +144,7 @@ public class Game {
 
     /**
      * Get the unique game ID.
+     * 
      * @return The game ID
      */
     public String getGameID() {
@@ -253,7 +255,8 @@ public class Game {
     }
 
     /**
-     * Get the status of the game by checking win conditions
+     * Get the status of the game by checking win conditions.
+     * 
      * @return Is the game over or still going
      */
     public boolean isGameOver() {
@@ -270,7 +273,8 @@ public class Game {
     }
 
     /**
-     * Check if the player is the winner
+     * Check if the player is the winner.
+     * 
      * @param player Player to check
      * @return If the player won
      */
@@ -280,6 +284,7 @@ public class Game {
 
     /**
      * Resign the game for the given player. The other player is the winner.
+     * 
      * @param player Player resigning
      * @return True if successful
      */
@@ -299,6 +304,7 @@ public class Game {
 
     /**
      * Has this game been resigned?
+     * 
      * @return If the game has been resigned by a player.
      */
     public boolean didPlayerResign() {
@@ -306,7 +312,8 @@ public class Game {
     }
 
     /**
-     * Checks if the move being made by a player is valid or not.  
+     * Checks if the move being made by a player is valid or not.
+     *   
      * @param move The Move object that the player is making
      * @return True if the move is valid, false if it is invalid.
      */

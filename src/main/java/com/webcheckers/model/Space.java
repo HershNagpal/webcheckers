@@ -3,6 +3,7 @@ package com.webcheckers.model;
 /**
  * Represents a space on a checkerboard. A space is located on a row
  * and column. A space may have a piece located on it.
+ * 
  * @author Luis Gutierrez
  * @author Chris Daukshus
  * @author Hersh Nagpal
@@ -14,17 +15,32 @@ public class Space {
     public enum SpaceColor {BLACK, WHITE}
 
     /**
-     * row - the row coordinate of this space.
-     * column - the column coordinate of this space.
-     * spaceColor - the color associated with this space (black or white).
+     * The row number of this space
      */
     private int row;
+
+    /**
+     * The column number of this space
+     */
     private int column;
+
+    /**
+     * The color of this space (Black or white)
+     */
     private SpaceColor spaceColor;
 
-    //Space has no piece before setUpBoard() in Board
+    /**
+     * The piece that is on this space
+     */
     private Piece piece;
 
+    /**
+     * Construct a Space
+     * 
+     * @param row The row number of the space
+     * @param column The column number of the space
+     * @param piece The piece to place on this space
+     */
     public Space(int row, int column, Piece piece) {
         this.row = row;
         this.column = column;
@@ -36,7 +52,7 @@ public class Space {
     /**
      * Sets the Space color based on rows and columns.
      * If both row and column have the same remainder when divided
-     * by two, the space .
+     * by two, the space is white. Otherwise, it is black.
      */
     private void setSpaceColor() {
         if (row % 2 == column % 2) {
@@ -62,6 +78,7 @@ public class Space {
 
     /**
      * Checks if the space is a valid space to move to.
+     * 
      * @return true if this space is valid, false otherwise.
      */
     public boolean isValid() {
@@ -70,6 +87,7 @@ public class Space {
 
     /**
      * Does the space have a checker in it?
+     * 
      * @return true if the space has a checker, false if it doesn't.
      */
     public boolean hasChecker() {
@@ -78,23 +96,26 @@ public class Space {
 
     /**
      * Get the column
-     * @return The column
+     * 
+     * @return The column number of this Space.
      */
     public int getCellIdx() {
         return column;
     }
 
     /**
-     * Get the piece located at this space
-     * @return The piece or null
+     * Get the Piece located at this Space
+     * 
+     * @return The Piece on this Space. Returns null if none.
      */
     public Piece getPiece() {
         return piece;
     }
 
     /**
-     * Puts a piece into the space.
-     * @param piece the piece to put into the space
+     * Puts a Piece onto this Space.
+     * 
+     * @param piece the Piece to put onto the Space
      */
     public void setPiece(Piece piece) {
         this.piece = piece;
@@ -103,6 +124,7 @@ public class Space {
     /**
      * Overriding equals() for deep equality between Space Objects.
      * This method is used for testing.
+     * 
      * @param obj Object being compared to "this" Piece
      * @return true if "this" is equal to obj
      */

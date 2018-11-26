@@ -8,13 +8,12 @@ package com.webcheckers.model;
 public class Player {
 
     /**
-     * name - The name of the player
-     * game - the game that this player is in.
+     * The String name of this player.
      */
     private String name;
 
     /**
-     * Create a player with a specified name. Set the game to null.
+     * Create a player with a specified name.
      *
      * @param name specified name
      */
@@ -50,7 +49,7 @@ public class Player {
     /**
      * The hashcode of the player is determined by the name.
      *
-     * @return  Hashcode of the player's name
+     * @return Hashcode of the player's name
      */
     @Override
     public int hashCode() {

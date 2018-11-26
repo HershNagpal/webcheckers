@@ -2,6 +2,7 @@ package com.webcheckers.model;
 
 /**
  * Class holding all move logic done in Game.
+ * 
  * @author Luis Gutierrez
  * @author Hersh Nagpal
  */
@@ -9,6 +10,7 @@ public class MoveManager {
 
     /**
      * Returns whether or not the given move is valid according to checkers rules.
+     * 
      * @param move The move to be checked for validity.
      * @return True if the given move is valid, false otherwise.
      */
@@ -34,6 +36,7 @@ public class MoveManager {
 
     /**
      * Returns whether or not this move involves a piece moving towards its own side.
+     * 
      * @return True if this is a 'King' move, false otherwise.
      */
     public static boolean isKingMove(Move move, Piece piece) {
@@ -56,6 +59,7 @@ public class MoveManager {
 
     /**
      * Checks if the given Move is a valid normal, non-jump move.
+     * 
      * @param move The Move object that the player is making
      * @return true if the move is a valid normal, non-jump move, false if it is invalid or not a normal move.
      */
@@ -84,7 +88,8 @@ public class MoveManager {
     }
 
     /**
-     * Checks if the given Move is a valid jump move
+     * Checks if the given Move is a valid jump move.
+     * 
      * @param move The Move object that the player is making.
      * @return true if the move is a valid jump move, false if it is invalid or not a jump move.
      */
@@ -125,7 +130,8 @@ public class MoveManager {
     }
 
     /**
-     * Checks if the given Move is a valid jump move
+     * Checks if the given Move is a valid jump move.
+     * 
      * @param move The Move object that the player is making.
      * @return true if the move is a valid jump move, false if it is invalid or not a jump move.
      */
