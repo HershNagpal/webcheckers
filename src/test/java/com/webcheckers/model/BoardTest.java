@@ -6,12 +6,15 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Unit test suite for Board class.
  *
  * @author Luis Gutierrez
+ * @author Matthew Bollinger
  */
 @Tag("Model-tier")
 public class BoardTest {
@@ -432,4 +435,37 @@ public class BoardTest {
     assertTrue(CuT.checkNoMoreValidMoves(Color.WHITE));
   }
 
+  /**
+   * Test that getValidNormalMovePositions returns
+   * a list of valid normal move positions
+   */
+  @Test
+  public void testGetValidNormalMovePositions(){
+      List<Position> testPositions;
+
+      //test normal white piece
+      Position centerPiece = new Position(0,2);
+      testPositions = CuT2.getValidNormalMovePositions(centerPiece);
+      assert(testPositions.size() == 1);
+
+      //test normal red piece
+      centerPiece = new Position(1, 1);
+      testPositions = CuT2.getValidNormalMovePositions(centerPiece);
+      assert(testPositions.size() == 1);
+
+      //test kinged white piece
+      Piece piece = CuT2.getPieceAtPosition(centerPiece);
+      piece.kingPiece();
+      testPositions = CuT2.getValidNormalMovePositions(centerPiece);
+      assert(testPositions.size() == 3);
+
+      //test kinged red piece
+      centerPiece = new Position(6, 2);
+      piece = CuT2.getPieceAtPosition(centerPiece);
+      piece.kingPiece();
+      testPositions = CuT2.getValidNormalMovePositions(centerPiece);
+      assert(testPositions.size() == 3);
+
+
+  }
 }

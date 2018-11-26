@@ -140,6 +140,11 @@ public class GameCenter {
         return getGames().size();
     }
 
+    public Game determineGame(Player player, Player opponent) {
+        return opponent == null ? createAIGame(player)
+                : createGame(player, opponent);
+    }
+
     /**
      * Create a new game for the two players.
      *
@@ -153,6 +158,18 @@ public class GameCenter {
         games.put(opponent, game);
         gameIDMap.put(game.getGameID(), game);
         return game;
+    }
+
+    /**
+     * Creates a new AI game for one player, includes creating the MoveBrain AI
+     * @param player The player that started the game
+     * @return The created game
+     */
+    public Game createAIGame(Player player){
+       Player aiPlayer = new Player("AI");
+       Game game = new MoveBrain(player, aiPlayer, ++gameCounter);
+       games.put(player, game);
+       return game;
     }
 
     /**
@@ -270,7 +287,13 @@ public class GameCenter {
      */
     public Message resignGame(Player player) {
         Game game = getGame(player);
-        return messenger.resignGame(game, player);
+        Message message = messenger.resignGame(game, player);
+        // Update the games early if playing an AI game
+        if (message.getType().equals(MessageType.info) &&
+                game.getWhitePlayer().getName().equals("AI")) {
+            updateGames(game);
+        }
+        return message;
     }
 
 }
