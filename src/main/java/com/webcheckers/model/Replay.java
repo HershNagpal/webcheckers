@@ -12,12 +12,12 @@ import java.util.Map;
 public class Replay extends Game {
 
     /**
-     * Current turn being replayed
+     * Current turn being replayed.
      */
     private int replayIndex;
 
     /**
-     * Replay version of the game.
+     * Create a replay version of the given Game.
      * @param game Original finished game to copy
      */
     public Replay(Game game) {
@@ -26,7 +26,8 @@ public class Replay extends Game {
     }
 
     /**
-     * Move the game to the next turn.
+     * Move the replay game to the next turn. Returns true if 
+     * successful, false otherwise.
      *
      * @return If the game successfully went to the next turn
      */
@@ -85,7 +86,9 @@ public class Replay extends Game {
     }
 
     /**
-     * "Undo" last move made
+     * Undo the last move made.
+     * 
+     * @param move the move to be undone.
      */
     public void backUpMove(Move move) {
         Move backUpMove = move.createBackUpMove();
