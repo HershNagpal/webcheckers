@@ -173,7 +173,7 @@ alter, or display them, the UI first goes through the correct application tier m
     4. PostValidateRoute goes through the same steps of acquiring the correct message (ValidMove or InvalidMove) by
     by using GameCenter to return the correct message obtained by calling validateMove() in Messenger, which uses Game
     to return true or false depending on whether the move follows the American Checkers rules.
-    ![PostValidateRoute Sequence Diagram](PostValidateRoute_SequenceDiagram.png)
+    ![PostValidateRoute Sequence Diagram](PostValidateRoute-SequenceDiagram.png)
 - Messenger
   * Many routes require appropriate messages to display depending on system events like valid/invalid move, opponent
   resignation, or player resignation. The class Messenger was created to hold all messages needed to be displayed for
