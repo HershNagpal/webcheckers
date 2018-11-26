@@ -1,4 +1,4 @@
-package com.webcheckers.model;
+package com.webcheckers.ui  ;
 
 /**
  * View modes used by the game view.
