@@ -52,6 +52,16 @@ public class GameCenterTest {
     }
 
     /**
+     * Test to check if there are ongoing games
+     */
+    @Test
+    public void testGamesOngoing() {
+        assertTrue(CuT.gamesOngoing());
+        CuT.updateGames(game);
+        assertFalse(CuT.gamesOngoing());
+    }
+
+    /**
      * Test that the given player is already in a game or not.
      */
     @Test
@@ -67,6 +77,7 @@ public class GameCenterTest {
     public void testWasChallenged() {
         assertTrue(CuT.wasChallenged(opponent));
         assertFalse(CuT.wasChallenged(dummy));
+        assertFalse(CuT.wasChallenged(player));
         game.resignGame(player);
         assertFalse(CuT.wasChallenged(opponent));
     }
@@ -78,6 +89,22 @@ public class GameCenterTest {
     public void testGetGame() {
         assertEquals(game, CuT.getGame(player));
         assertNull(CuT.getGame(dummy));
+    }
+
+    /**
+     * Test that the set of games is retrieved.
+     */
+    @Test
+    public void testGetGames() {
+        assertNotNull(CuT.getGames());
+    }
+
+    /**
+     * Test that the size of the set of games is correct
+     */
+    @Test
+    public void testSize() {
+        assertEquals(1, CuT.size());
     }
 
     /**
@@ -116,10 +143,35 @@ public class GameCenterTest {
     }
 
     /**
-     * Test that the turn status of a player can be checked.
+     * Test that to check who won the game
      */
     @Test
-    public void testCheckTurn() {
+    public void testWhoWon() {
+        Message message = new Message("", MessageType.info);
+        when(messenger.whoWon(game)).thenReturn(message);
+        Message centerMessage = CuT.whoWon(game);
+        assertEquals(centerMessage.getType(), messenger.whoWon(game).getType());
+        assertEquals(centerMessage.getText(), messenger.whoWon(game).getText());
+    }
+
+    /**
+     * Test that the turn status of a game has changed
+     */
+    @Test
+    public void testCheckTurnGameID() {
+        Message message = new Message("true", MessageType.info);
+        Game game = CuT.createGame(new Player("1"), new Player("2"));
+        when(messenger.checkTurn(game)).thenReturn(message);
+        Message centerMessage = CuT.checkTurn("1+2+2");
+        assertEquals(centerMessage.getType(), messenger.checkTurn(game).getType());
+        assertEquals(centerMessage.getText(), messenger.checkTurn(game).getText());
+    }
+
+    /**
+     * Test that the turn status of a player can be checked using a game and a player.
+     */
+    @Test
+    public void testCheckTurnPlayer() {
         Message message = new Message("true", MessageType.info);
         when(messenger.checkTurn(game, player)).thenReturn(message);
         Message centerMessage = CuT.checkTurn(player);
@@ -128,7 +180,7 @@ public class GameCenterTest {
         // Case where game ended and therefore removed from list of games
         game.resignGame(player);
         CuT.resignGame(player);
-        CuT.isGameOver(game);
+        CuT.updateGames(game);
         assertNull(CuT.checkTurn(player));
     }
 
