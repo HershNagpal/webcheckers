@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import com.webcheckers.model.Piece.Type;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Represents the Checkers Board and all the logical operations that need to be done on
  * pieces for the game to function.
- * 
+ *
  * @author Christopher Daukshus
  * @author Matthew Bollinger
  * @author Hersh Nagpal
@@ -124,9 +127,9 @@ public class Board {
     }
 
     /**
-     * Flips the pieces in the Board's 2D Array of pieces as if 
+     * Flips the pieces in the Board's 2D Array of pieces as if
      * they were viewed by someone on the other side of the board.
-     * 
+     *
      * @return a flipped 2D array of pieces.
      */
     public Piece[][] getFlippedPieces() {
@@ -141,7 +144,7 @@ public class Board {
 
     /**
      * Flips the BoardView to make it so each player sees their pieces closest to them.
-     * 
+     *
      * @return a BoardView that is flipped around (pieces on the far side would appear closer).
      */
     public BoardView getFlippedBoardView() {
@@ -151,7 +154,7 @@ public class Board {
 
     /**
      * returns the visual representation of this board.
-     * 
+     *
      * @return the boardview associated with this board.
      */
     public BoardView getBoardView() {
@@ -160,7 +163,7 @@ public class Board {
 
     /**
      * Get the array of pieces on this board.
-     * 
+     *
      * @return 2d array of Pieces
      */
     public Piece[][] getPieces() {
@@ -170,7 +173,7 @@ public class Board {
     /**
      * Overriding equals() for deep equality between Board Objects.
      * This method is used for testing.
-     * 
+     *
      * @param obj Object being compared to "this" Board
      * @return true if "this" is equal to obj
      */
@@ -201,7 +204,7 @@ public class Board {
 
     /**
      * Returns the piece at the given Board Position.
-     * 
+     *
      * @param position the Position of the piece
      * @return the Piece at the location. If none, returns null.
      */
@@ -213,9 +216,9 @@ public class Board {
     }
 
     /**
-     * Gets the Piece at a given Position, but from the perspective 
+     * Gets the Piece at a given Position, but from the perspective
      * of a player on the other side of the Board.
-     * 
+     *
      * @param position The position of the Piece on the Board.
      * @return
      */
@@ -227,7 +230,7 @@ public class Board {
 
     /**
      * Perform a normal single move on the Board.
-     * 
+     *
      * @param move The move to be made.
      */
     public void makeNormalMove(Move move) {
@@ -247,7 +250,7 @@ public class Board {
     /**
      * Performs a jump move by updating the piece moved and removing the
      * jumped piece.
-     * 
+     *
      * @param move Jump move to be performed on board.
      */
     public void makeJumpMove(Move move) {
@@ -268,7 +271,7 @@ public class Board {
     /**
      * Performs a back up for a jump move by updating the piece that jumped
      * and by placing the piece that was jumped back into the board.
-     * 
+     *
      * @param move Jump move to be performed on board.
      */
     public void makeBackUpJumpMove(Move move, Color activeColor) {
@@ -322,7 +325,7 @@ public class Board {
     /**
      * Check the board to see if the pieces of the given color are
      * eliminated.
-     * 
+     *
      * @param color The color of the pieces to check
      * @return If there are no more pieces of the given color
      */
@@ -344,7 +347,7 @@ public class Board {
     /**
      * Check the board to see if the pieces of the given color can still
      * move at any instance.
-     * 
+     *
      * @param color The color of the pieces to check
      * @return If there is a case where there can be a valid move made
      */
@@ -380,15 +383,15 @@ public class Board {
     /**
      * Takes in the position of a piece and returns all locations that it cn make a valid jump move.
      * Must be a piece at given location.
-     * 
+     *
      * @param start the position of a piece.
      * @return a list of the possible valid jump moves this piece can make.
      */
     public List<Position> getJumpLocations(Position start) {
         List<Position> validJumpPositions = new ArrayList<>();
-        
+
         List<Position> possibleJumpPositions = this.findPossibleJumpPositions(start);
-        
+
         Move possibleJumpMove;
         for (Position currentEnd : possibleJumpPositions) {
             possibleJumpMove = new Move(start, currentEnd);
@@ -402,7 +405,7 @@ public class Board {
 
     /**
      * Returns a list of positions to be jumped to on the board from a given position.
-     * 
+     *
      * @param position the position of the piece to be checked for possible jump locations.
      * @return a list of the possible locations to be jumped to from this position.
      */
@@ -415,7 +418,7 @@ public class Board {
         if(row - 2 >= 0) {
             if (col - 2 >= 0) {
                 // Left
-                possibleJumpPositions.add((new Position(row - 2, col - 2))); 
+                possibleJumpPositions.add((new Position(row - 2, col - 2)));
             }
             if (col + 2 < Board.COLUMNS) {
                 // Right
@@ -426,7 +429,7 @@ public class Board {
         if(row + 2 < Board.ROWS) {
             if (col - 2 >= 0) {
                 // Left
-                possibleJumpPositions.add((new Position(row + 2, col - 2))); 
+                possibleJumpPositions.add((new Position(row + 2, col - 2)));
             }
             if (col + 2 < Board.COLUMNS) {
                 // Right
