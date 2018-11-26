@@ -69,7 +69,24 @@ public class Game {
      * Used for backing up a move.
      */
     //private List<Move> lastMoves = new ArrayList<>();
-    private Stack<Move> lastMoves = new Stack<>();
+    private List<Move> lastMoves;
+
+    /**
+     * Stack of all moves submitted in the game for each turn.
+     * Used for replaying the game.
+     */
+    //private Stack<Move> allMoves;
+    private Map<Integer, List<Move>> allMoves;
+
+    /**
+     * Current turn number being played
+     */
+    private int turnIndex;
+
+    /**
+     * Current turn being replayed
+     */
+    private int replayIndex;
 
     /**
      * Start a game with a given board state.
@@ -83,6 +100,10 @@ public class Game {
         this.whitePlayer = whitePlayer;
         this.board = board;
         activeColor = Color.RED;
+        lastMoves = new ArrayList<>();
+        allMoves = new HashMap<>();
+        turnIndex = 0;
+        replayIndex = 0;
         //gameID = redPlayer.getName() + "+" + whitePlayer.getName() + "+" + String.valueOf(hashCode());
     }
 
@@ -95,19 +116,41 @@ public class Game {
     public Game(Player redPlayer, Player whitePlayer, int gameNum) {
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
-
+/*
         if(redPlayer.getName().equals("debug") && whitePlayer.getName().equals("test")) {
             this.board = new Board(Board.END_GAME);
         } else if (redPlayer.getName().equals("test") && whitePlayer.getName().equals("debug")) {
             this.board = new Board(Board.END_GAME);
-        } else {
+        } else {*/
             this.board = new Board();
-        }
-
+        //}
+        lastMoves = new ArrayList<>();
+        allMoves = new HashMap<>();
+        turnIndex = 0;
+        replayIndex = 0;
         activeColor = Color.RED;
         // Unique ID
         gameID = redPlayer.getName() + "+" + whitePlayer.getName() + "+" + gameNum;
         this.gameNum = gameNum;
+    }
+
+    /**
+     * Copy constructor.
+     * Copy the finished game for a replay game.
+     *
+     * @param game Game to copy
+     */
+    public Game(Game game) {
+        this.redPlayer = game.redPlayer;
+        this.whitePlayer = game.whitePlayer;
+        // reset board to starting state
+        this.board = new Board();
+        activeColor = Color.RED;
+        this.allMoves = game.allMoves;
+        this.gameID = game.gameID;
+        this.gameNum = game.gameNum;
+        turnIndex = 0;
+        replayIndex = 0;
     }
 
     public boolean playerInGame(Player player) {
@@ -226,6 +269,59 @@ public class Game {
     }
 
     /**
+     * Move the game to the next turn.
+     *
+     * @return If the game successfully went to the next turn
+     */
+    public boolean nextTurn() {
+        lastMoves = allMoves.get(replayIndex);
+        for (Move move : lastMoves) {
+            makeMove(move);
+        }
+        // Next color and index
+        switchActiveColor();
+        replayIndex++;
+        return true;
+
+    }
+
+    /**
+     * Move the game to the previous turn.
+     *
+     * @return If the game successfully went to the previous turn
+     */
+    public boolean previousTurn() {
+        // Previous color and index
+        switchActiveColor();
+        replayIndex--;
+        lastMoves = allMoves.get(replayIndex);
+        for (int i = 0; i<lastMoves.size(); i++) {
+            backUpMove();
+        }
+        return true;
+    }
+
+    /**
+     * Get the mode options component required by the view-model
+     *
+     * @return Map<String, Object> of the required keys and values.
+     */
+    public Map<String, Object> getModeOptions() {
+        Map<String, Object> modeOptions = new HashMap<>();
+        if (replayIndex == 0) {
+            modeOptions.put("hasPrevious", false);
+        } else {
+            modeOptions.put("hasPrevious", true);
+        }
+        if (replayIndex == allMoves.size()) {
+            modeOptions.put("hasNext", false);
+        } else {
+            modeOptions.put("hasNext", true);
+        }
+        return modeOptions;
+    }
+
+    /**
      * Get the status of the game by checking win conditions
      * @return Is the game over or still going
      */
@@ -315,7 +411,6 @@ public class Game {
 
         if (MoveManager.isValidMove(move, board) && canContinueMoving) {
             if (MoveManager.isSingleMove(move, movingPiece)) {
-                System.out.println("Single Move");
                 //Force Jump Move
                 //System.out.println("Jump Move Exists (Validate Move): "+jumpMoveExists());
                 if (jumpMoveExists()) {
@@ -324,9 +419,9 @@ public class Game {
                 canContinueMoving = false;
             }
             else if (MoveManager.isJumpMove(move, board)){
-                System.out.println("Jump Move");
+
             }
-            lastMoves.push(move);
+            lastMoves.add(move);
             makeMove(move);
 
             //Prevent player from performing a single jump after jump move is finished
@@ -384,17 +479,17 @@ public class Game {
      * @return True or false depending on if the move was made
      */
     public boolean submitTurn() {
-        if (lastMoves.empty()) {
+        if (lastMoves.isEmpty()) {
             return false;
         }
 
-        Move lastMove = lastMoves.peek();
+        Move lastMove = lastMoves.get(lastMoves.size()-1);
         Piece movingPiece = board.getPieceAtPosition(lastMove.getEnd());
         //Enforce player ending a multiple jump move
         Position lastMoveEndPos = lastMove.getEnd();
         //Multiple jump move has not been completed
-        System.out.println("LastMoveJump: " + MoveManager.isLastMoveJump(lastMove, movingPiece));
-        System.out.println("JumpLocation Exists: " + (board.getJumpLocations(lastMoveEndPos).size() > 0));
+//        System.out.println("LastMoveJump: " + MoveManager.isLastMoveJump(lastMove, movingPiece));
+//        System.out.println("JumpLocation Exists: " + (board.getJumpLocations(lastMoveEndPos).size() > 0));
         boolean kinged = checkIfKinged(lastMove);
         if (MoveManager.isLastMoveJump(lastMove, movingPiece)) {
             if (!kinged && board.getJumpLocations(lastMoveEndPos).size() > 0) {
@@ -402,8 +497,9 @@ public class Game {
             }
         }
 
-        //Potentially King moving piece
-     //   checkIfKinged(lastMove);
+        // Keep track of moves that happened each turn
+        List<Move> copy = new ArrayList<>(lastMoves);
+        allMoves.put(turnIndex++, copy);
 
         //reset lastMoves
         lastMoves.clear();
@@ -428,7 +524,7 @@ public class Game {
         }
 
         //Remove lastMove from list of previous moves
-        Move lastMove = lastMoves.pop();
+        Move lastMove = lastMoves.remove(lastMoves.size()-1);
         Move backUpMove = lastMove.createBackUpMove();
         //Undo last move
         makeMove(backUpMove);
@@ -471,11 +567,11 @@ public class Game {
      * @return whether or not the current player can make a jump move.
      */
     public boolean jumpMoveExists() {
-        System.out.println("Active Color: "+getActiveColor());
+        //System.out.println("Active Color: "+getActiveColor());
         List<Position> movablePieceLocations = board.getMovablePieceLocations(getActiveColor());
-        System.out.println("MovablePieceLocations size: "+movablePieceLocations.size());
+        //System.out.println("MovablePieceLocations size: "+movablePieceLocations.size());
         for (Position indexPosition : movablePieceLocations) {
-            System.out.println("JumpLocations for Pos size: "+board.getJumpLocations(indexPosition).size());
+            //System.out.println("JumpLocations for Pos size: "+board.getJumpLocations(indexPosition).size());
             // Check if piece at indexPosition has a position to jump to
             if (board.getJumpLocations(indexPosition).size() > 0) {
                 return true;
