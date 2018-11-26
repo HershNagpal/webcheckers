@@ -18,7 +18,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * Unit test suite for PostSpectatorCheckTurnRoute class.
+ * Unit test suite for PostSpectatorPrevTurnRoute class.
  *
  * @author Michael Kha
  */
