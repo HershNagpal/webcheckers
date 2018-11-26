@@ -17,8 +17,6 @@ import static org.mockito.Mockito.mock;
 @Tag("Model-tier")
 public class ReplayTest {
 
-    private static final String gameID = "1+2+0";
-
     /**
      * Component under test
      */
