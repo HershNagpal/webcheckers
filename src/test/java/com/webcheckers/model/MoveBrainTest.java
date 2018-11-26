@@ -83,11 +83,8 @@ public class MoveBrainTest {
                     total--;
             }
         }
-        System.out.println(total);
         assert(total == 0);
-
     }
-
     /**
      * Test generateAIMove method
      */

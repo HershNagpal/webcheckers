@@ -16,8 +16,6 @@ public class MoveBrain extends Game {
         super(redPlayer, whitePlayer, gameNum);
     }
 
-    public MoveBrain(Player redPlayer, Player whitePlayer, Board board) {super(redPlayer, whitePlayer, board);}
-
     /**
      * Submit the red player's last made move. Once the submitted turn is
      * successful, the AI's turn is simulated and the red player begins
@@ -91,7 +89,6 @@ public class MoveBrain extends Game {
         Boolean jumpMoveFound = false;
         for(Position position: AIPieces) {
             Piece piece = this.getBoard().getPieceAtPosition(position);
-            if(piece.getColor() == Color.WHITE) {
                 //first check for jump positions
                 List<Position> pieceJumpPositions = this.getJumpLocations(position);
                 if (pieceJumpPositions.size() != 0) {
@@ -105,14 +102,12 @@ public class MoveBrain extends Game {
                         }
                     }
                 }
-            }
         }
         //if there are no jump moves found then make a list of simple moves
         if(!(jumpMoveFound)){
             //iterate over AIPieces
             for (Position position: AIPieces) {
                 Piece piece = this.getBoard().getPieceAtPosition(position);
-                if(piece.getColor() == Color.WHITE) {
                     List<Position> validPositionList;
                     validPositionList = this.getBoard().getValidNormalMovePositions(position);
                     for (Position end : validPositionList) {
@@ -123,7 +118,6 @@ public class MoveBrain extends Game {
                             AIMoves.add(move);
                         }
                     }
-                }
             }
         }
         return AIMoves;
