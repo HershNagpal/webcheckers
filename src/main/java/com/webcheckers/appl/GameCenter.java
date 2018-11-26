@@ -1,7 +1,6 @@
 package com.webcheckers.appl;
 
 import com.webcheckers.model.*;
-
 import java.util.*;
 
 /**
@@ -39,6 +38,9 @@ public class GameCenter {
 
     /**
      * Initialize the list of games.
+     *
+     * @param messenger the messenger that will handle all message sending
+     * @param finishedGames a map of the finished game names linked to the various games that has ended
      */
     public GameCenter(Messenger messenger, Map<String, Game> finishedGames) {
         games = new HashMap<>();
@@ -49,7 +51,7 @@ public class GameCenter {
     }
 
     /**
-     * Are there games ongoing?
+     * Checks if there are any games ongoing.
      *
      * @return If there are games in the map
      */
@@ -58,7 +60,7 @@ public class GameCenter {
     }
 
     /**
-     * Are there games finished?
+     * Checks if there game finished.
      *
      * @return If there are games finished
      */
@@ -67,9 +69,10 @@ public class GameCenter {
     }
 
     /**
-     * Is the given player in a game
+     * Checks if the given player is in a game
+     *
      * @param player Player to check
-     * @return If the player is in a game
+     * @return True if the player is in a game, false otherwise
      */
     public boolean playerInGame(Player player) {
         Game game = games.get(player);
@@ -77,9 +80,10 @@ public class GameCenter {
     }
 
     /**
-     * Was the given player challenged to a game
+     * Checks is the given player was challenged to a game
+     *
      * @param player Player to check
-     * @return If the player was challenged
+     * @return True if the player was challenged, false otherwise
      */
     public boolean wasChallenged(Player player) {
         if (!playerInGame(player)) {
@@ -91,6 +95,7 @@ public class GameCenter {
 
     /**
      * Get the game a player is in.
+     *
      * @param player The player to get a game from
      * @return The game or null if it does not exist
      */
@@ -100,6 +105,7 @@ public class GameCenter {
 
     /**
      * Get the game from a gameID.
+     *
      * @param gameID The unique game ID
      * @return The game or null if it does not exist
      */
@@ -109,6 +115,7 @@ public class GameCenter {
 
     /**
      * Get all unique games from the map
+     *
      * @return All unique games
      */
     public Set<Game> getGames() {
@@ -117,6 +124,7 @@ public class GameCenter {
 
     /**
      * Get all games that are finished
+     *
      * @return All finished games
      */
     public Set<Game> getFinishedGames() {
@@ -125,6 +133,7 @@ public class GameCenter {
 
     /**
      * Get the size of the set of games.
+     *
      * @return The size of the set of games.
      */
     public int size() {
@@ -133,6 +142,7 @@ public class GameCenter {
 
     /**
      * Create a new game for the two players.
+     *
      * @param player The player that started the game
      * @param opponent The player that was selected to be an opponent
      * @return The created game
@@ -147,8 +157,9 @@ public class GameCenter {
 
     /**
      * Check if the game has ended by any condition.
+     *
      * @param game Game to check
-     * @return If this game been resigned
+     * @return True if this game been resigned, false otherwise
      */
     public boolean isGameOver(Game game) {
         return game.isGameOver();
@@ -156,6 +167,7 @@ public class GameCenter {
 
     /**
      * Update the state of the game center to remove the game a player is in
+     *
      * @param game Game to update
      */
     public void updateGames(Game game) {
@@ -172,9 +184,10 @@ public class GameCenter {
 
     /**
      * Get the message from the messenger about how the player did in the game.
+     *
      * @param game Game to check
      * @param player Player to check
-     * @return Message with correct type
+     * @return Message about whether the player won or not
      */
     public Message isWinner(Game game, Player player) {
         return messenger.isWinner(game, player);
@@ -182,6 +195,7 @@ public class GameCenter {
 
     /**
      * Get the message from the messenger about who won the game.
+     *
      * @param game Game to check
      * @return Message about who won
      */
@@ -192,6 +206,9 @@ public class GameCenter {
     /**
      * Get the message from the messenger about if the turn has changed.
      * Used by spectator mode.
+     *
+     * @param gameID to be acquired from the list of games
+     * @return Message about if the turn has changed
      */
     public Message checkTurn(String gameID) {
         Game game = getGame(gameID);
@@ -199,10 +216,11 @@ public class GameCenter {
     }
 
     /**
-     * Get the message from the messenger about whose turn it is.
+     * Get the message from the messenger about if it is a given player's turn.
      * Used by play mode.
      *
-     * @return Message with correct type
+     * @param player to be checked if it is their turn
+     * @return Message about whether it is the player's turn
      */
     public Message checkTurn(Player player) {
         Game game = getGame(player);
@@ -210,9 +228,12 @@ public class GameCenter {
     }
 
     /**
-     * Get the message from the messenger about a valid move.
+     * Get the message from the messenger about whether a move is valid
+     * for a given player.
      *
-     * @return Message with correct type
+     * @param player to be checked whether the move is valid
+     * @param move to be checked if valid
+     * @return Message about whether the move is valid for the player
      */
     public Message validateMove(Player player, Move move) {
         Game game = getGame(player);
@@ -222,7 +243,8 @@ public class GameCenter {
     /**
      * Get the message from the messenger about submitting a turn.
      *
-     * @return Message with correct type
+     * @param player to check turn submit status for
+     * @return Message about whether the player submitted the turn correctly
      */
     public Message submitTurn(Player player) {
         Game game = getGame(player);
@@ -230,9 +252,10 @@ public class GameCenter {
     }
 
     /**
-     * Get the message from the messenger about backing up a move.
+     * Get the message from the messenger about backing up a moves
      *
-     * @return Message with correct type
+     * @param player to check if a move has been backed up for
+     * @return Message about whether the player has backed up a move correctly
      */
     public Message backupMove(Player player) {
         Game game = getGame(player);
@@ -241,9 +264,9 @@ public class GameCenter {
 
     /**
      * Get the message from the messenger about resigning the game.
-     * Update the list of ended games
      *
-     * @return Message with correct type
+     * @param player to check if they have resigned
+     * @return Message about whether the player has resigned correctly
      */
     public Message resignGame(Player player) {
         Game game = getGame(player);
