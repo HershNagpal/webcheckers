@@ -130,6 +130,15 @@ public class GameTest {
     }
 
     /**
+     * Tests the getGameName method
+     */
+    @Test
+    public void testGetGameName() {
+        CuT = new Game(new Player("1"), new Player("2"), 1);
+        assertEquals(CuT.getGameName(), "Game 1: 1 vs. 2");
+    }
+
+    /**
      * Tests the isRedPlayer method
      */
     @Test
@@ -322,11 +331,38 @@ public class GameTest {
         CuT = new Game(redPlayer, whitePlayer, board);
 
         //Red Player resigns
-        CuT.resignGame(redPlayer);
+        assertTrue(CuT.resignGame(redPlayer));
 
         //Winner should be white player
         assertTrue(CuT.isWinner(whitePlayer));
+        assertEquals(CuT.getWinner(), whitePlayer);
+
+        //White Player cannot resign
+        assertFalse(CuT.resignGame(whitePlayer));
+
     }
+
+    /**
+     * Test for hasGameChanged
+     */
+    @Test
+    public void testHasGameChanged() {
+        //Setup test
+        board = new Board(customPieces);
+        CuT = new Game(redPlayer, whitePlayer, board);
+
+        boolean temp = CuT.hasGameChanged();
+        CuT.submitTurn();
+        assertEquals(temp, CuT.hasGameChanged());
+
+        //Perform red jump move
+        CuT.validateMove(new Move(new Position(0, 2), new Position(2, 0)).flipMove());
+
+        //Test game has changed now
+        CuT.submitTurn();
+        assertNotEquals(temp, CuT.hasGameChanged());
+    }
+
 
     /**
      * Test for isGameOver

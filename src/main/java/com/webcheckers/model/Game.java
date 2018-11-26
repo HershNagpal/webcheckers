@@ -107,14 +107,14 @@ public class Game {
     public Game(Player redPlayer, Player whitePlayer, int gameNum) {
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
-/*
+
         if(redPlayer.getName().equals("debug") && whitePlayer.getName().equals("test")) {
-            this.board = new Board(Board.END_GAME);
+            this.board = new Board(Board.NO_MOVES_RED);
         } else if (redPlayer.getName().equals("test") && whitePlayer.getName().equals("debug")) {
             this.board = new Board(Board.END_GAME);
-        } else {*/
+        } else {
             this.board = new Board();
-        //}
+        }
         lastMoves = new ArrayList<>();
         allMoves = new HashMap<>();
         turnIndex = 0;
@@ -257,25 +257,25 @@ public class Game {
      * @return Is the game over or still going
      */
     public boolean isGameOver() {
+        // TODO delete if not needed
+        //if (resigned) {
+        //    return true;
+        //}
+        //Color allPiecesEliminated = board.checkAllPiecesEliminated();
+        //if (allPiecesEliminated == activeColor) {
+        //    winner = allPiecesEliminated == Color.RED ? whitePlayer : redPlayer;
+        //    return true;
+        //}
+        //Color noMoreValidMoves = board.checkNoMoreValidMoves();
+        //if (noMoreValidMoves == activeColor) {
+        //    winner = noMoreValidMoves == Color.RED ? whitePlayer : redPlayer;
+        //    return true;
+        //}
+        //return false;
+
         if (resigned) {
             return true;
         }
-        Color allPiecesEliminated = board.checkAllPiecesEliminated();
-        if (allPiecesEliminated == activeColor) {
-            winner = allPiecesEliminated == Color.RED ? whitePlayer : redPlayer;
-            return true;
-        }
-        Color noMoreValidMoves = board.checkNoMoreValidMoves();
-        if (noMoreValidMoves == activeColor) {
-            winner = noMoreValidMoves == Color.RED ? whitePlayer : redPlayer;
-            return true;
-        }
-        return false;
-        /*
-        if (resigned) {
-            return true;
-        }
-        //Color otherColor = activeColor == Color.RED ? Color.WHITE : Color.RED;
         if (board.checkNoMoreValidMoves(activeColor) ||
                 board.checkAllPiecesEliminated(activeColor)) {
             winner = activeColor == Color.RED ? whitePlayer : redPlayer;
@@ -283,7 +283,6 @@ public class Game {
         }
 
         return false;
-        */
     }
 
     /**
@@ -343,14 +342,10 @@ public class Game {
         if (MoveManager.isValidMove(move, board) && canContinueMoving) {
             if (MoveManager.isSingleMove(move, movingPiece)) {
                 //Force Jump Move
-                //System.out.println("Jump Move Exists (Validate Move): "+jumpMoveExists());
                 if (jumpMoveExists()) {
                     return false;
                 }
                 canContinueMoving = false;
-            }
-            else if (MoveManager.isJumpMove(move, board)){
-
             }
             lastMoves.add(move);
             makeMove(move);
@@ -419,8 +414,6 @@ public class Game {
         //Enforce player ending a multiple jump move
         Position lastMoveEndPos = lastMove.getEnd();
         //Multiple jump move has not been completed
-//        System.out.println("LastMoveJump: " + MoveManager.isLastMoveJump(lastMove, movingPiece));
-//        System.out.println("JumpLocation Exists: " + (board.getJumpLocations(lastMoveEndPos).size() > 0));
         boolean kinged = checkIfKinged(lastMove);
         if (MoveManager.isLastMoveJump(lastMove, movingPiece)) {
             if (!kinged && board.getJumpLocations(lastMoveEndPos).size() > 0) {
@@ -435,7 +428,7 @@ public class Game {
         //reset lastMoves
         lastMoves.clear();
         this.canContinueMoving = true;
-
+        gameChanged = true;
         if (!isGameOver()) {
             switchActiveColor();
         }
@@ -498,11 +491,8 @@ public class Game {
      * @return whether or not the current player can make a jump move.
      */
     public boolean jumpMoveExists() {
-        //System.out.println("Active Color: "+getActiveColor());
         List<Position> movablePieceLocations = board.getMovablePieceLocations(getActiveColor());
-        //System.out.println("MovablePieceLocations size: "+movablePieceLocations.size());
         for (Position indexPosition : movablePieceLocations) {
-            //System.out.println("JumpLocations for Pos size: "+board.getJumpLocations(indexPosition).size());
             // Check if piece at indexPosition has a position to jump to
             if (board.getJumpLocations(indexPosition).size() > 0) {
                 return true;
