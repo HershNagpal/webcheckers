@@ -14,17 +14,17 @@ import java.util.Map;
 public class ReplayController {
 
     /**
-     * All games that have finished
+     * Collection of all games that have finished
      */
     private Map<String, Game> finishedGames;
 
     /**
-     * Players that are replaying
+     * Players that are currently replaying games
      */
     private Map<Player, Replay> replays;
 
     /**
-     * Share the map of finished games with gameCenter
+     * Constructor shares the map of finished games with gameCenter.
      *
      * @param finishedGames all finished games that can be replayed
      */
@@ -36,6 +36,8 @@ public class ReplayController {
     /**
      * Get the replay game from a gameID and copy the original game.
      * Also tracks that the player is replaying.
+     *
+     * @param player player who is accessing the replay
      * @param gameID The unique game ID
      * @return The game or null if it does not exist
      */
@@ -51,8 +53,9 @@ public class ReplayController {
     }
 
     /**
-     * Update that this player is no longer replaying
-     * @param player Player to stop watching a replay
+     * Updates that a player is no longer replaying.
+     *
+     * @param player to stop watching a replay
      */
     public void stopReplaying(Player player) {
         replays.remove(player);
@@ -60,9 +63,10 @@ public class ReplayController {
 
 
     /**
-     * Get the message from the messenger about backing up a move.
+     * Get the message from the messenger about continuing to the next turn.
      *
-     * @return Message with correct type
+     * @param player replaying the game
+     * @return Message about whether the next turn has been continued to successfully
      */
     public Message nextTurn(Player player) {
         Replay game = replays.get(player);
@@ -70,9 +74,10 @@ public class ReplayController {
     }
 
     /**
-     * Get the message from the messenger about backing up a move.
+     * Get the message from the messenger about backing up to a previous turn.
      *
-     * @return Message with correct type
+     * @param player replaying the game
+     * @return Message about whether the previous turn has been returned to successfully
      */
     public Message previousTurn(Player player) {
         Replay game = replays.get(player);

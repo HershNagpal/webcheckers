@@ -1,7 +1,6 @@
 package com.webcheckers.appl;
 
 import com.webcheckers.model.Player;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -15,22 +14,22 @@ import java.util.Set;
 public class PlayerLobby {
 
     /**
-     * Players must be unique
+     * Set of unique players that have signed in
      */
     private Set<Player> players;
 
     /**
-     * All players that are spectating games
+     * Set of all players that are spectating games
      */
     private Set<Player> spectators;
 
     /**
-     * All players that are replaying games
+     * Set of all players that are replaying games
      */
     private Set<Player> replayers;
 
     /**
-     * Initialize the set of players
+     * Constructor used to initialize the sets of players.
      */
     public PlayerLobby(){
         players = new HashSet<>();
@@ -39,7 +38,8 @@ public class PlayerLobby {
     }
 
     /**
-     * Check if any players have the username
+     * Check if any players have the username of another logged in player.
+     *
      * @param username name to check
      * @return is the username taken
      */
@@ -50,6 +50,7 @@ public class PlayerLobby {
     /**
      * Alphanumeric regex to check if username contains at least
      * one letter or number and optionally spaces if this is satisfied.
+     *
      * @param username name to check
      * @return is the username valid
      */
@@ -74,7 +75,8 @@ public class PlayerLobby {
     }
 
     /**
-     * Let the player sign into the lobby
+     * Signs a player into the lobby by adding it to the players set.
+     *
      * @param player Player signing in
      */
     public void signIn(Player player) {
@@ -82,7 +84,8 @@ public class PlayerLobby {
     }
 
     /**
-     * Let the player sign out of the lobby
+     * Signs a player out of the lobby by removing it from the players set.
+     *
      * @param player Player signing out
      */
     public void signOut(Player player) {
@@ -91,6 +94,7 @@ public class PlayerLobby {
 
     /**
      * Get a player within the lobby given a name.
+     *
      * @param name Name of player
      * @return The specified player if they exist
      */
@@ -104,8 +108,9 @@ public class PlayerLobby {
     }
 
     /**
-     * Ease of access for player names within the lobby.
+     * Gets the list of all players other than the given one.
      *
+     * @param self player to be omitted from the player list
      * @return List of player names other than the player's
      */
     public List<String> getPlayerLobbyNames(Player self) {
@@ -119,7 +124,7 @@ public class PlayerLobby {
     }
 
     /**
-     * The number of players in the lobby.
+     * Gets the number of players in the lobby.
      *
      * @return number of players
      */
@@ -128,7 +133,7 @@ public class PlayerLobby {
     }
 
     /**
-     * Add the player to the set of spectators.
+     * Add a player to the set of spectators.
      *
      * @param player The player that is starting to spectate
      */
@@ -137,7 +142,7 @@ public class PlayerLobby {
     }
 
     /**
-     * Remove the player from the set of spectators
+     * Remove a player from the set of spectators.
      *
      * @param player The player who wants to stop spectating
      */
@@ -146,16 +151,17 @@ public class PlayerLobby {
     }
 
     /**
-     * Is the player spectating a game?
-     * @param player Player to check
-     * @return If the player is spectating
+     * Checks if a player is spectating a game.
+     *
+     * @param player Player to check if spectating
+     * @return True if the player is spectating, false otherwise
      */
     public boolean isSpectating(Player player) {
         return spectators.contains(player);
     }
 
     /**
-     * Add the player to the set of replayers.
+     * Add the player to the set of replaying players.
      *
      * @param player The player that is starting to replay
      */
@@ -164,7 +170,7 @@ public class PlayerLobby {
     }
 
     /**
-     * Remove the player from the set of replayers
+     * Remove the player from the set of replaying players.
      *
      * @param player The player who wants to stop replaying
      */
@@ -173,9 +179,10 @@ public class PlayerLobby {
     }
 
     /**
-     * Is the player replaying a game?
+     * Checks is a player is replaying a game.
+     *
      * @param player Player to check
-     * @return If the player is replaying
+     * @return True if the player is replaying, false otherwise
      */
     public boolean isReplaying(Player player) {
         return replayers.contains(player);

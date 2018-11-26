@@ -108,14 +108,25 @@ public class Game {
     public Game(Player redPlayer, Player whitePlayer, int gameNum) {
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
-
-        // if(redPlayer.getName().equals("debug") && whitePlayer.getName().equals("test")) {
-        //     this.board = new Board(Board.NO_MOVES_RED);
-        // } else if (redPlayer.getName().equals("test") && whitePlayer.getName().equals("debug")) {
-        //     this.board = new Board(Board.END_GAME);
-        // } else {
-            this.board = new Board();
-        //}
+        String whitePlayerName = whitePlayer.getName();
+        if(redPlayer.getName().equals("debug")){
+            switch(whitePlayerName){
+                case "KINGED_NO_JUMP":
+                    this.board = new Board(Board.KINGED_NO_JUMP);
+                    break;
+                case "END_GAME":
+                    this.board = new Board(Board.END_GAME);
+                    break;
+                case "NO_MOVES_WHITE":
+                    this.board = new Board(Board.NO_MOVES_WHITE);
+                    break;
+                case "MULTIPLE_JUMP":
+                    this.board = new Board(Board.MULTIPLE_JUMP_RED);
+                    break;
+                default:
+                    this.board = new Board();
+            }
+        }
         lastMoves = new ArrayList<>();
         allMoves = new HashMap<>();
         turnIndex = 0;
