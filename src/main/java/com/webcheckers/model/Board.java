@@ -1,19 +1,18 @@
 package com.webcheckers.model;
 
-import com.webcheckers.model.Piece.Type;
-
 import java.util.ArrayList;
 import java.util.List;
+import com.webcheckers.model.Piece.Type;
 
 /**
  * Represents the Checkers Board and all the logical operations that need to be done on
  * pieces for the game to function.
+ *
  * @author Christopher Daukshus
  * @author Matthew Bollinger
- *
+ * @author Hersh Nagpal
  */
 public class Board {
-
 
     /**
      * ROWS - number of rows on the board

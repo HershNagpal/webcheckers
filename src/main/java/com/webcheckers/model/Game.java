@@ -752,4 +752,12 @@ public class Game {
         return movablePieceLocations;
     }
 
+    /**
+     * This is a method to set the current board
+     * used for testing purposes
+     */
+    public void setBoard(Board board){
+        this.board = board;
+    }
+
 }
