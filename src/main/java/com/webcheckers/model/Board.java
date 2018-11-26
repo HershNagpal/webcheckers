@@ -348,17 +348,17 @@ public class Board {
         }
         //remove positions that are off the board or occupied
         List<Position> remove = new ArrayList<>();
-        for(int i = 0; i < movePositions.size(); i++){
+        for(int i = 0; i < movePositions.size(); i++) {
             Position position = movePositions.get(i);
             if (position.getRow() >= Board.ROWS || position.getRow() < 0 ||
-                    position.getCell() >= Board.COLUMNS || position.getCell() < 0){
+                    position.getCell() >= Board.COLUMNS || position.getCell() < 0) {
                 remove.add(position);
-            }
-            else{
-                if (!(this.getPieceAtPosition(position) == null)){
+            } else {
+                if (!(this.getPieceAtPosition(position) == null)) {
                     remove.add(position);
-                if (!(piece == null)){
-                    movePositions.remove(position);
+                    if (!(piece == null)) {
+                        movePositions.remove(position);
+                    }
                 }
             }
         }
