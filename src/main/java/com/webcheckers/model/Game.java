@@ -82,7 +82,7 @@ public class Game {
     private int turnIndex;
 
     /**
-     * Start a game with a given board state.
+     * Start a game with a given board state. Used only for testing.
      *
      * @param redPlayer   The red player
      * @param whitePlayer The white player
@@ -257,22 +257,6 @@ public class Game {
      * @return Is the game over or still going
      */
     public boolean isGameOver() {
-        // TODO delete if not needed
-        //if (resigned) {
-        //    return true;
-        //}
-        //Color allPiecesEliminated = board.checkAllPiecesEliminated();
-        //if (allPiecesEliminated == activeColor) {
-        //    winner = allPiecesEliminated == Color.RED ? whitePlayer : redPlayer;
-        //    return true;
-        //}
-        //Color noMoreValidMoves = board.checkNoMoreValidMoves();
-        //if (noMoreValidMoves == activeColor) {
-        //    winner = noMoreValidMoves == Color.RED ? whitePlayer : redPlayer;
-        //    return true;
-        //}
-        //return false;
-
         if (resigned) {
             return true;
         }

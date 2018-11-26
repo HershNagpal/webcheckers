@@ -288,7 +288,6 @@ public class Board {
     }
 
     /**
-     * TODO: check and write tests
      * Check the board to see if the pieces of the given color are
      * eliminated.
      * @param color The color of the pieces to check
@@ -309,34 +308,7 @@ public class Board {
         return true;
     }
 
-    public Color checkAllPiecesEliminated() {
-        boolean redElim = true;
-        boolean whiteElim = true;
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
-                Piece currentPiece = pieces[row][col];
-                if(currentPiece != null) {
-                    if (currentPiece.getColor() == Color.RED) {
-                        redElim = false;
-                    }
-                    else {
-                        whiteElim = false;
-                    }
-                }
-            }
-        }
-        if (redElim) {
-            return Color.RED;
-        }
-        else if (whiteElim) {
-            return Color.WHITE;
-        }
-        return null;
-    }
-
-
     /**
-     * TODO: check and write tests
      * Check the board to see if the pieces of the given color can still
      * move at any instance.
      * @param color The color of the pieces to check
@@ -371,51 +343,7 @@ public class Board {
         return true;
     }
 
-    public Color checkNoMoreValidMoves() {
-        boolean redNoValid = true;
-        boolean whiteNoValid = true;
-        // Get the start position
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
-                Position start = new Position(row, col);
-                // Is this a bad start position?
-                Piece startPiece = getPieceAtPosition(start);
-                if (startPiece == null) {
-                    continue;
-                }
-                Color color = startPiece.getColor();
-                // Get the end position
-                for (int r = 0; r < 8; r++) {
-                    for (int c = 0; c < 8; c++) {
-                        Position end = new Position(r, c);
-                        // Create the move through these positions
-                        Move move = new Move(start, end);
-                        // Check if move is valid
-                        if (MoveManager.isValidMove(move, this)) {
-                            // there is at least one valid move, stop checking
-                            if (color == Color.RED) {
-                                redNoValid = false;
-                            }
-                            else {
-                                whiteNoValid = false;
-                            }
-                        }
-
-                    }
-                }
-            }
-        }
-        if (redNoValid) {
-            return Color.RED;
-        }
-        else if (whiteNoValid) {
-            return Color.WHITE;
-        }
-        return null;
-    }
-
     /**
-     * TODO: check and write tests
      * Takes in the position of a piece and returns all locations that it cn make a valid jump move.
      * Must be a piece at given location.
      * @param start the position of a piece.
@@ -435,40 +363,6 @@ public class Board {
         }
 
         return validJumpPositions;
-    }
-
-    /**
-     * Returns a list of positions to be jumped to on the board from the given position.
-     * @return a list of the possible locations to be jumped to from this position.
-     */
-    public List<Position> findJumpedPositions(Position start, List<Position> possibleJumpPositions) {
-        List<Position> jumpedPositions = new ArrayList<>();
-        int row = start.getRow();
-        int col = start.getCell();
-
-        for (Position currentPosition : possibleJumpPositions) {
-
-            // Upper 
-            if(currentPosition.isAbove(start)) {
-                if(currentPosition.isRightOf(start)) {
-                    // Right
-                    possibleJumpPositions.add((new Position(row - 1, col + 1)));
-                } else {
-                    // Left
-                    possibleJumpPositions.add((new Position(row - 1, col - 1)));
-                }
-            } else {
-                if(currentPosition.isRightOf(start)) {
-                    // Right
-                    possibleJumpPositions.add((new Position(row + 1, col + 1)));
-                } else {
-                    // Left
-                    possibleJumpPositions.add((new Position(row + 1, col - 1)));
-                }
-            }
-        }
-
-        return jumpedPositions;
     }
 
     /**
