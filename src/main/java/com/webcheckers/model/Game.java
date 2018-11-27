@@ -28,7 +28,7 @@ public class Game {
      * Used to prevent player from making successive simple moves
      * and for enforcing the completion of jump moves.
      */
-    private boolean canContinueMoving = true;
+    boolean canContinueMoving = true;
 
     /**
      * The resign state of the game.
@@ -63,7 +63,7 @@ public class Game {
     /**
      * Has a move been made since last checked.
      */
-    private boolean gameChanged;
+    boolean gameChanged;
 
     /**
      * Last move made before a move is submitted.
@@ -75,7 +75,7 @@ public class Game {
      * Stack of moves made before a move is submitted.
      * Used for backing up a move.
      */
-    List<Move> lastMoves;
+    List<Move> lastMoves = new ArrayList<>();
 
     /**
      * Stack of all moves submitted in the game for each turn.
@@ -358,6 +358,7 @@ public class Game {
                 canContinueMoving = false;
             }
             lastMoves.add(move);
+            lastMove = move;
             makeMove(move);
 
             //Prevent player from performing a single jump after jump move is finished
@@ -566,7 +567,7 @@ public class Game {
                     if (!jumpedPiece.getColor().equals(activeColor)) {
                         System.out.println(jumpedPiece);
                         //Invalid jump if the piece is type SINGLE and going in the wrong direction
-                        if (!movingPiece.getType().equals(Type.KING)) {
+                        if (!movingPiece.getType().equals(Piece.Type.KING)) {
                             //SINGLE red piece cant jump up
                             if (activeColor.equals(Color.RED)) {
                                 if (i != 0 && i != 1) {

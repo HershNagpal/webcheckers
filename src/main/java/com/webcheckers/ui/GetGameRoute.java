@@ -173,7 +173,7 @@ public class GetGameRoute implements Route{
                 return null;
             }
             // Create a new game
-            game = gameCenter.createGame(player, opponent);
+            game = gameCenter.determineGame(player, opponent);
         }
         if (gameCenter.isGameOver(game)) {
             Message message = gameCenter.isWinner(game, player);

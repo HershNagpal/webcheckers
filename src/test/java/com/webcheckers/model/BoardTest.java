@@ -455,14 +455,14 @@ public class BoardTest {
 
       //test kinged white piece
       Piece piece = CuT2.getPieceAtPosition(centerPiece);
-      piece.kingPiece();
+      piece.becomeKing();
       testPositions = CuT2.getValidNormalMovePositions(centerPiece);
       assert(testPositions.size() == 3);
 
       //test kinged red piece
       centerPiece = new Position(6, 2);
       piece = CuT2.getPieceAtPosition(centerPiece);
-      piece.kingPiece();
+      piece.becomeKing();
       testPositions = CuT2.getValidNormalMovePositions(centerPiece);
       assert(testPositions.size() == 3);
 

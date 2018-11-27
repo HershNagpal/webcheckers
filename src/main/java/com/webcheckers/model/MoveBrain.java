@@ -31,7 +31,8 @@ public class MoveBrain extends Game {
         //Enforce player ending a multiple jump move
         Position lastMoveEndPos = lastMove.getEnd();
         //Multiple jump move has not been completed
-        if (isLastMoveJump(lastMove) && getJumpLocations(lastMoveEndPos).size() > 0) {
+        Piece p = this.getBoard().getPieceAtPosition(lastMove.getEnd());
+        if (MoveManager.isLastMoveJump(lastMove, p) && getJumpLocations(lastMoveEndPos).size() > 0) {
             return false;
         }
 
@@ -94,7 +95,7 @@ public class MoveBrain extends Game {
                 if (pieceJumpPositions.size() != 0) {
                     for (Position jumpTargetPosition : pieceJumpPositions) {
                         Move move = new Move(position, jumpTargetPosition);
-                        if (isJumpMove(move)) {
+                        if (MoveManager.isJumpMove(move, this.getBoard())) {
                             Piece endPiece = this.getBoard().getPieceAtPosition(move.getEnd());
                             if (endPiece == null)
                             AIMoves.add(move);
@@ -112,7 +113,7 @@ public class MoveBrain extends Game {
                     validPositionList = this.getBoard().getValidNormalMovePositions(position);
                     for (Position end : validPositionList) {
                         Move move = new Move(position, end);
-                        if (isNormalMove(move)) {
+                        if (MoveManager.isSingleMove(move, piece)) {
                             Piece endPiece = this.getBoard().getPieceAtPosition(move.getEnd());
                             if (endPiece == null)
                             AIMoves.add(move);
