@@ -53,7 +53,7 @@ public class Game {
     /**
      * The state of the board and its pieces
      */
-    private Board board;
+    Board board;
 
     /**
      * The color of the player taking their turn.
@@ -64,12 +64,6 @@ public class Game {
      * Has a move been made since last checked.
      */
     boolean gameChanged;
-
-    /**
-     * Last move made before a move is submitted.
-     * lastMove is the move at the end of lastMoves.
-     */
-    Move lastMove;
 
     /**
      * Stack of moves made before a move is submitted.
@@ -86,7 +80,7 @@ public class Game {
     /**
      * Current turn number being played
      */
-    private int turnIndex;
+    int turnIndex;
 
     /**
      * Start a game with a given board state. Used only for testing.
@@ -358,7 +352,6 @@ public class Game {
                 canContinueMoving = false;
             }
             lastMoves.add(move);
-            lastMove = move;
             makeMove(move);
 
             //Prevent player from performing a single jump after jump move is finished
@@ -477,7 +470,7 @@ public class Game {
      * @param move The move that was just made
      * @return Whether or not the piece was kinged.
      */
-    private boolean checkIfKinged(Move move) {
+    boolean checkIfKinged(Move move) {
         int endRow = move.getEnd().getRow();
         Piece currentPiece = board.getPieceAtPosition(move.getEnd());
         Color pieceColor = currentPiece.getColor();
