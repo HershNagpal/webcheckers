@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import com.webcheckers.model.Piece.Type;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Represents the Checkers Board and all the logical operations that need to be done on
  * pieces for the game to function.
