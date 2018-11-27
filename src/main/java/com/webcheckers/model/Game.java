@@ -548,8 +548,6 @@ public class Game {
 
             // Check if position jumping into is not empty
             else if (board.getPieceAtPosition(pos) == null) {
-                // Check if there is a piece being jumped
-                Position positionJumped = new Position(pos.getRow(), pos.getCell());
 
                 // Checking if its equal to null because you cannot call .equals on null
                 if (board.getPieceAtPosition(jumpedPositions.get(i)) == null) {
