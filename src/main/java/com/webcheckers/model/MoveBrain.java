@@ -20,6 +20,7 @@ public class MoveBrain extends Game {
      * Submit the red player's last made move. Once the submitted turn is
      * successful, the AI's turn is simulated and the red player begins
      * their turn again.
+     *
      * @return True or false depending on if the move was made
      */
     @Override

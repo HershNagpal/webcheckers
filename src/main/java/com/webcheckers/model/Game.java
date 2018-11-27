@@ -69,7 +69,7 @@ public class Game {
      * Stack of moves made before a move is submitted.
      * Used for backing up a move.
      */
-    List<Move> lastMoves = new ArrayList<>();
+    List<Move> lastMoves;
 
     /**
      * Stack of all moves submitted in the game for each turn.
@@ -150,6 +150,7 @@ public class Game {
         // reset board to starting state
         this.board = new Board();
         activeColor = Color.RED;
+        lastMoves = new ArrayList<>();
         this.allMoves = new HashMap<>(game.allMoves);
         this.gameID = game.gameID;
         this.gameNum = game.gameNum;
@@ -510,7 +511,6 @@ public class Game {
      *
      * @param position location of an active player's piece
      * @return true if piece at position has a position to jump to
-     * @TODO make this so that it only checks kinged jump moves if the piece is a king.
      */
     public List<Position> getJumpLocations(Position position) {
         Piece movingPiece = board.getPieceAtPosition(position);
@@ -548,6 +548,8 @@ public class Game {
 
             // Check if position jumping into is not empty
             else if (board.getPieceAtPosition(pos) == null) {
+                // Check if there is a piece being jumped
+                //Position positionJumped = new Position(pos.getRow(), pos.getCell());
 
                 // Checking if its equal to null because you cannot call .equals on null
                 if (board.getPieceAtPosition(jumpedPositions.get(i)) == null) {
