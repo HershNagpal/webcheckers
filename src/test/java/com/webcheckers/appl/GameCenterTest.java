@@ -10,6 +10,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -136,6 +137,17 @@ public class GameCenterTest {
     }
 
     /**
+     * Test that the correct game is created.
+     */
+    @Test
+    public void testDetermineGame() {
+        game = CuT.determineGame(player, null);
+        assertTrue(game instanceof MoveBrain);
+        game = CuT.determineGame(player, opponent);
+        assertFalse(game instanceof MoveBrain);
+    }
+
+    /**
      * Test that a game can be created with two players.
      */
     @Test
@@ -144,6 +156,16 @@ public class GameCenterTest {
         assertSame(game.getRedPlayer(), player);
         assertSame(game.getWhitePlayer(), opponent);
         assertTrue(game.isActivePlayer(player));
+    }
+
+    /**
+     * Test that the AI game is created.
+     */
+    @Test
+    public void testCreateAIGame() {
+        game = CuT.createAIGame(player);
+        assertEquals(game.getWhitePlayer().getName(), "AI");
+        assertTrue(game instanceof MoveBrain);
     }
 
     /**
@@ -274,6 +296,14 @@ public class GameCenterTest {
         Message centerMessage = CuT.resignGame(player);
         assertEquals(centerMessage.getType(), message.getType());
         assertEquals(centerMessage.getText(), message.getText());
+
+        // Test that AI games are updated when resigned is called
+        Player test = new Player("test");
+        game = CuT.createAIGame(test);
+        game.resignGame(test);
+        CuT.resignGame(test);
+        CuT.updateGames(game);
+        assertTrue(CuT.gamesFinished());
     }
 
 
