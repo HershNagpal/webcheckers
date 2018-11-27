@@ -38,16 +38,6 @@ public class Board {
     private Map<Position, Piece> removedPieces;
 
     /**
-     * A default single red piece used in debug boards.
-     */
-    public static Piece red = new Piece(Color.RED, Type.SINGLE);
-
-    /**
-     * A default single white piece used in debug boards.
-     */
-    public static Piece white = new Piece(Color.WHITE, Type.SINGLE);
-
-    /**
      * Piece color to create new piece used in custom demo boards
      */
     private static Color r = Color.RED;
