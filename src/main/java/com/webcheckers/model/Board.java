@@ -138,6 +138,7 @@ public class Board {
      */
     public Board(Piece[][] customPieces) {
         pieces = customPieces;
+        removedPieces = new HashMap<>();
     }
 
     /**
