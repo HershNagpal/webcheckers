@@ -52,6 +52,16 @@ public class Board {
                     {null, null, null, null, null, red, null, white},
                     {white, null, null, null, null, null, white, null},
             };
+    public final static Piece[][] PIECE_MOVEMENT =
+            {   {null, null, null, null, null, null, null, null},
+                    {null, null, null, null, red, null, null, null},
+                    {null, red, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, white, null},
+                    {null, null, null, null, null, null, null, null},
+                    {null, null, white, null, null, null, white, null},
+                    {null, null, null, null, null, white, null, null},
+                    {null, null, null, null, null, null, null, null}
+            };
     public final static Piece[][] KINGED_NO_JUMP =
             {   {null, red, null, null, null, null, null, null},
                     {null, null, null, null, red, null, null, null},

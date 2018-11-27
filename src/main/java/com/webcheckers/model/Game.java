@@ -111,6 +111,9 @@ public class Game {
         String whitePlayerName = whitePlayer.getName();
         if(redPlayer.getName().equals("debug")){
             switch(whitePlayerName){
+                case "PieceMovement":
+                    this.board = new Board(Board.PIECE_MOVEMENT);
+                    break;
                 case "KingedNoJump":
                     this.board = new Board(Board.KINGED_NO_JUMP);
                     break;
@@ -120,7 +123,7 @@ public class Game {
                 case "NoMovesWhite":
                     this.board = new Board(Board.NO_MOVES_WHITE);
                     break;
-                case "MultipleJump":
+                case "MultipleJumpRed":
                     this.board = new Board(Board.MULTIPLE_JUMP_RED);
                     break;
                 default:
