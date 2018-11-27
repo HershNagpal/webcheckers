@@ -33,7 +33,7 @@ public class MoveBrain extends Game {
         //Enforce player ending a multiple jump move
         Position lastMoveEndPos = lastMove.getEnd();
         //Multiple jump move has not been completed
-        boolean kinged = checkIfKinged(lastMove);
+        boolean kinged = board.getPieceAtPosition(lastMoveEndPos).isKing();
         if (MoveManager.isLastMoveJump(lastMove, movingPiece)) {
             if (!kinged && board.getJumpLocations(lastMoveEndPos).size() > 0) {
                 return false;
