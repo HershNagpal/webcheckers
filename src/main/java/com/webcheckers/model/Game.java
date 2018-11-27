@@ -422,8 +422,7 @@ public class Game {
         //Enforce player ending a multiple jump move
         Position lastMoveEndPos = lastMove.getEnd();
         //Multiple jump move has not been completed
-        kingPiece(lastMove);
-        boolean kinged = board.getPieceAtPosition(lastMoveEndPos).isKing();
+        boolean kinged = checkIfKinged(lastMove);
         if (MoveManager.isLastMoveJump(lastMove, movingPiece)) {
             if (!kinged && board.getJumpLocations(lastMoveEndPos).size() > 0) {
                 return false;
@@ -467,21 +466,29 @@ public class Game {
     }
 
     /**
-     * Checks whether or not the last move made a piece is able to be kinged.
-     * If able to be kinged, do so.
+     * Checks whether or not the last move made a piece able to be kinged.
+     * If the piece is kinged, returns true. If already kinged or not able to be
+     * kinged, returns false.
      * This should only be called once a move has been made.
      *
      * @param move The move that was just made
+     * @return Whether or not the piece was kinged.
      */
-    void kingPiece(Move move){
+    boolean checkIfKinged(Move move) {
         int endRow = move.getEnd().getRow();
         Piece currentPiece = board.getPieceAtPosition(move.getEnd());
         Color pieceColor = currentPiece.getColor();
+        if (currentPiece.isKing()) {
+            return false;
+        }
         if (endRow == 7 && pieceColor == Color.RED) {
             currentPiece.becomeKing();
+            return true;
         } else if (endRow == 0 && pieceColor == Color.WHITE) {
             currentPiece.becomeKing();
+            return true;
         }
+        return false;
     }
 
     /**
@@ -544,13 +551,8 @@ public class Game {
 
             // Check if position jumping into is not empty
             else if (board.getPieceAtPosition(pos) == null) {
-                // Check if there is a piece being jumped
-                Position positionJumped = new Position(pos.getRow(), pos.getCell());
-
                 // Checking if its equal to null because you cannot call .equals on null
-                if (board.getPieceAtPosition(jumpedPositions.get(i)) == null) {
-                    //continue
-                } else {
+                if (board.getPieceAtPosition(jumpedPositions.get(i)) != null) {
                     Piece jumpedPiece = board.getPieceAtPosition(jumpedPositions.get(i));
                     //Valid jump if the piece jumped is the opposite color of the active color.
                     if (!jumpedPiece.getColor().equals(activeColor)) {
