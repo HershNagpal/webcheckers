@@ -40,34 +40,40 @@ public class Board {
     /**
      * A default single red piece used in debug boards.
      */
-    public static Piece red = new Piece(Color.RED, Type.SINGLE);
+    //public static Piece red = new Piece(Color.RED, Type.SINGLE);
 
     /**
      * A default single white piece used in debug boards.
      */
-    public static Piece white = new Piece(Color.WHITE, Type.SINGLE);
+    //public static Piece white = new Piece(Color.WHITE, Type.SINGLE);
+
+    /**
+     * Piece color to create new piece used in custom demo boards
+     */
+    private static Color r = Color.RED;
+    private static Color w = Color.WHITE;
 
     /**
      * Various debug boards used for acceptance testing.
      */
-    public final static Piece[][] DEBUG_PIECES =
-            {   {null, red, null, red, null, null, null, null},
-                    {null, null, null, null, red, null, null, null},
-                    {null, null, null, null, null, red, null, null},
+    /*public final static Piece[][] DEBUG_PIECES =
+            {   {null, cP(r), null, cP(r), null, null, null, null},
+                    {null, null, null, null, cP(r), null, null, null},
+                    {null, null, null, null, null, cP(r), null, null},
                     {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, red, null, null},
-                    {null, null, red, null, null, null, null, null},
-                    {null, null, null, null, null, red, null, white},
-                    {white, null, null, null, null, null, white, null},
+                    {null, null, null, null, null, cP(r), null, null},
+                    {null, null, cP(r), null, null, null, null, null},
+                    {null, null, null, null, null, cP(r), null, cP(w)},
+                    {cP(w), null, null, null, null, null, cP(w), null},
             };
     public final static Piece[][] PIECE_MOVEMENT02 =
             {   {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, red, null, null, null},
-                    {null, red, null, null, null, null, null, null},
-                    {null, null, null, null, null, null, white, null},
+                    {null, null, null, null, cP(r), null, null, null},
+                    {null, cP(r), null, null, null, null, null, null},
+                    {null, null, null, null, null, null, cP(w), null},
                     {null, null, null, null, null, null, null, null},
-                    {null, null, white, null, null, null, white, null},
-                    {null, null, null, null, null, white, null, null},
+                    {null, null, cP(w), null, null, null, cP(w), null},
+                    {null, null, null, null, null, cP(w), null, null},
                     {null, null, null, null, null, null, null, null}
             };
     public final static Piece[][] PIECE_MOVEMENT =
@@ -120,6 +126,10 @@ public class Board {
                     {null, null, null, null, null, null, null, null},
                     {null, null, null, null, null, null, null, null}
             };
+
+    public static Piece cP(Color color){
+        return new Piece(color, Type.SINGLE);
+    }*/
 
 
     /**
