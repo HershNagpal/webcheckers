@@ -80,10 +80,10 @@ public class Board {
             {   {null, null, null, cP(r), null, null, null, null},
                     {null, null, null, null, null, null, null, null},
                     {null, null, null, cP(r), null, null, null, null},
-                    {white, null, null, null, null, null, null, null},
+                    {cP(w), null, null, null, null, null, null, null},
                     {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, white, null, null, null},
-                    {null, null, null, white, null, white, null, null},
+                    {null, null, null, null, cP(w), null, null, null},
+                    {null, null, null, cP(w), null, cP(w), null, null},
                     {null, null, null, null, null, null, null, null}
             };
     public final static Piece[][] KINGED_NO_JUMP =
