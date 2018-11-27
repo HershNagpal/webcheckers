@@ -40,12 +40,12 @@ public class Board {
     /**
      * A default single red piece used in debug boards.
      */
-    //public static Piece red = new Piece(Color.RED, Type.SINGLE);
+    public static Piece red = new Piece(Color.RED, Type.SINGLE);
 
     /**
      * A default single white piece used in debug boards.
      */
-    //public static Piece white = new Piece(Color.WHITE, Type.SINGLE);
+    public static Piece white = new Piece(Color.WHITE, Type.SINGLE);
 
     /**
      * Piece color to create new piece used in custom demo boards
@@ -56,7 +56,7 @@ public class Board {
     /**
      * Various debug boards used for acceptance testing.
      */
-    /*public final static Piece[][] DEBUG_PIECES =
+    public final static Piece[][] DEBUG_PIECES =
             {   {null, cP(r), null, cP(r), null, null, null, null},
                     {null, null, null, null, cP(r), null, null, null},
                     {null, null, null, null, null, cP(r), null, null},
@@ -77,9 +77,9 @@ public class Board {
                     {null, null, null, null, null, null, null, null}
             };
     public final static Piece[][] PIECE_MOVEMENT =
-            {   {null, null, null, red, null, null, null, null},
+            {   {null, null, null, cP(r), null, null, null, null},
                     {null, null, null, null, null, null, null, null},
-                    {null, null, null, red, null, null, null, null},
+                    {null, null, null, cP(r), null, null, null, null},
                     {white, null, null, null, null, null, null, null},
                     {null, null, null, null, null, null, null, null},
                     {null, null, null, null, white, null, null, null},
@@ -87,9 +87,9 @@ public class Board {
                     {null, null, null, null, null, null, null, null}
             };
     public final static Piece[][] KINGED_NO_JUMP =
-            {   {null, red, null, null, null, null, null, null},
-                    {null, null, null, null, red, null, null, null},
-                    {null, white, null, null, null, null, null, null},
+            {   {null, cP(r), null, null, null, null, null, null},
+                    {null, null, null, null, cP(r), null, null, null},
+                    {null, cP(w), null, null, null, null, null, null},
                     {null, null, null, null, null, null, null, null},
                     {null, null, null, null, null, null, null, null},
                     {null, null, null, null, null, null, null, null},
@@ -97,8 +97,8 @@ public class Board {
                     {null, null, null, null, null, null, null, null}
             };
     public final static Piece[][] END_GAME =
-            {   {null, red, null, null, null, null, null, null},
-                    {null, null, white, null, null, null, null, null},
+            {   {null, cP(r), null, null, null, null, null, null},
+                    {null, null, cP(w), null, null, null, null, null},
                     {null, null, null, null, null, null, null, null},
                     {null, null, null, null, null, null, null, null},
                     {null, null, null, null, null, null, null, null},
@@ -107,20 +107,20 @@ public class Board {
                     {null, null, null, null, null, null, null, null}
             };
     public final static Piece[][] NO_MOVES_WHITE =
-            {   {null, red, null, null, null, null, null, null},
+            {   {null, cP(r), null, null, null, null, null, null},
                     {null, null, null, null, null, null, null, null},
                     {null, null, null, null, null, null, null, null},
                     {null, null, null, null, null, null, null, null},
                     {null, null, null, null, null, null, null, null},
-                    {null, null, null, red, null, null, null, red},
-                    {null, null, null, null, red, null, red, null},
-                    {null, null, null, null, null, white, null, null}
+                    {null, null, null, cP(r), null, null, null, cP(r)},
+                    {null, null, null, null, cP(r), null, cP(r), null},
+                    {null, null, null, null, null, cP(w), null, null}
             };
     public final static Piece[][] MULTIPLE_JUMP_RED =
-            {   {null, red, null, null, null, null, null, null},
-                    {null, null, white, null, null, null, null, null},
+            {   {null, cP(r), null, null, null, null, null, null},
+                    {null, null, cP(w), null, null, null, null, null},
                     {null, null, null, null, null, null, null, null},
-                    {null, null, white, null, white, null, null, null},
+                    {null, null, cP(w), null, cP(w), null, null, null},
                     {null, null, null, null, null, null, null, null},
                     {null, null, null, null, null, null, null, null},
                     {null, null, null, null, null, null, null, null},
@@ -129,7 +129,7 @@ public class Board {
 
     public static Piece cP(Color color){
         return new Piece(color, Type.SINGLE);
-    }*/
+    }
 
 
     /**

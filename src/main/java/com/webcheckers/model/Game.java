@@ -108,7 +108,6 @@ public class Game {
     public Game(Player redPlayer, Player whitePlayer, int gameNum) {
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
-        /*
         String whitePlayerName = whitePlayer.getName();
         if(redPlayer.getName().equals("debug")){
             switch(whitePlayerName){
@@ -130,9 +129,9 @@ public class Game {
                 default:
                     this.board = new Board();
             }
-        } else {*/
+        } else {
             this.board = new Board();
-        //}
+        }
         lastMoves = new ArrayList<>();
         allMoves = new HashMap<>();
         turnIndex = 0;
