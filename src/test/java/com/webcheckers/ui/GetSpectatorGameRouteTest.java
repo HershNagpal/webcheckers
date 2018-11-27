@@ -123,8 +123,21 @@ public class GetSpectatorGameRouteTest {
         when(gameCenter.isGameOver(game)).thenReturn(true);
         Message message = new Message("test", MessageType.info);
         when(gameCenter.whoWon(game)).thenReturn(message);
-        final TemplateEngineTester tester = new TemplateEngineTester();
-        when(engine.render(any(ModelAndView.class))).thenAnswer(tester.makeAnswer());
+        // Invoke test
+        CuT.handle(request, response);
+
+        verify(response).redirect(WebServer.HOME_URL);
+    }
+
+    /**
+     * Test that the route redirects home when the game is not found
+     */
+    @Test
+    public void testGameNotFoundRedirect() {
+        // Create the test scenario
+        game = null;
+        String gameID = p1.getName() + "+" + p2.getName();
+        when(gameCenter.getGame(gameID)).thenReturn(game);
         // Invoke test
         CuT.handle(request, response);
 

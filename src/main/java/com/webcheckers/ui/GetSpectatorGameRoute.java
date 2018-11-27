@@ -80,6 +80,12 @@ public class GetSpectatorGameRoute implements Route {
             "You are spectating still. Return to the game and exit.", MessageType.info);
 
     /**
+     * Message to display when game could not be found.
+     */
+    static final Message GAME_NOT_FOUND = new Message(
+            "Game could not be found.", MessageType.info);
+
+    /**
      * The game center that holds games and handles actions
      */
     private final GameCenter gameCenter;
@@ -128,8 +134,14 @@ public class GetSpectatorGameRoute implements Route {
         String gameID = request.queryParams(ID_PARAM);
         gameID = String.join("+", gameID.split(" "));
         Player currentPlayer = session.attribute(CURRENT_PLAYER_ATTR);
-        playerLobby.startSpectating(currentPlayer);
         Game game = gameCenter.getGame(gameID);
+        // Game could not be found redirect back home
+        if (game == null) {
+            session.attribute(MESSAGE_ATTR, GAME_NOT_FOUND);
+            response.redirect(WebServer.HOME_URL);
+            return null;
+        }
+        playerLobby.startSpectating(currentPlayer);
         vm.put(CURRENT_PLAYER_ATTR, currentPlayer);
         vm.put(VIEW_MODE_ATTR, ViewMode.SPECTATOR);
         Player red = game.getRedPlayer();
