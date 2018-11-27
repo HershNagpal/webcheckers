@@ -402,7 +402,6 @@ public class Game {
                 board.makeJumpMove(move);
             }
         }
-        kingPiece(move);
     }
 
     /**
@@ -422,6 +421,7 @@ public class Game {
         //Enforce player ending a multiple jump move
         Position lastMoveEndPos = lastMove.getEnd();
         //Multiple jump move has not been completed
+        kingPiece(lastMove);
         boolean kinged = board.getPieceAtPosition(lastMoveEndPos).isKing();
         if (MoveManager.isLastMoveJump(lastMove, movingPiece)) {
             if (!kinged && board.getJumpLocations(lastMoveEndPos).size() > 0) {
