@@ -108,6 +108,7 @@ public class Game {
     public Game(Player redPlayer, Player whitePlayer, int gameNum) {
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
+        /*
         String whitePlayerName = whitePlayer.getName();
         if(redPlayer.getName().equals("debug")){
             switch(whitePlayerName){
@@ -129,9 +130,9 @@ public class Game {
                 default:
                     this.board = new Board();
             }
-        } else {
+        } else {*/
             this.board = new Board();
-        }
+        //}
         lastMoves = new ArrayList<>();
         allMoves = new HashMap<>();
         turnIndex = 0;
@@ -555,7 +556,6 @@ public class Game {
                     Piece jumpedPiece = board.getPieceAtPosition(jumpedPositions.get(i));
                     //Valid jump if the piece jumped is the opposite color of the active color.
                     if (!jumpedPiece.getColor().equals(activeColor)) {
-                        System.out.println(jumpedPiece);
                         //Invalid jump if the piece is type SINGLE and going in the wrong direction
                         if (!movingPiece.getType().equals(Piece.Type.KING)) {
                             //SINGLE red piece cant jump up

@@ -1,9 +1,6 @@
 package com.webcheckers.model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.webcheckers.model.Piece.Type;
 
@@ -35,7 +32,7 @@ public class Board {
     /**
      * Removed pieces from jump moves and their positions.
      */
-    private Map<Position, Piece> removedPieces;
+    private Map<Position, Stack<Piece>> removedPieces;
 
     /**
      * Piece color to create new piece used in custom demo boards
@@ -303,7 +300,14 @@ public class Board {
         Position jumpedPosition = move.getJumpedPosition();
 
         Piece piece = this.pieces[jumpedPosition.getRow()][jumpedPosition.getCell()];
-        removedPieces.put(jumpedPosition, new Piece(piece));
+        if (removedPieces.containsKey(jumpedPosition)) {
+            removedPieces.get(jumpedPosition).push(new Piece(piece));
+        }
+        else {
+            Stack<Piece> pieces = new Stack<>();
+            pieces.add(new Piece(piece));
+            removedPieces.put(jumpedPosition, pieces);
+        }
         this.pieces[jumpedPosition.getRow()][jumpedPosition.getCell()] = null;
     }
 
@@ -352,7 +356,7 @@ public class Board {
 
         //Place removed piece that got jumped back into board
         if(move.isBackUpMove()) {
-            pieces[jumpedRow][jumpedCol] = removedPieces.get(new Position(jumpedRow, jumpedCol));
+            pieces[jumpedRow][jumpedCol] = removedPieces.get(new Position(jumpedRow, jumpedCol)).pop();
         }
     }
 
