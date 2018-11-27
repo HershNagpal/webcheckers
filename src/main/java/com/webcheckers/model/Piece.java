@@ -40,6 +40,15 @@ public class Piece {
     }
 
     /**
+     * Copy a piece for storage in board when it is removed
+     * @param piece Piece to copy based on color and type
+     */
+    public Piece(Piece piece) {
+        this.color = piece.color;
+        this.type = piece.type;
+    }
+
+    /**
      * Get this piece's color.
      * 
      * @return Piece color
@@ -69,6 +78,13 @@ public class Piece {
      */
     public void becomeKing() {
         type = Type.KING;
+    }
+
+    /**
+     * Change this piece to a single piece.
+     */
+    public void becomeSingle() {
+        type = Type.SINGLE;
     }
 
     /**

@@ -17,12 +17,18 @@ public class Replay extends Game {
     private int replayIndex;
 
     /**
+     * Map of moves that king a piece on the given turn.
+     */
+    private Map<Integer, Move> kingMoves;
+
+    /**
      * Create a replay version of the given Game.
      * @param game Original finished game to copy
      */
     public Replay(Game game) {
         super(game);
         replayIndex = 0;
+        kingMoves = new HashMap<>();
     }
 
     /**
@@ -38,6 +44,9 @@ public class Replay extends Game {
         }
         for (Move move : lastMoves) {
             makeMove(move);
+            if (checkIfKinged(move)) {
+                kingMoves.put(replayIndex, move);
+            }
         }
         // Next color and index
         switchActiveColor();
@@ -59,7 +68,12 @@ public class Replay extends Game {
         if (lastMoves == null) {
             return false;
         }
-        for (Move move : lastMoves) {
+        if (kingMoves.containsKey(replayIndex)) {
+            Move revertKing = kingMoves.get(replayIndex);
+            board.getPieceAtFlippedPosition(revertKing.flipMove().getEnd()).becomeSingle();
+        }
+        for (int i = lastMoves.size() - 1; i >= 0; i--) {
+            Move move = lastMoves.get(i);
             backUpMove(move);
         }
         return true;
