@@ -132,6 +132,8 @@ public class Game {
                 default:
                     this.board = new Board();
             }
+        } else {
+            this.board = new Board();
         }
         lastMoves = new ArrayList<>();
         allMoves = new HashMap<>();
