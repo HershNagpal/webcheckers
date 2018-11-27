@@ -82,9 +82,9 @@ public class Board {
                     {null, null, null, null, null, null, null, null},
                     {null, null, null, null, null, null, null, null},
                     {null, null, null, null, null, null, null, null},
-                    {null, null, null, cP(r), null, null, null, cP(r)},
-                    {null, null, null, null, cP(r), null, cP(r), null},
-                    {null, null, null, null, null, cP(w), null, null}
+                    {null, null, cP(r), null, null, null, cP(r), null},
+                    {null, null, null, cP(r), null, cP(r), null, null},
+                    {null, null, null, null, cP(w), null, null, null}
             };
     public final static Piece[][] MULTIPLE_JUMP_RED =
             {   {null, cP(r), null, null, null, null, null, null},
