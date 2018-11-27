@@ -111,16 +111,16 @@ public class Game {
         String whitePlayerName = whitePlayer.getName();
         if(redPlayer.getName().equals("debug")){
             switch(whitePlayerName){
-                case "KINGED_NO_JUMP":
+                case "KingedNoJump":
                     this.board = new Board(Board.KINGED_NO_JUMP);
                     break;
-                case "END_GAME":
+                case "EndGame":
                     this.board = new Board(Board.END_GAME);
                     break;
-                case "NO_MOVES_WHITE":
+                case "NoMovesWhite":
                     this.board = new Board(Board.NO_MOVES_WHITE);
                     break;
-                case "MULTIPLE_JUMP":
+                case "MultipleJump":
                     this.board = new Board(Board.MULTIPLE_JUMP_RED);
                     break;
                 default:
