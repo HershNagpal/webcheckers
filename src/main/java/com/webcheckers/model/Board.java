@@ -38,7 +38,7 @@ public class Board {
     private Map<Position, Piece> removedPieces;
 
     /**
-     * Piece color to create new piece used in custom demo boards
+     * Piece color to create new pieces used in custom demo boards
      */
     private static Color r = Color.RED;
     private static Color w = Color.WHITE;
@@ -46,29 +46,9 @@ public class Board {
     /**
      * Various debug boards used for acceptance testing.
      */
-    public final static Piece[][] DEBUG_PIECES =
-            {   {null, cP(r), null, cP(r), null, null, null, null},
-                    {null, null, null, null, cP(r), null, null, null},
-                    {null, null, null, null, null, cP(r), null, null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, cP(r), null, null},
-                    {null, null, cP(r), null, null, null, null, null},
-                    {null, null, null, null, null, cP(r), null, cP(w)},
-                    {cP(w), null, null, null, null, null, cP(w), null},
-            };
-    public final static Piece[][] PIECE_MOVEMENT02 =
-            {   {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, cP(r), null, null, null},
-                    {null, cP(r), null, null, null, null, null, null},
-                    {null, null, null, null, null, null, cP(w), null},
-                    {null, null, null, null, null, null, null, null},
-                    {null, null, cP(w), null, null, null, cP(w), null},
-                    {null, null, null, null, null, cP(w), null, null},
-                    {null, null, null, null, null, null, null, null}
-            };
     public final static Piece[][] PIECE_MOVEMENT =
-            {   {null, null, null, cP(r), null, null, null, null},
-                    {null, null, null, null, null, null, null, null},
+            {   {null, null, null, null, null, null, null, null},
+                    {null, null, cP(r), null, null, null, null, null},
                     {null, null, null, cP(r), null, null, null, null},
                     {cP(w), null, null, null, null, null, null, null},
                     {null, null, null, null, null, null, null, null},
@@ -117,6 +97,11 @@ public class Board {
                     {null, null, null, null, null, null, null, null}
             };
 
+    /***
+     * Helper method used to create new pieces for custom demo boards.
+     * @param color Color of new piece to be created
+     * @return new piece of type single and color 'color'
+     */
     public static Piece cP(Color color){
         return new Piece(color, Type.SINGLE);
     }
