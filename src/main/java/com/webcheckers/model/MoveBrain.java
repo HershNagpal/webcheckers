@@ -24,23 +24,30 @@ public class MoveBrain extends Game {
      */
     @Override
     public boolean submitTurn() {
-        if (lastMove == null) {
+        if (lastMoves.isEmpty()) {
             return false;
         }
 
+        Move lastMove = lastMoves.get(lastMoves.size()-1);
+        Piece movingPiece = board.getPieceAtPosition(lastMove.getEnd());
         //Enforce player ending a multiple jump move
         Position lastMoveEndPos = lastMove.getEnd();
         //Multiple jump move has not been completed
-        Piece p = this.getBoard().getPieceAtPosition(lastMove.getEnd());
-        if (MoveManager.isLastMoveJump(lastMove, p) && getJumpLocations(lastMoveEndPos).size() > 0) {
-            return false;
+        boolean kinged = checkIfKinged(lastMove);
+        if (MoveManager.isLastMoveJump(lastMove, movingPiece)) {
+            if (!kinged && board.getJumpLocations(lastMoveEndPos).size() > 0) {
+                return false;
+            }
         }
 
-        //reset lastMoves and lastMove
+        // Keep track of moves that happened each turn
+        List<Move> copy = new ArrayList<>(lastMoves);
+        allMoves.put(turnIndex++, copy);
+
+        //reset lastMoves
         lastMoves.clear();
-        lastMove = null;
-        // Do not switch the turn if the game is over
-        // Otherwise invokes PostCheckTurn when not your turn when game is over
+        this.canContinueMoving = true;
+        gameChanged = true;
         if (!isGameOver()) {
             switchActiveColor();
             // Simulate AI turn
@@ -49,8 +56,7 @@ public class MoveBrain extends Game {
                 switchActiveColor();
             }
         }
-        gameChanged = true;
-        this.canContinueMoving = true;
+
         return true;
     }
 
