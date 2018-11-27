@@ -126,6 +126,8 @@ public class Game {
                 default:
                     this.board = new Board();
             }
+        } else {
+            this.board = new Board();
         }
         lastMoves = new ArrayList<>();
         allMoves = new HashMap<>();
@@ -274,6 +276,7 @@ public class Game {
         if (resigned) {
             return true;
         }
+        System.out.println(board);
         if (board.checkNoMoreValidMoves(activeColor) ||
                 board.checkAllPiecesEliminated(activeColor)) {
             winner = activeColor == Color.RED ? whitePlayer : redPlayer;
