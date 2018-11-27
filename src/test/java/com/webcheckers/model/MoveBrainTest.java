@@ -170,6 +170,7 @@ public class MoveBrainTest {
         assert(found);
     }
 
+
     /**
      * Test getRandomInt method
      */
