@@ -20,7 +20,6 @@ public class MoveBrain extends Game {
      * Submit the red player's last made move. Once the submitted turn is
      * successful, the AI's turn is simulated and the red player begins
      * their turn again.
-     *
      * @return True or false depending on if the move was made
      */
     @Override
@@ -52,9 +51,8 @@ public class MoveBrain extends Game {
         if (!isGameOver()) {
             switchActiveColor();
             // Simulate AI turn
-            if (isActivePlayer(getWhitePlayer())) {
+            if (!isGameOver() && isActivePlayer(getWhitePlayer())) {
                 simulateTurn();
-                switchActiveColor();
             }
         }
 
@@ -65,17 +63,12 @@ public class MoveBrain extends Game {
      * Simulate the AI's turn.
      */
     public void simulateTurn() {
-        Move currentMove = generateAIMove();
-        if(MoveManager.isSingleMove(currentMove, board.getPieceAtPosition(currentMove.getStart()))){
-            makeMove(currentMove);
+        Move move = generateAIMove();
+        validateMove(move);
+        // Is there another jump move to be made
+        if (!submitTurn()) {
+            simulateTurn();
         }
-        else if(MoveManager.isJumpMove(currentMove,board)) {
-            while (MoveManager.isJumpMove(currentMove, board)) {
-                makeMove(currentMove);
-                currentMove = generateAIMove();
-            }
-        }
-        submitTurn();
     }
 
     /**
@@ -104,17 +97,17 @@ public class MoveBrain extends Game {
         List<Position> AIPieces = this.getMovablePieceLocations();
         Boolean jumpMoveFound = false;
         for(Position position: AIPieces) {
+            Piece piece = this.getBoard().getPieceAtPosition(position);
                 //first check for jump positions
                 List<Position> pieceJumpPositions = this.getJumpLocations(position);
                 if (pieceJumpPositions.size() != 0) {
                     for (Position jumpTargetPosition : pieceJumpPositions) {
                         Move move = new Move(position, jumpTargetPosition);
-                        if (MoveManager.isJumpMove(move, board)) {
-                            Piece endPiece = board.getPieceAtPosition(move.getEnd());
-                            if (endPiece == null) {
-                                AIMoves.add(move);
-                                jumpMoveFound = true;
-                            }
+                        if (MoveManager.isJumpMove(move, this.getBoard())) {
+                            Piece endPiece = this.getBoard().getPieceAtPosition(move.getEnd());
+                            if (endPiece == null)
+                            AIMoves.add(move);
+                            jumpMoveFound = true;
                         }
                     }
                 }
@@ -123,13 +116,13 @@ public class MoveBrain extends Game {
         if(!(jumpMoveFound)){
             //iterate over AIPieces
             for (Position position: AIPieces) {
-                Piece piece = board.getPieceAtPosition(position);
+                Piece piece = this.getBoard().getPieceAtPosition(position);
                     List<Position> validPositionList;
-                    validPositionList = board.getValidNormalMovePositions(position);
+                    validPositionList = this.getBoard().getValidNormalMovePositions(position);
                     for (Position end : validPositionList) {
                         Move move = new Move(position, end);
                         if (MoveManager.isSingleMove(move, piece)) {
-                            Piece endPiece = board.getPieceAtPosition(move.getEnd());
+                            Piece endPiece = this.getBoard().getPieceAtPosition(move.getEnd());
                             if (endPiece == null)
                             AIMoves.add(move);
                         }
