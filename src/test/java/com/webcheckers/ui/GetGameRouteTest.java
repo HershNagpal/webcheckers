@@ -66,7 +66,7 @@ public class GetGameRouteTest {
         when(request.queryParams(GetGameRoute.ID_PARAM)).thenReturn(gameID);
         when(session.attribute(GetGameRoute.CURRENT_PLAYER_ATTR)).thenReturn(p1);
         when(playerLobby.getPlayer(gameID.split(" ")[1])).thenReturn(p2);
-        when(gameCenter.createGame(p1, p2)).thenReturn(game);
+        when(gameCenter.determineGame(p1, p2)).thenReturn(game);
         when(game.getBoardView(p1)).thenReturn(boardView);
         when(game.getBoardView(p2)).thenReturn(boardView);
         when(game.getRedPlayer()).thenReturn(p1);

@@ -289,8 +289,7 @@ public class GameCenter {
         Game game = getGame(player);
         Message message = messenger.resignGame(game, player);
         // Update the games early if playing an AI game
-        if (message.getType().equals(MessageType.info) &&
-                game.getWhitePlayer().getName().equals("AI")) {
+        if (game instanceof MoveBrain) {
             updateGames(game);
         }
         return message;
