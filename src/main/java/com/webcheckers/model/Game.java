@@ -69,7 +69,7 @@ public class Game {
      * Stack of moves made before a move is submitted.
      * Used for backing up a move.
      */
-    List<Move> lastMoves;
+    List<Move> lastMoves = new ArrayList<>();
 
     /**
      * Stack of all moves submitted in the game for each turn.
@@ -112,6 +112,9 @@ public class Game {
         String whitePlayerName = whitePlayer.getName();
         if(redPlayer.getName().equals("debug")){
             switch(whitePlayerName){
+                case "PieceMovement":
+                    this.board = new Board(Board.PIECE_MOVEMENT);
+                    break;
                 case "KingedNoJump":
                     this.board = new Board(Board.KINGED_NO_JUMP);
                     break;
@@ -121,7 +124,7 @@ public class Game {
                 case "NoMovesWhite":
                     this.board = new Board(Board.NO_MOVES_WHITE);
                     break;
-                case "MultipleJump":
+                case "MultipleJumpRed":
                     this.board = new Board(Board.MULTIPLE_JUMP_RED);
                     break;
                 default:
@@ -151,7 +154,6 @@ public class Game {
         // reset board to starting state
         this.board = new Board();
         activeColor = Color.RED;
-        lastMoves = new ArrayList<>();
         this.allMoves = new HashMap<>(game.allMoves);
         this.gameID = game.gameID;
         this.gameNum = game.gameNum;
@@ -420,7 +422,8 @@ public class Game {
         //Enforce player ending a multiple jump move
         Position lastMoveEndPos = lastMove.getEnd();
         //Multiple jump move has not been completed
-        boolean kinged = checkIfKinged(lastMove);
+        kingPiece(lastMove);
+        boolean kinged = board.getPieceAtPosition(lastMoveEndPos).isKing();
         if (MoveManager.isLastMoveJump(lastMove, movingPiece)) {
             if (!kinged && board.getJumpLocations(lastMoveEndPos).size() > 0) {
                 return false;
@@ -464,29 +467,21 @@ public class Game {
     }
 
     /**
-     * Checks whether or not the last move made a piece able to be kinged.
-     * If the piece is kinged, returns true. If already kinged or not able to be
-     * kinged, returns false.
+     * Checks whether or not the last move made a piece is able to be kinged.
+     * If able to be kinged, do so.
      * This should only be called once a move has been made.
      *
      * @param move The move that was just made
-     * @return Whether or not the piece was kinged.
      */
-    boolean checkIfKinged(Move move) {
+    void kingPiece(Move move){
         int endRow = move.getEnd().getRow();
         Piece currentPiece = board.getPieceAtPosition(move.getEnd());
         Color pieceColor = currentPiece.getColor();
-        if (currentPiece.isKing()) {
-            return false;
-        }
         if (endRow == 7 && pieceColor == Color.RED) {
             currentPiece.becomeKing();
-            return true;
         } else if (endRow == 0 && pieceColor == Color.WHITE) {
             currentPiece.becomeKing();
-            return true;
         }
-        return false;
     }
 
     /**
@@ -550,7 +545,7 @@ public class Game {
             // Check if position jumping into is not empty
             else if (board.getPieceAtPosition(pos) == null) {
                 // Check if there is a piece being jumped
-                //Position positionJumped = new Position(pos.getRow(), pos.getCell());
+                Position positionJumped = new Position(pos.getRow(), pos.getCell());
 
                 // Checking if its equal to null because you cannot call .equals on null
                 if (board.getPieceAtPosition(jumpedPositions.get(i)) == null) {
