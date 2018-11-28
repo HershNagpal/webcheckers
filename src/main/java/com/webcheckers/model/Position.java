@@ -171,4 +171,13 @@ public class Position {
         return this.row == p2.row && this.cell == p2.cell;
     }
 
+    /**
+     * Make positions have a unique hash code by their row and cell
+     * @return A unique hash code based on the row and cell
+     */
+    @Override
+    public int hashCode() {
+        int tmp = (row +((cell+1)/2));
+        return cell+(tmp*tmp);
+    }
 }

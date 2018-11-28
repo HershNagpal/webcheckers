@@ -69,7 +69,7 @@ public class Game {
      * Stack of moves made before a move is submitted.
      * Used for backing up a move.
      */
-    List<Move> lastMoves;
+    List<Move> lastMoves = new ArrayList<>();
 
     /**
      * Stack of all moves submitted in the game for each turn.
@@ -108,27 +108,31 @@ public class Game {
     public Game(Player redPlayer, Player whitePlayer, int gameNum) {
         this.redPlayer = redPlayer;
         this.whitePlayer = whitePlayer;
+        /*
         String whitePlayerName = whitePlayer.getName();
         if(redPlayer.getName().equals("debug")){
             switch(whitePlayerName){
-                case "KINGED_NO_JUMP":
+                case "PieceMovement":
+                    this.board = new Board(Board.PIECE_MOVEMENT);
+                    break;
+                case "KingedNoJump":
                     this.board = new Board(Board.KINGED_NO_JUMP);
                     break;
-                case "END_GAME":
+                case "EndGame":
                     this.board = new Board(Board.END_GAME);
                     break;
-                case "NO_MOVES_WHITE":
+                case "NoMovesWhite":
                     this.board = new Board(Board.NO_MOVES_WHITE);
                     break;
-                case "MULTIPLE_JUMP":
+                case "MultipleJumpRed":
                     this.board = new Board(Board.MULTIPLE_JUMP_RED);
                     break;
                 default:
                     this.board = new Board();
             }
-        } else {
+        } else {*/
             this.board = new Board();
-        }
+        //}
         lastMoves = new ArrayList<>();
         allMoves = new HashMap<>();
         turnIndex = 0;
@@ -150,7 +154,6 @@ public class Game {
         // reset board to starting state
         this.board = new Board();
         activeColor = Color.RED;
-        lastMoves = new ArrayList<>();
         this.allMoves = new HashMap<>(game.allMoves);
         this.gameID = game.gameID;
         this.gameNum = game.gameNum;
@@ -548,17 +551,11 @@ public class Game {
 
             // Check if position jumping into is not empty
             else if (board.getPieceAtPosition(pos) == null) {
-                // Check if there is a piece being jumped
-                //Position positionJumped = new Position(pos.getRow(), pos.getCell());
-
                 // Checking if its equal to null because you cannot call .equals on null
-                if (board.getPieceAtPosition(jumpedPositions.get(i)) == null) {
-                    //continue
-                } else {
+                if (board.getPieceAtPosition(jumpedPositions.get(i)) != null) {
                     Piece jumpedPiece = board.getPieceAtPosition(jumpedPositions.get(i));
                     //Valid jump if the piece jumped is the opposite color of the active color.
                     if (!jumpedPiece.getColor().equals(activeColor)) {
-                        System.out.println(jumpedPiece);
                         //Invalid jump if the piece is type SINGLE and going in the wrong direction
                         if (!movingPiece.getType().equals(Piece.Type.KING)) {
                             //SINGLE red piece cant jump up

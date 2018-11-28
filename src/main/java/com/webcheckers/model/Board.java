@@ -1,7 +1,7 @@
 package com.webcheckers.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
 import com.webcheckers.model.Piece.Type;
 
 /**
@@ -30,32 +30,33 @@ public class Board {
     private Piece[][] pieces;
 
     /**
-     * A default single red piece used in debug boards.
+     * Removed pieces from jump moves and their positions.
      */
-    public static Piece red = new Piece(Color.RED, Type.SINGLE);
+    private Map<Position, Stack<Piece>> removedPieces;
 
     /**
-     * A default single white piece used in debug boards.
+     * Piece color to create new pieces used in custom demo boards
      */
-    public static Piece white = new Piece(Color.WHITE, Type.SINGLE);
+    private static Color r = Color.RED;
+    private static Color w = Color.WHITE;
 
     /**
      * Various debug boards used for acceptance testing.
      */
-    public final static Piece[][] DEBUG_PIECES =
-            {   {null, red, null, red, null, null, null, null},
-                    {null, null, null, null, red, null, null, null},
-                    {null, null, null, null, null, red, null, null},
+    public final static Piece[][] PIECE_MOVEMENT =
+            {   {null, null, null, null, null, null, null, null},
+                    {null, null, cP(r), null, null, null, null, null},
+                    {null, null, null, cP(r), null, null, null, null},
+                    {cP(w), null, null, null, null, null, null, null},
                     {null, null, null, null, null, null, null, null},
-                    {null, null, null, null, null, red, null, null},
-                    {null, null, red, null, null, null, null, null},
-                    {null, null, null, null, null, red, null, white},
-                    {white, null, null, null, null, null, white, null},
+                    {null, null, null, null, cP(w), null, null, null},
+                    {null, null, null, cP(w), null, cP(w), null, null},
+                    {null, null, null, null, null, null, null, null}
             };
     public final static Piece[][] KINGED_NO_JUMP =
-            {   {null, red, null, null, null, null, null, null},
-                    {null, null, null, null, red, null, null, null},
-                    {null, white, null, null, null, null, null, null},
+            {   {null, cP(r), null, null, null, null, null, null},
+                    {null, null, null, null, cP(r), null, null, null},
+                    {null, cP(w), null, null, null, null, null, null},
                     {null, null, null, null, null, null, null, null},
                     {null, null, null, null, null, null, null, null},
                     {null, null, null, null, null, null, null, null},
@@ -63,8 +64,8 @@ public class Board {
                     {null, null, null, null, null, null, null, null}
             };
     public final static Piece[][] END_GAME =
-            {   {null, red, null, null, null, null, null, null},
-                    {null, null, white, null, null, null, null, null},
+            {   {null, cP(r), null, null, null, null, null, null},
+                    {null, null, cP(w), null, null, null, null, null},
                     {null, null, null, null, null, null, null, null},
                     {null, null, null, null, null, null, null, null},
                     {null, null, null, null, null, null, null, null},
@@ -73,25 +74,34 @@ public class Board {
                     {null, null, null, null, null, null, null, null}
             };
     public final static Piece[][] NO_MOVES_WHITE =
-            {   {null, red, null, null, null, null, null, null},
+            {   {null, cP(r), null, null, null, null, null, null},
                     {null, null, null, null, null, null, null, null},
                     {null, null, null, null, null, null, null, null},
                     {null, null, null, null, null, null, null, null},
                     {null, null, null, null, null, null, null, null},
-                    {null, null, null, red, null, null, null, red},
-                    {null, null, null, null, red, null, red, null},
-                    {null, null, null, null, null, white, null, null}
+                    {null, null, cP(r), null, null, null, cP(r), null},
+                    {null, null, null, cP(r), null, cP(r), null, null},
+                    {null, null, null, null, cP(w), null, null, null}
             };
     public final static Piece[][] MULTIPLE_JUMP_RED =
-            {   {null, red, null, null, null, null, null, null},
-                    {null, null, white, null, null, null, null, null},
+            {   {null, cP(r), null, null, null, null, null, null},
+                    {null, null, cP(w), null, null, null, null, null},
                     {null, null, null, null, null, null, null, null},
-                    {null, null, white, null, white, null, null, null},
+                    {null, null, cP(w), null, cP(w), null, null, null},
                     {null, null, null, null, null, null, null, null},
                     {null, null, null, null, null, null, null, null},
                     {null, null, null, null, null, null, null, null},
                     {null, null, null, null, null, null, null, null}
             };
+
+    /***
+     * Helper method used to create new pieces for custom demo boards.
+     * @param color Color of new piece to be created
+     * @return new piece of type single and color 'color'
+     */
+    public static Piece cP(Color color){
+        return new Piece(color, Type.SINGLE);
+    }
 
 
     /**
@@ -100,6 +110,7 @@ public class Board {
      */
     public Board() {
         pieces = new Piece[ROWS][COLUMNS];
+        removedPieces = new HashMap<>();
         setUpBoard();
     }
 
@@ -109,6 +120,7 @@ public class Board {
      */
     public Board(Piece[][] customPieces) {
         pieces = customPieces;
+        removedPieces = new HashMap<>();
     }
 
     /**
@@ -272,6 +284,15 @@ public class Board {
 
         Position jumpedPosition = move.getJumpedPosition();
 
+        Piece piece = this.pieces[jumpedPosition.getRow()][jumpedPosition.getCell()];
+        if (removedPieces.containsKey(jumpedPosition)) {
+            removedPieces.get(jumpedPosition).push(new Piece(piece));
+        }
+        else {
+            Stack<Piece> pieces = new Stack<>();
+            pieces.add(new Piece(piece));
+            removedPieces.put(jumpedPosition, pieces);
+        }
         this.pieces[jumpedPosition.getRow()][jumpedPosition.getCell()] = null;
     }
 
@@ -320,12 +341,7 @@ public class Board {
 
         //Place removed piece that got jumped back into board
         if(move.isBackUpMove()) {
-            if(activeColor.equals(Color.RED)) {
-                pieces[jumpedRow][jumpedCol] = new Piece(Color.WHITE, Piece.Type.SINGLE);
-            }
-            else{
-                pieces[jumpedRow][jumpedCol] = new Piece(Color.RED, Piece.Type.SINGLE);
-            }
+            pieces[jumpedRow][jumpedCol] = removedPieces.get(new Position(jumpedRow, jumpedCol)).pop();
         }
     }
 
