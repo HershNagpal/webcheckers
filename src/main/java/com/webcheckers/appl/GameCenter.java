@@ -166,10 +166,11 @@ public class GameCenter {
      * @return The created game
      */
     public Game createAIGame(Player player){
-       Player aiPlayer = new Player("AI");
-       Game game = new MoveBrain(player, aiPlayer, ++gameCounter);
-       games.put(player, game);
-       return game;
+        Player aiPlayer = new Player("AI");
+        Game game = new MoveBrain(player, aiPlayer, ++gameCounter);
+        games.put(player, game);
+        gameIDMap.put(game.getGameID(), game);
+        return game;
     }
 
     /**

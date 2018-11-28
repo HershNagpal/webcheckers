@@ -59,7 +59,7 @@ any time.
 
 ### Roadmap of Enhancements
 1. Replay Mode: Games can be stored and then reviewed at a later date.
-2. Spectator Mode: Other players may view an on-going game that they are not playing.Replay Mode: Games can be stored and then reviewed at a later date.
+2. Spectator Mode: Other players may view an on-going game that they are not playing.
 3. AI Player: Players may play a game against an artificial intelligence player.
 4. Player Help: Extend the Game View to support the ability to request help.
 5. Asynchronous Play: Players can play asynchronously.
