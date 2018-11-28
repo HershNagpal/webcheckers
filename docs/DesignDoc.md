@@ -187,6 +187,21 @@ The model tier is a collection is a collection of objects and types that make up
 of the checkers game. The Board, Space, and Piece classes are examples of game objects. Color,
 MessageType, and ViewMode are examples of types that describe other objects or states that objects
 can be in. The main hierarchy of the board is contained in the Board class.
+Fabricated classes that were not part of the problem description include MoveManager, MoveBrain,
+BoardView, Move, and Position. These classes were created to allow for the easier implementation
+of several features and for better adherence to the principles of object oriented design.
+Move, and Position were created in order to ensure all necessary information was packaged in a small
+object and to centralize operations on the different types of moves and positions on the board rather
+than have them scattered among other, irrelevant classes.
+The MoveBrain is used by the AI player to find and perform valid moves against a player. It is a
+derivative of the Game class with a more specific purpose of facilitating AI play rather than human
+players.
+BoardView is the class that holds the highest level in the hierarchy of game components. It contains
+the rows, spaces, and pieces on the board. Its single responsibility is to act as the highest level
+of the hierarchy while game operations on the board that move the pieces or perform moves are either
+in the Board class or Game class depending on the operation.
+MoveManager is a class with the single responsibility of finding and classifying valid moves.
+MoveManger's purpose is further discussed in the next section.
 
 ### Design Improvements
 Previously, the Game class contained over 660 lines of code. Many of these lines were used for the
@@ -204,6 +219,9 @@ more readable and singularly purposed Game class far outweighs the new dependenc
 Many of the methods in the Game class were also found to be a better fit within other classes, such as
 a method that returns all of the pieces that can make moves on the Board. Methods such as these were
 moved out of the Game class and into more appropriate classes.
+Future improvements may focus on the Board class next. While the Game class has been significantly cleaned
+up by moving many of the long methods out and repeated operations into functions, the Board class is still
+extremely long and may have repetitive code that can be put into methods.
 
 ## Testing
 Tests were performed mainly by running the game server and manually creating situations in which the
@@ -217,11 +235,12 @@ feature. This feature was worth 2 story points and is the only feature for this 
 
 ### Unit Testing and Code Coverage
 Our testing strategy was to use as many cases as possible to ensure all conditional paths are traversed
-by the testing. Every possible case is tested unless it is simple enough to be falsifiable by eye.
+by the testing. Every possible case is tested unless it is simple enough to be falsifiable by eye or would
+take excessive amounts of effort to traverse in a reasonable way.
 Coverage targets were chosen based on the ease by which classes could be tested and all conditional
 paths traversed. Lower coverage targets indicates that the tier had more difficult code to traverse in tests.
 
 Coverage targets:
-Model - 90%
-UI - 80%
-Application - 80%
+Model - 95%
+UI - 100%
+Application - 95%
