@@ -43,6 +43,8 @@ page.
 | Multiple Jump Move | Jump moves performed in succession on the same turn by the same piece |
 | End-game Condition | A game can be won when a the other player has no more pieces or moves on their turn |
 | Game Over | A game is finished when a player resigns or an end-game condition is met |
+| Ongoing Game | A game has not reached the state where the game has is over |
+| Finished Game | A game has reached the state where the game has been over |
 
 ## Requirements
 
@@ -119,6 +121,12 @@ with the WebCheckers application.
 
 ![The WebCheckers Web Interface Statechart](web-interface-statechart.png)
 
+![Game Statechart](game-statechart.png)
+
+![Spectate Mode Statechart(spectate-statechart.png)
+
+![Replay Mode Statechart(replay-statechart.png)
+
 Users can expect to be connected to the home page where they will have the option to sign in.
 Upon visiting the sign in page, users are prompted to enter a username. A username must follow
 specific criteria to be valid. Once a user has signed in, they will be able to see other players
@@ -161,7 +169,6 @@ Provided below is each page and the routes that are used as well as a descriptio
   from the move. These actions are handled by the PostSubmitTurnRoute and PostBackupMoveRoute.
   * At any point of the game, a player can resign from the game and return to the home page.
   The other player will see a message indicating that this player resigned.
-  ![The Game Statechart](game-statechart.png)
 
 ### Application Tier
 The application tier facilitates interactions between the game objects of the model and the server and
