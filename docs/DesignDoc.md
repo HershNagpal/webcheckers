@@ -168,7 +168,7 @@ The application tier facilitates interactions between the game objects of the mo
 client communication of the UI. When the UI requires access to the model classes, whether to create,
 alter, or display them, the UI first goes through the correct application tier manager class.
 
-#### Services
+#### Services and Controllers
 - GameCenter
 * Each route located in the UI tier uses GameCenter to get information from game objects in the model package.
   GameCenter creates and manages games by storing them in a list of ongoing games and ended games. Given that
@@ -196,7 +196,20 @@ alter, or display them, the UI first goes through the correct application tier m
   all system events. Routes that require messages from messenger go through gameCenter which will call the appropriate
   messenger method. Messenger methods will in turn return the appropriate message by checking game state through a game
   object.
-
+- PlayerLobby
+  * Determines a valid username to allow users to sign in.
+  * Keeps track of all players that are signed in and when they sign out.
+  * Holds the state of players in lists to determine what a player is currently doing. Used to check if a player
+  can start playing a game with their opponent by checking if that opponent is not spectating or replaying a game.
+- ReplayController
+  * Shares a map of finished games with the GameCenter for ease of access.
+  * Replays are created when a player starts replaying a game. A replay consists of copying a finished game
+  to not overwrite moves made. The purpose of copying a game is to allow for multiple users to replay the same
+  game without accessing the same state.
+  * When a player starts replaying, that player is recorded with that game as the current replay.
+  * A player cannot start a new replay until they stop replaying by clicking the exit button.
+  * When a player is done replaying, this controller removes the record of that player replaying a game
+  so that they can start another replay.
 
 ### Model Tier
 The model tier is a collection is a collection of objects and types that make up the basic structure
@@ -267,6 +280,8 @@ extremely long and may have repetitive code that can be put into methods.
   * The game states of being ongoing and finished are updated poorly due to some pages refreshing
   automatically. Defensive checks could be made to properly update the games as soon as they are finished,
   rather than when the player tries to play a new game.
+  * The player lobby could be optimized to a single data structure that keeps track of players and their
+  states in a map rather than lists of players in states.
 - Improving Enhancement Features
   * Replay mode currently requires a board that holds the state of what pieces have been captured and
   where they were captured. The design can be improved by creating a subclass of Board that is allowed
