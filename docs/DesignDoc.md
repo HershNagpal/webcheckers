@@ -38,7 +38,11 @@ page.
 | VO | Value Object |
 | MVP | Minimum Viable Product |
 | UI | User Interface |
-
+| Player | Signed-in user |
+| AI | Artificial intelligence |
+| Multiple Jump Move | Jump moves performed in succession on the same turn by the same piece |
+| End-game Condition | A game can be won when a the other player has no more pieces or moves on their turn |
+| Game Over | A game is finished when a player resigns or an end-game condition is met |
 
 ## Requirements
 
@@ -146,7 +150,10 @@ Provided below is each page and the routes that are used as well as a descriptio
   * The user will proceed to enter a name into the sign-in form. PostSignInRoute makes sure that the
   username is valid in all cases (the name has not been taken and follows the sign-in conventions).
   * Once the user enters a valid name, PostSignInRoute redirects the now logged-in player back to the home page.
+  * At any time, users can sign out and be redirected to the home page.
 - Game Page
+  * Players that are already in a game, spectating a game, or replaying a game are in a busy state and
+  redirect the challenger back to the home page with a message explaining the reasons listed above.
   * Players will see the board view representation of the board that is oriented to the bottom of the grid.
   * The turn is checked by the PostCheckTurnRoute every 5 seconds by an ajax call.
   * When a player makes a move on the board, the PostValidateMoveRoute makes sure that the move is valid.
@@ -212,7 +219,30 @@ in the Board class or Game class depending on the operation.
 MoveManager is a class with the single responsibility of finding and classifying valid moves.
 MoveManger's purpose is further discussed in the next section.
 
+
+### Enhancement Features
+- General overview of additional features and how they function.
+- AI Player
+  * Players can start a game with a computer player through the home page. This brings the player to
+  the game page like a normal game.
+  * As players makes a move and submits their turn, the AI player generates a valid move and checks that
+  the move is able to submit. If the move is unable to submit, another move is still available and will
+  be made.
+- Spectator Mode
+  * When a game is ongoing, players on the home page can start spectating that game.
+  * While spectating, the user cannot interact with the board between the two players playing.
+  * The board state is checked incrementally for updating similar to how a game typically updates.
+  * Users can stop spectating only by clicking on the exit button.
+  * While spectating, users cannot be challenged to a new game.
+- Replay Mode
+  * When a game has finished, players on the home page can replay that game through each turn.
+  * Turns are replayed by clicking the next and previous buttons on the page.
+  * The board state must keep track of the pieces that were captured each turn and their positions.
+  * Users can stop replaying only by clicking on the exit button.
+  * While replaying, users cannot be challenged to a new game.
+
 ### Design Improvements
+- Game Class
 Previously, the Game class contained over 660 lines of code. Many of these lines were used for the
 implementation of the piece movement feature. As a team, we have discussed creating a separate class
 dedicated to piece movement in order to clean up the look of the class. This would increase cohesion,
@@ -231,6 +261,24 @@ moved out of the Game class and into more appropriate classes.
 Future improvements may focus on the Board class next. While the Game class has been significantly cleaned
 up by moving many of the long methods out and repeated operations into functions, the Board class is still
 extremely long and may have repetitive code that can be put into methods.
+- General Improvements to be Made
+  * Signing out of the application should update the player state of being in a game, replaying, and
+  spectating, meaning the player is automatically resigned and exited from the game modes.
+  * The game states of being ongoing and finished are updated poorly due to some pages refreshing
+  automatically. Defensive checks could be made to properly update the games as soon as they are finished,
+  rather than when the player tries to play a new game.
+- Improving Enhancement Features
+  * Replay mode currently requires a board that holds the state of what pieces have been captured and
+  where they were captured. The design can be improved by creating a subclass of Board that is allowed
+  to keep track of the pieces captured. In this manner, normal games being played do not have to store
+  this information that is unused. Additionally, the current implementation of replay keeps track of
+  users replaying in two controllers. Changing the design to only need one controller do this should be
+  considered.
+- Improving Adherence to Design Principles
+  * FILL-IN
+  *
+  *
+  *
 
 ## Testing
 Tests were performed mainly by running the game server and manually creating situations in which the
