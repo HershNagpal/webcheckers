@@ -16,12 +16,21 @@ geometry: margin=1in
 
 WebCheckers is a web-based version of the game of checkers built using the
 Spark web framework and the FreeMarker template engine that is run on Java8.
+Within this document are the details for the design of the system
+and its subsystems.
 
 ### Purpose
 The goal of this project is to have a functional application that allows users
 to play a game of checkers with other users. Users select an opponent or wait
 to be selected to begin a game within the player lobby. Players can expect to
 play under the American rules for checkers until a player wins or resigns.
+
+To meet this goal, users must be able to sign into the application and
+interact with other users from the player lobby on the home page.
+
+Users can also start a game with a computer player, spectate ongoing games, and
+replay finished games. These features are accessed by clicking links on the home
+page.
 
 ### Glossary and Acronyms
 | Term | Definition |
@@ -58,9 +67,9 @@ any time.
   * No More Valid Moves
 
 ### Roadmap of Enhancements
-1. Replay Mode: Games can be stored and then reviewed at a later date.
+1. AI Player: Players may play a game against an artificial intelligence player.
 2. Spectator Mode: Other players may view an on-going game that they are not playing.
-3. AI Player: Players may play a game against an artificial intelligence player.
+3. Replay Mode: Games can be stored and then reviewed at a later date.
 4. Player Help: Extend the Game View to support the ability to request help.
 5. Asynchronous Play: Players can play asynchronously.
 6. Multiple Games: A player may play more than one game at a time.
