@@ -123,9 +123,9 @@ with the WebCheckers application.
 
 ![Game Statechart](game-statechart.png)
 
-![Spectate Mode Statechart(spectate-statechart.png)
+![Spectate Mode Statechart](spectate-statechart.png)
 
-![Replay Mode Statechart(replay-statechart.png)
+![Replay Mode Statechart](replay-statechart.png)
 
 Users can expect to be connected to the home page where they will have the option to sign in.
 Upon visiting the sign in page, users are prompted to enter a username. A username must follow
@@ -196,7 +196,9 @@ alter, or display them, the UI first goes through the correct application tier m
     4. PostValidateRoute goes through the same steps of acquiring the correct message (ValidMove or InvalidMove) by
     by using GameCenter to return the correct message obtained by calling validateMove() in Messenger, which uses Game
     to return true or false depending on whether the move follows the American Checkers rules.
+
     ![PostValidateRoute Sequence Diagram](PostValidateRoute-SequenceDiagram.png)
+
 - Messenger
   * Many routes require appropriate messages to display depending on system events like valid/invalid move, opponent
   resignation, or player resignation. The class Messenger was created to hold all messages needed to be displayed for
@@ -259,6 +261,9 @@ Modes options are needed to allow the UI to know if the turn buttons should be a
   * The board state is checked incrementally for updating similar to how a game typically updates.
   * Users can stop spectating only by clicking on the exit button.
   * While spectating, users cannot be challenged to a new game.
+
+  ![UML Class Diagram of Spectator Feature](SpectatorUMLClassDiagram.png)
+
 - Replay Mode
   * When a game has finished, players on the home page can replay that game through each turn.
   * Turns are replayed by clicking the next and previous buttons on the page.
