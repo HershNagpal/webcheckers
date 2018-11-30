@@ -50,7 +50,7 @@ This section describes the features of the application.
 
 ### Definition of MVP
 WebCheckers is an application in which players can challenge each other to
-checkers games over the internet. Players will be able to log in to a website 
+checkers games over the internet. Players will be able to log in to a website
 and see a list of other players who are online. Clicking a player will challenge
 them to a game of checkers. If they accept, a game of checkers will be created.
 The game will follow the regulations of American Checkers. Players can resign at
@@ -207,31 +207,36 @@ alter, or display them, the UI first goes through the correct application tier m
   to not overwrite moves made. The purpose of copying a game is to allow for multiple users to replay the same
   game without accessing the same state.
   * When a player starts replaying, that player is recorded with that game as the current replay.
+  * Replays consist of turns which are updated by the controller by calling the replay methods and returning
+  messages to the UI about whether changing the turn was successful.
   * A player cannot start a new replay until they stop replaying by clicking the exit button.
   * When a player is done replaying, this controller removes the record of that player replaying a game
   so that they can start another replay.
 
 ### Model Tier
-The model tier is a collection is a collection of objects and types that make up the basic structure
+- The model tier is a collection is a collection of objects and types that make up the basic structure
 of the checkers game. The Board, Space, and Piece classes are examples of game objects. Color,
 MessageType, and ViewMode are examples of types that describe other objects or states that objects
 can be in. The main hierarchy of the board is contained in the Board class.
-Fabricated classes that were not part of the problem description include MoveManager, MoveBrain,
+- Fabricated classes that were not part of the problem description include MoveManager, MoveBrain,
 BoardView, Move, and Position. These classes were created to allow for the easier implementation
 of several features and for better adherence to the principles of object oriented design.
 Move, and Position were created in order to ensure all necessary information was packaged in a small
 object and to centralize operations on the different types of moves and positions on the board rather
 than have them scattered among other, irrelevant classes.
-The MoveBrain is used by the AI player to find and perform valid moves against a player. It is a
+- The MoveBrain is used by the AI player to find and perform valid moves against a player. It is a
 derivative of the Game class with a more specific purpose of facilitating AI play rather than human
 players.
-BoardView is the class that holds the highest level in the hierarchy of game components. It contains
+- BoardView is the class that holds the highest level in the hierarchy of game components. It contains
 the rows, spaces, and pieces on the board. Its single responsibility is to act as the highest level
 of the hierarchy while game operations on the board that move the pieces or perform moves are either
 in the Board class or Game class depending on the operation.
-MoveManager is a class with the single responsibility of finding and classifying valid moves.
+- MoveManager is a class with the single responsibility of finding and classifying valid moves.
 MoveManger's purpose is further discussed in the next section.
-
+- Replay is a subclass of game used to change the state of a game and board without changing the original
+state. This is performed by using a copy constructor in Game. Replay also performs turns and moves differently
+through the previous and next turn methods that are called when the respective buttons are pressed in the mode.
+Modes options are needed to allow the UI to know if the turn buttons should be available to click.
 
 ### Enhancement Features
 - General overview of additional features and how they function.
