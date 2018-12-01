@@ -262,7 +262,7 @@ Modes options are needed to allow the UI to know if the turn buttons should be a
   * Users can stop spectating only by clicking on the exit button.
   * While spectating, users cannot be challenged to a new game.
 
-  ![UML Class Diagram of Spectator Feature](SpectatorUMLClassDiagram.png)
+  ![UML Class Diagram of Spectator Mode](SpectatorUMLClassDiagram.png)
 
 - Replay Mode
   * When a game has finished, players on the home page can replay that game through each turn.
@@ -270,6 +270,8 @@ Modes options are needed to allow the UI to know if the turn buttons should be a
   * The board state must keep track of the pieces that were captured each turn and their positions.
   * Users can stop replaying only by clicking on the exit button.
   * While replaying, users cannot be challenged to a new game.
+
+  ![UML Class Diagram of Replay Mode](ReplayUMLClassDiagram.png)
 
 ### Design Improvements
 - Game Class
