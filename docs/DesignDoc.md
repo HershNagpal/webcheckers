@@ -87,9 +87,10 @@ This section describes the application domain.
 
 ![The WebCheckers Domain Model](domain-model.png)
 
-Players sign in to play the game of checkers. The game is played on a standard 8x8
-checkers board. The pieces are located on individual spaces. Players play against
-another player, taking turns moving pieces and capturing their opponents pieces.
+Players sign in to interact with checkers games. Interacting includes playing, replaying, or
+spectating a game. The game is played on a standard 8x8 checkers board. The pieces are
+located on individual spaces. Players play against another player, taking turns moving
+pieces and capturing their opponents pieces.
 
 
 ## Architecture and Design
