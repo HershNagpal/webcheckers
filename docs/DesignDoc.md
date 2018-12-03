@@ -310,10 +310,28 @@ extremely long and may have repetitive code that can be put into methods.
   users replaying in two controllers. Changing the design to only need one controller do this should be
   considered.
 - Improving Adherence to Design Principles
-  * FILL-IN
+  * Single Responsibility Principle: The
   *
   *
   *
+
+## Code Metrics
+- Initial (Prior to Sprint 4):
+  * OCavg (Average Operation Complexity) = 1.55
+  * WMC (Weighted Method Complexity) = 7.63
+- Updated:
+  * OCavg (Average Operation Complexity) = 1.56
+  * WMC (Weighted Method Complexity) = 8.65
+- The Average Operation Complexity increased due to new functionality added after the initial code metrics were measured.
+- Improvements:
+  * Reduced the Average Operation Complexity of Game class from 3.14 to 2.41, this means that we reduced the average
+    resource (time) consumption of the operations in Game class leading to a more efficient system. We also reduced the
+    Weighted Method Complexity of Game class from 88 to 70, meaning that we reduced the number of paths through the code
+    involved in Game methods. This leads to more testable code as we transition the product to the maintenance phase.
+- Drawbacks:
+  * Increased the Average Operation Complexity of Board class from 2.46 to 3.25, and the Weighted Method Complexity from
+   32 to 65. This was due to moving some functionality previously held in Game into Board and also adding new functionality
+   to Board for features in Sprint 3 including End Game scenarios.
 
 ## Testing
 Each team member was responsible for creating unit tests for every method created or modified as features were worked on.
@@ -333,5 +351,5 @@ paths traversed. High test coverage of classes in the Model tier was necessary f
 in the UI tier through the creation of mock objects. Lower coverage targets indicates that the tier had more difficult
 code to traverse in tests.
 
-*Coverage Targets: Model - 95%    UI - 100%    Application - 95%
-*Coverage Achieved: Model - 95%    UI - 100%    Application - 100%
+-Coverage Targets: Model - 95%    UI - 100%    Application - 95%
+-Coverage Achieved: Model - 95%    UI - 100%    Application - 100%
