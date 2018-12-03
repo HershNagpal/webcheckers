@@ -97,7 +97,7 @@ public class MoveBrain extends Game {
         List<Position> AIPieces = this.getMovablePieceLocations();
         Boolean jumpMoveFound = false;
         for(Position position: AIPieces) {
-            Piece piece = this.getBoard().getPieceAtPosition(position);
+            //Piece piece = this.getBoard().getPieceAtPosition(position);
                 //first check for jump positions
                 List<Position> pieceJumpPositions = this.getJumpLocations(position);
                 if (pieceJumpPositions.size() != 0) {
