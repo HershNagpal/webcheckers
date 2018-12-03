@@ -310,7 +310,9 @@ extremely long and may have repetitive code that can be put into methods.
   users replaying in two controllers. Changing the design to only need one controller do this should be
   considered.
 - Improving Adherence to Design Principles
-  * Single Responsibility Principle: The
+  * Single Responsibility Principle: As mentioned above, fabricating the class MoveManager and moving move logic from
+    Game to MoveManager led to more narrow and focused classes in our system as the Game class is now truly only focused
+    on game logic affecting game state.
   *
   *
   *
