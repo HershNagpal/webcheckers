@@ -302,6 +302,7 @@ extremely long and may have repetitive code that can be put into methods.
   rather than when the player tries to play a new game.
   * The player lobby could be optimized to a single data structure that keeps track of players and their
   states in a map rather than lists of players in states.
+  * Defensive checks in general logic to avoid errors from occurring.
 - Improving Enhancement Features
   * Replay mode currently requires a board that holds the state of what pieces have been captured and
   where they were captured. The design can be improved by creating a subclass of Board that is allowed
@@ -313,9 +314,11 @@ extremely long and may have repetitive code that can be put into methods.
   * Single Responsibility Principle: As mentioned above, fabricating the class MoveManager and moving move logic from
     Game to MoveManager led to more narrow and focused classes in our system as the Game class is now truly only focused
     on game logic affecting game state.
-  *
-  *
-  *
+  * Pure Fabrication Principle: Create a subclass for Board that stores captured pieces as said in Improving Enhancement
+    Features.
+  * Information Expert: Our redesign of the Game class and move logic could still be improved by moving methods to
+    where they will be used in their respective classes.
+
 
 ## Code Metrics
 - Initial (Prior to Sprint 4):
