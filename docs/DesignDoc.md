@@ -316,18 +316,17 @@ extremely long and may have repetitive code that can be put into methods.
   *
 
 ## Testing
-Tests were performed mainly by running the game server and manually creating situations in which the
-code could be tested. After the feature was verified to be working ideally in game, each conditional
-branch that could be reached through unit testing reasonably. Code coverage and unit tests are
-discussed further in the below sections.
+Each team member was responsible for creating unit tests for every method created or modified as features were worked on.
+Testing new functionality would also be performed by running the game server and manually creating situations in which the
+code could be tested. Unit tests were the main source of testing each conditional branch present in our system.
+Code coverage and unit tests are discussed further in the below sections.
 
 ### Acceptance Testing
-All user stories have passed except for two (33/35). The failed tests are part of the "All Pieces Eliminated"
-feature. This feature was worth 2 story points and is the only feature for this sprint that is not complete.
+All user stories have passed their acceptance criteria.
 
 ### Unit Testing and Code Coverage
 Our testing strategy was to use as many cases as possible to ensure all conditional paths are traversed
-by the testing. Every possible case is tested unless it is simple enough to be falsifiable by eye or would
+through testing. Every possible case is tested unless it is simple enough to be falsifiable by eye or would
 take excessive amounts of effort to traverse in a reasonable way.
 Coverage targets were chosen based on the ease by which classes could be tested and all conditional
 paths traversed. Lower coverage targets indicates that the tier had more difficult code to traverse in tests.
