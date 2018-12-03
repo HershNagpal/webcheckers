@@ -352,5 +352,5 @@ in the UI tier through the creation of mock objects. Lower coverage targets indi
 code to traverse in tests.
 
 #### Code Coverage Targets
-+ Targets: Model 95%    UI 100%    Application 95%
-+ Achieved: Model 95%    UI 100%    Application 100%
++ Targets: Model 95% &nbsp; UI 100% &nbsp; Application 95%
++ Achieved: Model 95% &nbsp; UI 100% &nbsp; Application 100%
