@@ -351,5 +351,6 @@ paths traversed. High test coverage of classes in the Model tier was necessary f
 in the UI tier through the creation of mock objects. Lower coverage targets indicates that the tier had more difficult
 code to traverse in tests.
 
--Coverage Targets: Model - 95%    UI - 100%    Application - 95%
--Coverage Achieved: Model - 95%    UI - 100%    Application - 100%
+#### Code Coverage Targets
+-Targets: Model - 95%    UI - 100%    Application - 95%
+-Achieved: Model - 95%    UI - 100%    Application - 100%
