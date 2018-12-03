@@ -326,12 +326,12 @@ All user stories have passed their acceptance criteria.
 
 ### Unit Testing and Code Coverage
 Our testing strategy was to use as many cases as possible to ensure all conditional paths are traversed
-through testing. Every possible case is tested unless it is simple enough to be falsifiable by eye or would
+through testing. Every possible case was tested unless it was simple enough to be falsifiable by eye or would
 take excessive amounts of effort to traverse in a reasonable way.
 Coverage targets were chosen based on the ease by which classes could be tested and all conditional
-paths traversed. Lower coverage targets indicates that the tier had more difficult code to traverse in tests.
+paths traversed. High test coverage of classes in the Model tier was necessary for facilitating the testing of classes
+in the UI tier through the creation of mock objects. Lower coverage targets indicates that the tier had more difficult
+code to traverse in tests.
 
-Coverage targets:
-Model - 95%
-UI - 100%
-Application - 95%
+*Coverage Targets: Model - 95%    UI - 100%    Application - 95%
+*Coverage Achieved: Model - 95%    UI - 100%    Application - 100%
